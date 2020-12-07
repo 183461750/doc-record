@@ -10,3 +10,7 @@ docker swarm join-token manager
 ```shell script
 docker swarm leave
 ```
+## 部署命令
+```shell script
+docker stack up -c docker-compose.yml rmq
+```
