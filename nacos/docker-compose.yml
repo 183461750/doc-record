@@ -39,7 +39,6 @@ services:
       - ./docker/nacos/conf/application.properties:/home/nacos/conf/application.properties
     ports:
       - "9999:9999"
-      - "8848:8848"
   prometheus:
     image: prom/prometheus:latest
     volumes:
