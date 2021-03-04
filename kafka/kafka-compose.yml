@@ -11,45 +11,11 @@ services:
       - 2181:2181
     environment:
       ZOO_MY_ID: 1
-      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=zoo3:2888:3888;2181
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
     volumes:
       - "zoo1conf:/conf"
       - "zoo1data:/data"
       - "zoo1datalog:/datalog"
-    deploy:
-      mode: replicated
-      replicas: 1
-  zoo2:
-    image: zookeeper
-    networks:
-      - kafka
-    hostname: zoo2
-    ports: # 端口
-      - 2182:2181
-    environment:
-      ZOO_MY_ID: 2
-      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=0.0.0.0:2888:3888;2181 server.3=zoo3:2888:3888;2181
-    volumes:
-      - "zoo2conf:/conf"
-      - "zoo2data:/data"
-      - "zoo2datalog:/datalog"
-    deploy:
-      mode: replicated
-      replicas: 1
-  zoo3:
-    image: zookeeper
-    networks:
-      - kafka
-    hostname: zoo3
-    ports: # 端口
-      - 2183:2181
-    environment:
-      ZOO_MY_ID: 3
-      ZOO_SERVERS: server.1=zoo1:2888:3888;2181 server.2=zoo2:2888:3888;2181 server.3=0.0.0.0:2888:3888;2181
-    volumes:
-      - "zoo3conf:/conf"
-      - "zoo3data:/data"
-      - "zoo3datalog:/datalog"
     deploy:
       mode: replicated
       replicas: 1
@@ -58,8 +24,6 @@ services:
     image: wurstmeister/kafka
     depends_on:
       - zoo1
-      - zoo2
-      - zoo3
     ports:
       - target: 9094
         published: 9094
@@ -69,7 +33,7 @@ services:
       # HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
       HOSTNAME_COMMAND: "docker info -f '{{`{{.Swarm.NodeAddr}}`}}'"
       #BROKER_ID_COMMAND : "docker info -f '{{`{{.Name}}`}}' | sed 's/kafka//g'"
-      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181,zoo2:2181,zoo3:2181
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
@@ -90,10 +54,8 @@ services:
       - "9012:9000"
     depends_on:
       - zoo1
-      - zoo2
-      - zoo3
     environment:
-      ZK_HOSTS: "zoo1:2181,zoo2:2181,zoo3:2181"
+      ZK_HOSTS: "zoo1:2181"
       APPLICATION_SECRET: "random-secret"
     networks:
       - kafka
@@ -104,55 +66,19 @@ volumes:
     driver_opts:
       type: "nfs"
       o: "addr=111.111.3.41,rw"
-      device: ":/root/kafkadata/zoo1/data"
+      device: ":/data/docker/kafka/zoo1/data"
   zoo1datalog:
     driver: local
     driver_opts:
       type: "nfs"
       o: "addr=111.111.3.41,rw"
-      device: ":/root/kafkadata/zoo1/datalog"
+      device: ":/data/docker/kafka/zoo1/datalog"
   zoo1conf:
     driver: local
     driver_opts:
       type: "nfs"
       o: "addr=111.111.3.41,rw"
-      device: ":/root/kafkadata/zoo1/conf"
-  zoo2data:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: "addr=111.111.3.41,rw"
-      device: ":/root/kafkadata/zoo2/data"
-  zoo2datalog:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: "addr=111.111.3.41,rw"
-      device: ":/root/kafkadata/zoo2/datalog"
-  zoo2conf:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: "addr=111.111.3.41,rw"
-      device: ":/root/kafkadata/zoo2/conf"
-  zoo3data:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: "addr=111.111.3.41,rw"
-      device: ":/root/kafkadata/zoo3/data"
-  zoo3datalog:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: "addr=111.111.3.41,rw"
-      device: ":/root/kafkadata/zoo3/datalog"
-  zoo3conf:
-    driver: local
-    driver_opts:
-      type: "nfs"
-      o: "addr=111.111.3.41,rw"
-      device: ":/root/kafkadata/zoo3/conf"
+      device: ":/data/docker/kafka/zoo1/conf"
 
 networks:
   kafka:
