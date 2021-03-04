@@ -1,0 +1,36 @@
+version: '3.2'
+services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    #environment:
+    #  ZOO_SERVERS: server.0=172.126.1.22:2888:3888;2181 server.1=172.126.1.31:2888:3888;2181 server.2=172.126.1.32:2888:3888;2181 server.3=172.126.1.33:2888:3888;2181
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka:latest
+    ports:
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: host
+    environment:
+      #HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"  使用的主机名
+      HOSTNAME_COMMAND: "docker info | grep 'Node Address' | cut -d' ' -f 4"  #使用Ip地址
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_CREATE_TOPICS: "test:1:1"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    deploy:
+      mode: global
+  kafka-manager:
+    image: sheepkiller/kafka-manager
+    ports:
+      - "9012:9000"
+    depends_on:
+      - zookeeper
+    environment:
+      - ZK_HOSTS=zookeeper:2181
