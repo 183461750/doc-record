@@ -6,7 +6,7 @@ services:
     image: zookeeper
     networks:
       - kafka
-    hostname: zoo1
+#    hostname: zoo1
     ports: # 端口
       - 2181:2181
     environment:
@@ -38,7 +38,7 @@ services:
       KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
       KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
-      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'false'
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true' # 自动创建topics
       KAFKA_LOG_DIRS: /kafka/kafka_log
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
