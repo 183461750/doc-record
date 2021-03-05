@@ -27,3 +27,7 @@ systemctl stop firewalld.service
 ```shell script
 yum -y install docker
 ```
+## 修改主机名
+```shell script
+hostnamectl set-hostname manager43
+```
