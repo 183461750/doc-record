@@ -6,7 +6,7 @@ services:
     image: zookeeper
     networks:
       - kafka
-#    hostname: zoo1
+    hostname: zoo1
     ports: # 端口
       - 2181:2181
     environment:
