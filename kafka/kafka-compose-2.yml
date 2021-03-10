@@ -40,6 +40,8 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true' # 自动创建topics
       KAFKA_LOG_DIRS: /kafka/kafka_log
+#      BROKER_ID_COMMAND: "hostname | awk -F'-' '{print $$2}'" # broker_id 使用hostname的值
+      KAFKA_BROKER_ID: 1002 # 设置brokerId的值
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - "/dada/docker/kafka:/kafka"
