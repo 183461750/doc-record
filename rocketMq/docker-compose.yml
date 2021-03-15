@@ -5,8 +5,8 @@ services:
     ports:
       - 9876:9876
     volumes:
-      - /data/docker/rocketMq/rmqnamesrv/logs:/opt/logs
-      - /data/docker/rocketMq/rmqnamesrv/store:/opt/store
+      - /dada/docker/rocketMq/rmqnamesrv/logs:/opt/logs
+      - /dada/docker/rocketMq/rmqnamesrv/store:/opt/store
     deploy:
       replicas: 1
       update_config:
@@ -23,9 +23,9 @@ services:
       - 10909:10909
       - 10911:10911
     volumes:
-      - /data/docker/rocketMq/rmqbroker/logs:/opt/logs
-      - /data/docker/rocketMq/rmqbroker/store:/opt/store
-      - /data/docker/rocketMq/rmqbroker/brokerconf/broker.conf:/etc/rocketmq/broker.conf
+      - /dada/docker/rocketMq/rmqbroker/logs:/opt/logs
+      - /dada/docker/rocketMq/rmqbroker/store:/opt/store
+      - /dada/docker/rocketMq/rmqbroker/brokerconf/broker.conf:/etc/rocketmq/broker.conf
     environment:
       NAMESRV_ADDR: "rmqnamesrv:9876"
       JAVA_OPTS: " -Duser.home=/opt"
