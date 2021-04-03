@@ -62,6 +62,8 @@ yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/d
 vi /etc/yum.repos.d/docker-ce.repo
 # 命令如下：
 :%s#https://download-stage.docker.com#http://mirrors.aliyun.com/docker-ce#g
+# 更新yum缓存
+yum makecache fast
 # 这时，可通过阿里镜像安装doker了
 yum install docker-ce
 ```
