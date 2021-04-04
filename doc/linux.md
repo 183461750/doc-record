@@ -56,7 +56,10 @@ yum makecache
 yum repolist
 ```
 ```shell
-# 安装docker  配置镜像源
+# 安装docker  
+# 安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的
+yum install -y yum-utils device-mapper-persistent-data lvm2
+# 配置镜像源
 yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 # 通过命令把https://download-stage.docker.com替换为http://mirrors.aliyun.com/docker-ce
 vi /etc/yum.repos.d/docker-ce.repo
@@ -66,15 +69,4 @@ vi /etc/yum.repos.d/docker-ce.repo
 yum makecache fast
 # 这时，可通过阿里镜像安装doker了
 yum install docker-ce
-```
-```shell
-# 配置docker镜像源
-sudo mkdir -p /etc/docker
-sudo tee /etc/docker/daemon.json <<-'EOF'
-{
-  "registry-mirrors": ["https://ipl2fa8y.mirror.aliyuncs.com"]
-}
-EOF
-sudo systemctl daemon-reload
-sudo systemctl restart docker
 ```
