@@ -13,9 +13,9 @@ services:
       ZOO_MY_ID: 1
       ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
     volumes:
-      - "/dada/docker/kafka/zoo1/conf:/conf"
-      - "/dada/docker/kafka/zoo1/data:/data"
-      - "/dada/docker/kafka/zoo1/datalog:/datalog"
+      - "/data/docker/kafka/zoo1/conf:/conf"
+      - "/data/docker/kafka/zoo1/data:/data"
+      - "/data/docker/kafka/zoo1/datalog:/datalog"
     deploy:
       mode: replicated
       replicas: 1
@@ -44,7 +44,7 @@ services:
 #      KAFKA_BROKER_ID: 1002 # 设置brokerId的值
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - "/dada/docker/kafka:/kafka"
+      - "/data/docker/kafka:/kafka"
     networks:
       - kafka
     deploy:
