@@ -14,3 +14,7 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
+```shell script
+# docker镜像源
+https://docker.mirrors.ustc.edu.cn
+```
