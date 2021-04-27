@@ -55,8 +55,17 @@ yum makecache
 # 查看配置好的yum源是否正常
 yum repolist
 ```
+## 安装docker
+```shell script
+# 使用官方安装脚本自动安装
+# 安装命令如下：
+
+curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
+# 也可以使用国内 daocloud 一键安装命令：
+
+curl -sSL https://get.daocloud.io/docker | sh
+```
 ```shell
-# 安装docker  
 # 安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的
 yum install -y yum-utils device-mapper-persistent-data lvm2
 # 配置镜像源
