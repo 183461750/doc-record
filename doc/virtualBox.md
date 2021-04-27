@@ -2,3 +2,8 @@
 ```
 https://www.cnblogs.com/imzhi/p/solution-to-the-failed-to-get-the-virtualbox-com-object.html
 ```
+## 安装centos
+```shell script
+# 网络
+# 启用3网卡（nat,桥接,host-only）
+```
