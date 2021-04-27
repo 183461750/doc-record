@@ -31,6 +31,28 @@ scp /etc/hosts root@192.168.31.188:/etc/hosts
 systemctl disable firewalld.service
 systemctl stop firewalld.service
 ```
+```shell script
+# 防火墙配置
+# 官方文档
+
+# centos7采用firewalld来配置防火墙，默认不开放接口。官方文档中给出的方案比较底层。这里我们采取自定义Service的方式来配置
+
+# 创建文件
+/etc/firewalld/services/docker.xml
+# 加入以下内容
+<?xml version="1.0" encoding="utf-8"?>
+      <service>
+        <short>docker</short>
+        <description>docker daemon for remote access</description>
+        <port protocol="tcp" port="2375"/>
+      </service>
+# 查看默认zone(一般是public)
+firewall-cmd --get-default-zone
+# 在zone中加入这个service
+firewall-cmd --zone=public --add-service=docker --permanent
+# 重新加载
+firewall-cmd --reload
+```
 
 ## 添加dns
 ```shell
