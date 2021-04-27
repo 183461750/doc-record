@@ -38,7 +38,7 @@ systemctl stop firewalld.service
 # centos7采用firewalld来配置防火墙，默认不开放接口。官方文档中给出的方案比较底层。这里我们采取自定义Service的方式来配置
 
 # 创建文件
-/etc/firewalld/services/docker.xml
+vi /etc/firewalld/services/docker.xml
 # 加入以下内容
 <?xml version="1.0" encoding="utf-8"?>
       <service>
@@ -52,6 +52,8 @@ firewall-cmd --get-default-zone
 firewall-cmd --zone=public --add-service=docker --permanent
 # 重新加载
 firewall-cmd --reload
+# 参考链接
+https://my.oschina.net/u/4560825/blog/4314028
 ```
 
 ## 添加dns
