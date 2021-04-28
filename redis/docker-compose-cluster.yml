@@ -10,6 +10,12 @@ services:
       - 6379:6379
     volumes:
       - redis-master:/data
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
 
   redis-slave:
     image: redis
@@ -18,6 +24,12 @@ services:
     command: redis-server --slaveof redis-master 6379
     volumes:
       - redis-slave:/data
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
 
   sentinel:
     image: redis
@@ -37,6 +49,12 @@ services:
     depends_on:
       - redis-master
       - redis-slave
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
 
 volumes:
   redis-master:
