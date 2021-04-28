@@ -37,7 +37,7 @@ services:
       - redisdb
     ports:
       - 26379:26379
-    command: >
+    command:
       bash -c "echo 'port 26379' > sentinel.conf &&
       echo 'dir /tmp' >> sentinel.conf &&
       echo 'sentinel monitor redis-master redis-master 6379 2' >> sentinel.conf &&
