@@ -6,7 +6,7 @@ services:
       - /data/docker/redis/data:/data
       - /data/docker/redis/config/redis.conf:/etc/redis/redis.conf
       - /data/docker/redis/logs:/logs
-    command: redis-server /docker/config/redis.conf
+    command: redis-server /etc/redis/redis.conf --appendonly yes --requirepass "foobared"
       #      两个写入操作 只是为了解决启动后警告 可以去掉
 #      /bin/bash -c "echo 511 > /proc/sys/net/core/somaxconn
 #      && echo never > /sys/kernel/mm/transparent_hugepage/enabled
