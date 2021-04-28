@@ -34,7 +34,7 @@ services:
       echo 'sentinel failover-timeout redis-master 5000' >> sentinel.conf &&
       cat sentinel.conf &&
       redis-server sentinel.conf --sentinel"
-    links:
+    depends_on:
       - redis-master
       - redis-slave
 
