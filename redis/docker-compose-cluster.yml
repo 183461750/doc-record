@@ -7,7 +7,13 @@ services:
     networks:
       - redisdb
     ports:
-      - 6379:6379
+      - 63791:63791
+    command:
+      bash -c "echo 'port 63791' > redis.conf  &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
     volumes:
       - redis-master:/data
       - /etc/localtime:/etc/localtime:ro
@@ -22,12 +28,20 @@ services:
     image: redis
     networks:
       - redisdb
-    command: redis-server --slaveof redis-master 6379
+    ports:
+      - 63792:63792
+    command:
+      bash -c "echo 'port 63792' > redis.conf  &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      echo 'slaveof redis-master 63791' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
     volumes:
       - redis-slave:/data
       - /etc/localtime:/etc/localtime:ro
     deploy:
-      replicas: 2
+      replicas: 1
       update_config:
         parallelism: 1
       restart_policy:
@@ -40,16 +54,17 @@ services:
     ports:
       - 26379:26379
     volumes:
-    - /etc/localtime:/etc/localtime:ro
+      - /etc/localtime:/etc/localtime:ro
     command:
       bash -c "echo 'port 26379' > sentinel.conf &&
       echo 'dir /tmp' >> sentinel.conf &&
+      echo 'sentinel monitor redis-cluster 192.168.56.101 63791 2' >> sentinel.conf &&
       echo 'sentinel down-after-milliseconds redis-cluster 5000' >> sentinel.conf &&
       echo 'sentinel parallel-syncs redis-cluster 1' >> sentinel.conf &&
       echo 'sentinel failover-timeout redis-cluster 5000' >> sentinel.conf &&
+      echo 'sentinel auth-pass redis-cluster foobared' >> sentinel.conf &&
       cat sentinel.conf &&
-      redis-server sentinel.conf --sentinel monitor redis-cluster 192.168.56.101 6379 2"
-    # sentinel auth-pass mymaster 12345678 主密码，不设置的话不能动态切换
+      redis-server sentinel.conf --sentinel"
     depends_on:
       - redis-master
       - redis-slave
