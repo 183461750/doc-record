@@ -40,12 +40,12 @@ services:
     command:
       bash -c "echo 'port 26379' > sentinel.conf &&
       echo 'dir /tmp' >> sentinel.conf &&
-      echo 'sentinel monitor redis-master redis-master 6379 2' >> sentinel.conf &&
-      echo 'sentinel down-after-milliseconds redis-master 5000' >> sentinel.conf &&
-      echo 'sentinel parallel-syncs redis-master 1' >> sentinel.conf &&
-      echo 'sentinel failover-timeout redis-master 5000' >> sentinel.conf &&
+      echo 'sentinel down-after-milliseconds redis-cluster 5000' >> sentinel.conf &&
+      echo 'sentinel parallel-syncs redis-cluster 1' >> sentinel.conf &&
+      echo 'sentinel failover-timeout redis-cluster 5000' >> sentinel.conf &&
       cat sentinel.conf &&
-      redis-server sentinel.conf --sentinel"
+      redis-server sentinel.conf --sentinel monitor redis-cluster 192.168.56.101 6379 2"
+    # sentinel auth-pass mymaster 12345678 主密码，不设置的话不能动态切换
     depends_on:
       - redis-master
       - redis-slave
