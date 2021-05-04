@@ -10,6 +10,7 @@ services:
       - 6379:6379
     volumes:
       - redis-master:/data
+      - /etc/localtime:/etc/localtime:ro
     deploy:
       replicas: 1
       update_config:
@@ -24,6 +25,7 @@ services:
     command: redis-server --slaveof redis-master 6379
     volumes:
       - redis-slave:/data
+      - /etc/localtime:/etc/localtime:ro
     deploy:
       replicas: 2
       update_config:
@@ -37,6 +39,8 @@ services:
       - redisdb
     ports:
       - 26379:26379
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
     command:
       bash -c "echo 'port 26379' > sentinel.conf &&
       echo 'dir /tmp' >> sentinel.conf &&
