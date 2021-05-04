@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.8'
 
 services:
 
@@ -15,7 +15,7 @@ services:
       cat redis.conf &&
       redis-server redis.conf"
     volumes:
-      - redis-master:/data
+      - redis-master-v:/data
       - /etc/localtime:/etc/localtime:ro
     deploy:
       replicas: 1
@@ -38,7 +38,7 @@ services:
       cat redis.conf &&
       redis-server redis.conf"
     volumes:
-      - redis-slave:/data
+      - redis-slave-v:/data
       - /etc/localtime:/etc/localtime:ro
     deploy:
       replicas: 1
@@ -58,27 +58,27 @@ services:
     command:
       bash -c "echo 'port 26379' > sentinel.conf &&
       echo 'dir /tmp' >> sentinel.conf &&
-      echo 'sentinel monitor redis-cluster 192.168.56.101 63791 2' >> sentinel.conf &&
-      echo 'sentinel down-after-milliseconds redis-cluster 5000' >> sentinel.conf &&
-      echo 'sentinel parallel-syncs redis-cluster 1' >> sentinel.conf &&
-      echo 'sentinel failover-timeout redis-cluster 5000' >> sentinel.conf &&
-      echo 'sentinel auth-pass redis-cluster foobared' >> sentinel.conf &&
+      echo 'sentinel monitor master-alias 192.168.56.101 63791 1' >> sentinel.conf &&
+      echo 'sentinel down-after-milliseconds master-alias 5000' >> sentinel.conf &&
+      echo 'sentinel parallel-syncs master-alias 1' >> sentinel.conf &&
+      echo 'sentinel failover-timeout master-alias 5000' >> sentinel.conf &&
+      echo 'sentinel auth-pass master-alias foobared' >> sentinel.conf &&
       cat sentinel.conf &&
-      redis-server sentinel.conf --sentinel"
+      redis-sentinel sentinel.conf"
     depends_on:
       - redis-master
       - redis-slave
     deploy:
-      replicas: 3
+      replicas: 1
       update_config:
         parallelism: 1
       restart_policy:
         condition: on-failure
 
 volumes:
-  redis-master:
+  redis-master-v:
     driver: local
-  redis-slave:
+  redis-slave-v:
     driver: local
 
 networks:
