@@ -1,0 +1,225 @@
+version: '3.8'
+# 部署哨兵和多主多从配置：待测试
+services:
+
+  redis-1:
+    image: redis:6.0
+    networks:
+      - redisdb
+    ports:
+      - 7001:7001
+    command:
+      bash -c "echo 'port 7001' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    volumes:
+      - redis-1:/data
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  redis-2:
+    image: redis:6.0
+    networks:
+      - redisdb
+    ports:
+      - 7002:7002
+    command:
+      bash -c "echo 'port 7002' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    volumes:
+      - redis-2:/data
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  redis-3:
+    image: redis:6.0
+    networks:
+      - redisdb
+    ports:
+      - 7003:7003
+    command:
+      bash -c "echo 'port 7003' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    volumes:
+      - redis-3:/data
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  redis-4:
+    image: redis:6.0
+    networks:
+      - redisdb
+    ports:
+      - 7004:7004
+    command:
+      bash -c "echo 'port 7004' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    volumes:
+      - redis-4:/data
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  redis-5:
+    image: redis:6.0
+    networks:
+      - redisdb
+    ports:
+      - 7005:7005
+    command:
+      bash -c "echo 'port 7005' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    volumes:
+      - redis-5:/data
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  redis-6:
+    image: redis:6.0
+    networks:
+      - redisdb
+    ports:
+      - 7006:7006
+    command:
+      bash -c "echo 'port 7006' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    volumes:
+      - redis-6:/data
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  redis-cluster:
+    image: redis:6.0
+    networks:
+      - redisdb
+    # command:
+    #  bash -c "redis-cli --cluster create redis-1:7001 redis-2:7002 redis-3:7003 redis-4:7004 redis-5:7005 redis-6:7006 --cluster-replicas 1 -a foobared"
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  sentinel:
+    image: redis:6.0
+    networks:
+      - redisdb
+    ports:
+      - 26379:26379
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    command:
+      bash -c "echo 'port 26379' > sentinel.conf &&
+      echo 'bind 0.0.0.0' >> sentinel.conf &&
+      echo 'protected-mode no' >> sentinel.conf &&
+      echo 'cluster-enabled yes' >> sentinel.conf &&
+      echo 'appendonly yes' >> sentinel.conf &&
+      echo 'dir /tmp' >> sentinel.conf &&
+      echo 'sentinel monitor master-alias 192.168.56.101 7001 1' >> sentinel.conf &&
+      echo 'sentinel down-after-milliseconds master-alias 5000' >> sentinel.conf &&
+      echo 'sentinel parallel-syncs master-alias 1' >> sentinel.conf &&
+      echo 'sentinel failover-timeout master-alias 5000' >> sentinel.conf &&
+      echo 'sentinel auth-pass master-alias foobared' >> sentinel.conf &&
+      cat sentinel.conf &&
+      redis-sentinel sentinel.conf"
+    depends_on:
+      - redis-master
+      - redis-slave
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  redis-1:
+    driver: local
+  redis-2:
+    driver: local
+  redis-3:
+    driver: local
+  redis-4:
+    driver: local
+  redis-5:
+    driver: local
+  redis-6:
+    driver: local
+
+networks:
+  redisdb:
+    attachable: true
+    driver: overlay
