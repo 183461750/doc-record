@@ -3,13 +3,13 @@ version: '3.8'
 services:
 
   redis-master:
-    image: redis
+    image: redis:6.0
     networks:
       - redisdb
     ports:
-      - 63791:63791
+      - 6379:6379
     command:
-      bash -c "echo 'port 63791' > redis.conf  &&
+      bash -c "echo 'port 6379' > redis.conf  &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
       cat redis.conf &&
@@ -25,16 +25,14 @@ services:
         condition: on-failure
 
   redis-slave:
-    image: redis
+    image: redis:6.0
     networks:
       - redisdb
-    ports:
-      - 63792:63792
     command:
-      bash -c "echo 'port 63792' > redis.conf  &&
+      bash -c "echo 'port 6379' > redis.conf  &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
-      echo 'slaveof redis-master 63791' >> redis.conf  &&
+      echo 'slaveof redis-master 6379' >> redis.conf  &&
       cat redis.conf &&
       redis-server redis.conf"
     volumes:
@@ -48,20 +46,20 @@ services:
         condition: on-failure
 
   sentinel:
-    image: redis
+    image: redis:6.0
     networks:
       - redisdb
-    ports:
-      - 26379:26379
     volumes:
       - /etc/localtime:/etc/localtime:ro
     command:
       bash -c "echo 'port 26379' > sentinel.conf &&
       echo 'dir /tmp' >> sentinel.conf &&
-      echo 'sentinel monitor master-alias 192.168.56.101 63791 1' >> sentinel.conf &&
+      echo 'sentinel monitor master-alias redis-master 6379 1' >> sentinel.conf &&
+
       echo 'sentinel down-after-milliseconds master-alias 5000' >> sentinel.conf &&
+      echo 'sentinel failover-timeout master-alias 60000' >> sentinel.conf &&
       echo 'sentinel parallel-syncs master-alias 1' >> sentinel.conf &&
-      echo 'sentinel failover-timeout master-alias 5000' >> sentinel.conf &&
+
       echo 'sentinel auth-pass master-alias foobared' >> sentinel.conf &&
       cat sentinel.conf &&
       redis-sentinel sentinel.conf"
