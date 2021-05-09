@@ -33,7 +33,7 @@ services:
       bash -c "echo 'port 6379' > redis.conf  &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
-      echo 'replicaof redis-master 6379' >> redis.conf  &&
+      echo 'replicaof master 6379' >> redis.conf  &&
 
       echo 'slave-announce-ip slave-1' >> redis.conf  &&
 
@@ -57,7 +57,7 @@ services:
       bash -c "echo 'port 6379' > redis.conf  &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
-      echo 'replicaof redis-master 6379' >> redis.conf  &&
+      echo 'replicaof master 6379' >> redis.conf  &&
 
       echo 'slave-announce-ip slave-2' >> redis.conf  &&
 
