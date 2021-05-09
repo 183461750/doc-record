@@ -1,9 +1,10 @@
-version: '3.4'
 # 一主一从配置
+version: '3.4'
+
 services:
 
   redis-master:
-    image: redis
+    image: redis:6.0
     networks:
       - redisdb
     ports:
@@ -25,7 +26,7 @@ services:
         condition: on-failure
 
   redis-slave:
-    image: redis
+    image: redis:6.0
     networks:
       - redisdb
     command:
@@ -53,5 +54,4 @@ volumes:
 
 networks:
   redisdb:
-    attachable: true
     driver: overlay
