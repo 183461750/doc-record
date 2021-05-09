@@ -2,51 +2,56 @@ version: '3.4'
 # 一主一从配置
 services:
 
-  sentinel:
+  redis-master:
     image: redis
     networks:
       - redisdb
     ports:
-      - 26379:26379
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
+      - 6379:6379
     command:
-      bash -c "echo 'port 26379' > sentinel.conf &&
-      echo 'dir /tmp' >> sentinel.conf &&
-
-      echo 'sentinel monitor master-1 10.0.2.12 7001 2' >> sentinel.conf &&
-      echo 'sentinel monitor master-2 10.0.2.14 7002 2' >> sentinel.conf &&
-      echo 'sentinel monitor master-3 10.0.2.16 7003 2' >> sentinel.conf &&
-
-      echo 'sentinel down-after-milliseconds master-1 5000' >> sentinel.conf &&
-      echo 'sentinel parallel-syncs master-1 1' >> sentinel.conf &&
-      echo 'sentinel failover-timeout master-1 5000' >> sentinel.conf &&
-
-      echo 'sentinel down-after-milliseconds master-2 5000' >> sentinel.conf &&
-      echo 'sentinel parallel-syncs master-2 1' >> sentinel.conf &&
-      echo 'sentinel failover-timeout master-2 5000' >> sentinel.conf &&
-
-      echo 'sentinel down-after-milliseconds master-3 5000' >> sentinel.conf &&
-      echo 'sentinel parallel-syncs master-3 1' >> sentinel.conf &&
-      echo 'sentinel failover-timeout master-3 5000' >> sentinel.conf &&
-
-      echo 'sentinel auth-pass master-1 foobared' >> sentinel.conf &&
-      echo 'sentinel auth-pass master-2 foobared' >> sentinel.conf &&
-      echo 'sentinel auth-pass master-3 foobared' >> sentinel.conf &&
-      cat sentinel.conf &&
-      redis-sentinel sentinel.conf"
+      bash -c "echo 'port 6379' > redis.conf  &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    volumes:
+      - redis-master-v:/data
+      - /etc/localtime:/etc/localtime:ro
     deploy:
-      replicas: 3
+      replicas: 1
       update_config:
         parallelism: 1
       restart_policy:
         condition: on-failure
 
+  redis-slave:
+    image: redis
+    networks:
+      - redisdb
+    command:
+      bash -c "echo 'port 6379' > redis.conf  &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      echo 'slaveof redis-master 6379' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    volumes:
+      - redis-slave-v:/data
+      - /etc/localtime:/etc/localtime:ro
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  redis-master-v:
+    driver: local
+  redis-slave-v:
+    driver: local
+
 networks:
   redisdb:
+    attachable: true
     driver: overlay
-
-
-# Adding replica 10.0.2.20:7005 to 10.0.2.12:7001
-# Adding replica 10.0.2.3:7006 to 10.0.2.14:7002
-# Adding replica 10.0.2.18:7004 to 10.0.2.16:7003
