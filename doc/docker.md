@@ -18,3 +18,8 @@ sudo systemctl restart docker
 # docker镜像源
 https://docker.mirrors.ustc.edu.cn
 ```
+## 部署
+```shell script
+# 对性能要求高 用 --net=host(对应docker-stack.yml文件下的(service.serviceName.network_mode=host)network_mode: "host") ， 不用-p
+# 参考网上的测试：上次对对使用Docker的两台Redis做压力测试，A台使用-p，B台使用--net=host。但是发现A的效率只有B的1/3-2/3 ，这么大的性能影响，-p应该不适合生产环境吧？望大师们指教。谢谢。
+```
