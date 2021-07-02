@@ -16,6 +16,11 @@ docker swarm join-token manager
 docker swarm leave
 ```
 
+## 创建网络
+```shell
+docker network create middleware -d overlay --scope swarm 
+```
+
 ## 部署命令
 ```shell script
 docker stack up -c docker-compose.yml rmq
