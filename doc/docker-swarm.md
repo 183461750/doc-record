@@ -16,6 +16,11 @@ docker swarm join-token manager
 docker swarm leave
 ```
 
+## 给node节点添加标签
+```shell
+docker node update --label-add func=nginx worker1
+```
+
 ## 创建网络
 ```shell
 docker network create middleware -d overlay --scope swarm 
