@@ -8,7 +8,7 @@ services:
       TZ: "Asia/Shanghai"
       SUB_DOMAIN_MQ: "mq.*"
     command:
-      " sh -c entrypoint.sh && nginx -g daemon off; "
+      " bash -c /etc/nginx/entrypoint.sh && nginx -g daemon off; "
     networks:
       middleware:
     ports:
@@ -22,7 +22,7 @@ services:
 
     volumes:
       - "/etc/localtime:/etc/localtime"
-      - "./nginx/:/data/docker/nginx/"
+      - "./nginx/entrypoint.sh:/etc/nginx/entrypoint.sh"
       - "./nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
       - "./nginx/conf/cors.conf:/etc/nginx/cors.conf"
       - "./nginx/conf/template:/etc/nginx/template"
