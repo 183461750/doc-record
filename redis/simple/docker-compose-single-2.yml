@@ -13,12 +13,18 @@ services:
       redis-server redis.conf"
     ports:
       - 6379:6379
+    networks:
+      - middleware
     deploy:
       replicas: 1
       update_config:
         parallelism: 1
       restart_policy:
         condition: on-failure
+
+networks:
+  middleware:
+    external: true
 
 volumes:
   redis_data:
