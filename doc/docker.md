@@ -1,3 +1,11 @@
+## 安装docker
+```shell
+# 使用官方安装脚本自动安装
+curl -fsSL https://get.docker.com | bash -s docker --mirror aliyun
+# 使用国内 daocloud 一键安装命令
+curl -sSL https://get.daocloud.io/docker | sh
+```
+
 ## 设置docker开机自启
 ```shell
 systemctl enable docker
