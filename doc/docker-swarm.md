@@ -76,6 +76,9 @@ firewall-cmd --add-port=4789/udp --permanent
 > docker swarm 端口开放[参考链接](https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-centos-7)
 ```shell script
 xml开放端口
+
+vi /etc/firewalld/services/docker.xml
+
 <?xml version="1.0" encoding="utf-8"?>
       <service>
         <short>docker</short>
