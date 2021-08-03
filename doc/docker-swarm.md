@@ -88,5 +88,12 @@ vi /etc/firewalld/services/docker.xml
         <port protocol="udp" port="7946"/>
         <port protocol="udp" port="4789"/>
       </service>
+      
+# 查看默认zone(一般是public)
+firewall-cmd --get-default-zone
+# 在zone中加入这个service
+firewall-cmd --zone=public --add-service=docker --permanent
+# 重新加载
+firewall-cmd --reload
 # 详见linux.md
 ```
