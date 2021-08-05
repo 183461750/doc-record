@@ -83,6 +83,7 @@ vi /etc/firewalld/services/docker.xml
       <service>
         <short>docker</short>
         <description>docker daemon for remote access</description>
+        <port protocol="tcp" port="2376"/>
         <port protocol="tcp" port="2377"/> # manager节点才需要
         <port protocol="tcp" port="7946"/>
         <port protocol="udp" port="7946"/>
