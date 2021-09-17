@@ -53,7 +53,10 @@ services:
   kafka-manager:
     image: hlebalbau/kafka-manager:stable
     ports:
-      - "9012:9000"
+      - target: 9000
+        published: 9012
+        protocol: tcp
+        mode: host
     depends_on:
       - kafka
     environment:

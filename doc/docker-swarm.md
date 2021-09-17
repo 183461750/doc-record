@@ -30,6 +30,15 @@ docker network create middleware -d overlay --scope swarm
 ```shell script
 docker stack up -c docker-compose.yml rmq
 ```
+## docker swarm 端口映射问题
+```shell
+  <serviceName>:
+    ports:
+      - target: 6379
+        published: 6379
+        protocol: tcp
+        mode: host
+```
 
 ## docker swarm 端口开放
 ```shell
