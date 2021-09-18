@@ -3,7 +3,10 @@ services:
   rmqnamesrv:
     image: foxiswho/rocketmq:4.8.0
     ports:
-      - 9876:9876
+      - target: 9876
+        published: 9876
+        protocol: tcp
+        mode: host
     volumes:
       - rmqnamesrv_logs:/opt/logs
       - rmqnamesrv_store:/opt/store
@@ -58,7 +61,10 @@ services:
   rmqconsole:
     image: styletang/rocketmq-console-ng
     ports:
-      - 8080:8080
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
     environment:
       JAVA_OPTS: "-Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
     depends_on:
