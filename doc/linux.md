@@ -26,6 +26,11 @@ vi /etc/hosts
 scp /etc/hosts root@192.168.31.188:/etc/hosts
 ```
 
+## 查看防火墙
+```shell
+`firewall-cmd --zone=public --list-ports` 和 `netstat -tlunp`
+```
+
 ## 设置防火墙
 ```shell script
 systemctl disable firewalld.service
