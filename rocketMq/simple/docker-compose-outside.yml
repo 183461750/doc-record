@@ -45,7 +45,7 @@ services:
       echo 'brokerRole = ASYNC_MASTER' >> broker.conf  &&
       echo 'flushDiskType = ASYNC_FLUSH' >> broker.conf  &&
 
-      echo 'brokerIP1=10.0.0.73' >> broker.conf  && # todo brokerIP1 需外网访问，需改为外网地址
+      echo 'brokerIP1=10.0.0.73' >> broker.conf  && # todo brokerIP1 需外网访问，需改为外网地址，运行报错则把该注释去掉
 
       cat broker.conf &&
       mqbroker -c broker.conf"
