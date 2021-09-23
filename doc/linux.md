@@ -108,3 +108,9 @@ yum makecache fast
 # 这时，可通过阿里镜像安装doker了
 yum install docker-ce
 ```
+
+## 监控命令
+```shell
+# 查看服务状态，一秒一次，启动之后可通过IP：端口访问界面
+watch -n 1 docker stack services hadoop
+```
