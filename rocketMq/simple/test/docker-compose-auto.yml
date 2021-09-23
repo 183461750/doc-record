@@ -29,6 +29,12 @@ services:
       - /bin/docker:/bin/docker
       - rmqbroker_logs:/opt/logs
       - rmqbroker_store:/opt/store
+    environment:
+      # HOSTNAME_COMMAND: "{{`docker info --format '{{json .Swarm.NodeAddr}}'`}}"
+      HOSTNAME_COMMAND: "{{`docker info -f '{{.Swarm.NodeAddr}}'`}}"
+      NAMESRV_ADDR: "rmqnamesrv:9876"
+      JAVA_OPTS: " -Duser.home=/opt"
+      JAVA_OPT_EXT: "-Xms512M -Xmx512M -Xmn128m"
     command:
       bash -c "echo 'brokerClusterName = DefaultCluster' > broker.conf  &&
       echo 'brokerName = broker-a' >> broker.conf  &&
@@ -38,16 +44,10 @@ services:
       echo 'brokerRole = ASYNC_MASTER' >> broker.conf  &&
       echo 'flushDiskType = ASYNC_FLUSH' >> broker.conf  &&
 
-      echo brokerIP1=`$HOSTNAME_COMMAND` >> broker.conf  &&
+      echo "brokerIP1=`$HOSTNAME_COMMAND`" >> broker.conf  && # todo 不生效，可能是environment在command之后执行的原因
 
       cat broker.conf &&
       mqbroker -c broker.conf"
-    environment:
-      # HOSTNAME_COMMAND: "{{`docker info --format '{{json .Swarm.NodeAddr}}'`}}"
-      HOSTNAME_COMMAND: "{{`docker info -f '{{.Swarm.NodeAddr}}'`}}"
-      NAMESRV_ADDR: "rmqnamesrv:9876"
-      JAVA_OPTS: " -Duser.home=/opt"
-      JAVA_OPT_EXT: "-Xms512M -Xmx512M -Xmn128m"
     depends_on:
       - rmqnamesrv
     networks:
