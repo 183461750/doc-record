@@ -14,7 +14,7 @@ code settings.xml
 # 1. 下载安装插件
 # 在管理中选插件，输入Git Parameter
 ```
-![img.png](img.png)
-![img_1.png](img_1.png)
-![img_2.png](img_2.png)
+![img.png](img/img.png)
+![img_1.png](img/img_1.png)
+![img_2.png](img/img_2.png)
 --- 
