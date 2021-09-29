@@ -2,7 +2,6 @@
 ```shell
 docker volume ls
 docker volume inspect jenkins_jenkins_home
-docker volume inspect jenkins_jenkins_home
 cd /var/lib/docker/volumes/jenkins_jenkins_home/_data
 mkdir -p ./data/maven
 code settings.xml
