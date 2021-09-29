@@ -1,4 +1,4 @@
-version: '3'
+version: '3.5'
 services:
   jenkins:
     image: jenkinsci/blueocean
@@ -7,7 +7,9 @@ services:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
-      - 9090:8080
+      - target: 8080
+        published: 9090
+        mode: host
     networks:
       - middleware
     deploy:
