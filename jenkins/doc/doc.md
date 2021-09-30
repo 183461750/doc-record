@@ -27,3 +27,9 @@ code settings.xml
 # Deploy to container 
 # Send build artifacts over SSH
 ```
+- 步骤
+    ![img.png](img/构建maven项目/img.png)
+    ![img_1.png](img/构建maven项目/img_1.png)
+    ![img_2.png](img/构建maven项目/img_2.png)
+    ![img_3.png](img/构建maven项目/img_3.png)
+    ![img_4.png](img/构建maven项目/img_4.png)
