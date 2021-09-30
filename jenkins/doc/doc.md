@@ -14,7 +14,16 @@ code settings.xml
 # 1. 下载安装插件
 # 在管理中选插件，输入Git Parameter
 ```
-![img.png](img/img.png)
-![img_1.png](img/img_1.png)
-![img_2.png](img/img_2.png)
+![img.png](img/多分支参数构建/img.png)
+![img_1.png](img/多分支参数构建/img_1.png)
+![img_2.png](img/多分支参数构建/img_2.png)
 --- 
+## 构建maven项目
+```shell
+# 下载安装插件
+# 在管理中选插件，输入
+# Maven Integration
+# SSH
+# Deploy to container 
+# Send build artifacts over SSH
+```
