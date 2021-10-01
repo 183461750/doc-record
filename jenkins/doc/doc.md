@@ -33,6 +33,11 @@ code settings.xml
     ![img_2.png](img/构建maven项目/img_2.png)
     ![img_3.png](img/构建maven项目/img_3.png)
     ![img_4.png](img/构建maven项目/img_4.png)
+- Build
+```shell
+# Goals and options
+clean install -Dmaven.test.skip=true -Pprivate -Djava.awt.headless=true
+```
 - send build artifacts over SSH (Transfers Set -> Exec command)
 ```shell
 imagesid=`docker images|grep -i docker-test|awk '{print $3}'`
