@@ -103,15 +103,7 @@ docker run -itd -p 8280:8080 $JOB_NAME
 # 第三版(swarm)
 # docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
 
-# 删除旧容器和旧镜像
-dockerid=`docker ps -aq -f ancestor=$JOB_NAME `
-if  [ -n "$dockerid" ]  ;then
-   docker stop $dockerid
-   docker rm -f $dockerid
-   docker rmi $(docker images -q -f reference=$JOB_NAME)
-else
-   echo 'dockerid is null'
-fi
+docker stack rm app
 
 cd $DOCKER_WORKSPACE/$JOB_NAME
 
