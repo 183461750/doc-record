@@ -34,6 +34,7 @@ code settings.xml
     ![img_3.png](img/构建maven项目/img_3.png)
     ![img_4.png](img/构建maven项目/img_4.png)
     ![ssh信息输出到控制台](img/构建maven项目/img_5.png)
+    ![docker全局环境变量](img/构建maven项目/img_6.png)
 - Build
 ```shell
 # Goals and options
@@ -41,6 +42,7 @@ clean install -Dmaven.test.skip=true -Pprivate -Djava.awt.headless=true
 ```
 - send build artifacts over SSH (Transfers Set -> Exec command)
 ```shell
+# 第一版(初版)
 imagesid=`docker images|grep -i docker-test|awk '{print $3}'`
 project=/var/lib/docker/volumes/jks_jenkins_home/_data/workspace/test4
 dockerid=`docker ps -a|grep -i docker-test|awk '{print $1}' `
@@ -68,4 +70,37 @@ else
    echo 'dockerid is null'
 fi
 docker run -itd -p 8080:8080 docker-test
+```
+```shell
+# 第二版
+imagesid=`docker images|grep -i $JOB_NAME|awk '{print $3}'`
+dockerid=`docker ps -a|grep -i $JOB_NAME|awk '{print $1}' `
+
+if  [ ! -n "$imagesid" ];then
+   echo $imagesid "is null"
+else
+    docker rmi $imagesid -f
+fi
+
+cd $DOCKER_WORKSPACE/$JOB_NAME
+
+echo "FROM tomcat:8.5" > Dockerfile
+echo "MAINTAINER Fa" >> Dockerfile
+echo "RUN rm -rf /usr/local/tomcat/webapps/*" >> Dockerfile
+echo "ADD ./target/*.war /usr/local/tomcat/webapps/" >> Dockerfile
+echo "EXPOSE 8080" >> Dockerfile
+# echo "ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]" >> Dockerfile
+
+docker build -t $JOB_NAME .
+
+if  [ -n "$dockerid" ]  ;then
+   docker stop $dockerid
+   docker rm -f $dockerid
+else
+   echo 'dockerid is null'
+fi
+docker run -itd -p 8280:8080 $JOB_NAME
+
+docker images | awk '{if($1=="<none>") print $3}' | xargs docker rmi
+
 ```
