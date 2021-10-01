@@ -3,83 +3,51 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
-<!-- todo 需要改的地方 -->
+    <!-- 阿里云maven配置指导：https://developer.aliyun.com/mvn/guide -->
+
+    <!-- todo 需要改的地方 -->
     <localRepository>/var/jenkins_home/data/maven/repo</localRepository>
 
-    <!--    <mirrors>-->
-    <!--        <mirror>-->
-    <!--            <id>maven-net-cn</id>-->
-    <!--            <name>Maven China Mirror</name>-->
-    <!--            <url>http://maven.net.cn/content/groups/public/</url>-->
-    <!--            <mirrorOf>central</mirrorOf>-->
-    <!--        </mirror>-->
-    <!--    </mirrors>-->
-
-    <!--    <mirrors>-->
-    <!--        <mirror>-->
-    <!--            <id>alimaven</id>-->
-    <!--            <name>aliyun maven</name>-->
-    <!--            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>-->
-    <!--            <mirrorOf>central</mirrorOf>-->
-    <!--        </mirror>-->
-    <!--    </mirrors>-->
+    <mirrors>
+        <mirror>
+            <id>aliyunmaven</id>
+            <mirrorOf>*</mirrorOf>
+            <name>阿里云公共仓库</name>
+            <url>https://maven.aliyun.com/repository/public</url>
+        </mirror>
+    </mirrors>
 
     <profiles>
         <profile>
-            <id>test</id>
-            <!-- repositories and pluginRepositories here-->
+            <id>ali_maven</id>
             <repositories>
-                <!--                <repository>-->
-                <!--                    <id>maven-net-cn</id>-->
-                <!--                    <name>Maven China Mirror</name>-->
-                <!--                    <url>http://maven.net.cn/content/groups/public/</url>-->
-                <!--                    <releases>-->
-                <!--                        <enabled>true</enabled>-->
-                <!--                    </releases>-->
-                <!--                    <snapshots>-->
-                <!--                        <enabled>false</enabled>-->
-                <!--                    </snapshots>-->
-                <!--                </repository>-->
                 <repository>
-                    <id>Aliyun_Nexus</id>
-                    <name>Aliyun Nexus Repository</name>
-                    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+                    <id>spring</id>
+                    <url>https://maven.aliyun.com/repository/spring</url>
                     <releases>
                         <enabled>true</enabled>
                     </releases>
                     <snapshots>
-                        <enabled>false</enabled>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+
+                <repository>
+                    <id>spring-plugin</id>
+                    <url>https://maven.aliyun.com/repository/spring-plugin</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
                     </snapshots>
                 </repository>
             </repositories>
-            <pluginRepositories>
-                <!--                <pluginRepository>-->
-                <!--                    <id>maven-net-cn</id>-->
-                <!--                    <name>Maven China Mirror</name>-->
-                <!--                    <url>http://maven.net.cn/content/groups/public/</url>-->
-                <!--                    <releases>-->
-                <!--                        <enabled>true</enabled>-->
-                <!--                    </releases>-->
-                <!--                    <snapshots>-->
-                <!--                        <enabled>false</enabled>-->
-                <!--                    </snapshots>-->
-                <!--                </pluginRepository>-->
-                <pluginRepository>
-                    <id>Aliyun_Nexus</id>
-                    <name>Aliyun Nexus Repository</name>
-                    <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </pluginRepository>
-            </pluginRepositories>
         </profile>
     </profiles>
     <activeProfiles>
-        <activeProfile>test</activeProfile>
+        <activeProfile>ali_maven</activeProfile>
     </activeProfiles>
+
 
 </settings>
