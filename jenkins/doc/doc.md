@@ -74,12 +74,13 @@ docker run -itd -p 8080:8080 docker-test
 ```shell
 # 第二版
 
-dockerid=`docker ps -a -q -f ancestor=$JOB_NAME `
+dockerid=`docker ps -aq -f ancestor=$JOB_NAME `
 
 if  [ -n "$dockerid" ]  ;then
    docker stop $dockerid
    docker rm -f $dockerid
    docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
+   docker rmi $(docker images -q -f reference=$JOB_NAME)
 else
    echo 'dockerid is null'
 fi

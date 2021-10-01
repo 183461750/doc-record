@@ -34,4 +34,12 @@ https://docker.mirrors.ustc.edu.cn
 ## 删除空镜像
 ```shell script
 sudo docker images | awk '{if($2=="<none>") print $3}' | xargs sudo docker rmi
+
+# 您需要先停止运行容器然后将其删除
+docker stop $(docker ps -a -q)
+docker rm $(docker ps -a -q)
+# 对于图像，请尝试删除悬空图像
+docker rmi $(docker images -f dangling=true -q)
+# 删除所有未被使用的镜像
+docker image prune  -a 
 ```
