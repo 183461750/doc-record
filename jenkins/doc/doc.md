@@ -96,11 +96,11 @@ docker build -t $JOB_NAME .
 if  [ -n "$dockerid" ]  ;then
    docker stop $dockerid
    docker rm -f $dockerid
+   docker images | awk '{if($1=="<none>") print $3}' | xargs docker rmi
 else
    echo 'dockerid is null'
 fi
-docker run -itd -p 8280:8080 $JOB_NAME
 
-docker images | awk '{if($1=="<none>") print $3}' | xargs docker rmi
+docker run -itd -p 8280:8080 $JOB_NAME
 
 ```
