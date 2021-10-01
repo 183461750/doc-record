@@ -53,6 +53,8 @@ echo "ADD ./target/*.war /usr/local/tomcat/webapps/" >> Dockerfile
 echo "EXPOSE 8080" >> Dockerfile
 echo "ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]" >> Dockerfile
 
+docker build -t docker-test .
+
 if  [ -n "$dockerid" ]  ;then
    docker stop $dockerid
    docker rm -f $dockerid
