@@ -124,14 +124,17 @@ echo "EXPOSE 8080" >> Dockerfile
 # echo "ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]" >> Dockerfile
 
 # 构建镜像
-docker build -t $JOB_NAME .
+docker build -t $JOB_NAME:1.0 .
+
+# 删除空镜像
+docker images | awk '{if($1=="<none>")print $3}' | xargs docker rmi 
 
 # 编辑stack yml文件
 tee $JOB_NAME.yml <<-'EOF'
 version: '3.5'
 services:
   $JOB_NAME:
-    image: $JOB_NAME
+    image: $JOB_NAME:1.0
     ports:
       - target: 8080
         published: 8280
