@@ -73,13 +73,15 @@ docker run -itd -p 8080:8080 docker-test
 ```
 ```shell
 # 第二版
-imagesid=`docker images|grep -i $JOB_NAME|awk '{print $3}'`
-dockerid=`docker ps -a|grep -i $JOB_NAME|awk '{print $1}' `
 
-if  [ ! -n "$imagesid" ];then
-   echo $imagesid "is null"
+dockerid=`docker ps -a -q -f ancestor=$JOB_NAME `
+
+if  [ -n "$dockerid" ]  ;then
+   docker stop $dockerid
+   docker rm -f $dockerid
+   docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
 else
-    docker rmi $imagesid -f
+   echo 'dockerid is null'
 fi
 
 cd $DOCKER_WORKSPACE/$JOB_NAME
@@ -92,14 +94,6 @@ echo "EXPOSE 8080" >> Dockerfile
 # echo "ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]" >> Dockerfile
 
 docker build -t $JOB_NAME .
-
-if  [ -n "$dockerid" ]  ;then
-   docker stop $dockerid
-   docker rm -f $dockerid
-   docker images | awk '{if($1=="<none>") print $3}' | xargs docker rmi
-else
-   echo 'dockerid is null'
-fi
 
 docker run -itd -p 8280:8080 $JOB_NAME
 
