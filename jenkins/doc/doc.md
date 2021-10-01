@@ -99,3 +99,58 @@ docker build -t $JOB_NAME .
 docker run -itd -p 8280:8080 $JOB_NAME
 
 ```
+```shell
+# 第三版(swarm)
+# docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
+
+# 删除旧容器和旧镜像
+dockerid=`docker ps -aq -f ancestor=$JOB_NAME `
+if  [ -n "$dockerid" ]  ;then
+   docker stop $dockerid
+   docker rm -f $dockerid
+   docker rmi $(docker images -q -f reference=$JOB_NAME)
+else
+   echo 'dockerid is null'
+fi
+
+cd $DOCKER_WORKSPACE/$JOB_NAME
+
+# 编辑Dockerfile文件
+echo "FROM tomcat:8.5" > Dockerfile
+echo "MAINTAINER Fa" >> Dockerfile
+echo "RUN rm -rf /usr/local/tomcat/webapps/*" >> Dockerfile
+echo "ADD ./target/*.war /usr/local/tomcat/webapps/" >> Dockerfile
+echo "EXPOSE 8080" >> Dockerfile
+# echo "ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]" >> Dockerfile
+
+# 构建镜像
+docker build -t $JOB_NAME .
+
+# 编辑stack yml文件
+tee $JOB_NAME.yml <<-'EOF'
+version: '3.5'
+services:
+  $JOB_NAME:
+    image: $JOB_NAME
+    ports:
+      - target: 8080
+        published: 8280
+        mode: host
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  middleware:
+    external: true
+
+EOF
+
+docker stack up -c $JOB_NAME.yml app
+
+```
