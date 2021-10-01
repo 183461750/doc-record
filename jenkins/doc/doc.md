@@ -51,7 +51,7 @@ echo "MAINTAINER Fa" >> Dockerfile
 echo "RUN rm -rf /usr/local/tomcat/webapps/*" >> Dockerfile
 echo "ADD ./target/*.war /usr/local/tomcat/webapps/" >> Dockerfile
 echo "EXPOSE 8080" >> Dockerfile
-echo "ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]" >> Dockerfile
+# echo 'ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]' >> Dockerfile
 
 docker build -t docker-test .
 
@@ -61,5 +61,5 @@ if  [ -n "$dockerid" ]  ;then
 else
    echo 'dockerid is null'
 fi
-docker run -it -d -p 8080:8080 -t "docker-test"
+docker run -itd -p 8080:8080 docker-test
 ```
