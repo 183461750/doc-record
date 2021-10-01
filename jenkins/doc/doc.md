@@ -33,6 +33,7 @@ code settings.xml
     ![img_2.png](img/构建maven项目/img_2.png)
     ![img_3.png](img/构建maven项目/img_3.png)
     ![img_4.png](img/构建maven项目/img_4.png)
+    ![ssh信息输出到控制台](img/构建maven项目/img_5.png)
 - Build
 ```shell
 # Goals and options
