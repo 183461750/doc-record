@@ -33,3 +33,31 @@ code settings.xml
     ![img_2.png](img/构建maven项目/img_2.png)
     ![img_3.png](img/构建maven项目/img_3.png)
     ![img_4.png](img/构建maven项目/img_4.png)
+- send build artifacts over SSH (Transfers Set -> Exec command)
+```shell
+imagesid=`docker images|grep -i docker-test|awk '{print $3}'`
+project=/var/lib/docker/volumes/jks_jenkins_home/_data/workspace/test4
+dockerid=`docker ps -a|grep -i docker-test|awk '{print $1}' `
+echo $project
+if  [ ! -n "$imagesid" ];then
+   echo $imagesid "is null"
+else
+    docker rmi $imagesid -f
+fi
+cd $project
+
+echo "FROM tomcat:8.5" > Dockerfile
+echo "MAINTAINER Fa" >> Dockerfile
+echo "RUN rm -rf /usr/local/tomcat/webapps/*" >> Dockerfile
+echo "ADD ./target/*.war /usr/local/tomcat/webapps/" >> Dockerfile
+echo "EXPOSE 8080" >> Dockerfile
+echo "ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]" >> Dockerfile
+
+if  [ -n "$dockerid" ]  ;then
+   docker stop $dockerid
+   docker rm -f $dockerid
+else
+   echo 'dockerid is null'
+fi
+docker run -it -d -p 8080:8080 -t "docker-test"
+```
