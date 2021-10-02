@@ -2,6 +2,8 @@
 ```shell
 whereis hosts
 vi /etc/hosts
+
+10.0.0.73 registry.docker.com
 ```
 ## 配置不安全域名访问
 ```shell
@@ -12,7 +14,7 @@ vi /etc/docker/daemon.json
     "https://registry.docker-cn.com"
   ],
   "insecure-registries": [
-    "ip:5000"   （ip 为server端的ip）
+    "registry.docker.com:5000"   （ip 为server端的ip）
   ]
 }
 # 重启服务
@@ -28,14 +30,14 @@ docker pull nginx
 docker images
  
 ## 标记本地镜像并指向目标仓库（ip:port/image_name:tag，该格式为标记版本号）
-docker tag nginx 192.168.75.133:5000/nginx
+docker tag nginx registry.docker.com:5000/nginx
  
 ## 提交镜像到仓库
-docker push 192.168.75.133:5000/nginx
+docker push registry.docker.com:5000/nginx
 
 ## 查看全部镜像
-curl -XGET http://192.168.75.133:5000/v2/_catalog
+curl -XGET http://registry.docker.com:5000/v2/_catalog
 
 ## 查看指定镜像 
-curl -XGET http://192.168.75.133:5000/v2/nginx/tags/list
+curl -XGET http://registry.docker.com:5000/v2/nginx/tags/list
 ```
