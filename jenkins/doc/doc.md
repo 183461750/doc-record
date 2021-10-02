@@ -103,12 +103,12 @@ docker run -itd -p 8280:8080 $JOB_NAME
 # 第三版(swarm)
 # docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
 
-docker stack rm app
+docker service rm app_$JOB_NAME
 
 cd $DOCKER_WORKSPACE/$JOB_NAME
 
 # 编辑Dockerfile文件
-echo "FROM tomcat:8.5" > Dockerfile
+echo "FROM tomcat:8.5.71-jdk8-corretto" > Dockerfile
 echo "MAINTAINER Fa" >> Dockerfile
 echo "RUN rm -rf /usr/local/tomcat/webapps/*" >> Dockerfile
 echo "ADD ./target/*.war /usr/local/tomcat/webapps/" >> Dockerfile
