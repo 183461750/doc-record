@@ -43,3 +43,5 @@ docker rmi $(docker images -f dangling=true -q)
 # 删除所有未被使用的镜像
 docker image prune  -a 
 ```
+## 找镜像的地址
+    https://hub.docker.com/

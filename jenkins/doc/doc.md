@@ -102,6 +102,7 @@ docker run -itd -p 8280:8080 $JOB_NAME
 ```shell
 # 第三版(swarm)
 # docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
+# published: 8280 # todo 映射端口根据实际调整
 
 docker service rm app_$JOB_NAME
 
