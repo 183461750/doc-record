@@ -105,6 +105,8 @@ docker run -itd -p 8280:8080 $JOB_NAME
 # published: 8280 # todo 映射端口根据实际调整
 export app_version='1.0'
 
+docker service rm app_$JOB_NAME
+
 cd $DOCKER_WORKSPACE/$JOB_NAME
 
 # 编辑Dockerfile文件
@@ -145,13 +147,6 @@ networks:
 
 EOF
 
-# 更新或构建镜像
-dockerid=`docker ps -aq -f ancestor=$JOB_NAME:$app_version`
-if  [ -n "$dockerid" ]  ;then
-   docker service update --force app_$JOB_NAME
-else
-   echo 'dockerid is null'
-   docker stack up -c $JOB_NAME.yml app
-fi
+docker stack up -c $JOB_NAME.yml app
 
 ```
