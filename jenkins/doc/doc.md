@@ -103,8 +103,7 @@ docker run -itd -p 8280:8080 $JOB_NAME
 # 第三版(swarm)
 # docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
 # published: 8280 # todo 映射端口根据实际调整
-
-docker service rm app_$JOB_NAME
+export app_version='1.0'
 
 cd $DOCKER_WORKSPACE/$JOB_NAME
 
@@ -114,10 +113,9 @@ echo "MAINTAINER Fa" >> Dockerfile
 echo "RUN rm -rf /usr/local/tomcat/webapps/*" >> Dockerfile
 echo "ADD ./target/*.war /usr/local/tomcat/webapps/" >> Dockerfile
 echo "EXPOSE 8080" >> Dockerfile
-# echo "ENTRYPOINT ["/usr/local/tomcat/bin/catalina.sh","run"]" >> Dockerfile
 
 # 构建镜像
-docker build -t $JOB_NAME:1.0 .
+docker build -t $JOB_NAME:$app_version .
 
 # 删除空镜像
 docker images | awk '{if($1=="<none>")print $3}' | xargs docker rmi 
@@ -127,7 +125,7 @@ tee $JOB_NAME.yml <<-'EOF'
 version: '3.5'
 services:
   $JOB_NAME:
-    image: $JOB_NAME:1.0
+    image: $JOB_NAME:${app_version}
     ports:
       - target: 8080
         published: 8280
@@ -147,6 +145,13 @@ networks:
 
 EOF
 
-docker stack up -c $JOB_NAME.yml app
+# 更新或构建镜像
+dockerid=`docker ps -aq -f ancestor=$JOB_NAME:$app_version`
+if  [ -n "$dockerid" ]  ;then
+   docker service update --force app_$JOB_NAME
+else
+   echo 'dockerid is null'
+   docker stack up -c $JOB_NAME.yml app
+fi
 
 ```
