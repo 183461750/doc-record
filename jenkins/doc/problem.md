@@ -7,6 +7,8 @@
 ## 不能下载maven插件依赖
 - Could not transfer artifact org.apache.maven.plugins:maven-clean-plugin:pom:2.5 from 这类问题的解决方法
 - -Dmaven.wagon.http.ssl.insecure=true -Dmaven.wagon.http.ssl.allowall=true # 在maven_ops中加入该配置即可
+- [参考文章](https://www.cnblogs.com/JavaArchitect/p/14383061.html)
+
 ![img.png](img/不能下载maven插件依赖/img.png)
   
 ---
