@@ -1,0 +1,95 @@
+version: '3.5'
+services:
+  rmqnamesrv:
+    image: foxiswho/rocketmq:4.8.0
+    ports:
+      - target: 9876
+        published: 9876
+        protocol: tcp
+        mode: host
+    volumes:
+      - rmqnamesrv_logs:/opt/logs
+      - rmqnamesrv_store:/opt/store
+    environment:
+      JAVA_OPT_EXT: "-Xms512M -Xmx512M -Xmn128m"
+    command: mqnamesrv
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  rmqbroker:
+    image: foxiswho/rocketmq:4.8.0
+    ports:
+      - target: 10911
+        published: 10911
+        protocol: tcp
+        mode: host
+      # rocke有9876
+      # 非vip通道端口:10911
+      # vip通道端口:10909
+      # 10909是VIP通道对应的端口，在JAVA中的消费者对象或者是生产者对象中关闭VIP通道即可无需开放10909端口
+    volumes:
+      - rmqbroker_logs:/opt/logs
+      - rmqbroker_store:/opt/store
+    command:
+      bash -c "echo 'brokerClusterName = DefaultCluster' > broker.conf  &&
+      echo 'brokerName = broker-a' >> broker.conf  &&
+      echo 'brokerId = 0' >> broker.conf  &&
+      echo 'deleteWhen = 04' >> broker.conf  &&
+      echo 'fileReservedTime = 48' >> broker.conf  &&
+      echo 'brokerRole = ASYNC_MASTER' >> broker.conf  &&
+      echo 'flushDiskType = ASYNC_FLUSH' >> broker.conf  &&
+
+      echo 'brokerIP1=10.0.0.73' >> broker.conf  && # todo brokerIP1 需外网访问，需改为外网地址，运行报错则把该注释去掉
+
+      cat broker.conf &&
+      mqbroker -c broker.conf"
+    environment:
+      NAMESRV_ADDR: "rmqnamesrv:9876"
+      JAVA_OPTS: " -Duser.home=/opt"
+      JAVA_OPT_EXT: "-Xms512M -Xmx512M -Xmn128m"
+    depends_on:
+      - rmqnamesrv
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  rmqconsole:
+    image: styletang/rocketmq-console-ng
+    ports:
+      - target: 8080
+        published: 8080
+        protocol: tcp
+        mode: host
+    environment:
+      JAVA_OPTS: "-Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
+    depends_on:
+      - rmqnamesrv
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  middleware:
+    external: true
+
+volumes:
+  rmqbroker_logs:
+  rmqbroker_store:
+  rmqnamesrv_logs:
+  rmqnamesrv_store:

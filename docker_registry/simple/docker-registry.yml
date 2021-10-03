@@ -1,15 +1,13 @@
 version: '3.5'
+
 services:
-  jenkins:
-    image: jenkinsci/blueocean
-    user: root
+  registry:
+    image: registry
     volumes:
-      - jenkins_home:/var/jenkins_home
-    environment:
-      JAVA_OPTS: "-Dsun.jnu.encoding=UTF-8 -Dfile.encoding=UTF-8"
+      - registry_data:/var/lib/registry
     ports:
-      - target: 8080
-        published: 9090
+      - target: 5000
+        published: 5000
         mode: host
     networks:
       - middleware
@@ -25,4 +23,4 @@ networks:
     external: true
 
 volumes:
-  jenkins_home:
+  registry_data:

@@ -1,7 +1,7 @@
 # dockerRecord
 
 #### 介绍
-记录docker的使用
+记录docker的使用, 通过docker swarm 一键简单部署各种中间件和项目应用
 
 #### 软件架构
 软件架构说明
