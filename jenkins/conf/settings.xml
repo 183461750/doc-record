@@ -7,20 +7,33 @@
 
     <!-- todo 需要改的地方 -->
     <localRepository>/var/jenkins_home/data/maven/repo</localRepository>
-
-    <mirrors>
-        <mirror>
-            <id>aliyunmaven</id>
-            <mirrorOf>*</mirrorOf>
-            <name>阿里云公共仓库</name>
-            <url>https://maven.aliyun.com/repository/public</url>
-        </mirror>
-    </mirrors>
+    <!--
+        <mirrors>
+            <mirror>
+                <id>aliyunmaven</id>
+                <mirrorOf>*</mirrorOf>
+                <name>阿里云公共仓库</name>
+                <url>https://maven.aliyun.com/repository/public</url>
+            </mirror>
+        </mirrors>
+         -->
 
     <profiles>
         <profile>
             <id>ali_maven</id>
             <repositories>
+
+                <repository>
+                    <id>public</id>
+                    <url>https://maven.aliyun.com/repository/public</url>
+                    <releases>
+                        <enabled>true</enabled>
+                    </releases>
+                    <snapshots>
+                        <enabled>true</enabled>
+                    </snapshots>
+                </repository>
+
                 <repository>
                     <id>spring</id>
                     <url>https://maven.aliyun.com/repository/spring</url>
@@ -41,6 +54,11 @@
                     <snapshots>
                         <enabled>true</enabled>
                     </snapshots>
+                </repository>
+
+                <repository>
+                    <id>getui-nexus</id>
+                    <url>http://mvn.gt.getui.com/nexus/content/repositories/releases/</url>
                 </repository>
             </repositories>
         </profile>
