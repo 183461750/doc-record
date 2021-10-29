@@ -163,8 +163,9 @@ cd $DOCKER_WORKSPACE/$JOB_NAME
 # 编辑Dockerfile文件
 echo "FROM tomcat:8.5.71-jdk8-corretto" > Dockerfile
 echo "MAINTAINER Fa" >> Dockerfile
-echo "RUN rm -rf /usr/local/tomcat/webapps/*" >> Dockerfile
-echo "ADD ./target/*.war /usr/local/tomcat/webapps/" >> Dockerfile
+echo "WORKDIR /usr/local/tomcat" >> Dockerfile
+echo "RUN rm -rf webapps/*" >> Dockerfile
+echo "ADD ./target/*$JOB_NAME webapps/$JOB_NAME" >> Dockerfile
 echo "EXPOSE 8080" >> Dockerfile
 
 # 构建镜像
