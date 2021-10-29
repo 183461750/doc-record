@@ -4,8 +4,8 @@ services:
     image: "docker.io/mysql:latest"
     environment:
       MYSQL_ROOT_PASSWORD: "root"
-      MYSQL_USER: 'root'
-      MYSQL_PASS: 'root'
+      MYSQL_USER: 'root' # 用于配置普通用户
+      MYSQL_PASS: 'root' # 用于配置普通用户
     ports:
       - "3306:3306"
     volumes:
