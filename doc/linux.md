@@ -114,3 +114,11 @@ yum install docker-ce
 # 查看服务状态，一秒一次，启动之后可通过IP：端口访问界面
 watch -n 1 docker stack services hadoop
 ```
+
+## 打印信息
+```shell
+# 不打印正常信息，打印错误信息（/dev/null 代表空设备）
+xargs docker rmi > /dev/null
+# 正常和错误信息都不打印
+xargs docker rmi &> /dev/null
+```
