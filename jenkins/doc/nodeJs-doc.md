@@ -1,23 +1,27 @@
+## 安装插件
+    nodeJs(14.16.0)
+![img.png](img/构建nodeJs项目/img_2.png)
+## 配置步骤
+![img.png](img/构建nodeJs项目/img.png)
+![img_1.png](img/构建nodeJs项目/img_1.png)
+## 执行shell（在jenkins里执行）
 ```shell
-# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
-# nvm install 14.16.0
-# npm install -g nrm
-# nrm ls
-# nrm use taobao
-# npm config ls
-# rm -rf ./node_modules
-# npm install
-# npm run build:test
 
-export app_version='1.0'
+pwd
 
-cd $DOCKER_WORKSPACE/$JOB_NAME
+# 构建项目
+npm run build:test
 
 # 删除除 node_modules 以外的所有内容
 ls | grep -v 'node_modules\|1.txt' | xargs  rm -rf
 
-# 构建项目
-npm run build:test
+```
+## Send files or execute commands over SSH(通过ssh远程执行shell)
+```shell
+
+export app_version='1.0'
+
+cd $DOCKER_WORKSPACE/$JOB_NAME
 
 # 编辑Dockerfile文件
 echo "FROM nginx" > Dockerfile

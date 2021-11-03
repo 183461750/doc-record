@@ -128,3 +128,16 @@ xargs docker rmi &> /dev/null
 # 排除多个文件或文件夹
 ls | grep -v 'a\|b'
 ```
+## nodejs安装
+```shell
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+# nvm install 14.16.0
+# npm install -g nrm
+# nrm ls
+# nrm use taobao
+# npm config ls
+# rm -rf ./node_modules
+# npm install
+# npm run build:test
+
+```
