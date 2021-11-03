@@ -14,8 +14,8 @@ npm install
 # 构建项目
 npm run build:test
 
-# 删除除 node_modules 以外的所有内容
-ls | grep -v 'node_modules\|1.txt' | xargs  rm -rf
+# 删除除 node_modules和dist 以外的所有内容
+ls | grep -v 'node_modules\|dist' | xargs  rm -rf
 
 ```
 ## Send files or execute commands over SSH(通过ssh远程执行shell)
@@ -67,5 +67,8 @@ networks:
 EOF
 
 docker stack up -c $JOB_NAME.yml app
+
+# 删除除 node_modules 以外的所有内容
+ls | grep -v 'node_modules' | xargs  rm -rf
 
 ```
