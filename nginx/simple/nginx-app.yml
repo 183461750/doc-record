@@ -1,0 +1,37 @@
+version: "3.5"
+
+services:
+
+  nginx:
+    image: nginx
+    environment:
+      TZ: "Asia/Shanghai"
+      SUB_DOMAIN_WAP: "act.*"
+      SUB_DOMAIN_WAP_API: "act-api.* s.*"
+      SUB_DOMAIN_WEB: "maclient.*"
+      SUB_DOMAIN_WEB_API: "ma-api.*"
+    networks:
+      middleware:
+    ports:
+      - target: 80
+        published: 80
+        mode: host
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - "/etc/localtime:/etc/localtime"
+      - "nginx:/var/log/"
+      - "./nginx/conf.d:/etc/nginx/conf.d"
+      - "./nginx/cors.conf:/etc/nginx/cors.conf"
+      - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+
+volumes:
+  nginx:
+
+networks:
+  middleware:
+    external: true
