@@ -1,16 +1,31 @@
 ```shell
+# curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+# nvm install 14.16.0
+# npm install -g nrm
+# nrm ls
+# nrm use taobao
+# npm config ls
+# rm -rf ./node_modules
+# npm install
+# npm run build:test
 
 export app_version='1.0'
 
 cd $DOCKER_WORKSPACE/$JOB_NAME
 
+# 删除除 node_modules 以外的所有内容
+ls | grep -v 'node_modules\|1.txt' | xargs  rm -rf
+
+# 构建项目
+npm run build:test
+
 # 编辑Dockerfile文件
-echo "FROM node" > Dockerfile
+echo "FROM nginx" > Dockerfile
 echo "MAINTAINER Fa" >> Dockerfile
-echo "RUN mkdir -p /home/project" >> Dockerfile
-echo "WORKDIR /home/project" >> Dockerfile
-echo "EXPOSE 3000" >> Dockerfile
-echo "CMD npm install --registry=https://registry.npm.taobao.org && npm start" >> Dockerfile
+echo "WORKDIR /usr/share/nginx/html" >> Dockerfile
+echo "RUN rm -rf *" >> Dockerfile
+echo "ADD ./dist ." >> Dockerfile
+echo "EXPOSE 80" >> Dockerfile
 
 # 构建镜像
 docker build -t $JOB_NAME:$app_version .
@@ -29,11 +44,9 @@ services:
   $JOB_NAME:
     image: registry.docker.com:5000/$JOB_NAME:${app_version}
     ports:
-      - target: 3000
+      - target: 80
         published: 3230
         mode: host
-    volumes:
-      - "/var/lib/docker/volumes/jks_jenkins_home/_data/workspace/$JOB_NAME:/home/project"
     networks:
       - middleware
     deploy:

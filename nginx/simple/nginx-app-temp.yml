@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  nginx:
+    image: nginx
+    networks:
+      middleware:
+    ports:
+      - "80:80"
+    deploy:
+      mode: replicated
+      replicas: 1
+    volumes:
+      - "/etc/localtime:/etc/localtime"
+      - "/var/lib/docker/volumes/jks_jenkins_home/_data/workspace/web-h5-demo/dist:/usr/share/nginx/html/web-h5"
+      - "nginx:/var/log/"
+volumes:
+  nginx:
+networks:
+  middleware:
+    external: true

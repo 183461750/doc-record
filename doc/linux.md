@@ -122,3 +122,9 @@ xargs docker rmi > /dev/null
 # 正常和错误信息都不打印
 xargs docker rmi &> /dev/null
 ```
+
+## 打印文件或文件夹列表时，排除文件或文件夹
+```shell
+# 排除多个文件或文件夹
+ls | grep -v 'a\|b'
+```
