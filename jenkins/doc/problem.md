@@ -17,3 +17,8 @@
 ## vue项目，刷新页面后，显示404的问题
 - try_files $uri $uri/ /index.html; # 用于解决刷新页面后，显示404的问题
 - [参考文章](https://www.cnblogs.com/caijinghong/p/14693820.html)
+
+## npm镜像源问题
+- https://registry.npmmirror.com/(淘宝镜像源)
+- https://registry.npm.taobao.org(淘宝cnpm镜像源)
+- [参考文章](https://cloud.tencent.com/developer/article/1372949)
