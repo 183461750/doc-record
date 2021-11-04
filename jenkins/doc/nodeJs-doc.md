@@ -25,6 +25,31 @@ export app_version='1.0'
 
 cd $DOCKER_WORKSPACE/$JOB_NAME
 
+mkdir -p ./nginx/conf.d/
+
+# 添加default.conf文件
+tee ./nginx/conf.d/default.conf <<-'EOF'
+server {
+    listen       80;
+    listen  [::]:80;
+    server_name  localhost;
+
+    #access_log  /var/log/nginx/host.access.log  main;
+
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+        try_files $uri $uri/ /index.html; # 用于解决刷新页面后，显示404的问题
+    }
+
+    error_page   500 502 503 504  /50x.html;
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+}
+EOF
+
 # 编辑Dockerfile文件
 echo "FROM nginx" > Dockerfile
 echo "MAINTAINER Fa" >> Dockerfile
@@ -34,7 +59,7 @@ echo "ADD ./dist ." >> Dockerfile
 echo "EXPOSE 80" >> Dockerfile
 
 # 构建镜像
-docker build -t $JOB_NAME:$app_version .
+docker build --no-cache -t $JOB_NAME:$app_version .
 
 # 上传镜像到私服
 docker tag $JOB_NAME:$app_version registry.docker.com:5000/$JOB_NAME:$app_version
