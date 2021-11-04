@@ -42,11 +42,6 @@ server {
         try_files $uri $uri/ /index.html; # 用于解决刷新页面后，显示404的问题
     }
 
-    error_page   500 502 503 504  /50x.html;
-    location = /50x.html {
-        root   /usr/share/nginx/html;
-    }
-
 }
 EOF
 
