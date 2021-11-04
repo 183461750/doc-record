@@ -13,3 +13,7 @@
 ![img.png](img/不能下载maven插件依赖/img.png)
   
 ---
+
+## vue项目，刷新页面后，显示404的问题
+- try_files $uri $uri/ /index.html; # 用于解决刷新页面后，显示404的问题
+- [参考文章](https://www.cnblogs.com/caijinghong/p/14693820.html)
