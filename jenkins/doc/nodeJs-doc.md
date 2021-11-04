@@ -10,7 +10,7 @@
 pwd
 
 # 安装依赖(非必须)
-npm install
+npm --registry https://registry.npm.taobao.org install
 # 构建项目
 npm run build:test
 
