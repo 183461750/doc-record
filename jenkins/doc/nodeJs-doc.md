@@ -51,6 +51,7 @@ echo "MAINTAINER Fa" >> Dockerfile
 echo "WORKDIR /usr/share/nginx/html" >> Dockerfile
 echo "RUN rm -rf *" >> Dockerfile
 echo "ADD ./dist ." >> Dockerfile
+echo "ADD ./nginx/conf.d/default.conf /etc/nginx/conf.d/" >> Dockerfile
 echo "EXPOSE 80" >> Dockerfile
 
 # 构建镜像
