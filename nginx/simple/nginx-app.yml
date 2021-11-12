@@ -10,6 +10,11 @@ services:
       SUB_DOMAIN_WAP_API: "act-api.* s.*"
       SUB_DOMAIN_WEB: "maclient.*"
       SUB_DOMAIN_WEB_API: "ma-api.*"
+    command:
+      bash -c "mkdir -p /usr/lib/nginx/proxy_tmp && \
+      mkdir -p /usr/lib/nginx/proxy_cache/imgcache && \
+      chown -R nginx:nginx /usr/lib/nginx/proxy* && \
+      /docker-entrypoint.sh nginx -g 'daemon off;'"
     networks:
       middleware:
     ports:
