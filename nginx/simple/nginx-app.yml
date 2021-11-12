@@ -39,7 +39,7 @@ services:
       - "./nginx/conf.d:/etc/nginx/conf.d"
       - "./nginx/cors.conf:/etc/nginx/cors.conf"
       - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
-      - /home/data/file:/usr/lib/nginx/proxy_cache/imgcache
+      - /home/data/file:/home/data/uploads
 
 volumes:
   nginx:
