@@ -3,7 +3,7 @@ version: "3.5"
 services:
 
   nginx:
-    image: nginx
+    image: nginx:1.0  # 使用Dockerfile构建的镜像，(docker build -t nginx:1.0 .)
     environment:
       TZ: "Asia/Shanghai"
       SUB_DOMAIN_WAP: "act.*"
@@ -39,6 +39,7 @@ services:
       - "./nginx/conf.d:/etc/nginx/conf.d"
       - "./nginx/cors.conf:/etc/nginx/cors.conf"
       - "./nginx/nginx.conf:/etc/nginx/nginx.conf"
+      - /home/data/file:/usr/lib/nginx/proxy_cache/imgcache
 
 volumes:
   nginx:
