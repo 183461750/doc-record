@@ -141,3 +141,11 @@ ls | grep -v 'a\|b'
 # npm run build:test
 
 ```
+
+## docker访问权限问题
+```shell
+sudo groupadd docker          #添加docker用户组
+sudo gpasswd -a $USER docker  #将当前用户添加至docker用户组
+newgrp docker                 #更新docker用户组
+
+```
