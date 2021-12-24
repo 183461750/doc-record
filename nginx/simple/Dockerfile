@@ -1,4 +1,4 @@
-FROM nginx
+FROM nginx:1.20
 
 EXPOSE 10000
 EXPOSE 10001
