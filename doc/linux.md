@@ -149,3 +149,9 @@ sudo gpasswd -a $USER docker  #将当前用户添加至docker用户组
 newgrp docker                 #更新docker用户组
 
 ```
+
+## 查看端口占用
+``` shell
+# 查看53端口的占用情况
+sudo netstat -anlp | grep -w LISTEN | grep 53
+```
