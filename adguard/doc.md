@@ -29,3 +29,15 @@ $ crontab -e
 - 在 iOS 上使用 DNSCloak 設定 On demand 自動切換
 
     [参考文章](https://www.jkg.tw/p2660/)
+
+## 封锁清单
+- https://easylist-downloads.adblockplus.org/easylistchina.txt
+
+## DNS服务器
+- 114.114.114.114
+- 223.5.5.5
+- 223.6.6.6
+- 2400:3200::1
+- 2400:3200:baba::1
+- https://dns.alidns.com/dns-query
+- tls://dns.alidns.com
