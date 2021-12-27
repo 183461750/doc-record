@@ -1,0 +1,35 @@
+groups:
+  - name: hostStatsAlert
+    rules:
+      - alert: 服务器CPU告警
+        expr: (100 - avg (rate(node_cpu_seconds_total{job="agent",mode="idle"}[2m])) by (instance) * 100) > 8
+        for: 1m
+        labels:
+          severity: 二级
+        annotations:
+          summary: "服务器实例：{{ $labels.instance }} CPU使用率过高"
+          description: "服务器 {{ $labels.instance }} CPU使用率超过8% (当前值为: {{ $value }})"
+          username: "lcb"
+          link: https://grafana.llnovel.com/d/5rJJbzz7k/fu-wu-qi-xing-neng-jian-kong?orgId=1
+
+      - alert: 服务器内存告警
+        expr: ((node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes)/node_memory_MemTotal_bytes)*100 > 67
+        for: 1m
+        labels:
+          severity: 二级
+        annotations:
+          summary: "服务器实例：{{ $labels.instance }} 内存使用率过高"
+          description: "服务器 {{ $labels.instance }} 内存使用率超过 67% (当前值为: {{ $value }})"
+          username: "lcb"
+          link: https://grafana.llnovel.com/d/5rJJbzz7k/fu-wu-qi-xing-neng-jian-kong?orgId=1
+
+      - alert: 服务器磁盘告警
+        expr: (node_filesystem_size_bytes{mountpoint="/"} - node_filesystem_free_bytes{mountpoint="/"}) / node_filesystem_size_bytes{mountpoint="/"} * 100 > 68.5
+        for: 1m
+        labels:
+          severity: 二级
+        annotations:
+          summary: "服务器实例：{{ $labels.instance }} 分区使用率过高"
+          description: "服务器 {{ $labels.instance }} 磁盘分区使用率超过 68.5% (当前值为: {{ $value }})"
+          username: "lcb"
+          link: https://grafana.llnovel.com/d/5rJJbzz7k/fu-wu-qi-xing-neng-jian-kong?orgId=1
