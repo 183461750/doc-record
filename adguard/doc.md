@@ -32,6 +32,8 @@ $ crontab -e
 
 ## 封锁清单
 - https://easylist-downloads.adblockplus.org/easylistchina.txt
+- https://anti-ad.net/easylist.txt
+- [参考文章](https://www.isharepc.com/27230.html)
 
 ## DNS服务器
 - 114.114.114.114
