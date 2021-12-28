@@ -2,13 +2,13 @@ version: "3.5"
 
 services:
 
-  grafana:
+  grafana: # 监控的web-ui好用的可视化组件
     image: grafana/grafana
     networks:
       middleware:
     ports:
       - target: 3000
-        published: 3001
+        published: 3000
         protocol: tcp
         mode: host
     deploy:
@@ -17,12 +17,9 @@ services:
         parallelism: 1
       restart_policy:
         condition: on-failure
-    volumes:
-      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
-      - grafana_log:/var/log/grafana
 
-  prometheus:
-    image: prom/prometheus:v2.27.1
+  prometheus: # 核心监控组件
+    image: prom/prometheus
     networks:
       middleware:
     ports:
@@ -38,37 +35,9 @@ services:
         condition: on-failure
     volumes:
       - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
-      - ./prometheus/rules:/etc/prometheus/rules
 
-  influxdb:
-    image: influxdb:1.8
-    networks:
-      middleware:
-    ports:
-      - target: 8086
-        published: 8086
-        protocol: tcp
-        mode: host
-    environment:
-      - INFLUXDB_DB=prometheus
-      - INFLUXDB_ADMIN_ENABLED=true
-      - INFLUXDB_ADMIN_USER=admin
-      - INFLUXDB_ADMIN_PASSWORD=admin
-      - INFLUXDB_USER=root
-      - INFLUXDB_USER_PASSWORD=root
-    command: -config /etc/influxdb/influxdb.conf
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-      restart_policy:
-        condition: on-failure
-    volumes:
-      - ./influxdb/conf/influxdb.conf:/etc/influxdb/influxdb.conf
-      - ./influxdb:/var/lib/influxdb
-
-  alertmanager:
-    image: docker.io/prom/alertmanager:latest
+  alertmanager: # 告警组件（目前暂未用到)
+    image: prom/alertmanager
     networks:
       middleware:
     ports:
@@ -82,10 +51,41 @@ services:
         parallelism: 1
       restart_policy:
         condition: on-failure
+
+  node-exporter: # 用户获取服务器的指标
+    image: quay.io/prometheus/node-exporter
+    networks:
+      middleware:
+    ports:
+      - target: 9100
+        published: 9100
+        protocol: tcp
+        mode: host
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  cadvisor: # 用于获取docker容器的指标
+    image: google/cadvisor:latest
+    ports:
+      - target: 8899
+        published: 8899
+        protocol: tcp
+        mode: host
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
     volumes:
-      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
-      - ./alertmanager/storage:/data/alertmanager/storage
-      - ./alertmanager/template:/etc/alertmanager/template
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
 
 volumes:
   grafana_log:

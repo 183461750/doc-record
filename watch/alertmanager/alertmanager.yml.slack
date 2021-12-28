@@ -1,0 +1,20 @@
+global:
+  slack_api_url: https://xxxxxxxx
+templates:
+  - './template/*.tmpl'
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 1m
+  receiver: 'slack'
+
+receivers:
+- name: 'slack'
+  slack_configs:
+    - channel: '#告警'
+      send_resolved: true
+      text: "{{ range .Alerts }} {{ .Annotations.description}}\n {{end}} @{{ .CommonAnnotations.username}} <{{.CommonAnnotations.link}}| click here>"
+      title: "{{.CommonAnnotations.summary}}"
+      title_link: "{{.CommonAnnotations.link}}"
