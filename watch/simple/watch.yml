@@ -73,8 +73,8 @@ services:
     networks:
       middleware:
     ports:
-      - target: 8899
-        published: 8899
+      - target: 8080
+        published: 8080
         protocol: tcp
         mode: host
     deploy:
@@ -88,6 +88,7 @@ services:
       - /var/run:/var/run:rw
       - /sys:/sys:ro
       - /var/lib/docker/:/var/lib/docker:ro
+      - /dev/disk/:/dev/disk:ro
 
 volumes:
   grafana_log:
