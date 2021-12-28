@@ -45,3 +45,18 @@ docker image prune  -a
 ```
 ## 找镜像的地址
     https://hub.docker.com/
+
+## 修改宿主机的docker配置，让其可以远程访问
+```shell
+# 默认,我们的linux的 docker ,IDEA 是不可以访问的,所以需要修改下配置,让我们的IDEA 可以访问
+vi /lib/systemd/system/docker.service
+# 在 其中的ExecStart=后添加配置
+-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
+
+# 刷新配置，重启服务
+systemctl daemon‐reload  # 刷新服务
+systemctl restart docker # 重新启动docker
+docker start registry  # 启动registry
+
+```
+
