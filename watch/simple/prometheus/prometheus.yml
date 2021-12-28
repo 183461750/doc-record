@@ -1,6 +1,6 @@
 global:
-  scrape_interval:     15s
-  evaluation_interval: 15s
+  scrape_interval:     15s # Prometheus以scrape_interval规则周期性从监控目标上收集数据，然后将数据存储到本地存储上。
+  evaluation_interval: 15s # Prometheus以evaluation_interval规则周期性对告警规则做计算，然后更新告警状态。
 scrape_configs:
   - job_name: 'prometheus'
     static_configs:
