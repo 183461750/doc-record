@@ -70,6 +70,8 @@ services:
 
   cadvisor: # 用于获取docker容器的指标
     image: google/cadvisor:latest
+    networks:
+      middleware:
     ports:
       - target: 8899
         published: 8899
