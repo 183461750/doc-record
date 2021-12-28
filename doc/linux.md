@@ -57,6 +57,8 @@ firewall-cmd --get-default-zone
 firewall-cmd --zone=public --add-service=docker --permanent
 # 重新加载
 firewall-cmd --reload
+# 查询端口
+firewall-cmd --service=docker --get-ports --permanent
 # 参考链接
 https://my.oschina.net/u/4560825/blog/4314028
 ```

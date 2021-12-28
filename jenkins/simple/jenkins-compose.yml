@@ -5,6 +5,7 @@ services:
     user: root
     volumes:
       - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock # 使用到docker插件时，可能需要
     environment:
       JAVA_OPTS: "-Dsun.jnu.encoding=UTF-8 -Dfile.encoding=UTF-8"
     ports:
