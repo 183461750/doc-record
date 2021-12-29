@@ -1,0 +1,123 @@
+## maven使用dockerfile插件构建项目
+- 参考项目[https://gitee.com/LFa/demo-test.git]
+- Dockerfile文件配置
+```Dockerfile
+#FROM openjdk:8-jdk-alpine
+FROM hub.c.163.com/dwyane/openjdk:8
+VOLUME /tmp
+WORKDIR /workdir
+ARG JAR_FILE
+ARG APP_PORT
+ADD target/${JAR_FILE} app.jar
+#ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
+ENTRYPOINT ["java","-jar","app.jar"]
+EXPOSE ${APP_PORT}
+```
+- 执行mvn clean package > 访问私有仓库看构建情况: http://registry.docker.com:5000/v2/_catalog
+- Jenkins配置
+- 创建maven项目
+- Build[Goals and options -> clean install -Dmaven.test.skip=true]
+- Post Steps[Run only if build succeeds]
+- add post-build step[Send files or execute commands over SSH]
+```shell
+
+cd $DOCKER_WORKSPACE/$JOB_NAME
+
+export app_version='1.0'
+
+# 编辑Dockerfile文件
+tee Dockerfile <<-'EOF'
+
+FROM hub.c.163.com/dwyane/openjdk:8
+WORKDIR /workdir
+ADD target/$JOB_NAME.jar app.jar
+ENTRYPOINT ["java","-jar","app.jar"]
+EXPOSE 8080
+
+EOF
+
+# 构建镜像
+docker build -t $JOB_NAME:$app_version .
+
+# 上传镜像到私服
+docker tag $JOB_NAME:$app_version registry.docker.com:5000/$JOB_NAME:$app_version
+docker push registry.docker.com:5000/$JOB_NAME:$app_version
+
+# 编辑stack yml文件
+tee $JOB_NAME.yml <<-'EOF'
+version: '3.5'
+services:
+  $JOB_NAME:
+    image: registry.docker.com:5000/$JOB_NAME:${app_version}
+    ports:
+      - target: 8880
+        published: 8880
+        mode: host
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  middleware:
+    external: true
+
+EOF
+
+# 启动app容器 
+docker stack up -c $JOB_NAME.yml app
+
+```
+## 开放docker远程访问
+- 编辑/etc/sysconfig/docker文件，我安装的docker ce，没有发现这个文件，如果有，则：
+```shell
+sudo vi /etc/sysconfig/docker
+
+//添加下面这行
+other_args="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
+
+//保存
+:wq!
+ 
+//重启docker服务
+service docker restart
+```
+- 在windows系统环境变量中新建DOCKER_HOST值为tcp://{docker_ip}:2375，将这里的{docker_ip}，替换为docker所在的centos服务器IP或主机名（用主机名，需要windows配置hosts)，可能需要重启系统。
+- 修改/usr/lib/systemd/system/docker.service文件
+```shell
+sudo vi /usr/lib/systemd/system/docker.service
+//在ExecStart这一行后面加上（这里就写4个0，别改成自己的ip） 
+-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
+ 
+改完后效果如下
+ExecStart=/usr/bin/dockerd -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
+ 
+:wq!
+保存退出
+
+重新加载配置文件 systemctl daemon-reload
+重启docker ：service docker restart
+这样才可以是/etc/default/docker中的配置项生效
+```
+- 我们首先查询docker所在虚拟机在监听哪些端口，使用命令：
+```shell
+netstat -tlunp
+# 显示
+# tcp6       0      0 :::2375                 :::*                    LISTEN      -
+
+# 2375端口，已在监听。
+# 那很有可能时防火墙的问题，在CentOS7中，默认会打开firewalld防火墙，如果防火墙打开后，默认情况下只会监听在22号端口，也就是说主机对外暴露的端口只有22。
+# 使用如下命令：
+sudo iptables-save
+# 查看防火墙暴漏的对外端口，发现2373端口没有对位暴漏。
+# 需要增加2375端口对外暴漏，使用如下命令：
+# 添加端口
+sudo firewall-cmd --zone=public --add-port=2375/tcp --permanent
+# 重载防火墙
+sudo firewall-cmd --reload
+# 看到sucess字样后，再使用iptables-save命令查看端口，可以看到，对外放开的端口增加了2375端口。
+```
