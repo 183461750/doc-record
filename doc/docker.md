@@ -50,7 +50,7 @@ docker image prune  -a
 ```shell
 # 默认,我们的linux的 docker ,IDEA 是不可以访问的,所以需要修改下配置,让我们的IDEA 可以访问
 vi /lib/systemd/system/docker.service
-# 在 其中的ExecStart=后添加配置
+# 在 其中的ExecStart=后添加配置 > tip: 2375是为Docker开启的远程访问API的端口
 -H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock
 
 # 刷新配置，重启服务

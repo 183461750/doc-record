@@ -157,3 +157,8 @@ newgrp docker                 #更新docker用户组
 # 查看53端口的占用情况
 sudo netstat -anlp | grep -w LISTEN | grep 53
 ```
+
+## 定义环境变量
+```shell
+export DOCKER_HOST=tcp://localhost:2375
+```
