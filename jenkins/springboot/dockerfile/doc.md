@@ -1,4 +1,5 @@
 ## maven使用dockerfile插件构建项目
+- 参考项目[https://gitee.com/LFa/demo-test.git]
 - springboot pom.xml配置
 ```xml
     <properties>
@@ -32,7 +33,7 @@
             <!-- 注意，repository的格式必须为：<username>/<repository_name>
              username就是登录Docker Hub的用户名，例如我的用户名是longyonggang。
             repository_name就是上一步在Docker Hub上创建的repository名字。 -->
-            <repository>${docker.image.prefix}/app/${project.build.finalName}</repository>
+            <repository>${docker.image.prefix}/${project.build.finalName}</repository>
             <tag>${project.version}</tag>
             <buildArgs>
                 <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
