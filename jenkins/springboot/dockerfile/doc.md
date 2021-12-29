@@ -36,7 +36,7 @@
             <tag>${project.version}</tag>
             <buildArgs>
                 <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
-                <APP_PORT>${project.build.finalName}.jar</APP_PORT>
+                <APP_PORT>${appPort}</APP_PORT>
             </buildArgs>
         </configuration>
     </plugin>
