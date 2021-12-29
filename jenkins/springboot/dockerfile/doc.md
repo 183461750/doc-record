@@ -68,7 +68,47 @@ ENTRYPOINT ["java","-jar","app.jar"]
 EXPOSE ${APP_PORT}
 ```
 - 执行mvn clean package > 访问私有仓库看构建情况: http://registry.docker.com:5000/v2/
+- Jenkins配置
+- 创建maven项目
+- Build[Goals and options -> clean install -Dmaven.test.skip=true]
+- Post Steps[Run only if build succeeds]
+- add post-build step[Send files or execute commands over SSH]
+```shell
 
+cd $DOCKER_WORKSPACE/$JOB_NAME
+
+export app_version='1.0'
+
+# 编辑stack yml文件
+tee $JOB_NAME.yml <<-'EOF'
+version: '3.5'
+services:
+  $JOB_NAME:
+    image: registry.docker.com:5000/$JOB_NAME:${app_version}
+    ports:
+      - target: 8880
+        published: 8880
+        mode: host
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  middleware:
+    external: true
+
+EOF
+
+# 启动app容器 
+docker stack up -c $JOB_NAME.yml app
+
+```
+## 开放docker远程访问
 - 编辑/etc/sysconfig/docker文件，我安装的docker ce，没有发现这个文件，如果有，则：
 ```shell
 sudo vi /etc/sysconfig/docker
