@@ -67,7 +67,7 @@ ADD target/${JAR_FILE} app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
 EXPOSE ${APP_PORT}
 ```
-- 执行mvn clean package > 访问私有仓库看构建情况: http://registry.docker.com:5000/v2/
+- 执行mvn clean package > 访问私有仓库看构建情况: http://registry.docker.com:5000/v2/_catalog
 - Jenkins配置
 - 创建maven项目
 - Build[Goals and options -> clean install -Dmaven.test.skip=true]
