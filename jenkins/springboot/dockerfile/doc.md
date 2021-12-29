@@ -12,7 +12,9 @@
         <docker.image.prefix>registry.docker.com:5000</docker.image.prefix>
         <appPort>8880</appPort>
     </properties>
-<!-- build -> plugins -->
+    <!-- build -->
+    <finalName>${project.name}</finalName>
+    <!-- build -> plugins -->
     <plugin>
         <groupId>com.spotify</groupId>
         <artifactId>dockerfile-maven-plugin</artifactId>
