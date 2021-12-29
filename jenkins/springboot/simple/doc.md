@@ -1,20 +1,7 @@
 ## maven使用dockerfile插件构建项目
 - 参考项目[https://gitee.com/LFa/demo-test.git]
-- Dockerfile文件配置
-```Dockerfile
-#FROM openjdk:8-jdk-alpine
-FROM hub.c.163.com/dwyane/openjdk:8
-VOLUME /tmp
-WORKDIR /workdir
-ARG JAR_FILE
-ARG APP_PORT
-ADD target/${JAR_FILE} app.jar
-#ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","app.jar"]
-ENTRYPOINT ["java","-jar","app.jar"]
-EXPOSE ${APP_PORT}
-```
-- 执行mvn clean package > 访问私有仓库看构建情况: http://registry.docker.com:5000/v2/_catalog
-- Jenkins配置
+  
+#### Jenkins配置
 - 创建maven项目
 - Build[Goals and options -> clean install -Dmaven.test.skip=true]
 - Post Steps[Run only if build succeeds]
