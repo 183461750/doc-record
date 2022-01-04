@@ -171,6 +171,8 @@ minute   hour   day   month   week   command
 crontab -e
 # 查看任务列表
 crontab -l
+# 删除任务
+crontab -r
 # 查看已执行过的任务
 tail -f /var/log/cron
 ```
