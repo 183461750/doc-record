@@ -1,0 +1,33 @@
+version: "3.5"
+
+services:
+
+  jellyfin:
+    image: jellyfin/jellyfin
+    ports:
+      - target: 8096
+        published: 8096
+        mode: host
+#    environment:
+#      - JELLYFIN_PublishedServerUrl=http://example.com
+    volumes:
+      - jellyfin_config:/config
+      - jellyfin_cache:/cache
+      - jellyfin_media:/media
+    networks:
+      middleware:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  jellyfin_config:
+  jellyfin_cache:
+  jellyfin_media:
+
+networks:
+  middleware:
+    external: true
