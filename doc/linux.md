@@ -162,3 +162,15 @@ sudo netstat -anlp | grep -w LISTEN | grep 53
 ```shell
 export DOCKER_HOST=tcp://localhost:2375
 ```
+
+## crontab使用
+```shell
+# 格式
+minute   hour   day   month   week   command
+# 添加任务
+crontab -e
+# 查看任务列表
+crontab -l
+# 查看已执行过的任务
+tail -f /var/log/cron
+```
