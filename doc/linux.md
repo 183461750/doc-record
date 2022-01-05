@@ -176,3 +176,49 @@ crontab -r
 # 查看已执行过的任务
 tail -f /var/log/cron
 ```
+
+## 设置网络时间
+```shell
+# 查看当前时间
+date "+%Y-%m-%d %H:%M:%S"
+# 查看时区
+date "+%Z"
+# 使用cat /etc/sysconfig/clock查看当前时区
+cat /etc/sysconfig/clock
+# 设置时区
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+
+# 查看硬件时间
+hwclock
+# 同步硬件时间
+hwclock -w
+# 同步系统时间
+clock -w
+
+# ntpdate
+# 即使是硬件时间也会和网络时间有差异，想要和网络时间完全一致，我们就需要获取网络时间更新本地时间。
+# 安装工具： 
+yum -y install ntp ntpdate
+# 设置系统时间与网络时间同步：
+ntpdate cn.pool.ntp.org
+# 将系统时间写入硬件时间：
+hwclock –systohc
+
+# 同步时间服务器
+ntpdate -u ntp.api.bz
+# ntp常用服务器：
+# 中国国家授时中心：210.72.145.44
+# NTP服务器(上海) ：ntp.api.bz
+# 美国： time.nist.gov
+# 复旦： ntp.fudan.edu.cn
+# 微软公司授时主机(美国) ：time.windows.com
+# 北京邮电大学 : s1a.time.edu.cn
+# 清华大学 : s1b.time.edu.cn
+# 北京大学 : s1c.time.edu.cn
+# 台警大授时中心(台湾)：asia.pool.ntp.org
+
+# simple
+cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+ntpdate -u ntp.api.bz
+hwclock -w
+```
