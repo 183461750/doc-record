@@ -3,23 +3,6 @@
 
 cd $DOCKER_WORKSPACE/$JOB_NAME
 
-# 创建
-mkdir -p ./mongo/initdb.d
-tee ./mongo/initdb.d/setup.js <<-'EOF'
-
-db.createUser(
-    {
-        user: "user1",
-        pwd: "user1",
-        roles: [
-            { role: "dbAdmin", db: "yapi" },
-            { role: "readWrite", db: "yapi" }
-        ]
-    }
-);
-
-EOF
-
 # 构建mongo.yml
 tee mongo.yml <<-'EOF'
 
@@ -35,7 +18,6 @@ services:
       - MONGO_INITDB_ROOT_PASSWORD=root
     volumes:
       - mongo_data_db:/data/db
-      - ./mongo/initdb.d:/docker-entrypoint-initdb.d
     networks:
       middleware:
     deploy:
@@ -101,8 +83,8 @@ tee config.json <<-'EOF'
     "servername": "mongo",
     "DATABASE": "yapi",
     "port": 27017,
-    "user": "user1",
-    "pass": "user1",
+    "user": "root",
+    "pass": "root",
     "authSource": ""
   }
 }
