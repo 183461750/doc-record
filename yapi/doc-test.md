@@ -3,42 +3,45 @@
 
 cd $DOCKER_WORKSPACE/$JOB_NAME
 
-# 构建mongo.yml
-tee mongo.yml <<-'EOF'
+# 自定义配置文件 config.json
+tee config.json <<-'EOF'
 
-version: "3.5"
-
-services:
- 
-  mongo:
-    image: mongo
-    environment:
-      - MONGO_INITDB_DATABASE=yapi
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-    volumes:
-      - mongo_data_db:/data/db
-    networks:
-      middleware:
-    deploy:
-      replicas: 1
-      update_config:
-        parallelism: 1
-      restart_policy:
-        condition: on-failure
-
-volumes:
-  mongo_data_db:
-
-networks:
-  middleware:
-    external: true
+{
+  "port": "3000",
+  "adminAccount": "183461750@qq.com",
+  "timeout":120000,
+  "db": {
+    "servername": ${MONGO_SERVER_NAME},
+    "DATABASE": "yapi",
+    "port": 27017,
+    "user": "root",
+    "pass": "root",
+    "authSource": ""
+  }
+}
 
 EOF
 
-# 启动
-docker stack up -c mongo.yml open_app
+# 自定义配置文件 docker-entrypoint.sh
+tee docker-entrypoint.sh <<-'EOF'
 
+#!/bin/sh
+
+cp /yapi/config.json /yapi/config.json.temp 
+
+if [ "MONGO_SERVER_NAME" != "" ]
+
+then
+    envsubst '$MONGO_SERVER_NAME' < /yapi/config.json.temp > /yapi/config.json
+fi
+
+rm /yapi/config.json.temp 
+
+node server/app.js
+
+exec "$@"
+
+EOF
 
 # 创建Dockerfile文件
 tee Dockerfile <<-'EOF'
@@ -49,16 +52,19 @@ RUN apk add --no-cache wget python3 make
 ENV VERSION=1.9.3
 RUN wget https://github.com/YMFE/yapi/archive/v${VERSION}.zip
 RUN unzip v${VERSION}.zip && mv yapi-${VERSION} vendors
-RUN cd vendors && cp config_example.json ../config.json && npm install --production --registry https://registry.npm.taobao.org && npm run install-server
+COPY config.json config.json
+RUN cd vendors && npm install --production --registry https://registry.npm.taobao.org
 
 FROM node:12-alpine
 MAINTAINER 183461750@qq.com
 ENV TZ="Asia/Shanghai"
+ENV MONGO_SERVER_NAME=mongo
 WORKDIR /yapi/vendors
 COPY --from=builder /yapi/vendors /yapi/vendors
 EXPOSE 3000
-# ENTRYPOINT ["node"]
-ENTRYPOINT ["node", "server/app.js"]
+# ENTRYPOINT ["node", "server/app.js"]
+ENTRYPOINT ["docker-entrypoint.sh"]
+# CMD ["node", "server/app.js"]
 
 EOF
 
@@ -71,25 +77,6 @@ docker build -t $JOB_NAME:$app_version .
 # 上传镜像到私服
 docker tag $JOB_NAME:$app_version registry.docker.com:5000/$JOB_NAME:$app_version
 docker push registry.docker.com:5000/$JOB_NAME:$app_version
-
-# 自定义配置文件 config.json
-tee config.json <<-'EOF'
-
-{
-  "port": "3000",
-  "adminAccount": "183461750@qq.com",
-  "timeout":120000,
-  "db": {
-    "servername": "mongo",
-    "DATABASE": "yapi",
-    "port": 27017,
-    "user": "root",
-    "pass": "root",
-    "authSource": ""
-  }
-}
-
-EOF
 
 # 创建docker yapi.yml文件
 tee $JOB_NAME.yml <<-'EOF'
@@ -104,6 +91,10 @@ services:
       - target: 3000
         published: 3000
         mode: host
+    environment:
+      MONGO_SERVER_NAME: mongo
+    depends_on:
+      - mongo
     volumes:
       - yapi_log:/home/vendors/log
       - ./config.json:/yapi/config.json
@@ -116,8 +107,30 @@ services:
       restart_policy:
         condition: on-failure
 
+  mongo:
+    image: mongo
+    environment:
+      - MONGO_INITDB_DATABASE=yapi
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+    ports:
+      - target: 27017
+        published: 27017
+        mode: host
+    volumes:
+      - mongo_data_db:/data/db
+    networks:
+      middleware:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
 volumes:
   yapi_log:
+  mongo_data_db:
 
 networks:
   middleware:
