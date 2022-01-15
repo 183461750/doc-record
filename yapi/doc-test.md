@@ -42,7 +42,8 @@ do
 
   [ -z "${ENV_VAL}" ] && ENV_VAL=${PAGE_PARAMS[$index]}
 
-  echo "$(/bin/sed -i "s!${index}!${ENV_VAL}!g" /yapi/config.json)" > /yapi/config.json;
+  # echo "$(/bin/sed -i "s!${index}!${ENV_VAL}!g" /yapi/config.json)" > /yapi/config.json;
+  echo "$(/bin/sed "s!${index}!${ENV_VAL}!g" /yapi/config.json)" > /yapi/config.json;
 
 done
 
