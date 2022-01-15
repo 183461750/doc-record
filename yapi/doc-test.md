@@ -11,7 +11,7 @@ tee config.json <<-'EOF'
   "adminAccount": "183461750@qq.com",
   "timeout":120000,
   "db": {
-    "servername": ${MONGO_SERVER_NAME},
+    "servername": "MONGO_SERVER_NAME",
     "DATABASE": "yapi",
     "port": 27017,
     "user": "root",
@@ -24,20 +24,27 @@ EOF
 
 # 自定义配置文件 docker-entrypoint.sh
 tee docker-entrypoint.sh <<-'EOF'
+#!/bin/bash
 
-#!/bin/sh
+# set -eo pipefail
 
-cp /yapi/config.json /yapi/config.json.temp 
+declare -A PAGE_PARAMS=(
 
-if [ "MONGO_SERVER_NAME" != "" ]
+  ["MONGO_SERVER_NAME"]="mongo"
 
-then
-    envsubst '$MONGO_SERVER_NAME' < /yapi/config.json.temp > /yapi/config.json
-fi
+)
 
-rm /yapi/config.json.temp 
+for index in "${!PAGE_PARAMS[@]}";
 
-node server/app.js
+do
+
+  ENV_VAL=`eval echo '$'${index}`
+
+  [ -z "${ENV_VAL}" ] && ENV_VAL=${PAGE_PARAMS[$index]}
+
+  echo "$(/bin/sed -i "s!${index}!${ENV_VAL}!g" /yapi/config.json)" > /yapi/config.json;
+
+done
 
 exec "$@"
 
@@ -52,7 +59,6 @@ RUN apk add --no-cache wget python3 make
 ENV VERSION=1.9.3
 RUN wget https://github.com/YMFE/yapi/archive/v${VERSION}.zip
 RUN unzip v${VERSION}.zip && mv yapi-${VERSION} vendors
-COPY config.json config.json
 RUN cd vendors && npm install --production --registry https://registry.npm.taobao.org
 
 FROM node:12-alpine
@@ -61,10 +67,14 @@ ENV TZ="Asia/Shanghai"
 ENV MONGO_SERVER_NAME=mongo
 WORKDIR /yapi/vendors
 COPY --from=builder /yapi/vendors /yapi/vendors
+COPY config.json ../config.json
+COPY docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
+RUN echo -e http://mirrors.ustc.edu.cn/alpine/v3.15/main/ > /etc/apk/repositories
+RUN apk add --no-cache bash
 EXPOSE 3000
-# ENTRYPOINT ["node", "server/app.js"]
-ENTRYPOINT ["docker-entrypoint.sh"]
-# CMD ["node", "server/app.js"]
+ENTRYPOINT ["/docker-entrypoint.sh"]
+CMD ["node", "server/app.js"]
 
 EOF
 
