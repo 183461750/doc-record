@@ -51,7 +51,7 @@ tee config.json <<-'EOF'
 
 {
   "port": "3000",
-  "adminAccount": "admin",
+  "adminAccount": "admin@admin.com",
   "timeout":120000,
   "db": {
     "servername": "_MONGO_SERVER_NAME",
