@@ -138,3 +138,10 @@ containers:
     security_opt:
       - apparmor:unconfined
 ```
+
+## 镜像仓库
+```shell
+# 地址https://cr.console.aliyun.com/cn-hangzhou/instance/credentials
+registry.cn-hangzhou.aliyuncs.com
+
+```
