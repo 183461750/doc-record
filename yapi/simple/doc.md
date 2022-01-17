@@ -90,6 +90,10 @@ do
 
 done
 
+cat /yapi/config.json
+
+node /yapi/vendors/server/install.js
+
 exec "$@"
 
 EOF
