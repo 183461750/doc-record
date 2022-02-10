@@ -10,6 +10,7 @@ services:
     command:
       bash -c ' echo "[mysqld]" > /etc/mysql/conf.d/haproxy.cnf &&
       echo "symbolic-links=0" >> /etc/mysql/conf.d/haproxy.cnf &&
+      echo "server-id=1" >> /etc/mysql/conf.d/haproxy.cnf &&
       docker-entrypoint.sh mysqld '
     ports:
       - target: 3306
@@ -34,6 +35,7 @@ services:
     command:
       bash -c ' echo "[mysqld]" > /etc/mysql/conf.d/haproxy.cnf &&
       echo "symbolic-links=0" >> /etc/mysql/conf.d/haproxy.cnf &&
+      echo "server-id=2" >> /etc/mysql/conf.d/haproxy.cnf &&
       docker-entrypoint.sh mysqld '
     ports:
       - target: 3306
@@ -66,14 +68,14 @@ services:
       echo "  timeout server 5000" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  timeout client 5000" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "listen mysql-cluster" >> /usr/local/etc/haproxy/haproxy.cfg &&
-      echo "  bind *:3308" >> /usr/local/etc/haproxy/haproxy.cfg &&
+      echo "  bind 0.0.0.0:3308" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  mode tcp" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  option tcp-check" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  balance roundrobin" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  server mysql-master1 mysql_m1:3306 check" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  server mysql-master2 mysql_m2:3306 check" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "listen mysql-clusterstats" >> /usr/local/etc/haproxy/haproxy.cfg &&
-      echo "  bind *:8080" >> /usr/local/etc/haproxy/haproxy.cfg &&
+      echo "  bind 0.0.0.0:8080" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  mode http" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  stats enable" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  stats uri /" >> /usr/local/etc/haproxy/haproxy.cfg &&
