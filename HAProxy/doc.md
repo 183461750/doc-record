@@ -1,8 +1,8 @@
 ## 部署MySQL
 ```shell
-# mysql集群sql命令
+# mysql开启集群的sql命令
 
-# 设置sql执行模式为幂等的（例如，insert主键冲突时，将sql改为delete加insert）
+# 设置sql执行模式为幂等的（例如，insert主键冲突时，将sql改为delete加insert）（非必须）
 set global replica_exec_mode=idempotent;
 show global VARIABLES like "%exec_mode%";
 
