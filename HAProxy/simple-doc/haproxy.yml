@@ -65,10 +65,14 @@ services:
       echo "  log 127.0.0.1 local0" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "defaults" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  log global" >> /usr/local/etc/haproxy/haproxy.cfg &&
+      echo "  mode http" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  retries 2" >> /usr/local/etc/haproxy/haproxy.cfg &&
-      echo "  timeout connect 3000" >> /usr/local/etc/haproxy/haproxy.cfg &&
-      echo "  timeout server 5000" >> /usr/local/etc/haproxy/haproxy.cfg &&
-      echo "  timeout client 5000" >> /usr/local/etc/haproxy/haproxy.cfg &&
+      echo "  option redispatch" >> /usr/local/etc/haproxy/haproxy.cfg &&
+      echo "  option abortonclose" >> /usr/local/etc/haproxy/haproxy.cfg &&
+      echo "  maxconn 4096" >> /usr/local/etc/haproxy/haproxy.cfg &&
+      echo "  timeout connect 5000ms" >> /usr/local/etc/haproxy/haproxy.cfg &&
+      echo "  timeout server 30000ms" >> /usr/local/etc/haproxy/haproxy.cfg &&
+      echo "  timeout client 30000ms" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "listen mysql-cluster" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  bind 0.0.0.0:3308" >> /usr/local/etc/haproxy/haproxy.cfg &&
       echo "  mode tcp" >> /usr/local/etc/haproxy/haproxy.cfg &&
