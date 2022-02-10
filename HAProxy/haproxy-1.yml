@@ -9,7 +9,7 @@ services:
       - MYSQL_PASSWORD=root
     command:
       bash -c ' echo "[mysqld]
-      symbolic-links=0 " > /etc/mysql/conf.d/haproxy.cnf docker-entrypoint.sh mysqld'
+      symbolic-links=0 " > /etc/mysql/conf.d/haproxy.cnf && docker-entrypoint.sh mysqld'
     ports:
       - target: 3306
         published: 13306
@@ -32,7 +32,7 @@ services:
       - MYSQL_PASSWORD=root
     command:
       bash -c ' echo "[mysqld]
-      symbolic-links=0 " > /etc/mysql/conf.d/haproxy.cnf docker-entrypoint.sh mysqld'
+      symbolic-links=0 " > /etc/mysql/conf.d/haproxy.cnf && docker-entrypoint.sh mysqld'
     ports:
       - target: 3306
         published: 13307
@@ -77,7 +77,7 @@ services:
         stats enable
         stats uri /
         stats realm Strictly\ Private
-        stats auth admin:admin " > /usr/local/etc/haproxy/haproxy.cfg docker-entrypoint.sh haproxy -f /usr/local/etc/haproxy/haproxy.cfg'
+        stats auth admin:admin " > /usr/local/etc/haproxy/haproxy.cfg && docker-entrypoint.sh haproxy -f /usr/local/etc/haproxy/haproxy.cfg'
     ports:
       - target: 3308
         published: 3308
