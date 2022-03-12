@@ -1,0 +1,59 @@
+# firewalld防火墙相关配置
+
+- [阿里云开发者社区用户文章参考](https://developer.aliyun.com/article/292603)
+```shell
+# 安装
+yum install firewalld
+# 在开机时启用一个服务
+systemctl enable firewalld.service
+# 在开机时禁用一个服务
+systemctl disable firewalld.service
+# 查看服务是否开机启动
+systemctl is-enabled firewalld.service
+
+# 使最新的防火墙设置规则生效
+firewall-cmd --reload 
+
+# 查询ssh协议服务是否被允许
+firewall-cmd --zone=public --query-service=ssh
+
+# 查看已启动的服务列表
+systemctl list-unit-files | grep enabled
+
+# 查看启动失败的服务列表
+systemctl --failed
+
+# 查看所有打开的端口
+firewall-cmd --zone=public --list-ports
+
+# 拒绝所有包
+firewall-cmd --panic-on
+# 取消拒绝状态
+firewall-cmd --panic-off
+# 查看是否拒绝
+firewall-cmd --query-panic
+ 
+# 端口添加（--permanent永久生效，没有此参数重启后失效）
+firewall-cmd --permanent --zone=public --add-port=80/tcp
+# 查看80端口
+firewall-cmd --zone=public --query-port=80/tcp
+# 删除80端口
+firewall-cmd --permanent --zone=public --remove-port=80/tcp
+
+# 删除HTTP协议服务
+firewall-cmd --permanent --zone=public --remove-service=http
+
+# 查看当前的服务
+firewall-cmd --zone=public --list-services
+
+# 查看区域信息
+firewall-cmd --get-active-zones
+# 查看指定接口所属区域
+firewall-cmd --get-zone-of-interface=eth0
+# 查看当前的区域
+firewall-cmd --get-default-zone
+
+# 安装图形化用户接口工具 firewall-config，则以 root 用户身份运行下列命令
+yum install firewall-config
+
+```
