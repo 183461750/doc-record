@@ -105,5 +105,5 @@ firewall-cmd --get-default-zone
 firewall-cmd --zone=public --add-service=docker --permanent
 # 重新加载
 firewall-cmd --reload
-# 详见linux.md
+# 详见linux.md 和 firewalld.md文件
 ```
