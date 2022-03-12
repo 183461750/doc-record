@@ -4,6 +4,10 @@
 
 - [参考阿里开发者社区文章](https://developer.aliyun.com/mirror/centos)
 ```shell
+# centos8
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-vault-8.5.2111.repo
+yum clean all && yum makecache
 
 ```
 
