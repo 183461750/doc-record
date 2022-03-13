@@ -87,6 +87,9 @@ firewall-cmd --add-port=4789/udp --permanent
 # xml开放端口
 # 通过以下命令查找xml文件存放路径(这里查找的是系统存放路径)
 find / -name ssh.xml
+# 查找docker相关xml
+ls | grep docker
+# 如果有(docker-swarm.xml)则可直接开启它，可省去下面自己新建文件的过程
 
 vi /etc/firewalld/services/docker.xml # 这个是用户存放路径，可能不在这个路径，可以通过上面那条命令查找路径
 
