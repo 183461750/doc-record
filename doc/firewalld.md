@@ -32,6 +32,9 @@ firewall-cmd --zone=public --list-services
 # 查看还有哪些服务可以打开
 firewall-cmd --get-services
 
+# 查看所有信息(所有services和ports都能看到)
+firewall-cmd --list-all
+
 # 查询ssh协议服务是否被允许
 firewall-cmd --zone=public --query-service=ssh
 # 查看已启动的服务列表
