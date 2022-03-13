@@ -84,9 +84,11 @@ firewall-cmd --add-port=4789/udp --permanent
 ```
 > docker swarm 端口开放[参考链接](https://www.digitalocean.com/community/tutorials/how-to-configure-the-linux-firewall-for-docker-swarm-on-centos-7)
 ```shell script
-xml开放端口
+# xml开放端口
+# 通过以下命令查找xml文件存放路径(这里查找的是系统存放路径)
+find / -name ssh.xml
 
-vi /etc/firewalld/services/docker.xml
+vi /etc/firewalld/services/docker.xml # 这个是用户存放路径，可能不在这个路径，可以通过上面那条命令查找路径
 
 <?xml version="1.0" encoding="utf-8"?>
       <service>
