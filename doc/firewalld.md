@@ -13,7 +13,7 @@ systemctl is-enabled firewalld.service
 
 # 使最新的防火墙设置规则生效
 firewall-cmd --reload 
-# 更新防火墙规则并重启服务
+# 更新防火墙规则并重启服务(用不了)
 firewall-cmd --completely-reload 
 
 # 端口添加（--permanent永久生效，没有此参数重启后失效）
