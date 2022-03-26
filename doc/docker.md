@@ -1,4 +1,7 @@
+# docker笔记
+
 ## 安装docker
+
 ```shell
 # 使用官方安装脚本自动安装
 curl -fsSL https://get.docker.com | bash -s docker --mirror aliyun
@@ -7,11 +10,13 @@ curl -sSL https://get.daocloud.io/docker | sh
 ```
 
 ## 设置docker开机自启
+
 ```shell
 systemctl enable docker
 ```
 
 ## 配置docker镜像源
+
 ```shell
 sudo mkdir -p /etc/docker
 sudo tee /etc/docker/daemon.json <<-'EOF'
@@ -22,16 +27,21 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl restart docker
 ```
+
 ```shell script
 # docker镜像源
 https://docker.mirrors.ustc.edu.cn
 ```
+
 ## 部署
+
 ```shell script
 # 对性能要求高 用 --net=host(对应docker-stack.yml文件下的(service.serviceName.network_mode=host)network_mode: "host") ， 不用-p
 # 参考网上的测试：上次对对使用Docker的两台Redis做压力测试，A台使用-p，B台使用--net=host。但是发现A的效率只有B的1/3-2/3 ，这么大的性能影响，-p应该不适合生产环境吧？望大师们指教。谢谢。
 ```
+
 ## 删除空镜像
+
 ```shell script
 sudo docker images | awk '{if($2=="<none>") print $3}' | xargs sudo docker rmi
 
@@ -43,10 +53,13 @@ docker rmi $(docker images -f dangling=true -q)
 # 删除所有未被使用的镜像
 docker image prune  -a 
 ```
+
 ## 找镜像的地址
-    https://hub.docker.com/
+
+  https://hub.docker.com/
 
 ## 修改宿主机的docker配置，让其可以远程访问
+
 ```shell
 # 默认,我们的linux的 docker ,IDEA 是不可以访问的,所以需要修改下配置,让我们的IDEA 可以访问
 vi /lib/systemd/system/docker.service
@@ -61,6 +74,7 @@ docker start registry  # 启动registry
 ```
 
 ## docker compose文件root用户权限控制
+
 ```yaml
 containers:
       - name: snake
@@ -132,7 +146,9 @@ containers:
 #
 #  CAP_LEASE:允许修改文件锁的FL_LEASE标志
 ```
+
 ## docker compose文件资源权限控制
+
 ```yaml
 containers:
     security_opt:
@@ -140,6 +156,7 @@ containers:
 ```
 
 ## 镜像仓库
+
 ```shell
 # 地址https://cr.console.aliyun.com/cn-hangzhou/instance/credentials
 registry.cn-hangzhou.aliyuncs.com/fa
