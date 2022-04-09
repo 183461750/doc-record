@@ -1,10 +1,17 @@
+# jenkins构建node项目
+
 ## 安装插件
+
     nodeJs(14.16.0)
 ![img.png](img/构建nodeJs项目/img_2.png)
+
 ## 配置步骤
+
 ![img.png](img/构建nodeJs项目/img.png)
 ![img_1.png](img/构建nodeJs项目/img_1.png)
+
 ## 执行shell（在jenkins里执行）
+
 ```shell
 
 pwd
@@ -18,7 +25,9 @@ npm run build:test
 ls | grep -v 'node_modules\|dist' | xargs  rm -rf
 
 ```
+
 ## Send files or execute commands over SSH(通过ssh远程执行shell)
+
 ```shell
 
 export app_version='1.0'
