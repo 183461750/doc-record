@@ -222,3 +222,10 @@ cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 ntpdate -u ntp.api.bz
 hwclock -w
 ```
+
+## 查看linux系统版本
+
+```shell
+# 只适用于redhat系linux系统
+cat /etc/redhat-release
+```

@@ -1,17 +1,18 @@
 version: '3.5'
 services:
   jenkins:
-    image: jenkinsci/blueocean
+    image: jenkins/jenkins:lts-jdk11
     user: root
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock # 使用到docker插件时，可能需要
     environment:
+      TZ: "Asia/Shanghai"
       JAVA_OPTS: "-Dsun.jnu.encoding=UTF-8 -Dfile.encoding=UTF-8"
     ports:
       - target: 8080
         published: 9090
         mode: host
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock # 使用到docker插件时，可能需要
     networks:
       - middleware
     deploy:

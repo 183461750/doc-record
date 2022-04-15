@@ -1,36 +1,8 @@
-# jenkins构建node项目
-
-## 安装插件
-
-    nodeJs(14.16.0)
-![img.png](img/构建nodeJs项目/img_2.png)
-
-## 配置步骤
-
-![img.png](img/构建nodeJs项目/img.png)
-![img_1.png](img/构建nodeJs项目/img_1.png)
-
-## 执行shell（在jenkins里执行）
-
-```shell
-
-pwd
-
-# 安装依赖(非必须)
-npm --registry https://registry.npmmirror.com/ install
-# 构建项目
-npm run build:test
-
-# 删除除 node_modules和dist 以外的所有内容
-ls | grep -v 'node_modules\|dist' | xargs  rm -rf
-
-```
-
-## Send files or execute commands over SSH(通过ssh远程执行shell)
-
-```shell
+#!/bin/sh
 
 export app_version='1.0'
+export DOCKER_WORKSPACE='/home/admin/app'
+export JOB_NAME='zhaoquanmiao-h5'
 
 cd $DOCKER_WORKSPACE/$JOB_NAME
 
@@ -73,12 +45,14 @@ docker push registry.docker.com:5000/$JOB_NAME:$app_version
 # 删除空镜像
 docker images | awk '{if($1=="<none>")print $3}' | xargs docker rmi &> /dev/null
 
+mkdir ./template
+
 # 编辑stack yml文件
-tee $JOB_NAME.yml <<-'EOF'
+tee ./template/$JOB_NAME.yml <<-'EOF'
 version: '3.5'
 services:
-  $JOB_NAME:
-    image: registry.docker.com:5000/$JOB_NAME:${app_version}
+  ${JOB_NAME}:
+    image: registry.docker.com:5000/${JOB_NAME}:${app_version}
     ports:
       - target: 80
         published: 3230
@@ -96,9 +70,21 @@ networks:
     external: true
 EOF
 
+
+if [ "$JOB_NAME" != "" ]
+
+then
+    envsubst '$JOB_NAME' < ./template/$JOB_NAME.yml > ./$JOB_NAME.yml
+fi
+
+if [ "$app_version" != "" ]
+
+then
+    envsubst '$app_version' < ./template/$JOB_NAME.yml > ./$JOB_NAME.yml
+fi
+
+
 docker stack up -c $JOB_NAME.yml app
 
 # 删除除 node_modules 以外的所有内容
-ls | grep -v 'node_modules' | xargs  rm -rf
-
-```
+# ls | grep -v 'node_modules' | xargs  rm -rf

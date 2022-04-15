@@ -1,5 +1,19 @@
+# yum相关文档
+
+## yum源-使用阿里yum源
+
+- [参考阿里开发者社区文章](https://developer.aliyun.com/mirror/centos)
+```shell
+# centos8
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+wget -O /etc/yum.repos.d/CentOS-Base.repo https://mirrors.aliyun.com/repo/Centos-vault-8.5.2111.repo
+yum clean all && yum makecache
+
+```
+
 ## EPEL到底是什么，为何经常要安装epel-release软件包
 - EPEL (Extra Packages for Enterprise Linux)是基于Fedora的一个项目
+- [参考阿里云开发者社区文章](https://developer.aliyun.com/mirror/epel)
 ``` shell
 yum -y install epel-release
  
