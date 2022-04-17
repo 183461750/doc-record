@@ -79,10 +79,6 @@ version: '3.5'
 services:
   $JOB_NAME:
     image: registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:${app_version}
-    ports:
-      - target: 80
-        published: 3230
-        mode: host
     networks:
       - middleware
     deploy:
@@ -100,5 +96,37 @@ docker stack up -c $JOB_NAME.yml app
 
 # 删除除 node_modules 以外的所有内容
 ls | grep -v 'node_modules' | xargs  rm -rf
+
+```
+
+- Nginx添加代理配置
+
+- 在conf.d目录中添加mall-admin-web-demo.conf文件
+
+```shell
+server {
+    listen      80;
+    server_name mall-admin-web-demo.iuin.xyz iuin.xyz;
+
+    access_log /var/log/mall-admin-web-demo_access.log;
+    error_log /var/log/mall-admin-web-demo_error.log;
+
+    location / {
+        include cors.conf;
+        proxy_set_header Host $host;
+        proxy_set_header X-real-ip $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_pass http://mall-admin-web-demo;
+    }
+
+}
+
+```
+
+## 部署
+
+```shell
+# 镜像下载问题，可试这添加--with-registry-auth看看
+docker stack up -c $JOB_NAME.yml --with-registry-auth app
 
 ```
