@@ -1,4 +1,7 @@
+# docker相关报错记录
+
 ## docker info 报warning
+
 ```shell
 # WARNING: IPv4 forwarding is disabled. Networking will not work.
 # 解决办法：
@@ -16,6 +19,7 @@ sysctl net.ipv4.ip_forward
 
 # 如果返回为“ net.ipv4.ip_forward = 1 ”则表示成功了
 ```
+
 ```shell
 # 执行 docker info 时出现警告
 # WARNING: bridge-nf-call-iptables is disabled
@@ -32,3 +36,8 @@ net.bridge.bridge-nf-call-iptables = 1
 sysctl -p
 # 再试一次 docker info 问题应该解决了
 ```
+
+## 使用docker stack deploy 时遇到image could not be accessed on a registry to record its digest
+
+- 首先说一下遇到的坑，当执行命令时，会在work节点上pull配置文件中指定好的镜像，如果是DockerHub中存在的镜像则无问题，如果是私有镜像，就算是登录了也无法获取
+- 解决办法：在stack deploy后添加 --with-registry-auth即可
