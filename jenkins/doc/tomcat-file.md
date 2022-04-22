@@ -1,3 +1,5 @@
+# 构建tomcat应用的相关记录
+
 ```shell
 # 第四版(swarm+私服)
 # docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
