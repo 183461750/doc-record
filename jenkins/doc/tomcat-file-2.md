@@ -63,7 +63,7 @@ FROM tomcat:8.5-jdk8-corretto
 MAINTAINER Fa
 WORKDIR /usr/local/tomcat
 RUN rm -rf webapps/*
-ADD ./target/*$JOB_NAME webapps/$JOB_NAME
+ADD ./target/*$JOB_NAME webapps/ROOT
 
 RUN rm -rf ./conf/server.xml
 ADD ./tomcat-server.xml ./conf/server.xml
