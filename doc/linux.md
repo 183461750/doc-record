@@ -1,18 +1,24 @@
+# linux相关命令使用记录
+
 ## 安装docker并配置加速器
-```shell script
+
+```shell
 yum -y install docker
 ```
 
 ## 修改主机名
-```shell script
+
+```shell
 hostnamectl set-hostname manager43
-``` 
+```
 
 ## 配置hosts文件(可配置可不配置)
-```shell script
+
+```shell
 vi /etc/hosts
 ```
-```
+
+```shell
 127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4
 ::1         localhost localhost.localdomain localhost6 localhost6.localdomain6
  
@@ -22,21 +28,25 @@ vi /etc/hosts
 ```
 
 ## 使用scp复制到node主机
-```shell script
+
+```shell
 scp /etc/hosts root@192.168.31.188:/etc/hosts
 ```
 
 ## 查看防火墙
+
 ```shell
 `firewall-cmd --zone=public --list-ports` 和 `netstat -tlunp`
 ```
 
 ## 设置防火墙
-```shell script
+
+```shell
 systemctl disable firewalld.service
 systemctl stop firewalld.service
 ```
-```shell script
+
+```shell
 # 防火墙配置
 # 官方文档
 
@@ -64,6 +74,7 @@ https://my.oschina.net/u/4560825/blog/4314028
 ```
 
 ## 添加dns
+
 ```shell
 vi /etc/sysconfig/network-scripts/ifcfg-enp0s3
 # DNS2=114.114.114.114
@@ -72,6 +83,7 @@ vi /etc/resolv.conf # 查看结果
 ```
 
 ## 配置yum镜像源
+
 ```shell
 # 备份你的原镜像文件，以免出错后可以恢复
 mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
@@ -86,8 +98,10 @@ yum makecache
 # 查看配置好的yum源是否正常
 yum repolist
 ```
+
 ## 安装docker
-```shell script
+
+```shell
 # 使用官方安装脚本自动安装
 # 安装命令如下：
 
@@ -96,6 +110,7 @@ curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 
 curl -sSL https://get.daocloud.io/docker | sh
 ```
+
 ```shell
 # 安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的
 yum install -y yum-utils device-mapper-persistent-data lvm2
@@ -112,12 +127,14 @@ yum install docker-ce
 ```
 
 ## 监控命令
+
 ```shell
 # 查看服务状态，一秒一次，启动之后可通过IP：端口访问界面
 watch -n 1 docker stack services hadoop
 ```
 
 ## 打印信息
+
 ```shell
 # 不打印正常信息，打印错误信息（/dev/null 代表空设备）
 xargs docker rmi > /dev/null
@@ -126,11 +143,14 @@ xargs docker rmi &> /dev/null
 ```
 
 ## 打印文件或文件夹列表时，排除文件或文件夹
+
 ```shell
 # 排除多个文件或文件夹
 ls | grep -v 'a\|b'
 ```
+
 ## nodejs安装
+
 ```shell
 # curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
 # nvm install 14.16.0
@@ -145,6 +165,7 @@ ls | grep -v 'a\|b'
 ```
 
 ## docker访问权限问题
+
 ```shell
 sudo groupadd docker          #添加docker用户组
 sudo gpasswd -a $USER docker  #将当前用户添加至docker用户组
@@ -153,17 +174,20 @@ newgrp docker                 #更新docker用户组
 ```
 
 ## 查看端口占用
+
 ``` shell
 # 查看53端口的占用情况
 sudo netstat -anlp | grep -w LISTEN | grep 53
 ```
 
 ## 定义环境变量
+
 ```shell
 export DOCKER_HOST=tcp://localhost:2375
 ```
 
 ## crontab使用
+
 ```shell
 # 格式
 minute   hour   day   month   week   command
@@ -178,6 +202,7 @@ tail -f /var/log/cron
 ```
 
 ## 设置网络时间
+
 ```shell
 # 查看当前时间
 date "+%Y-%m-%d %H:%M:%S"
@@ -228,4 +253,37 @@ hwclock -w
 ```shell
 # 只适用于redhat系linux系统
 cat /etc/redhat-release
+```
+
+## Linux文件字符串替换命令
+
+```shell
+# perl命令替换
+# -e 执行指定的脚本。
+# -i 原地替换文件，并将旧文件用指定的扩展名备份。不指定扩展名则不备份。
+# -n 自动循环，相当于 while(<>) { 脚本; }
+# -p 自动循环+自动输出，相当于 while(<>) { 脚本; print; }
+
+# 用法示例：
+# 将所有C程序中的foo替换成bar，旧文件备份成.bak
+perl -p -i.bak -e 's/\bfoo\b/bar/g' *.c
+# 将当前文件夹下lishan.txt和lishan.txt.bak中的“shan”都替换为“hua”
+perl -p -i -e "s/shan/hua/g" ./lishan.txt ./lishan.txt.bak
+
+# ##################################################################
+
+# sed命令替换
+# -i 表示inplace edit，就地修改文件
+
+# s表示替换，d表示删除
+# 格式: sed -i "s/查找字段/替换字段/g" `grep 查找字段 -rl 路径` 文件名
+
+# 示例：
+# 把当前目录下lishan.txt里的shan都替换为hua
+sed -i "s/shan/hua/g" lishan.txt
+# 使用变量替换(使用双引号)
+sed -e "s/$var1/$var2/g" filename
+# 删除文本中空行和空格组成的行以及#号注释的行
+grep -v ^# filename | sed /^[[:space:]]*$/d | sed /^$/d
+
 ```
