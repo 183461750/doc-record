@@ -1,6 +1,7 @@
 # firewalld防火墙相关配置
 
 - [阿里云开发者社区用户文章参考](https://developer.aliyun.com/article/292603)
+
 ```shell
 # 安装
 yum install firewalld
@@ -26,6 +27,8 @@ firewall-cmd --permanent --zone=public --remove-port=80/tcp
 # 查看所有打开的端口
 firewall-cmd --zone=public --list-ports
 
+# 添加HTTP协议服务
+firewall-cmd --permanent --zone=public --add-service=http
 # 删除HTTP协议服务
 firewall-cmd --permanent --zone=public --remove-service=http
 
