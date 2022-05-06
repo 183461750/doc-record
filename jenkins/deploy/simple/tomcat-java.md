@@ -7,6 +7,13 @@
 
 ## 构建脚本
 
+- maven 构建
+
+```shell
+# Goals and options
+clean install -Dmaven.test.skip=true -Pprivate -Djava.awt.headless=true
+```
+
 - send build artifacts over SSH (Transfers Set -> Exec command)
 
 ```shell
