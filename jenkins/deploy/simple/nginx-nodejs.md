@@ -5,6 +5,14 @@
 - 系统管理 -> 系统配置 -> 全局属性 -> 环境变量 -> 新增键值对
 - DOCKER_JENKINS_WORKSPACE : /var/lib/docker/volumes/soft_jenkins_home/_data/workspace
 
+## NodeJS配置
+
+```shell
+# 下载NodeJS插件
+# 调整[系统管理 -> 全局工具配置 -> nodeJS 配置]
+# nodejs 16.14.0
+```
+
 ## Jenkins配置
 
 - 创建一个自由风格的项目
