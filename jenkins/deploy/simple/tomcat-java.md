@@ -5,14 +5,25 @@
 - 系统管理 -> 系统配置 -> 全局属性 -> 环境变量 -> 新增键值对
 - DOCKER_JENKINS_WORKSPACE : /var/lib/docker/volumes/soft_jenkins_home/_data/workspace
 
+## jdk配置
+
+```shell
+# 新建目录
+cd /var/lib/docker/volumes/soft_jenkins_home/_data && mkdir -p ./soft/jdks
+# 下载jdk
+wget https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.tar.gz
+
+# 系统管理 -> 全局工具配置 -> JDK
+# JAVA_HOME(/var/jenkins_home/soft/jdks/amazon-corretto-8.332.08.1-linux-x64)
+```
+
 ## maven配置
 
 ```shell
 # 下载Maven Integration插件
 
 # 自定义settings.xml的配置
-cd /var/lib/docker/volumes/soft_jenkins_home/_data
-mkdir -p ./soft/maven
+cd /var/lib/docker/volumes/soft_jenkins_home/_data && mkdir -p ./soft/maven
 code settings.xml
 # 复制./conf/settings.xml文件内容
 # 修改标签<localRepository>内容

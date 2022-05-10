@@ -1,4 +1,7 @@
+# java 相关记录
+
 ## openjdk下载
+
 [参考链接](https://www.cnblogs.com/haimishasha/p/9909055.html)
 
     # openjdk官网 
@@ -9,6 +12,7 @@
     wget https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.tar.gz
 
 ## openjdk编译
+
     yum install unzip
     unzip openjdk-8u40-src-b25-10_feb_2015.zip
     cd openjdk/
