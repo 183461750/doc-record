@@ -17,7 +17,8 @@
 
 - 创建一个自由风格的项目
 - 使用gitee作为代码源
-- 在构建步骤中添加[执行 shell]步骤
+- 在 [构建环境] 步骤 添加 [Provide Node & npm bin/ folder to PATH]
+- 在[构建]步骤中添加[执行 shell]步骤
 
 ```shell
 
