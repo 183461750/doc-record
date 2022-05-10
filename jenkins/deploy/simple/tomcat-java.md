@@ -5,6 +5,23 @@
 - 系统管理 -> 系统配置 -> 全局属性 -> 环境变量 -> 新增键值对
 - DOCKER_JENKINS_WORKSPACE : /var/lib/docker/volumes/soft_jenkins_home/_data/workspace
 
+## maven配置
+
+```shell
+# 下载Maven Integration插件
+
+# 自定义settings.xml的配置
+cd /var/lib/docker/volumes/soft_jenkins_home/_data
+mkdir -p ./soft/maven
+code settings.xml
+# 复制./conf/settings.xml文件内容
+# 修改标签<localRepository>内容
+# 调整[系统管理 -> 全局工具配置 -> Maven 配置]
+# 默认(和全局) settings 提供 -> 文件系统中的 settings 文件 -> 文件路径(/var/jenkins_home/soft/maven/settings.xml)
+```
+
+---
+
 ## 构建脚本
 
 - maven 构建

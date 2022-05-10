@@ -1,4 +1,7 @@
+# Jenkins 相关使用记录
+
 ## maven配置settings.xml
+
 ```shell
 docker volume ls
 docker volume inspect jenkins_jenkins_home
@@ -7,18 +10,26 @@ mkdir -p ./data/maven
 code settings.xml
 # 复制./conf/settings.xml文件内容
 # 修改标签<localRepository>内容
+# 调整[系统管理 -> 全局工具配置 -> Maven 配置]
+# 默认(和全局) settings 提供 -> 文件系统中的 settings 文件 -> 文件路径(/var/jenkins_home/soft/maven/settings.xml)
 ```
+
 ---
+
 ## 多分支参数构建
+
 ```shell
 # 1. 下载安装插件
 # 在管理中选插件，输入Git Parameter
 ```
+
 ![img.png](img/多分支参数构建/img.png)
 ![img_1.png](img/多分支参数构建/img_1.png)
 ![img_2.png](img/多分支参数构建/img_2.png)
---- 
+---
+
 ## 构建maven项目
+
 ```shell
 # 下载安装插件
 # 在管理中选插件，输入
@@ -27,6 +38,7 @@ code settings.xml
 # Deploy to container 
 # Send build artifacts over SSH
 ```
+
 - 步骤
     ![img.png](img/构建maven项目/img.png)
     ![img_1.png](img/构建maven项目/img_1.png)
@@ -36,11 +48,14 @@ code settings.xml
     ![ssh信息输出到控制台](img/构建maven项目/img_5.png)
     ![docker全局环境变量](img/构建maven项目/img_6.png)
 - Build
+
 ```shell
 # Goals and options
 clean install -Dmaven.test.skip=true -Pprivate -Djava.awt.headless=true
 ```
+
 - send build artifacts over SSH (Transfers Set -> Exec command)
+
 ```shell
 # 第一版(初版)
 imagesid=`docker images|grep -i docker-test|awk '{print $3}'`
@@ -71,6 +86,7 @@ else
 fi
 docker run -itd -p 8080:8080 docker-test
 ```
+
 ```shell
 # 第二版
 # docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
@@ -99,6 +115,7 @@ docker build -t $JOB_NAME .
 docker run -itd -p 8280:8080 $JOB_NAME
 
 ```
+
 ```shell
 # 第三版(swarm)
 # docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
@@ -151,6 +168,7 @@ EOF
 docker stack up -c $JOB_NAME.yml app
 
 ```
+
 ```shell
 # 第四版(swarm+私服)
 # docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
