@@ -29,6 +29,7 @@ code settings.xml
 # 修改标签<localRepository>内容
 # 调整[系统管理 -> 全局工具配置 -> Maven 配置]
 # 默认(和全局) settings 提供 -> 文件系统中的 settings 文件 -> 文件路径(/var/jenkins_home/soft/maven/settings.xml)
+# maven v3.6.3
 ```
 
 ---
