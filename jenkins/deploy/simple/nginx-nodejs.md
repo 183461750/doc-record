@@ -10,7 +10,7 @@
 ```shell
 # 下载NodeJS插件
 # 调整[系统管理 -> 全局工具配置 -> nodeJS 配置]
-# nodejs 16.14.0
+# nodejs 14.15.0
 ```
 
 ## Jenkins配置
