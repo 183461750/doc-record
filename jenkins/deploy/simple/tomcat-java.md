@@ -13,6 +13,8 @@ cd /var/lib/docker/volumes/soft_jenkins_home/_data && mkdir -p ./soft/jdks
 # 下载jdk
 wget https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.tar.gz
 wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.tar.gz
+# 解压
+tar -zxvf amazon-corretto-8-x64-linux-jdk.tar.gz
 
 # 系统管理 -> 全局工具配置 -> JDK
 # JAVA_HOME(/var/jenkins_home/soft/jdks/amazon-corretto-8.332.08.1-linux-x64)
