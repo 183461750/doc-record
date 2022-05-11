@@ -6,7 +6,7 @@
     <!-- 阿里云maven配置指导：https://developer.aliyun.com/mvn/guide -->
 
     <!-- todo 需要改的地方 -->
-    <localRepository>/var/jenkins_home/data/maven/repo</localRepository>
+    <localRepository>/var/jenkins_home/soft/maven/repo</localRepository>
     <!--
         <mirrors>
             <mirror>
