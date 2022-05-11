@@ -25,7 +25,7 @@
 pwd
 
 # 安装依赖(非必须)
-npm install
+npm install --registry https://registry.npm.taobao.org
 # 构建项目
 npm run build:prod
 
