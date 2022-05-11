@@ -24,6 +24,9 @@
 
 pwd
 
+# 删除 dist 的所有内容
+rm -rf dist
+
 # 安装依赖(非必须)
 npm install --registry https://registry.npm.taobao.org
 # 构建项目
@@ -101,9 +104,6 @@ networks:
 EOF
 
 docker stack up -c $JOB_NAME.yml app
-
-# 删除除 node_modules 以外的所有内容
-ls | grep -v 'node_modules' | xargs  rm -rf
 
 ```
 
