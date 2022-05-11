@@ -43,9 +43,9 @@ ls | grep -v 'node_modules\|dist' | xargs  rm -rf
 
 export app_version='1.0'
 
-if [ -z $DOCKER_JENKINS_WORKSPACE];then
-  echo "环境变量 [$DOCKER_JENKINS_WORKSPACE] 缺失，需配置 DOCKER_JENKINS_WORKSPACE 环境变量; exit -1;";
-  exit -1;
+if [ -z $DOCKER_JENKINS_WORKSPACE] then
+  echo "环境变量 [$DOCKER_JENKINS_WORKSPACE] 缺失，需配置 DOCKER_JENKINS_WORKSPACE 环境变量(exit -1)"
+  exit -1
 fi
 
 cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
