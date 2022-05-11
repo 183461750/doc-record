@@ -80,10 +80,6 @@ version: '3.5'
 services:
   $JOB_NAME:
     image: registry.docker.com:5000/$JOB_NAME:${app_version}
-    ports:
-      - target: 8080
-        published: 8280
-        mode: host
     volumes:
       - /home/data/file:/usr/local/tmp/web-api/uploads/
     networks:
