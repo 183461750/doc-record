@@ -54,7 +54,6 @@ clean package -D maven.test.skip=true -P prod help:active-profiles
 ```shell
 # 第四版(swarm+私服)
 # docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
-# published: 8280 # todo 映射端口根据实际调整
 
 export app_version='1.0'
 
@@ -79,8 +78,8 @@ EOF
 docker build -t $JOB_NAME:$app_version .
 
 # 上传镜像到私服
-docker tag $JOB_NAME:$app_version registry.docker.com:5000/$JOB_NAME:$app_version
-docker push registry.docker.com:5000/$JOB_NAME:$app_version
+docker tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+docker push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
 
 # 删除空镜像
 docker images | awk '{if($1=="<none>")print $3}' | xargs docker rmi 
@@ -90,7 +89,7 @@ tee $JOB_NAME.yml <<-'EOF'
 version: '3.5'
 services:
   $JOB_NAME:
-    image: registry.docker.com:5000/$JOB_NAME:${app_version}
+    image: registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:${app_version}
     networks:
       - middleware
     deploy:
