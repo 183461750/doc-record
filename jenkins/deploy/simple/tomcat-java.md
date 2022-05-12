@@ -91,8 +91,6 @@ version: '3.5'
 services:
   $JOB_NAME:
     image: registry.docker.com:5000/$JOB_NAME:${app_version}
-    volumes:
-      - /home/data/file:/usr/local/tmp/web-api/uploads/
     networks:
       - middleware
     deploy:
