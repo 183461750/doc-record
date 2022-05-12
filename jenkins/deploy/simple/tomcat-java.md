@@ -66,7 +66,7 @@ cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
 
 # 编辑Dockerfile文件
 tee Dockerfile <<-'EOF'
-FROM tomcat:8.5-jdk8-corretto
+FROM tomcat:jre8-alpine
 MAINTAINER Fa
 WORKDIR /usr/local/tomcat
 RUN rm -rf webapps/*

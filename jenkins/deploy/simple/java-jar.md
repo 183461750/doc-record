@@ -66,7 +66,7 @@ cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
 
 # 编辑Dockerfile文件
 tee Dockerfile <<-'EOF'
-FROM openjdk:11
+FROM openjdk:11-jre-alpine
 WORKDIR /workdir
 ADD ./target/$JOB_NAME.jar app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]

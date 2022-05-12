@@ -71,7 +71,7 @@ server {
 EOF
 
 # 编辑Dockerfile文件
-echo "FROM nginx" > Dockerfile
+echo "FROM nginx:stable-alpine" > Dockerfile
 echo "MAINTAINER Fa" >> Dockerfile
 echo "WORKDIR /usr/share/nginx/html" >> Dockerfile
 echo "RUN rm -rf *" >> Dockerfile
