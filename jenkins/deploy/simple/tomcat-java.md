@@ -44,6 +44,9 @@ code settings.xml
 ```shell
 # Goals and options
 clean install -Dmaven.test.skip=true -Pprivate -Djava.awt.headless=true
+
+# 也可替换为以下命令
+clean package -D maven.test.skip=true -P prod help:active-profiles
 ```
 
 - send build artifacts over SSH (Transfers Set -> Exec command)
@@ -55,8 +58,8 @@ clean install -Dmaven.test.skip=true -Pprivate -Djava.awt.headless=true
 
 export app_version='1.0'
 
-if [ -z $DOCKER_JENKINS_WORKSPACE] then
-  echo "环境变量 [$DOCKER_JENKINS_WORKSPACE] 缺失，需配置 DOCKER_JENKINS_WORKSPACE 环境变量(exit -1)"
+if [ -z $DOCKER_JENKINS_WORKSPACE]; then
+  echo "环境变量 DOCKER_JENKINS_WORKSPACE:[$DOCKER_JENKINS_WORKSPACE] 缺失，需配置 DOCKER_JENKINS_WORKSPACE 环境变量(exit -1)"
   exit -1
 fi
 
