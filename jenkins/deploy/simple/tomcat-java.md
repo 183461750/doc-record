@@ -66,12 +66,12 @@ cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
 
 # 编辑Dockerfile文件
 tee Dockerfile <<-'EOF'
-FROM tomcat:8.5-jdk8-corretto"
-MAINTAINER Fa"
-WORKDIR /usr/local/tomcat"
-RUN rm -rf webapps/*"
-ADD ./target/*$JOB_NAME webapps/$JOB_NAME"
-EXPOSE 8080"
+FROM tomcat:8.5-jdk8-corretto
+MAINTAINER Fa
+WORKDIR /usr/local/tomcat
+RUN rm -rf webapps/*
+ADD ./target/*$JOB_NAME webapps/$JOB_NAME
+EXPOSE 8080
 EOF
 
 # 构建镜像
@@ -82,7 +82,7 @@ docker tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_N
 docker push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
 
 # 删除空镜像
-docker images | awk '{if($1=="<none>")print $3}' | xargs docker rmi 
+docker images | awk '{if($1=="<none>")print $3}' | xargs docker rmi &> /dev/null
 
 # 编辑stack yml文件
 tee $JOB_NAME.yml <<-'EOF'
