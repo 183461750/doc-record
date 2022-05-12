@@ -4,8 +4,8 @@ upstream jenkins {
 }
 
 server {
-  listen          ${NGINX_PORT};       # Listen on port 80 for IPv4 requests
-  listen          ${HTTPS_PORT} ssl;
+  listen          80;       # Listen on port 80 for IPv4 requests
+  listen          443 ssl;
 
   server_name     jenkins.${NGINX_HOST}; 
 

@@ -1,6 +1,6 @@
 server {
-    listen      ${NGINX_PORT};
-    listen      ${HTTPS_PORT} ssl;
+    listen      80;
+    listen      443 ssl;
     server_name localhost ${NGINX_HOST};
     
     access_log /var/log/default_access.log;
