@@ -51,6 +51,8 @@ fi
 cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
 
 mkdir -p ./nginx/conf.d/
+# todo 按需调整用户名和组
+chown -R 1000:1000 ./nginx
 
 # 添加default.conf文件
 tee ./nginx/conf.d/default.conf <<-'EOF'
