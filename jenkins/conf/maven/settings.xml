@@ -3,7 +3,9 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
           xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.0.0 http://maven.apache.org/xsd/settings-1.0.0.xsd">
 
-    <!-- 阿里云maven配置指导：https://packages.aliyun.com/repos/2143785-release-MaMQl4/guide -->
+    <!-- 阿里云 云效maven私仓 配置指导：https://packages.aliyun.com/repos/2143785-release-MaMQl4/guide -->
+    <!-- 配置内容: https://gitee.com/LFa/doc -->
+    <!-- 这里只展示简化版 -->
     
     <!-- todo 需要改的地方 -->
     <localRepository>/var/jenkins_home/soft/maven/repo</localRepository>
@@ -18,30 +20,10 @@
 
     </mirrors>
 
-    <servers>
-        <server>
-            <id>rdc-releases</id>
-            <username>615819fcd6ea5ebe4ad3ab3a</username>
-            <password>YPOUDifbWPiI</password>
-        </server>
-        <server>
-            <id>rdc-snapshots</id>
-            <username>615819fcd6ea5ebe4ad3ab3a</username>
-            <password>YPOUDifbWPiI</password>
-        </server>
-    </servers>
-    
     <profiles>
         <profile>
             <id>rdc</id>
-            <properties>
-                <altReleaseDeploymentRepository>
-                    rdc-releases::default::https://packages.aliyun.com/maven/repository/2143785-release-MaMQl4/
-                </altReleaseDeploymentRepository>
-                <altSnapshotDeploymentRepository>
-                    rdc-snapshots::default::https://packages.aliyun.com/maven/repository/2143785-snapshot-sWDrIG/
-                </altSnapshotDeploymentRepository>
-            </properties>
+
             <repositories>
                 <repository>
                     <id>central</id>
@@ -53,6 +35,7 @@
                         <enabled>false</enabled>
                     </snapshots>
                 </repository>
+                
                 <repository>
                     <id>snapshots</id>
                     <url>https://maven.aliyun.com/nexus/content/groups/public</url>
@@ -63,26 +46,7 @@
                         <enabled>true</enabled>
                     </snapshots>
                 </repository>
-                <repository>
-                    <id>rdc-releases</id>
-                    <url>https://packages.aliyun.com/maven/repository/2143785-release-MaMQl4/</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </repository>
-                <repository>
-                    <id>rdc-snapshots</id>
-                    <url>https://packages.aliyun.com/maven/repository/2143785-snapshot-sWDrIG/</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </repository>
+                
             </repositories>
             <pluginRepositories>
                 <pluginRepository>
@@ -95,6 +59,7 @@
                         <enabled>false</enabled>
                     </snapshots>
                 </pluginRepository>
+
                 <pluginRepository>
                     <id>snapshots</id>
                     <url>https://maven.aliyun.com/nexus/content/groups/public</url>
@@ -105,26 +70,7 @@
                         <enabled>true</enabled>
                     </snapshots>
                 </pluginRepository>
-                <pluginRepository>
-                    <id>rdc-releases</id>
-                    <url>https://packages.aliyun.com/maven/repository/2143785-release-MaMQl4/</url>
-                    <releases>
-                        <enabled>true</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>false</enabled>
-                    </snapshots>
-                </pluginRepository>
-                <pluginRepository>
-                    <id>rdc-snapshots</id>
-                    <url>https://packages.aliyun.com/maven/repository/2143785-snapshot-sWDrIG/</url>
-                    <releases>
-                        <enabled>false</enabled>
-                    </releases>
-                    <snapshots>
-                        <enabled>true</enabled>
-                    </snapshots>
-                </pluginRepository>
+                
             </pluginRepositories>
         </profile>
     </profiles>
