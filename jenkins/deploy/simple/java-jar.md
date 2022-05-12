@@ -66,11 +66,10 @@ cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
 
 # 编辑Dockerfile文件
 tee Dockerfile <<-'EOF'
-FROM tomcat:8.5-jdk8-corretto
-MAINTAINER Fa
-WORKDIR /usr/local/tomcat
-RUN rm -rf webapps/*
-ADD ./target/*$JOB_NAME webapps/$JOB_NAME
+FROM openjdk:11
+WORKDIR /workdir
+ADD ./target/$JOB_NAME.jar app.jar
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
 EXPOSE 8080
 EOF
 
