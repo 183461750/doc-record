@@ -165,3 +165,85 @@ registry.cn-hangzhou.aliyuncs.com/fa
 registry.cn-hangzhou.aliyuncs.com
 
 ```
+
+## 查看docker容器
+
+```shell
+# 查询已死亡的docker容器
+docker ps -aq -f status=dead
+# 查询已退出的docker容器
+docker ps -aq -f status=exited
+```
+
+## 查看磁盘占用
+
+```shell
+# linux命令
+df -h
+# Docker 的内置 CLI 指令
+docker system df
+# 查看详情
+docker system df -v
+```
+
+## 磁盘空间清理
+
+- [参考文章](https://blog.csdn.net/longailk/article/details/122728982)
+
+```shell
+## 通过 Docker 内置的 CLI 指令docker system prune来进行自动空间清理。
+
+# 该指令默认会清除所有如下资源：
+# 已停止的容器（container）
+# 未被任何容器所使用的卷（volume）
+# 未被任何容器所关联的网络（network）
+# 所有悬空镜像（image）。
+# 使用这个命令查看帮助 docker system prune --help
+docker system prune -a
+
+# 删除无用的卷
+docker volume prune
+# 删除无用的网络
+docker network prune
+
+## 手动清除
+
+# 镜像清理
+# 删除所有悬空镜像，不删除未使用镜像：
+docker rmi $(docker images -f "dangling=true" -q)
+# 删除所有未使用镜像和悬空镜像
+docker rmi $(docker images -q)
+
+# 清理卷
+# 删除所有未被容器引用的卷
+docker volume rm $(docker volume ls -qf dangling=true)
+
+# 容器清理
+# 删除所有已退出的容器：
+docker rm -v $(docker ps -aq -f status=exited)
+# 删除所有状态为dead的容器
+docker rm -v $(docker ps -aq -f status=dead)
+# 删除孤立的容器
+docker container prune
+
+## 查找系统中的大文件【以上三步仍然不可以的时候执行】
+
+# 查找指定目录下所有大于100M的所有文件
+find /var/lib/docker/overlay2/ -type f -size +100M -print0 | xargs -0 du -h | sort -nr
+
+## 对标准输入日志大小与数量进行限制
+# 新建或修改/etc/docker/daemon.json，添加log-dirver和log-opts参数
+vi /etc/docker/daemon.json
+    {
+       "log-driver":"json-file",
+       "log-opts": {"max-size":"3m", "max-file":"1"}
+    }
+# 重启docker的守护线程
+systemctl daemon-reload
+systemctl restart docker
+
+## 实在没办法，只有把/var目录下所有日志文件清空
+for i in `find /var -name *.log*`;do >$i;done
+# 然后重启node节点，因为有些日志文件被占用，清空后空间仍然无法释放
+
+```
