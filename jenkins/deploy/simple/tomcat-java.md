@@ -90,6 +90,8 @@ version: '3.5'
 services:
   $JOB_NAME:
     image: registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:${app_version}
+    environment:
+      TZ: "Asia/Shanghai"
     networks:
       - middleware
     deploy:

@@ -40,9 +40,10 @@ code settings.xml
 ## 构建脚本
 
 - maven 构建
+- 构建 -> 添加构建步骤 -> 调用顶层 maven 目标
 
 ```shell
-# Goals and options
+# 目标
 clean install -Dmaven.test.skip=true -Pprivate -Djava.awt.headless=true
 
 # 也可替换为以下命令
@@ -68,8 +69,9 @@ cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
 tee Dockerfile <<-'EOF'
 FROM openjdk:11-jre-slim
 WORKDIR /workdir
-ADD ./target/$JOB_NAME.jar app.jar
-ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+ADD ./target/*.jar app.jar
+ENV SPRING_PROFILES_ACTIVE=prod
+ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-server","-XX:+HeapDumpOnOutOfMemoryError","-jar","--spring.profiles.active=$SPRING_PROFILES_ACTIVE","/app.jar"]
 EXPOSE 8080
 EOF
 
@@ -89,6 +91,9 @@ version: '3.5'
 services:
   $JOB_NAME:
     image: registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:${app_version}
+    environment:
+      TZ: "Asia/Shanghai"
+      SPRING_PROFILES_ACTIVE: "prod"
     networks:
       - middleware
     deploy:
