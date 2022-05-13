@@ -247,3 +247,41 @@ for i in `find /var -name *.log*`;do >$i;done
 # 然后重启node节点，因为有些日志文件被占用，清空后空间仍然无法释放
 
 ```
+
+## docker 工作根目录
+
+- [参考文章](https://blog.csdn.net/weixin_32820767/article/details/81196250)
+
+```shell
+## 迁移 /var/lib/docker 目录。
+# 停止docker服务。
+systemctl stop docker
+# 创建新的docker目录，执行命令df -h,找一个大的磁盘。 我在 /home目录下面建了 /home/docker/lib目录，执行的命令是：
+mkdir -p /home/docker/lib
+# 迁移/var/lib/docker目录下面的文件到 /home/docker/lib：
+rsync -avz /var/lib/docker /home/docker/lib/
+# 配置 /etc/systemd/system/docker.service.d/devicemapper.conf。查看 devicemapper.conf 是否存在。如果不存在，就新建。
+sudo mkdir -p /etc/systemd/system/docker.service.d/
+sudo vi /etc/systemd/system/docker.service.d/devicemapper.conf
+# 然后在 devicemapper.conf 写入：（同步的时候把父文件夹一并同步过来，实际上的目录应在 /home/docker/lib/docker ）
+[Service]
+ExecStart=
+ExecStart=/usr/bin/dockerd  --graph=/home/docker/lib/docker
+# 重新加载 docker
+systemctl daemon-reload
+systemctl restart docker
+systemctl enable docker
+# 检查Docker 的根目录.它将被更改为 /home/docker/lib/docker
+# Docker Root Dir: /home/docker/lib/docker
+docker info
+
+# 改回去的方法：
+# 将4.5中：--graph=/home/docker/lib/docker改为--graph=/var/lib/docker
+# systemctl daemon-reload
+# systemctl restart docker
+# systemctl enable docker
+# ps：不建议改docker配置，可将/var/lib/docker迁移后重新挂载，比较保险。
+
+# /var/lib/docker拷贝到目标目录中，可以直接把目标目录mount到/var/lib/docker里。修改/etc/fstab设置为开机自动挂载，这样docker的配置文件一点都不用动了
+
+```
