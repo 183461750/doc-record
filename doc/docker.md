@@ -274,6 +274,9 @@ systemctl enable docker
 # 检查Docker 的根目录.它将被更改为 /home/docker/lib/docker
 # Docker Root Dir: /home/docker/lib/docker
 docker info
+# 再确认之前的镜像还在：
+docker images
+# 确定容器没问题后删除/var/lib/docker/目录中的文件。
 
 # 改回去的方法：
 # 将4.5中：--graph=/home/docker/lib/docker改为--graph=/var/lib/docker
