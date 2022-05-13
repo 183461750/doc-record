@@ -1,7 +1,7 @@
 server {
     listen      80;
     listen      443 ssl;
-    server_name localhost ${NGINX_HOST};
+    server_name localhost;
     
     access_log /var/log/default_access.log;
     error_log /var/log/default_error.log;
