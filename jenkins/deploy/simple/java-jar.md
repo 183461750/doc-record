@@ -71,7 +71,8 @@ FROM openjdk:11-jre-slim
 WORKDIR /workdir
 ADD ./target/*.jar app.jar
 ENV SPRING_PROFILES_ACTIVE=prod
-ENTRYPOINT java -jar -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE app.jar
+ENV SERVER_PORT=8080
+ENTRYPOINT java -jar -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE -Dserver.port=$SERVER_PORT app.jar
 EXPOSE 8080
 EOF
 
@@ -93,7 +94,6 @@ services:
     image: registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:${app_version}
     environment:
       TZ: "Asia/Shanghai"
-      SPRING_PROFILES_ACTIVE: "prod"
     networks:
       - middleware
     deploy:
