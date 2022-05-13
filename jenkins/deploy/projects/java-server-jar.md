@@ -71,7 +71,7 @@ FROM openjdk:11-jre-slim
 WORKDIR /workdir
 ADD ./*-server/target/*.jar app.jar
 ENV SPRING_PROFILES_ACTIVE=prod
-ENTRYPOINT java -Djava.security.egd=file:/dev/./urandom -server -XX:+HeapDumpOnOutOfMemoryError -jar --spring.profiles.active=$SPRING_PROFILES_ACTIVE app.jar
+ENTRYPOINT java -jar -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE app.jar
 EXPOSE 8080
 EOF
 
