@@ -39,8 +39,8 @@ services:
         condition: on-failure
 
 volumes:
-  nginx_templates:
   nginx_log:
+  nginx_templates:
   nginx_uploads:
 
 networks:
