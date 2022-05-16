@@ -57,7 +57,7 @@ clean package -D maven.test.skip=true -P prod help:active-profiles
 
 ```shell
 
-export app_version='1.0'
+export app_version=${BUILD_NUMBER}
 
 cd $WORKSPACE
 
@@ -72,8 +72,8 @@ ENTRYPOINT java -jar -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.a
 EXPOSE 8080
 EOF
 
-# 登录阿里云私仓 todo ${username}和${password}需要手动替换成真实的数据
-docker login --username=${username} --password=${password} registry.cn-zhangjiakou.aliyuncs.com
+# 登录阿里云私仓 todo <username>和<password>需要手动替换成真实的数据
+echo <password> | docker login -u <username> --password-stdin registry.cn-zhangjiakou.aliyuncs.com
 
 # 构建镜像
 docker -H tcp://172.17.0.1:2375 build -t $JOB_NAME:$app_version .
@@ -91,6 +91,8 @@ docker logout
 - 选择远程ssh server，在远程服务器上启动docker容器
 
 ```shell
+
+export app_version=${BUILD_NUMBER}
 
 # 创建工作目录
 mkdir -p /www/temp/jenkins/docker

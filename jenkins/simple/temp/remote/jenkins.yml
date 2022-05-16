@@ -2,6 +2,7 @@ version: '3.5'
 services:
   jenkins:
     image: jenkins/jenkins:lts-alpine
+    user: root
     environment:
       TZ: "Asia/Shanghai"
       JAVA_OPTS: "-Dsun.jnu.encoding=UTF-8 -Dfile.encoding=UTF-8"
