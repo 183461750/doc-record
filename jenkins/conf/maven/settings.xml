@@ -13,7 +13,7 @@
     <mirrors>
         <mirror>
             <id>mirror</id>
-            <mirrorOf>central,jcenter,!rdc-releases,!rdc-snapshots</mirrorOf>
+            <mirrorOf>central,jcenter</mirrorOf>
             <name>mirror</name>
             <url>https://maven.aliyun.com/nexus/content/groups/public</url>
         </mirror>
@@ -22,7 +22,7 @@
 
     <profiles>
         <profile>
-            <id>rdc</id>
+            <id>aliyun</id>
 
             <repositories>
                 <repository>
@@ -76,7 +76,7 @@
     </profiles>
     
     <activeProfiles>
-        <activeProfile>rdc</activeProfile>
+        <activeProfile>aliyun</activeProfile>
     </activeProfiles>
 
 </settings>
