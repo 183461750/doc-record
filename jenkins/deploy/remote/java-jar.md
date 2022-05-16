@@ -81,7 +81,7 @@ docker -H tcp://172.17.0.1:2375 build -t $JOB_NAME:$app_version .
 docker -H tcp://172.17.0.1:2375 tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
 docker -H tcp://172.17.0.1:2375 push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
 
-# 退出私仓
+# 退出阿里云私仓
 docker logout
 
 ```
