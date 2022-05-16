@@ -6,10 +6,13 @@
 
     # openjdk官网 
     http://hg.openjdk.java.net/
-    tar  -zxvf openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz # 下载后解压
+    
     # 亚马逊发行版
     https://docs.aws.amazon.com/corretto/latest/corretto-8-ug/downloads-list.html
     wget https://corretto.aws/downloads/latest/amazon-corretto-8-x64-linux-jdk.tar.gz
+    wget https://corretto.aws/downloads/latest/amazon-corretto-11-x64-linux-jdk.tar.gz
+
+    tar  -zxvf openjdk-8u41-b04-linux-x64-14_jan_2020.tar.gz # 下载后解压
 
 ## openjdk编译
 
