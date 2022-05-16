@@ -109,6 +109,6 @@ networks:
 
 EOF
 
-docker stack up -c $JOB_NAME.yml app
+docker stack up -c $JOB_NAME.yml app --with-registry-auth
 
 ```
