@@ -52,7 +52,7 @@ clean package -D maven.test.skip=true -P prod help:active-profiles
 
 - 执行 shell
 - 将镜像上传到私仓
-- PS: 需要安装docker插件(配置: 系统管理->系统配置->cloud->docker->Docker Host URI=[tcp://10.0.0.73:2375])。宿主机docker需要开启远程访问。
+- PS: 宿主机docker需要开启远程访问(通过这种方式验证：docker -H tcp://172.17.0.1:2375 version)。
 
 ```shell
 
@@ -71,12 +71,18 @@ ENTRYPOINT java -jar -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.a
 EXPOSE 8080
 EOF
 
+# 登录阿里云私仓 todo ${username}和${password}需要手动替换成真实的数据
+docker login --username=${username} --password=${password} registry.cn-zhangjiakou.aliyuncs.com
+
 # 构建镜像
 docker -H tcp://172.17.0.1:2375 build -t $JOB_NAME:$app_version .
 
 # 上传镜像到私服
 docker -H tcp://172.17.0.1:2375 tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
 docker -H tcp://172.17.0.1:2375 push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+
+# 退出私仓
+docker logout
 
 ```
 
