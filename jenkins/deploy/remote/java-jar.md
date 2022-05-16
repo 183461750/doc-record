@@ -52,19 +52,13 @@ clean package -D maven.test.skip=true -P prod help:active-profiles
 
 - 执行 shell
 - 将镜像上传到私仓
+- PS: 需要安装docker插件(配置: 系统管理->系统配置->cloud->docker->Docker Host URI=[tcp://10.0.0.73:2375])。宿主机docker需要开启远程访问。
 
 ```shell
-# 第四版(swarm+私服)
-# docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
 
 export app_version='1.0'
 
-if [ -z $DOCKER_JENKINS_WORKSPACE ]; then
-  echo "环境变量 DOCKER_JENKINS_WORKSPACE:[$DOCKER_JENKINS_WORKSPACE] 缺失，需配置 DOCKER_JENKINS_WORKSPACE 环境变量(exit -1)"
-  exit -1
-fi
-
-cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
+cd $WORKSPACE
 
 # 编辑Dockerfile文件
 tee Dockerfile <<-'EOF'
@@ -78,14 +72,11 @@ EXPOSE 8080
 EOF
 
 # 构建镜像
-docker build -t $JOB_NAME:$app_version .
+docker -H tcp://172.17.0.1:2375 build -t $JOB_NAME:$app_version .
 
 # 上传镜像到私服
-docker tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
-docker push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
-
-# 删除空镜像
-docker images | awk '{if($1=="<none>")print $3}' | xargs docker rmi &> /dev/null
+docker -H tcp://172.17.0.1:2375 tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+docker -H tcp://172.17.0.1:2375 push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
 
 ```
 
