@@ -53,6 +53,7 @@ clean package -D maven.test.skip=true -P prod help:active-profiles
 - 执行 shell
 - 将镜像上传到私仓
 - PS: 宿主机docker需要开启远程访问(通过这种方式验证：docker -H tcp://172.17.0.1:2375 version)。
+- [参考文章](https://segmentfault.com/a/1190000024563734)
 
 ```shell
 
