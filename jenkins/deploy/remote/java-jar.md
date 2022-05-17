@@ -52,8 +52,6 @@ clean package -D maven.test.skip=true -P prod help:active-profiles
 
 - 执行 shell
 - 将镜像上传到私仓
-- PS: 宿主机docker需要开启远程访问(通过这种方式验证：docker -H tcp://172.17.0.1:2375 version)。
-- [参考文章](https://segmentfault.com/a/1190000024563734)
 
 ```shell
 
@@ -76,11 +74,14 @@ EOF
 echo <password> | docker login -u <username> --password-stdin registry.cn-zhangjiakou.aliyuncs.com
 
 # 构建镜像
-docker -H tcp://172.17.0.1:2375 build -t $JOB_NAME:$app_version .
+docker build -t $JOB_NAME:$app_version .
 
 # 上传镜像到私服
-docker -H tcp://172.17.0.1:2375 tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
-docker -H tcp://172.17.0.1:2375 push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+docker tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+docker push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+
+# 删除本地镜像
+docker rmi registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
 
 # 退出阿里云私仓
 docker logout

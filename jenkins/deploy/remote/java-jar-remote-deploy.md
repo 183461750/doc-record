@@ -50,42 +50,57 @@ clean install -Dmaven.test.skip=true -Pprivate -Djava.awt.headless=true
 clean package -D maven.test.skip=true -P prod help:active-profiles
 ```
 
-- send build artifacts over SSH (Transfers Set -> Exec command)
+- 执行 shell
+- 将镜像上传到私仓
 
 ```shell
-# 第四版(swarm+私服)
-# docker images | awk '{if($1=="$JOB_NAME") print $3}' | xargs docker rmi
 
-export app_version='1.0'
+export app_version=${BUILD_NUMBER}
 
-if [ -z $DOCKER_JENKINS_WORKSPACE ]; then
-  echo "环境变量 DOCKER_JENKINS_WORKSPACE:[$DOCKER_JENKINS_WORKSPACE] 缺失，需配置 DOCKER_JENKINS_WORKSPACE 环境变量(exit -1)"
-  exit -1
-fi
-
-cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
+cd $WORKSPACE
 
 # 编辑Dockerfile文件
 tee Dockerfile <<-'EOF'
-FROM eclipse-temurin:11-jre-alpine
+FROM openjdk:11-jre-slim
 WORKDIR /workdir
 ADD ./target/*.jar app.jar
 ENV SPRING_PROFILES_ACTIVE=prod
 ENV SERVER_PORT=8080
-ENV JAVA_OPTS="-Xms512m -Xmx512m"
-ENTRYPOINT java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE -Dserver.port=$SERVER_PORT -jar app.jar
+ENTRYPOINT java -jar -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE -Dserver.port=$SERVER_PORT app.jar
 EXPOSE 8080
 EOF
 
+# 登录阿里云私仓 todo <username>和<password>需要手动替换成真实的数据
+echo <password> | docker login -u <username> --password-stdin registry.cn-zhangjiakou.aliyuncs.com
+
 # 构建镜像
-docker build -t $JOB_NAME:$app_version .
+docker -H tcp://172.17.0.1:2375 build -t $JOB_NAME:$app_version .
 
 # 上传镜像到私服
-docker tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
-docker push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+docker -H tcp://172.17.0.1:2375 tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+docker -H tcp://172.17.0.1:2375 push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
 
 # 删除本地镜像
-docker rmi registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+docker -H tcp://172.17.0.1:2375 rmi registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+
+# 退出阿里云私仓
+docker logout
+
+```
+
+- send build artifacts over SSH (Transfers Set -> Exec command)
+- 选择远程ssh server，在远程服务器上启动docker容器
+- 或者，直接使用远程访问docker的方式部署
+  - PS: 服务器docker需要开启远程访问(通过这种方式验证：docker -H tcp://172.17.0.1:2375 version)。
+  - [参考文章](https://segmentfault.com/a/1190000024563734)
+
+```shell
+
+export app_version=${BUILD_NUMBER}
+
+# 创建工作目录
+mkdir -p /www/temp/jenkins/docker
+cd /www/temp/jenkins/docker
 
 # 编辑stack yml文件
 tee $JOB_NAME.yml <<-'EOF'
@@ -110,6 +125,6 @@ networks:
 
 EOF
 
-docker stack up -c $JOB_NAME.yml app --with-registry-auth
+docker -H tcp://172.17.0.1:2375 stack up -c $JOB_NAME.yml app --with-registry-auth
 
 ```
