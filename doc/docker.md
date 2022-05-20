@@ -288,3 +288,11 @@ docker images
 # /var/lib/docker拷贝到目标目录中，可以直接把目标目录mount到/var/lib/docker里。修改/etc/fstab设置为开机自动挂载，这样docker的配置文件一点都不用动了
 
 ```
+
+## 利用docker run -v 命令实现使用宿主机中没有的命令
+
+- 使用容器中的jar命令解压jar包，并将解压内容输出到挂载在宿主机中的目录里
+
+```shell
+docker run -it --name java -v /www/temp/java:/www/temp/java openjdk:11-jdk-slim sh -c "cd /www/temp/java && jar -xvf /www/temp/java/mall-server.jar"
+```

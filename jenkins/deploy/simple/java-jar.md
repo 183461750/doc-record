@@ -48,6 +48,9 @@ clean install -Dmaven.test.skip=true -Pprivate -Djava.awt.headless=true
 
 # 也可替换为以下命令
 clean package -D maven.test.skip=true -P prod help:active-profiles
+
+# 或使用
+clean package -D maven.test.skip=true -P prod -pl cn.facoder:mall-server -am
 ```
 
 - send build artifacts over SSH (Transfers Set -> Exec command)
