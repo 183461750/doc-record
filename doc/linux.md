@@ -287,3 +287,12 @@ sed -e "s/$var1/$var2/g" filename
 grep -v ^# filename | sed /^[[:space:]]*$/d | sed /^$/d
 
 ```
+
+## 复制命令
+
+- [参考文章](https://blog.csdn.net/qq_40880022/article/details/118937461)
+
+```shell
+# 复制目录 -- 即将[/www/temp/java/BOOT-INF/lib]里面的所有内容，复制到这个[/www/temp/java/lib]目录里面
+cp -a  /www/temp/java/BOOT-INF/lib /www/temp/java/lib
+```
