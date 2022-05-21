@@ -39,7 +39,8 @@ ls | grep -v 'node_modules\|dist' | xargs  rm -rf
 
 - 执行 shell
 - 将镜像上传到私仓
-- PS: Jenkins的部署需要使用remote/jenkins.yml文件部署(主要是需要在容器内使用docker命令)
+- PS: 宿主机docker需要开启远程访问(通过这种方式验证：docker -H tcp://172.17.0.1:2375 version)。
+- [参考文章](https://segmentfault.com/a/1190000024563734)
 
 ```shell
 
@@ -80,18 +81,18 @@ echo "EXPOSE 80" >> Dockerfile
 echo <password> | docker login -u <username> --password-stdin registry.cn-zhangjiakou.aliyuncs.com
 
 # 构建镜像
-docker build -t $JOB_NAME:$app_version .
+docker -H tcp://172.17.0.1:2375 build -t $JOB_NAME:$app_version .
 
 # 上传镜像到私服
-docker tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
-docker push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+docker -H tcp://172.17.0.1:2375 tag $JOB_NAME:$app_version registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
+docker -H tcp://172.17.0.1:2375 push registry.cn-zhangjiakou.aliyuncs.com/fa/$JOB_NAME:$app_version
 
 # 退出阿里云私仓
 docker logout
 
 ```
 
-- 在构建步骤中添加[Send files or execute commands over SSH(通过ssh远程执行shell命令)]步骤
+- 在构建步骤中添加[Send files or execute commands over SSH(通过ssh远程执行shell)]步骤
 
 ```shell
 

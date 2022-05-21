@@ -52,6 +52,7 @@ clean package -D maven.test.skip=true -P prod help:active-profiles
 
 - 执行 shell
 - 将镜像上传到私仓
+- PS: Jenkins的部署需要使用remote/jenkins.yml文件部署(主要是需要在容器内使用docker命令)
 
 ```shell
 
