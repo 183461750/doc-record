@@ -46,3 +46,9 @@
     docker build -t docker-test .
 
     ```
+
+## Java相关问题
+
+- 异常：org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: Could not initialize class sun.font.SunFontManager
+  - 启动java时加上参数:-Djava.awt.headless=true
+  - [参考文章](https://www.cnblogs.com/yanqin/p/7160889.html)
