@@ -70,13 +70,13 @@ cd $DOCKER_JENKINS_WORKSPACE/$JOB_NAME
 
 # 编辑Dockerfile文件
 tee Dockerfile <<-'EOF'
-FROM eclipse-temurin:11-jre
+FROM eclipse-temurin:11-jre-alpine
 WORKDIR /workdir
 ADD ./target/*.jar app.jar
 ENV SPRING_PROFILES_ACTIVE=prod
 ENV SERVER_PORT=8080
 ENV JAVA_OPTS="-Xms512m -Xmx512m"
-ENTRYPOINT java ${JAVA_OPTS} -Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE -Dserver.port=$SERVER_PORT -jar app.jar
+ENTRYPOINT java ${JAVA_OPTS} -Djava.security.egd=file:/dev/./urandom -Dspring.profiles.active=$SPRING_PROFILES_ACTIVE -Dserver.port=$SERVER_PORT -jar app.jar
 EXPOSE 8080
 EOF
 
