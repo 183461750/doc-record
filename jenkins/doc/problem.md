@@ -52,3 +52,6 @@
 - 异常：org.springframework.web.util.NestedServletException: Handler dispatch failed; nested exception is java.lang.NoClassDefFoundError: Could not initialize class sun.font.SunFontManager
   - 启动java时加上参数:-Djava.awt.headless=true
   - [参考文章](https://www.cnblogs.com/yanqin/p/7160889.html)
+
+- 异常：找不到文件/opt/java/openjdk/lib/libfontmanager.so
+  - 11-jre-alpine的docker镜像中找不到这个文件，所以去除-alpine，直接使用11-jre即可
