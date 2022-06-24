@@ -296,3 +296,11 @@ grep -v ^# filename | sed /^[[:space:]]*$/d | sed /^$/d
 # 复制目录 -- 即将[/www/temp/java/BOOT-INF/lib]里面的所有内容，复制到这个[/www/temp/java/lib]目录里面
 cp -a  /www/temp/java/BOOT-INF/lib /www/temp/java/lib
 ```
+
+## top命令使用
+
+```shell
+# 使用`1`显示每个CPU的使用情况
+# 使用`t`显示CPU使用百分比进度条
+# 使用`m`显示内存使用百分比进度条
+```
