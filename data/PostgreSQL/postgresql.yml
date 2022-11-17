@@ -14,7 +14,7 @@ services:
       - POSTGRESQL_POSTGRES_PASSWORD=bbb
       - POSTGRESQL_USERNAME=aaa
       - POSTGRESQL_PASSWORD=aaa
-      - POSTGRESQL_DATABASE=demo
+      - POSTGRESQL_DATABASE=aaa
       - POSTGRESQL_LOG_TIMEZONE=Asia/Shanghai
       - POSTGRESQL_TIMEZONE=Asia/Shanghai
     deploy:
