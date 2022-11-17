@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:
+  postgresql:
+    user: root
+    image: 'postgres'
+    ports:
+      - '5432:5432'
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+      - '/www/gfs-share/postgresql/:/var/lib/postgresql/'
+    environment:
+      - POSTGRES_PASSWORD=postgres
+    deploy:
+      mode: replicated
+      replicas: 1
+
+networks:
+  middleware:
+    external: true
