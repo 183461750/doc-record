@@ -3,14 +3,20 @@ version: '3.7'
 services:
   postgresql:
     user: root
-    image: 'postgres'
+    image: 'bitnami/postgresql:latest'
     ports:
       - '5432:5432'
     volumes:
+      - 'postgresql_data:/opt/bitnami/postgresql/'
       - "/etc/localtime:/etc/localtime:ro"
-      - '/www/gfs-share/postgresql/:/var/lib/postgresql/'
     environment:
-      - POSTGRES_PASSWORD=postgres
+      # 超管用户 postgres
+      - POSTGRESQL_POSTGRES_PASSWORD=bbb
+      - POSTGRESQL_USERNAME=aaa
+      - POSTGRESQL_PASSWORD=aaa
+      - POSTGRESQL_DATABASE=demo
+      - POSTGRESQL_LOG_TIMEZONE=Asia/Shanghai
+      - POSTGRESQL_TIMEZONE=Asia/Shanghai
     deploy:
       mode: replicated
       replicas: 1
@@ -18,3 +24,8 @@ services:
 networks:
   middleware:
     external: true
+
+volumes:
+  # /var/lib/docker/volumes/data_postgresql_data/_data/conf
+  postgresql_data:
+    driver: local

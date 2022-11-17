@@ -3,6 +3,7 @@
 ## 部署
 
 - [参考文章](http://t.csdn.cn/awC63)
+- 使用的容器为[bitnami/postgresql:latest]
 
 ```shell
 # 创建目录
@@ -19,7 +20,8 @@ docker stack up -c postgresql.yml data
 - 后期配置
 
 ```shell
-# 到这个文件`/www/gfs-share/postgresql/conf/postgresql.conf`去修改配置，在文件最底部加上
+# 默认配置文件`/www/gfs-share/postgresql/conf/postgresql.conf`
+# 创建自定义配置文件`/www/gfs-share/postgresql/conf/conf.d/custom.conf`
 # 最大连接数，默认是100
 max_connections = 10000
 
