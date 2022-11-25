@@ -17,6 +17,8 @@ services:
       - POSTGRESQL_DATABASE=aaa
       - POSTGRESQL_LOG_TIMEZONE=Asia/Shanghai
       - POSTGRESQL_TIMEZONE=Asia/Shanghai
+    networks:
+      - middleware
     deploy:
       mode: replicated
       replicas: 1
