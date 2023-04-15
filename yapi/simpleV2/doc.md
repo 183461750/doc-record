@@ -9,6 +9,7 @@ git clone https://github.com/fjc0k/docker-YApi.git
 # 无法访问 github 的可使用国内镜像：
 git clone https://gitee.com/fjc0k/docker-YApi.git
 # 接下来，进入docker-YApi目录，修改 docker-compose.yml 中 yapi-web 下的环境变量 YAPI_ADMIN_ACCOUNT 为你的管理员邮箱，YAPI_ADMIN_PASSWORD 为你的管理员密码。
+# YAPI_CLOSE_REGISTER=false 设置为false则开启普通用户注册功能
 
 # 最后，执行 docker-compose up -d 启动服务。
 
