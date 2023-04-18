@@ -1,4 +1,20 @@
-## 创建环境
+# 使用记录
+
+## 安装
+
+```shell
+# 下载安装脚本
+wget https://repo.anaconda.com/miniconda/Miniconda3-py38_23.1.0-1-Linux-aarch64.sh
+# 执行脚本安装
+bash bash Miniconda3-py38_23.1.0-1-Linux-aarch64.sh
+# 最后，重新打开终端执行下面的命令验证是否安装成功
+conda list
+# 更新
+conda update conda
 ```
+
+## 创建环境
+
+```shell
 conda create -n python3.4 python=3.4
 ```
