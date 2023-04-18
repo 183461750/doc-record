@@ -1,5 +1,7 @@
 # 使用记录
 
+- [conda官网](https://docs.conda.io/en/latest/index.html)
+
 ## 安装
 
 ```shell
