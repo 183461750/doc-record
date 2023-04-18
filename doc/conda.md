@@ -19,4 +19,17 @@ conda update conda
 
 ```shell
 conda create -n python3.4 python=3.4
+
+## 示例
+`bash
+    # create and activate the virtual environment
+    conda create --name animated_drawings python=3.8.13
+    conda activate animated_drawings
+
+    # clone AnimatedDrawings and use pip to install
+    git clone https://github.com/facebookresearch/AnimatedDrawings.git
+    cd AnimatedDrawings
+    pip install -e .
+`
+
 ```
