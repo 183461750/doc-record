@@ -296,3 +296,31 @@ docker images
 ```shell
 docker run -it --name java -v /www/temp/java:/www/temp/java openjdk:11-jdk-slim sh -c "cd /www/temp/java && jar -xvf /www/temp/java/mall-server.jar"
 ```
+
+## 下载、保存和加载镜像
+
+```shell
+# 1. 下载 Docker 镜像
+
+## 使用 docker pull 命令来下载 Docker 镜像，例如：
+
+docker pull nginx:latest
+
+## 以上命令将下载 Nginx 最新版本的镜像。
+
+# 1. 保存 Docker 镜像
+
+## 使用 docker save 命令将 Docker 镜像保存为 tar 归档文件，例如：
+
+docker save nginx:latest > nginx_latest.tar
+
+## 以上命令将保存 Nginx 最新版本的镜像为 nginx_latest.tar 文件。
+
+# 1. 加载 Docker 镜像
+
+## 使用 docker load 命令将已保存的 Docker 镜像加载到本地镜像库中，例如：
+
+docker load < nginx_latest.tar
+
+## 以上命令将加载 nginx_latest.tar 文件中的 Nginx 最新版本镜像到本地。加载完成后，可以通过 docker images 命令查看本地镜像库中是否存在该镜像。
+```
