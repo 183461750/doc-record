@@ -289,12 +289,36 @@ docker images
 
 ```
 
-## 利用docker run -v 命令实现使用宿主机中没有的命令
+## 利用docker run --rm 命令实现使用宿主机中没有的命令
 
 - 使用容器中的jar命令解压jar包，并将解压内容输出到挂载在宿主机中的目录里
 
 ```shell
 docker run -it --name java -v /www/temp/java:/www/temp/java openjdk:11-jdk-slim sh -c "cd /www/temp/java && jar -xvf /www/temp/java/mall-server.jar"
+
+```
+
+- 使用宿主机中没有的nmap命令来通过端口找IP
+
+```shell
+# 在10.0.16.*范围内找开放了50000端口的IP，并将结果输出到宿主机的output.txt文件中
+docker run --rm --name nmap securecodebox/nmap sh -c "nmap -p 50000 10.0.16.0/24" > output.txt
+
+# 以下为部分结果，状态为open则对应端口被开放(即10.0.16.27则是目标IP)
+"
+Nmap scan report for 10.0.16.26
+Host is up (0.00065s latency).
+
+PORT      STATE    SERVICE
+50000/tcp filtered ibm-db2
+
+Nmap scan report for 10.0.16.27
+Host is up (0.0017s latency).
+
+PORT      STATE SERVICE
+50000/tcp open  ibm-db2
+"
+
 ```
 
 ## 下载、保存和加载镜像
