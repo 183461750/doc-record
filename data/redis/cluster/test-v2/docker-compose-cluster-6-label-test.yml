@@ -176,25 +176,6 @@ services:
         constraints:
           - node.hostname == worker2
 
-  redis-cluster:
-    image: redis:6.0
-    networks:
-      - middleware
-    command: bash -c "echo 'test'"
-    depends_on:
-      - redis1
-      - redis2
-      - redis3
-      - redis4
-      - redis5
-      - redis6
-    deploy:
-      restart_policy:
-        condition: none # none 意味着服务不会被自动重启，一旦它停止或退出，它将被销毁。
-      placement:
-        constraints:
-          - node.hostname == manager1
-
 networks:
   middleware:
     external: true
