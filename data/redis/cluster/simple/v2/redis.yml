@@ -187,18 +187,10 @@ networks:
     external: true
 
 # 需创建网络，看/doc/docker-networks.md文件
-# docker network create -d  overlay --attachable middleware
+# docker network create -d overlay --attachable middleware
 
-# 启动stack命令
-# docker stack up -c redis.yml data
-
-# 创建集群脚本
-# sh redis-cluster.sh
-
-
-
-      # echo 'bind 0.0.0.0' >> redis.conf &&
-
+# 启动节点
+# docker stack deploy -c redis.yml redis-cluster
 
 # 部署集群的命令，通过echo打印出具体命令，再修改成对应的端口
 # echo docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli --cluster create $(docker inspect -f '{{.NetworkSettings.Networks.middleware.IPAddress}}:700' $(docker ps -qf "name=redis-cluster_redis")) --cluster-replicas 1 -a foobared
