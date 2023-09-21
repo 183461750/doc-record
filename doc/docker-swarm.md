@@ -18,6 +18,7 @@ docker swarm leave
 
 ## 给node节点添加标签
 ```shell
+# docker node update --label-add client=true <node-name>
 docker node update --label-add func=nginx worker1
 ```
 
