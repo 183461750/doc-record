@@ -16,3 +16,25 @@ sudo curl -L https://github.com/docker/compose/releases/download/v2.11.2/docker-
 chmod +x /usr/local/bin/docker-compose
 
 ```
+
+- 使用包管理器安装
+
+```shell
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+sudo yum install -y docker-compose
+
+```
+
+- 使用python安装docker-compose
+  - [参考文章](https://help.aliyun.com/zh/ecs/use-cases/deploy-and-use-docker-on-alibaba-cloud-linux-2-instances)
+
+```shell
+# 重要: 仅Python 3及以上版本支持docker-compose，并请确保已安装pip。
+pip3 install -U pip setuptools
+pip3 install docker-compose
+docker-compose --version
+```
+
+> 请注意，使用包管理器安装的方式可以确保安装的是官方支持的稳定版本。而使用pip安装的方式可能会安装最新版本，但在某些情况下可能会遇到依赖关系或兼容性问题。
