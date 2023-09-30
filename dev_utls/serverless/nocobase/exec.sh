@@ -6,9 +6,13 @@ source .env
 
 docker build -t $FC_DEMO_IMAGE .
 
-echo ${DOCKER_PWD} | docker login -u ${FC_ACCOUNT} --password-stdin registry.${region}.aliyuncs.com
+docker logout
+
+echo ${DOCKER_PWD} | docker login -u ${DOCKER_ACCOUNT} --password-stdin registry.${region}.aliyuncs.com
 
 s deploy
+
+docker logout
 
 
 #######################
