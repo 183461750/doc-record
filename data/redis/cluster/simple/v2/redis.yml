@@ -205,3 +205,9 @@ networks:
 
 ### 测试执行命令
 # docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli -c -h 10.0.1.144 -p 7001 -a foobared info Replication
+
+####################################################################################################################################
+
+## 示例
+# 自动拼接端口的方式
+# echo docker exec -it $(docker ps -qf "name=redis-redis1-1") redis-cli --cluster create $(index=1; for ip in $(docker inspect -f '{{.NetworkSettings.Networks.middleware.IPAddress}}' $(docker ps -qf "name=redis-redis")); do echo "${ip}:700${index}"; ((index++)); done) --cluster-replicas 1 -a foobared
