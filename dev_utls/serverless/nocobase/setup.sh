@@ -32,6 +32,8 @@ then
   exit 1
 fi
 
+cp s.yaml.example s.yaml
+
 perl -i -p -e 's/{FC_ACCOUNT}/$ENV{"FC_ACCOUNT"}/g' s.yaml
 perl -i -p -e 's/{region}/$ENV{"region"}/g' s.yaml
 perl -i -p -e 's/{CONTAINER_PORT}/$ENV{"CONTAINER_PORT"}/g' s.yaml
