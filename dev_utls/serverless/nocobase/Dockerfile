@@ -3,4 +3,4 @@ ARG LOCAL_STORAGE_BASE_URL=/storage/uploads
 
 COPY . .
 
-EXPOSE 80
+EXPOSE 80 13000
