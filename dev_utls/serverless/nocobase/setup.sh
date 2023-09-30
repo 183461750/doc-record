@@ -1,5 +1,7 @@
 #!/bin/bash
 
+source .env
+
 if [ -z "$FC_ACCOUNT" ]
 then
   echo "Argument account is required but not provided. Usage: $0 account ID;"

@@ -2,7 +2,7 @@
 
 source .env
 
-./setup.sh
+bash setup.sh
 
 docker build -t $FC_DEMO_IMAGE .
 
@@ -13,7 +13,6 @@ echo ${DOCKER_PWD} | docker login -u ${DOCKER_ACCOUNT} --password-stdin registry
 s deploy
 
 docker logout
-
 
 #######################
 
