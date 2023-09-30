@@ -19,4 +19,7 @@ s config add
 
 # or
 s config add --AccessKeyID LTAI4G4cwJkK4Rza6xd9**** --AccessKeySecret  eCc0GxSpzfq1DVspnqqd6nmYNN**** --AccountID 188077086902**** --access ***
+
+# or 
+s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a default -f
 ```
