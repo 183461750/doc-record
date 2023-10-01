@@ -1,0 +1,51 @@
+edition: 1.0.0
+name: nocobase-app
+access: "default"
+
+vars: # 全局变量
+  region: "cn-hangzhou"
+  image_namespace: "fa"
+  image_name: "nocobase:v1-fa"
+  service:
+    name: "nocobaseService"
+    nasConfig: auto
+
+services:
+  nocobaseService:
+    component: fc
+    actions:
+      pre-deploy:
+        - component: fc build --use-docker --dockerfile ./src/Dockerfile
+      # post-deploy:
+      #   - component: fc nas upload -ro /src/storage/db /mnt/auto/nocobase/storage/db
+    props:
+      region: ${vars.region}
+      service: ${vars.service}
+      function:
+        name: "nocobaseFc"
+        codeUri: './src'
+        runtime: custom-container
+        timeout: 60
+        memorySize: 512
+        instanceConcurrency: 100
+        caPort: 13000
+        customContainerConfig:
+          image: "registry.${vars.region}.aliyuncs.com/${vars.image_namespace}/${vars.image_name}"
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+              - OPTIONS
+      customDomains:
+        - domainName: Auto
+          protocol: HTTP
+          routeConfigs:
+            - path: /*
+              
