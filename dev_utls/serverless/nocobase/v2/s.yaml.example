@@ -1,4 +1,12 @@
 edition: 1.0.0
+name: nocobase-app
+access: "default"
+
+vars: # 全局变量
+  region: {region}
+  service:
+    name: "nocobaseService"
+    nasConfig: auto
 
 services:
   nocobaseService:
@@ -7,10 +15,8 @@ services:
       post-deploy:
         - component: fc nas upload -ro /app/nocobase/storage/db /mnt/auto/nocobase/storage/db
     props:
-      region: {region}
-      service:
-        name: nocobaseService
-        role: acs:ram::{FC_ACCOUNT}:role/aliyunfcdefaultrole
+      region: ${vars.region}
+      service: ${vars.service}
       function:
         name: nocobaseFc
         runtime: custom-container
