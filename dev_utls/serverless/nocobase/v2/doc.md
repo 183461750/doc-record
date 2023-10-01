@@ -18,5 +18,7 @@ services:
 ## 开始使用
 
 ```shell
-bash exec.sh
+bash setup.sh
+# 搞个git仓库将v2目录下的文件上传到git上
+# 在FC中创建个应用，再创建环境时勾选允许访问vps和nas
 ```
