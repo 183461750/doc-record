@@ -23,3 +23,9 @@ s config add --AccessKeyID LTAI4G4cwJkK4Rza6xd9**** --AccessKeySecret  eCc0GxSpz
 # or 
 s config add --AccessKeyID ${{secrets.AccessKeyID}} --AccessKeySecret ${{secrets.AccessKeySecret}} -a default -f
 ```
+
+## 部署
+
+```shell
+s deploy
+```
