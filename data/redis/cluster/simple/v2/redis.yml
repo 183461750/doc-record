@@ -186,28 +186,4 @@ networks:
   middleware:
     external: true
 
-# 需创建网络，看/doc/docker-networks.md文件
-# docker network create -d overlay --attachable middleware
-
-# 启动节点
-# docker stack deploy -c redis.yml redis-cluster
-
-# 部署集群的命令，通过echo打印出具体命令，再修改成对应的端口
-# echo docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli --cluster create $(docker inspect -f '{{.NetworkSettings.Networks.middleware.IPAddress}}:700' $(docker ps -qf "name=redis-cluster_redis")) --cluster-replicas 1 -a foobared
-
-# 查看集群是否健康
-# docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli -p 7001 -a foobared cluster info
-
-# 修改端口后的部署集群命令(可用docker ps查看端口的顺序)(PS: 所有的IP都需要应用能够正常访问才行(PS: 放弃了这个做法，还是用docker内网IP，应用部署到同一docker network即可))
-# docker exec -it 9f11d0bda1a1 redis-cli --cluster create 10.0.1.225:7001 10.0.1.223:7006 10.0.1.221:7005 10.0.1.219:7004 10.0.1.217:7003 10.0.1.215:7002 --cluster-replicas 1 -a foobared
-
-# 10.0.1.144:7001,10.0.1.142:7006,10.0.1.140:7005,10.0.1.138:7004,10.0.1.136:7003,10.0.1.134:7002
-
-### 测试执行命令
-# docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli -c -h 10.0.1.144 -p 7001 -a foobared info Replication
-
-####################################################################################################################################
-
-## 示例
-# 自动拼接端口的方式
-# echo docker exec -it $(docker ps -qf "name=redis-redis1-1") redis-cli --cluster create $(index=1; for ip in $(docker inspect -f '{{.NetworkSettings.Networks.middleware.IPAddress}}' $(docker ps -qf "name=redis-redis")); do echo "${ip}:700${index}"; ((index++)); done) --cluster-replicas 1 -a foobared
+# 相关执行说明文档看./doc.md文件
