@@ -33,3 +33,4 @@ echo docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli --
 ## 参考文章
 
 - [参考文章](https://blog.csdn.net/chinasun2015/article/details/122474365)
+- [参考文章(官方)](https://raw.githubusercontent.com/redis/redis/5.0/redis.conf)
