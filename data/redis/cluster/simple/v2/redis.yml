@@ -23,6 +23,7 @@ services:
       echo 'appendonly yes' >> redis.conf &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
+      echo 'cluster-announce-ip 10.0.16.27' >> redis.conf  &&
       cat redis.conf &&
       redis-server redis.conf"
     deploy:
@@ -53,6 +54,7 @@ services:
       echo 'appendonly yes' >> redis.conf &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
+      echo 'cluster-announce-ip 10.0.16.27' >> redis.conf  &&
       cat redis.conf &&
       redis-server redis.conf"
     deploy:
@@ -83,6 +85,7 @@ services:
       echo 'appendonly yes' >> redis.conf &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
+      echo 'cluster-announce-ip 10.0.16.27' >> redis.conf  &&
       cat redis.conf &&
       redis-server redis.conf"
     deploy:
@@ -113,6 +116,7 @@ services:
       echo 'appendonly yes' >> redis.conf &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
+      echo 'cluster-announce-ip 10.0.16.27' >> redis.conf  &&
       cat redis.conf &&
       redis-server redis.conf"
     deploy:
@@ -143,6 +147,7 @@ services:
       echo 'appendonly yes' >> redis.conf &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
+      echo 'cluster-announce-ip 10.0.16.27' >> redis.conf  &&
       cat redis.conf &&
       redis-server redis.conf"
     deploy:
@@ -173,6 +178,7 @@ services:
       echo 'appendonly yes' >> redis.conf &&
       echo 'requirepass foobared' >> redis.conf  &&
       echo 'masterauth foobared' >> redis.conf  &&
+      echo 'cluster-announce-ip 10.0.16.27' >> redis.conf  &&
       cat redis.conf &&
       redis-server redis.conf"
     deploy:

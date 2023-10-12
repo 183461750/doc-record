@@ -29,3 +29,7 @@ docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli -c -p 7
 echo docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli --cluster create $(index=1; for ip in $(docker inspect -f '{{.NetworkSettings.Networks.middleware.IPAddress}}' $(docker ps -qf "name=redis-cluster_redis")); do echo "${ip}:700${index}"; ((index++)); done) --cluster-replicas 1 -a foobared
 
 ```
+
+## 参考文章
+
+- [参考文章](https://blog.csdn.net/chinasun2015/article/details/122474365)
