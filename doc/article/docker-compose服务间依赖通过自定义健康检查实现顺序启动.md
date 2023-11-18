@@ -53,3 +53,8 @@ Learn more:
 1. [【Docker系列】Docker Compose 服务依赖和健康检查_docker-compose healthcheck-CSDN博客](https://blog.csdn.net/weixin_48447848/article/details/122632562)
 2. [[docker]-docker-compose通过healthcheck判断容器状态并依次启动_docker-compose healthcheck-CSDN博客](https://blog.csdn.net/xujiamin0022016/article/details/123642210)
 3. [Docker compose 服务依赖关系及健康检查 - 掘金](https://juejin.cn/post/7250374485567619131)
+
+## 参考内容
+
+- [nocodb部署yml](https://github.com/nocodb/nocodb/blob/develop/docker-compose/pg/docker-compose.yml)
+  
