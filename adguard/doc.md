@@ -36,10 +36,14 @@ $ crontab -e
 - [参考文章](https://www.isharepc.com/27230.html)
 
 ## DNS服务器
-- 114.114.114.114
-- 223.5.5.5
-- 223.6.6.6
-- 2400:3200::1
-- 2400:3200:baba::1
-- https://dns.alidns.com/dns-query
-- tls://dns.alidns.com
+
+```text
+223.5.5.5
+119.29.29.29
+114.114.114.114
+223.6.6.6
+2400:3200::1
+2400:3200:baba::1
+https://dns.alidns.com/dns-query
+tls://dns.alidns.com
+```
