@@ -1,74 +1,107 @@
-version: '3.1'
+version: '3.5'
+
 services:
   management1:
-    image: mysql/mysql-cluster
+    image: mysql/mysql-cluster:8.0
     volumes:
        - ./mysql.conf/my.cnf:/etc/my.cnf
        - ./mysql.conf/mysql-cluster.cnf:/etc/mysql-cluster.cnf
-    command: ndb_mgmd
+    command: [
+      'ndb_mgmd',
+      '--ndb-nodeid=1',
+      '--reload',
+      '--initial'
+    ]
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
     networks:
-      mysqlcluster:
-        ipv4_address: 10.0.4.2
+      middleware:
+
   ndb1:
-    image: mysql/mysql-cluster
+    image: mysql/mysql-cluster:8.0
     volumes:
        - ./mysql.conf/my.cnf:/etc/my.cnf
        - ./mysql.conf/mysql-cluster.cnf:/etc/mysql-cluster.cnf
-    #command: bash -c 'sleep 40; exec ndbd'
     command: ndbd
     depends_on:
       - "management1"
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
     networks:
-      mysqlcluster:
-        ipv4_address: 10.0.4.3
+      middleware:
+
   ndb2:
-    image: mysql/mysql-cluster
+    image: mysql/mysql-cluster:8.0
     volumes:
        - ./mysql.conf/my.cnf:/etc/my.cnf
        - ./mysql.conf/mysql-cluster.cnf:/etc/mysql-cluster.cnf
     command: ndbd
     depends_on:
       - "management1"
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
     networks:
-      mysqlcluster:
-        ipv4_address: 10.0.4.4
+      middleware:
+
   mysql1:
-    image: mysql/mysql-cluster
+    image: mysql/mysql-cluster:8.0
     ports:
-      - "3306:3306"
+      - target: 3306
+        published: 3306
+        mode: host
     volumes:
        - ./mysql.conf/my.cnf:/etc/my.cnf
        - ./mysql.conf/mysql-cluster.cnf:/etc/mysql-cluster.cnf
-    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: example
-      MYSQL_DATABASE: bdteste
-      MYSQL_USER: teste
-      MYSQL_PASSWORD: teste
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
       MYSQL_ROOT_HOST: '%'
-    #command: bash -c 'sleep 60; exec mysqld'
-    command: mysqld
+    command: [
+      'mysqld',
+      '--default-authentication-plugin=mysql_native_password'
+    ]
     depends_on:
       - "management1"
       - "ndb1"
       - "ndb2"
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
     networks:
-      mysqlcluster:
-        ipv4_address: 10.0.4.10
+      middleware:
+
   adminer:
     image: adminer
-    restart: always
     ports:
-      - 8081:8080
-    links:
-      - mysql1:db
+      - target: 8080
+        published: 8081
+        mode: host
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
     networks:
-      mysqlcluster:
+      middleware:
 
 networks:
- mysqlcluster:
-  driver: overlay
-  ipam:
-   config:
-    - subnet: 10.0.4.0/16
-      gateway: 10.0.4.1
+  middleware:
+    external: true

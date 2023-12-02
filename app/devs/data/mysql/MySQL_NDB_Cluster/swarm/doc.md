@@ -4,15 +4,15 @@
 
 ```shell
 # 初始化swarm
-sudo docker swarm  init
-# 创建可手动连接的swarm网络
-sudo docker network create --driver=overlay --subnet=10.0.4.0/16 --gateway=10.0.4.1 --attachable prod-cluster
+# docker swarm init
+# 这里网络可以不创建，需要的话可以通过以下命令创建
+# docker network create -d  overlay --attachable middleware
 ```
 
 ## 启动集群
 
 ```shell
-sudo docker stack deploy -c docker-compose.yml mysqlCluster
+docker stack deploy -c docker-compose.yml mysqlCluster
 ```
 
 ## 参考资料

@@ -21,19 +21,19 @@ IndexMemory=18M
 
 [ndb_mgmd]
 NodeId=1
-hostname=172.28.0.2
+hostname=management1
 datadir=/var/lib/mysql
 
 [ndbd]
 NodeId=2
-hostname=172.28.0.3
+hostname=ndb1
 datadir=/var/lib/mysql
 
 [ndbd]
 NodeId=3
-hostname=172.28.0.4
+hostname=ndb2
 datadir=/var/lib/mysql
 
 [mysqld]
 NodeId=4
-hostname=172.28.0.10
+hostname=mysql1
