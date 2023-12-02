@@ -12,10 +12,8 @@
 # 配置ndb_mgmd启动时的集群相关信息
 [ndbd default]
 NoOfReplicas= 2
-
-[mysqld  default]
-[ndb_mgmd default]
-[tcp default]
+DataMemory=80M
+IndexMemory=18M
 
 [ndb_mgmd]
 NodeId=1
@@ -23,12 +21,20 @@ hostname=ndb_management
 DataDir=/var/lib/mysql
 
 [ndbd]
+NodeId=2
 hostname=ndb_data1
 DataDir=/var/lib/mysql
 
 [ndbd]
+NodeId=3
 hostname=ndb_data2
 DataDir=/var/lib/mysql
+
 # MySQL API 节点不用特意指定hostname
 [mysqld]
+NodeId=4
+hostname=ndb_mysqld1
+
 [mysqld]
+NodeId=5
+hostname=ndb_mysqld2

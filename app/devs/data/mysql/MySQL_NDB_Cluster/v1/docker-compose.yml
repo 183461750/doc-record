@@ -14,16 +14,13 @@ services:
     # command会传给entrypoint.sh并启动不同的服务
     # 这个就只是启动的 ~ $ ndb_mgmd --ndb-nodeid=1 ...
     command: [
-      'ndb_mgmd',
-      '--ndb-nodeid=1',
-      '--reload',
-      '--initial'
+      'ndb_mgmd'
     ]
     # 容器卷，用来配置集群
-    # 集群配置文件为config.cnf
+    # 集群配置文件为mysql-cluster.cnf
     # 对应到容器里面的/etc/mysql-cluster.cnf，至于为什么，大家可以去看下镜像的源码
     volumes:
-      - ./config.cnf:/etc/mysql-cluster.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
       - ndb_management_mysql:/var/lib/mysql
     ports:
@@ -39,7 +36,7 @@ services:
       'ndbd'
     ]
     volumes:
-      - ./config.cnf:/etc/mysql-cluster.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
       - ndb_data1_mysql:/var/lib/mysql
     networks:
@@ -52,7 +49,7 @@ services:
       'ndbd'
     ]
     volumes:
-      - ./config.cnf:/etc/mysql-cluster.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
       - ndb_data2_mysql:/var/lib/mysql
     networks:
@@ -72,7 +69,7 @@ services:
       MYSQL_PASSWORD: test
       MYSQL_ROOT_HOST: '%'
     volumes:
-      - ./config.cnf:/etc/mysql-cluster.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
       - ndb_mysqld1_mysql:/var/lib/mysql
     networks:
@@ -97,7 +94,7 @@ services:
       MYSQL_PASSWORD: test
       MYSQL_ROOT_HOST: '%'
     volumes:
-      - ./config.cnf:/etc/mysql-cluster.cnf
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
       - ndb_mysqld2_mysql:/var/lib/mysql
     networks:
