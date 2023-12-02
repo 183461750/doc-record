@@ -66,8 +66,11 @@ services:
       '--default-authentication-plugin=mysql_native_password'
     ]
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: mycluster
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_HOST: '%'
     volumes:
       - ./config.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
@@ -89,7 +92,10 @@ services:
       '--default-authentication-plugin=mysql_native_password'
     ]
     environment:
-      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_HOST: '%'
     volumes:
       - ./config.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
