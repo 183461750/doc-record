@@ -14,7 +14,10 @@ services:
     # command会传给entrypoint.sh并启动不同的服务
     # 这个就只是启动的 ~ $ ndb_mgmd --ndb-nodeid=1 ...
     command: [
-      'ndb_mgmd'
+      'ndb_mgmd',
+      '--ndb-nodeid=1',
+      '--reload',
+      '--initial'
     ]
     # 容器卷，用来配置集群
     # 集群配置文件为mysql-cluster.cnf
