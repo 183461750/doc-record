@@ -36,7 +36,8 @@ services:
     image: mysql/mysql-cluster:8.0
     container_name: ndb_data1
     command: [
-      'ndbd'
+      'ndbd',
+      ' --initial'
     ]
     volumes:
       - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
@@ -49,7 +50,8 @@ services:
     image: mysql/mysql-cluster:8.0
     container_name: ndb_data2
     command: [
-      'ndbd'
+      'ndbd',
+      ' --initial'
     ]
     volumes:
       - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
@@ -109,16 +111,16 @@ services:
       - ndb_data1
       - ndb_data2
 
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8081:8080
-    links:
-      - ndb_mysqld1:db1
-      - ndb_mysqld2:db2
-    networks:
-      - my_cluster
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8081:8080
+  #   links:
+  #     - ndb_mysqld1:db1
+  #     - ndb_mysqld2:db2
+  #   networks:
+  #     - my_cluster
 
 networks:
   my_cluster:
