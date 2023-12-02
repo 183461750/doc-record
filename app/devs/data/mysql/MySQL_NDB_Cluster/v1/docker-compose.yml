@@ -2,9 +2,7 @@
 # docker exec -it ndb_mysqld1 mysql -uroot -p
 # docker exec -it ndb_mysqld2 mysql -uroot -p
 version: '3'
-networks:
-  my_cluster:
-    driver: bridge
+
 services:
   # 服务名，在同一个网络下的docker容器之间可以通过服务名访问，
   # 所以我在创建容器以及后面的配置文件中没有指定IP
@@ -27,7 +25,7 @@ services:
     volumes:
       - ./config.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
-      - ./ndb_mgmd:/var/lib/mysql
+      - ndb_management_mysql:/var/lib/mysql
     ports:
       - "1186:1186"
     # 指定网络
@@ -43,9 +41,10 @@ services:
     volumes:
       - ./config.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
-      - ./ndbd1:/var/lib/mysql
+      - ndb_data1_mysql:/var/lib/mysql
     networks:
       - my_cluster
+
   ndb_data2:
     image: mysql/mysql-cluster:8.0
     container_name: ndb_data2
@@ -55,7 +54,7 @@ services:
     volumes:
       - ./config.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
-      - ./ndbd2:/var/lib/mysql
+      - ndb_data2_mysql:/var/lib/mysql
     networks:
       - my_cluster
   
@@ -72,7 +71,7 @@ services:
     volumes:
       - ./config.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
-      - ./mysql1:/var/lib/mysql
+      - ndb_mysqld1_mysql:/var/lib/mysql
     networks:
       - my_cluster
     ports:
@@ -94,7 +93,7 @@ services:
     volumes:
       - ./config.cnf:/etc/mysql-cluster.cnf
       - ./my.cnf:/etc/my.cnf
-      - ./mysql2:/var/lib/mysql
+      - ndb_mysqld2_mysql:/var/lib/mysql
     networks:
       - my_cluster
     ports:
@@ -103,3 +102,25 @@ services:
       - ndb_management
       - ndb_data1
       - ndb_data2
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8081:8080
+    links:
+      - ndb_mysqld1:db1
+      - ndb_mysqld2:db2
+    networks:
+      - my_cluster
+
+networks:
+  my_cluster:
+    driver: bridge
+
+volumes:
+  ndb_management_mysql:
+  ndb_data1_mysql:
+  ndb_data2_mysql:
+  ndb_mysqld1_mysql:
+  ndb_mysqld2_mysql:
