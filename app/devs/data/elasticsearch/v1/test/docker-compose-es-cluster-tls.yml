@@ -22,12 +22,12 @@ services:
         fi;
       '
     networks:
-      - elastic
+      - middleware
     deploy:
 #      mode: global
-      placement:
-        constraints:
-          - node.labels.es.replica==1 # 部署位置
+      # placement:
+      #   constraints:
+      #     - node.labels.es.replica==1 # 部署位置
 
   kibana:
     image: kibana:7.10.1
@@ -37,18 +37,20 @@ services:
       - ELASTICSEARCH_USERNAME=elastic
       - ELASTICSEARCH_PASSWORD=vsUZGKNvjWRtTKPmDG
     ports:
-      - "5601:5601"
+      - target: 5601
+        published: 5601
+        mode: host
     networks:
-      - elastic
+      - middleware
     deploy:
       mode: replicated
       replicas: 1
       resources:
         limits:
           memory: 800M
-      placement:
-        constraints:
-          - node.labels.es.replica==1 # 部署位置
+      # placement:
+      #   constraints:
+      #     - node.labels.es.replica==1 # 部署位置
   es01:
     image: elasticsearch:7.10.1
     hostname: es01
@@ -79,15 +81,17 @@ services:
       - es01_data:/usr/share/elasticsearch/data
       - es01_logs:/usr/share/elasticsearch/logs
     ports:
-      - "9200:9200"
+      - target: 9200
+        published: 9200
+        mode: host
     networks:
-      - elastic
+      - middleware
     deploy:
       mode: replicated
       replicas: 1
-      placement:
-        constraints:
-          - node.labels.es.replica==1 # 部署位置
+      # placement:
+      #   constraints:
+      #     - node.labels.es.replica==1 # 部署位置
   es02:
     image: elasticsearch:7.10.1
     hostname: es02
@@ -117,13 +121,13 @@ services:
       - es02_data:/usr/share/elasticsearch/data
       - es02_logs:/usr/share/elasticsearch/logs
     networks:
-      - elastic
+      - middleware
     deploy:
       mode: replicated
       replicas: 1
-      placement:
-        constraints:
-          - node.labels.es.replica==2 # 部署位置
+      # placement:
+      #   constraints:
+      #     - node.labels.es.replica==2 # 部署位置
   es03:
     image: elasticsearch:7.10.1
     hostname: es03
@@ -153,13 +157,13 @@ services:
       - es03_data:/usr/share/elasticsearch/data
       - es03_logs:/usr/share/elasticsearch/logs
     networks:
-      - elastic
+      - middleware
     deploy:
       mode: replicated
       replicas: 1
-      placement:
-        constraints:
-          - node.labels.es.replica==3 # 部署位置
+      # placement:
+      #   constraints:
+      #     - node.labels.es.replica==3 # 部署位置
 
 volumes:
   certs:
@@ -178,5 +182,5 @@ volumes:
     driver: local
 
 networks:
-  elastic:
+  middleware:
     external: true # 用已经创建好的网络
