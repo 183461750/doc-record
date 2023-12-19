@@ -3,11 +3,12 @@ services:
   jenkins:
     image: jenkins/jenkins:lts-alpine
     user: root
+    dns:
+      - 114.114.114.114
     volumes:
       - jenkins_home:/var/jenkins_home
       - /var/run/docker.sock:/var/run/docker.sock
       - /bin/docker:/bin/docker
-      - /root/soft/vpn:/root/soft/vpn
     environment:
       TZ: "Asia/Shanghai"
       JAVA_OPTS: "-Dsun.jnu.encoding=UTF-8 -Dfile.encoding=UTF-8"
