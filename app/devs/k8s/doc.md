@@ -22,6 +22,14 @@ kubectl get pods -n kuboard
 kubectl get nodes
 # 打标
 kubectl label nodes docker-desktop k8s.kuboard.cn/role=etcd
+
+---
+
+## 访问 Kuboard
+# 在浏览器中打开链接 http://your-node-ip-address:30080 (eg: http://localhost:30080)
+# 输入初始用户名和密码，并登录
+# 用户名： admin
+# 密码： Kuboard123
 ```
 
 ## 参考链接
