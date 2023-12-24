@@ -1,5 +1,10 @@
 # k8s相关使用记录
 
+## k8s安装
+
+- 通过`KuboardSpray`安装
+  - [官网地址](https://kuboard-spray.cn/)
+
 ## helm命令
 
 ```bash
