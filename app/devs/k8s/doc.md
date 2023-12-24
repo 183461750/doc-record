@@ -9,6 +9,8 @@ brew install helm
 
 ## kuboard可视化界面
 
+- [也可以使用helm方式部署](./kuboard/doc.md)
+
 ```bash
 # 部署
 kubectl apply -f https://addons.kuboard.cn/kuboard/kuboard-v3.yaml
