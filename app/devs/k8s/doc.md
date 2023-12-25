@@ -5,6 +5,22 @@
 - 通过`KuboardSpray`安装
   - [官网地址](https://kuboard-spray.cn/)
 
+```bash
+# 进入指定目录
+cd /data/docker/k8s
+# 快速安装
+docker run -d \
+  --privileged \
+  --restart=unless-stopped \
+  --name=kuboard-spray \
+  -p 80:80/tcp \
+  -e TZ=Asia/Shanghai \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v ~/kuboard-spray-data:/data \
+  eipwork/kuboard-spray:latest-amd64
+# 在浏览器地址栏中输入 http://这台机器的IP地址，输入用户名 admin，默认密码 Kuboard123
+```
+
 ## helm命令
 
 ```bash
