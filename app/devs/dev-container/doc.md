@@ -6,4 +6,5 @@ ps: 在远程容器中进行开发，或者在本地开发在远程容器中运�
 
 - docker compose配置调整
   - 在modify option中勾选project-name可以把相同项目名的应用放到一个compose里去
+    - 生成的命令为`docker compose -f ./docker-compose.yml -p ma-compose up -d`
   
