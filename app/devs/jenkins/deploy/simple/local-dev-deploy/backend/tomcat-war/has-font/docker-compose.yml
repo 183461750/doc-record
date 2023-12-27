@@ -1,0 +1,26 @@
+version: '3.5'
+
+services:
+  web-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TZ: "Asia/Shanghai"
+    ports:
+      - "8080:8080"
+      - "28080:28080"
+    volumes:
+      - /home/data/file:/usr/local/tmp/web-api/uploads/
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  middleware:
+    external: true
