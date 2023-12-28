@@ -16,7 +16,7 @@ services:
     networks:
       middleware:
     ports:
-      - target: 80
+      - target: 8888
         published: 8888
         mode: host
       - target: 9999
