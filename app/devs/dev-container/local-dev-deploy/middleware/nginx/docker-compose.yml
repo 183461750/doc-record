@@ -19,6 +19,9 @@ services:
       - target: 80
         published: 8888
         mode: host
+      - target: 9999
+        published: 9999
+        mode: host
     deploy:
       replicas: 1
       update_config:
