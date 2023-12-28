@@ -1,9 +1,7 @@
 FROM node:14.21.1-slim as builder
 
 # 添加代理，用于加速npm构建
-ENV https_proxy="http://10.0.16.17:7890"
-ENV http_proxy="http://10.0.16.17:7890"
-ENV all_proxy="socks5://10.0.16.17:7890"
+ENV https_proxy="http://10.0.16.17:7890" http_proxy="http://10.0.16.17:7890" all_proxy="socks5://10.0.16.17:7890"
 
 WORKDIR /app
 
@@ -15,12 +13,7 @@ COPY . .
 #RUN npm run build
 
 # 构建代码
-RUN apt update \
-    && apt install git -y \
-    && node -v \
-    && npm install -g cnpm --registry=https://registry.npm.taobao.org \
-    && cnpm install \
-    && npm run build
+RUN apt update && apt install git -y && node -v && npm --registry https://registry.npmmirror.com/ install && npm run build:test
 
 # 下一阶段
 
