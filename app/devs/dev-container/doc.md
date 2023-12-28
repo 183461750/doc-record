@@ -7,6 +7,12 @@ ps: 在远程容器中进行开发，或者在本地开发在远程容器中运�
 - docker compose配置调整
   - 在modify option中勾选project-name可以把相同项目名的应用放到一个compose里去
     - 生成的命令为`docker compose -f ./docker-compose.yml -p ma-compose up -d`
+      - 使用--build选项：在运行docker-compose up命令时，添加--build选项可以确保每次都重新构建镜像。
+        - eg: `docker compose -f ./docker-compose.yml -p ma-compose up -d --build`
+    - 使用--no-cache选项：在构建镜像时，可以使用--no-cache选项来禁用缓存，强制重新构建镜像的每一层。
+      - eg: `docker compose -f ./docker-compose.yml -p ma-compose up -d --no-cache`
+    - 组合全命令
+      - eg: `docker compose -f ./docker-compose.yml -p ma-compose up -d --build --no-cache`
   
 ## dev container
 
