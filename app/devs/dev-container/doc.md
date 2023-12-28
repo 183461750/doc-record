@@ -27,3 +27,14 @@ nameserver 119.29.29.29
 nameserver 223.5.5.5
 
 ```
+
+## docker忽略文件的使用
+
+- 文件名:[.dockerignore]与Dockerfile文件同级
+
+```bash
+*
+!dist
+!wap.conf
+
+```
