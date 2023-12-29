@@ -38,3 +38,9 @@ docker-compose --version
 ```
 
 > 请注意，使用包管理器安装的方式可以确保安装的是官方支持的稳定版本。而使用pip安装的方式可能会安装最新版本，但在某些情况下可能会遇到依赖关系或兼容性问题。
+
+## 示例命令
+
+```bash
+docker compose -f ./docker-compose.yml -p project_name up -d --build service_name
+```
