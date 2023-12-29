@@ -304,6 +304,9 @@ docker run -it --name java -v /www/temp/java:/www/temp/java openjdk:11-jdk-slim 
 # 在10.0.16.*范围内找开放了50000端口的IP，并将结果输出到宿主机的output.txt文件中
 docker run --rm --name nmap securecodebox/nmap sh -c "nmap -p 50000 10.0.16.0/24" > output.txt
 
+# 直接筛选已开放指定端口的内容
+docker run --rm --name nmap securecodebox/nmap sh -c "nmap -p 9200 10.7.7.0/24 | grep -C 5 open"
+
 # 以下为部分结果，状态为open则对应端口被开放(即10.0.16.27则是目标IP)
 "
 Nmap scan report for 10.0.16.26
