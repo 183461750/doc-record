@@ -1,0 +1,99 @@
+# 部署多主多从(v2)
+version: '3.8'
+services:
+
+  redis1:
+    image: redis:5.0.4
+    networks:
+      - middleware
+    ports:
+      - target: 8001
+        published: 8001
+        protocol: tcp
+        mode: host
+      - target: 18001
+        published: 18001
+        protocol: tcp
+        mode: host
+    command:
+      bash -c "echo 'port 8001' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  redis2:
+    image: redis:5.0.4
+    networks:
+      - middleware
+    ports:
+      - target: 8002
+        published: 8002
+        protocol: tcp
+        mode: host
+      - target: 18002
+        published: 18002
+        protocol: tcp
+        mode: host
+    command:
+      bash -c "echo 'port 8002' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  redis3:
+    image: redis:5.0.4
+    networks:
+      - middleware
+    ports:
+      - target: 8003
+        published: 8003
+        protocol: tcp
+        mode: host
+      - target: 18003
+        published: 18003
+        protocol: tcp
+        mode: host
+    command:
+      bash -c "echo 'port 8003' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  middleware:
+    external: true
+
+# 相关执行说明文档看./doc.md文件
