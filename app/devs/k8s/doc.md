@@ -21,6 +21,10 @@ docker run -d \
 # 在浏览器地址栏中输入 http://这台机器的IP地址，输入用户名 admin，默认密码 Kuboard123
 ```
 
+## yum安装k8s
+
+- [文档详情地址](./docs/temp/yum安装k8s.md)(PS: AI提供的内容，还未测试过)
+
 ## helm命令
 
 ```bash
