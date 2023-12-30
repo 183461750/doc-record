@@ -8,7 +8,9 @@ services:
     environment:
       TZ: "Asia/Shanghai"
     networks:
-      - middleware
+      middleware:
+      self-network:
+        ipv4_address: 10.0.3.10
   web:
     build:
       context: ../web
@@ -16,7 +18,9 @@ services:
     environment:
       TZ: "Asia/Shanghai"
     networks:
-      - middleware
+      middleware:
+      self-network:
+        ipv4_address: 10.0.3.11
   wap-api:
     build:
       context: ../wap-api
@@ -26,7 +30,11 @@ services:
     ports:
       - "28081:28080"
     networks:
-      - middleware
+      middleware:
+      self-network:
+        ipv4_address: 10.0.3.12
+    extra_hosts: # 在/etc/hosts中添加一行记录 <host-gateway的ip> host.docker.internal
+      - host.docker.internal:host-gateway
   web-api:
     build:
       context: ../web-api
@@ -38,7 +46,9 @@ services:
     volumes:
       - /home/data/file:/usr/local/tmp/web-api/uploads/
     networks:
-      - middleware
+      middleware:
+      self-network:
+          ipv4_address: 10.0.3.13
   nginx:
     image: nginx:1.20
     user: root
@@ -52,6 +62,8 @@ services:
       /docker-entrypoint.sh nginx -g 'daemon off;'"
     networks:
       middleware:
+      self-network:
+          ipv4_address: 10.0.3.14
     ports:
       - target: 8888
         published: 8888
@@ -70,13 +82,18 @@ services:
       - "./nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
       - "./nginx/conf/cors.conf:/etc/nginx/cors.conf"
       - "./nginx/conf/conf.d/:/etc/nginx/conf.d/"
-      # - "nginx_uploads:/etc/nginx/data/uploads"
       - /home/data/file/:/etc/nginx/data/uploads
 
 volumes:
   nginx_log:
-#   nginx_uploads:
 
 networks:
   middleware:
     external: true
+  self-network:
+    driver: overlay
+    attachable: true
+    ipam:
+      config:
+        - subnet: 10.0.3.0/24
+          gateway: 10.0.3.1

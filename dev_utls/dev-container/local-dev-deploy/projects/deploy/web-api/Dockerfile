@@ -7,9 +7,7 @@ ENV JAVA_OPTS="-Djava.security.egd=file:/dev/./urandom"
 
 ENV TZ=Asia/Shanghai
 
-ENV https_proxy="http://10.0.16.17:7890"
-ENV http_proxy="http://10.0.16.17:7890"
-ENV all_proxy="socks5://10.0.16.17:7890"
+ENV https_proxy="http://10.0.16.17:7890" http_proxy="http://10.0.16.17:7890" all_proxy="socks5://10.0.16.17:7890"
 
 RUN rm -rf webapps/* \
     && apk update \
