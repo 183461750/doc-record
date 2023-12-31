@@ -30,8 +30,6 @@ services:
     restart: on-failure
     environment:
       TZ: "Asia/Shanghai"
-    ports:
-      - "28081:28080"
     networks:
       middleware:
       self-network:
@@ -45,8 +43,6 @@ services:
     restart: on-failure
     environment:
       TZ: "Asia/Shanghai"
-    ports:
-      - "28080:28080"
     volumes:
       - /home/data/file:/usr/local/tmp/web-api/uploads/
     networks:
