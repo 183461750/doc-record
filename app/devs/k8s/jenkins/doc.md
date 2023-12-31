@@ -10,6 +10,8 @@ helm install jenkins jenkinsci/jenkins
 # 检查Jenkins：使用helm list命令检查Jenkins的部署状态，并使用kubectl get pod命令检查Jenkins的Pod状态
 # 查看ip和端口
 kubectl get svc jenkins
+# 端口映射
+kubectl --namespace default port-forward svc/jenkins 8080:8080
 # 查看备注信息
 helm get notes jenkins
 
