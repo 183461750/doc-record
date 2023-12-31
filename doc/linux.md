@@ -12,6 +12,12 @@ yum -y install docker
 hostnamectl set-hostname manager43
 ```
 
+## 获取ip地址
+
+```bash
+$(hostname -I|cut -d" " -f 1)
+```
+
 ## 配置hosts文件(可配置可不配置)
 
 ```shell
