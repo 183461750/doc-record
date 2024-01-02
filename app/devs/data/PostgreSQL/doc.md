@@ -28,3 +28,9 @@ max_connections = 10000
 # 查看最大连接数
 show max_connections;
 ```
+
+## 备份数据
+
+```bash
+docker exec -it fc870c5cd426 pg_dump --dbname=iuin --create --clean --if-exists --user aaa
+````
