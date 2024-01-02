@@ -10,15 +10,28 @@
 cd /data/docker/k8s
 # 快速安装
 docker run -d \
+  --dns=223.5.5.5 \
+  --privileged \
+  --restart=unless-stopped \
+  --name=kuboard-spray \
+  -p 80:80/tcp \
+  -e TZ=Asia/Shanghai \
+  -e https_proxy=http://10.0.16.17:7890 \
+  -e http_proxy=http://10.0.16.17:7890 \
+  -e all_proxy=socks5://10.0.16.17:7890 \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  -v ~/kuboard-spray-data:/data \
+  eipwork/kuboard-spray:latest-amd64
+# 在浏览器地址栏中输入 http://这台机器的IP地址，输入用户名 admin，默认密码 Kuboard123
+docker run -d \
+  --dns=223.5.5.5 \
   --privileged \
   --restart=unless-stopped \
   --name=kuboard-spray \
   -p 80:80/tcp \
   -e TZ=Asia/Shanghai \
   -v /var/run/docker.sock:/var/run/docker.sock \
-  -v ~/kuboard-spray-data:/data \
   eipwork/kuboard-spray:latest-amd64
-# 在浏览器地址栏中输入 http://这台机器的IP地址，输入用户名 admin，默认密码 Kuboard123
 ```
 
 ## yum安装k8s
