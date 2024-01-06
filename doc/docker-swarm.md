@@ -23,8 +23,15 @@ docker node update --label-add func=nginx worker1
 ```
 
 ## 创建网络
+
+- overlay网络
+  - [No route to host的问题](./problems/docker-swarm-networks.md)
+
 ```shell
 docker network create middleware -d overlay --scope swarm 
+
+# 指定子网范围(PS: 防止和宿主机IP冲突(error: No route to host))
+docker swarm init --default-addr-pool 192.168.0.0/16
 ```
 
 ## 部署命令
