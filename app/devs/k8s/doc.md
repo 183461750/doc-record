@@ -45,6 +45,18 @@ docker run -d \
 brew install helm
 ```
 
+## minikube
+
+```bash
+# 安装(需要依赖docker)
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube
+# 请注意，这种方法会继续以root权限运行minikube，但它可能会带来安全风险，因为"docker"驱动不应该以root权限使用。
+minikube start --force
+# 仪表盘
+minikube dashboard
+```
+
 ## kuboard可视化界面
 
 - [也可以使用helm方式部署](./kuboard/doc.md)
