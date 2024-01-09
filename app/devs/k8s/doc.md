@@ -54,6 +54,11 @@ brew install helm
 kubectl apply -f https://addons.kuboard.cn/kuboard/kuboard-v3.yaml
 # 查看
 kubectl get pods -n kuboard
+# 卸载
+kubectl delete -f https://addons.kuboard.cn/kuboard/kuboard-v3.yaml
+  # 清理遗留数据
+    # 在 master 节点以及带有 k8s.kuboard.cn/role=etcd 标签的节点上执行
+rm -rf /usr/share/kuboard
 
 ---
 
