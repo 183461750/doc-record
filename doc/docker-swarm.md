@@ -25,7 +25,7 @@ docker node update --label-add func=nginx worker1
 ## 创建网络
 
 - overlay网络
-  - [No route to host的问题](./problems/docker-swarm-networks.md)
+  - [No route to host的问题](./problems/docker-swarm-networks.md#网段冲突问题解决方案)
 
 ```shell
 docker network create middleware -d overlay --scope swarm 
