@@ -60,6 +60,22 @@ minikube dashboard
 ## kuboard可视化界面
 
 - [也可以使用helm方式部署](./kuboard/doc.md)
+- docker 方式安装
+
+```bash
+# KUBOARD_ENDPOINT="http://内网IP:80"
+docker run -d \
+  --restart=unless-stopped \
+  --name=kuboard \
+  -p 80:80/tcp \
+  -p 10081:10081/tcp \
+  -e KUBOARD_ENDPOINT="http://10.0.16.17:80" \
+  -e KUBOARD_AGENT_SERVER_TCP_PORT="10081" \
+  -v /root/kuboard-data:/data \
+  eipwork/kuboard:v3
+```
+
+- kubectl 方式安装
 
 ```bash
 # 部署
