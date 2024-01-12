@@ -35,4 +35,9 @@ sudo yum install git
 sudo yum clean all
 
 
+## 问题
+# 如果安装不成功可尝试先卸载git(也可能不是yum安装的git，就需要其他方式卸载了)
+sudo yum remove git
+sudo yum remove git-*
+
 ```
