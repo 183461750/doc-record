@@ -34,3 +34,9 @@ nameserver 223.5.5.5
 !wap.conf
 
 ```
+
+## devcontainer.json的使用
+
+- 关于"SSH_AUTH_SOCK"配置使用记录[对应的devcontainer配置](./example/.devcontainer/devcontainer.json)
+  - "SSH_AUTH_SOCK": $SSH_AUTH_SOCK, // 这个配置不生效的话，看看是不是需要在`ssh config`文件（~/.ssh/config）中配置`ForwardAgent yes`才行
+  
