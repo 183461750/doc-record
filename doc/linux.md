@@ -310,3 +310,16 @@ cp -a  /www/temp/java/BOOT-INF/lib /www/temp/java/lib
 # 使用`t`显示CPU使用百分比进度条
 # 使用`m`显示内存使用百分比进度条
 ```
+
+## 时间相关
+
+- centos
+  
+```shell
+# 查看时间
+timedatectl
+date
+# 修改时间
+date -s "2024-01-19"
+date -s "10:30:00"
+```
