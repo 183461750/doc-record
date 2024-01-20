@@ -21,6 +21,16 @@ EOF
 
 # 重载nginx配置
 nginx -s reload
+
+## 如果没有安装nginx
+# 方式一
+docker run --network=host -v /etc/nginx/conf.d/ssh.conf:/etc/nginx/conf.d/ssh.conf -i --rm nginx
+
+# 方式二
+# 安装nginx(docker安装nginx)
+docker run --network=host -it --rm nginx bash
+# 执行命令
+nohup /docker-entrypoint.sh nginx -g 'daemon off;' &
 ```
 
 - 内网服务器ssh配置
