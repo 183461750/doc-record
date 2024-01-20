@@ -314,9 +314,9 @@ cp -a  /www/temp/java/BOOT-INF/lib /www/temp/java/lib
 ## 时间相关
 
 - 相关文章
-  - [[./material/ai/centos使用date命令同步网络时间.md]]
-  - [[./material/ai/timedatectl命令怎么同步网络时间.md]]
-  - [[./material/ai/timedatectl命令怎么同步网络时间.md]]
+  - [[centos使用date命令同步网络时间]]
+  - [[timedatectl命令怎么同步网络时间]]
+  - [[timedatectl命令怎么同步网络时间]]
 
 ```shell
 # 查看时间
