@@ -313,8 +313,11 @@ cp -a  /www/temp/java/BOOT-INF/lib /www/temp/java/lib
 
 ## 时间相关
 
-- centos
-  
+- 相关文章
+  - [[./material/ai/centos使用date命令同步网络时间.md]]
+  - [[./material/ai/timedatectl命令怎么同步网络时间.md]]
+  - [[./material/ai/timedatectl命令怎么同步网络时间.md]]
+
 ```shell
 # 查看时间
 timedatectl
@@ -322,4 +325,11 @@ date
 # 修改时间
 date -s "2024-01-19"
 date -s "10:30:00"
+timedatectl set-time "YYYY-MM-DD HH:MM:SS"
+
+# 开启自动同步时间
+timedatectl set-ntp true
+# 手动同步网络时间
+date -s "$(curl -s --head http://www.baidu.com | grep '^Date:' | cut -d' ' -f3-6)Z"
+
 ```
