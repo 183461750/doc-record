@@ -6,22 +6,26 @@
 
 1. 在SSH服务器上修改配置文件：打开SSH服务器的配置文件（通常是/etc/ssh/sshd_config），找到并修改以下行：
 
-   ````shell
+   ```shell
    GatewayPorts yes
    ```
+
    这将允许SSH服务器监听所有网络接口上的转发端口，而不仅仅是本地回环地址。
 
 2. 重启SSH服务器：保存配置文件修改后，重启SSH服务器以使修改生效。可以使用以下命令重启SSH服务器：
 
-   ````shell
+   ```shell
    sudo service ssh restart
+   # 或者
+   systemctl restart sshd
    ```
 
 3. 在客户端使用外网IP访问：现在，你可以使用SSH客户端通过外网IP访问转发的端口。例如，如果你将端口转发到SSH服务器的端口2222，并且SSH服务器的外网IP是203.0.113.1，你可以使用以下命令连接到转发的端口：
 
-   ````shell
+   ```shell
    ssh -p 2222 user@203.0.113.1
    ```
+
    这将连接到SSH服务器，并将流量转发到转发的端口。
 
 请注意，修改SSH服务器的配置文件可能需要管理员权限。此外，开放SSH服务器的转发端口可能会带来安全风险，请确保只允许受信任的主机访问转发的端口。
@@ -51,7 +55,7 @@ Failed to restart ssh.service: Unit not found.
 
    ```shell
    sudo systemctl restart ssh
-   ````
+   ```
 
    如果仍然出现相同的错误，请继续以下步骤。
 
@@ -59,7 +63,7 @@ Failed to restart ssh.service: Unit not found.
 
    ```shell
    sudo systemctl status sshd
-   ````
+   ```
 
    如果SSH服务未安装或未运行，请尝试重新安装SSH服务器并启动服务。
 
@@ -67,13 +71,13 @@ Failed to restart ssh.service: Unit not found.
 
    ```shell
    sudo apt-get purge openssh-server
-   ````
+   ```
 
    然后，重新安装SSH服务器：
 
    ```shell
    sudo apt-get install openssh-server
-   ````
+   ```
 
    最后，尝试重新启动SSH服务。
 
