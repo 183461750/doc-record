@@ -12,3 +12,9 @@ docker run --rm --link <你的Redis容器名或ID>:redis -it redis redis-cli -h 
 - 相关链接
   - [数据导出](../../../../../middleware/data/redis/doc.md#导出redis中的数据)
   
+## 监听命令
+
+```shell
+# 监听是否执行了指定key
+docker exec -it 017daffcd5a3 redis-cli -c -p 7001 -a foobared MONITOR | grep "xx:key"
+```
