@@ -14,7 +14,11 @@ docker run --rm --link <你的Redis容器名或ID>:redis -it redis redis-cli -h 
   
 ## 监听命令
 
+MONITOR命令貌似只能监听当前实例的命令，无法监听集群内其他实例的命令。
+
 ```shell
 # 监听是否执行了指定key
 docker exec -it 017daffcd5a3 redis-cli -c -p 7001 -a foobared MONITOR | grep "xx:key"
+# 指定host
+docker exec -it 017daffcd5a3 redis-cli -c -h redis2 -p 7002 -a foobared MONITOR | grep "formative:prize"
 ```
