@@ -105,7 +105,6 @@ kubectl label nodes docker-desktop k8s.kuboard.cn/role=etcd
 # 密码： Kuboard123
 ```
 
-## 参考链接
+### 参考链接
 
 - [官方链接](https://kuboard.cn/install/v3/install-in-k8s.html#%E5%AE%89%E8%A3%85)
-  
