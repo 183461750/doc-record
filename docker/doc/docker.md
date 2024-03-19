@@ -351,3 +351,18 @@ docker load < nginx_latest.tar
 
 ## 以上命令将加载 nginx_latest.tar 文件中的 Nginx 最新版本镜像到本地。加载完成后，可以通过 docker images 命令查看本地镜像库中是否存在该镜像。
 ```
+
+## 本地docker命令无感远程控制服务器docker
+
+```shell
+# 两种协议, 把这个配置添加到环境变量中, `~/.zshrc`和`~/.bash_profile`
+# 一种是tcp协议，需要先在服务器上开放2375端口，然后在本机上执行
+# export DOCKER_HOST=tcp://127.0.0.1:2375
+# 另一种是ssh协议，需要在本机上安装sshpass工具，然后在本机上执行(PS: AI写的, 不知道sshpass工具是啥, 我貌似没安装)
+export DOCKER_HOST=ssh://root@23-zq.internet.company
+```
+
+- 相关文章
+  - [通过ssh协议使本地docker无感控制远程docker](https://gitee.com/LFa/doc-record/raw/f0fe47892a0ac9c4ad0c5fa908f304d63f81130d/materiel/ai/docker/%E9%80%9A%E8%BF%87ssh%E5%8D%8F%E8%AE%AE%E4%BD%BF%E6%9C%AC%E5%9C%B0docker%E6%97%A0%E6%84%9F%E6%8E%A7%E5%88%B6%E8%BF%9C%E7%A8%8Bdocker.md)
+  - [ssy_config的ssh配置](https://gitee.com/LFa/doc/raw/efd164a538c1ee1b3780aa870b0dac06864f0313/workspace/me/conf/ssh/company/ssy_config) `23-zq.internet.company`这个host来源于这个配置文件
+  
