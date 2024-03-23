@@ -18,4 +18,5 @@ kubectl config current-context
 ## 相关疑问
 
 `git clone https://github.com/ambassadorlabs/telepresence-local-quickstart.git --recurse-submodules`
-TODO: 关于这个命令中的`--recurse-submodules`作用是啥?
+    - 关于这个命令中的`--recurse-submodules`作用是啥?
+        确保在克隆主项目的同时，其依赖的所有子模块也被克隆并设置好，以便开发者可以直接开始工作，而无需手动初始化和更新子模块。
