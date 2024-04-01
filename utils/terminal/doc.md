@@ -7,6 +7,23 @@ asdf 不打算成为系统包管理器。它是一个工具版本管理器。仅
 
 [官网地址](https://asdf-vm.com/)
 
+```bash
+# 安装
+git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.14.0
+# 配置环境变量
+code ~/.zshrc
+. "$HOME/.asdf/asdf.sh"
+. "$HOME/.asdf/completions/asdf.bash"
+# 查询插件
+asdf plugin list all | grep python
+# 安装插件
+asdf plugin add python https://github.com/danhper/asdf-python.git
+# 安装python
+asdf install python latest
+# 设置版本
+asdf global python latest
+```
+
 ## Nix工具
 
 Nix，纯粹的函数式包管理器
