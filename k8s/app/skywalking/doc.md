@@ -59,7 +59,7 @@ helm install "${SKYWALKING_RELEASE_NAME}" ${REPO}/skywalking -n "${SKYWALKING_RE
 ```
 
 ```bash
-# 方式二
+# 方式二(目前用的方式)
 
 # 设置环境变量
 export SKYWALKING_RELEASE_VERSION=4.3.0
