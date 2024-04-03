@@ -43,6 +43,15 @@ docker run -d \
 ```bash
 # 安装
 brew install helm
+
+# 使用
+
+# 安装
+helm install my-release skywalking -n <namespace>
+# 查看列表
+helm list
+# 卸载
+$ helm uninstall my-release -n <namespace>
 ```
 
 ## minikube
