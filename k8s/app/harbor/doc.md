@@ -59,6 +59,8 @@ helm upgrade --namespace harbor5 harbor-helm harbor/harbor \
   --set ipFamily.ipv6.enabled=false
 
 # test示例
+
+# 镜像上传需要harbor-helm-core的pod上传, portal为管理页面 --set externalURL=http://core.harbor.domain.harbor6:8080 \
 helm upgrade --namespace harbor6 harbor-helm harbor/harbor \
   --set database.type=external \
   --set database.external.host=10.0.0.11 \
@@ -68,8 +70,7 @@ helm upgrade --namespace harbor6 harbor-helm harbor/harbor \
   --set redis.external.addr=10.0.0.23:6379 \
   --set redis.external.password=foobared \
   --set harborAdminPassword=Harbor12345 \
-  # 镜像上传需要harbor-helm-core的pod上传, portal为管理页面
-  --set externalURL=http://core.harbor.domain:8080 \
+  --set externalURL=http://core.harbor.domain.harbor6:8080 \
   --set expose.tls.enabled=false \
   --set expose.type=loadBalancer \
   --set ipFamily.ipv6.enabled=false
@@ -162,4 +163,37 @@ docker push core.harbor.domain/lx/REPOSITORY[:TAG]
 docker login -u admin -p Harbor12345 core.harbor.domain:8080
 docker tag app-service:latest core.harbor.domain:8080/lx/app-service:latest
 docker push core.harbor.domain:8080/lx/app-service:latest
+```
+
+```bash
+# 配置本地hosts(code /etc/hosts)
+127.0.0.1 harbor.harbor6
+# 转发端口到本地(PS: 由于没有kubectl, 用的docker加alias实现的[参考文档](https://github.com/183461750/doc-record/blob/b9d7b122aa78712f6106df23f92518a0bfc199be/k8s/kubectl.md))
+kubectl port-forward pods/harbor-helm-nginx-cc76b85fb-mzj7z 80:8080 -n harbor6
+docker login -u admin -p Harbor12345 harbor.harbor6
+# 拉取镜像
+docker pull harbor.harbor6/lx/app-service:latest
+```
+
+- k8s中拉取镜像
+
+```bash
+# 转发端口
+kubectl port-forward pods/harbor-helm-nginx-cc76b85fb-mzj7z 80:8080 -n harbor6
+# 配置本地hosts(code /etc/hosts)
+127.0.0.1 harbor.harbor6
+# 设置不安全容器镜像仓库[参考文档](https://github.com/183461750/doc-record/blob/c80d519ba5e1d55e5ee385a867211800ea118c4b/k8s/crictl.md)
+# 拉取镜像
+crictl pull harbor.harbor6/lx/app-service:latest
+```
+
+- NodePort服务类型的访问
+  - 在kuboard中配置
+![service配置](img/image-2.png)
+
+```bash
+# 配置本地hosts(code /etc/hosts)(PS: 配置多个IP对应一个域名会随机选择一个IP进行访问)
+10.0.1.139 harbor.harbor6
+10.0.1.177 harbor.harbor6
+
 ```
