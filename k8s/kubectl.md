@@ -76,5 +76,8 @@ docker run --net="host" --rm --name kubectl -v /etc/hosts:/etc/hosts -v ~/.kube/
 # 还可以通过设置别名的方式
 alias kubectl='docker run --rm --name kubectl -v /etc/hosts:/etc/hosts -v ~/.kube/config:/.kube/config bitnami/kubectl:latest'
 alias kubectl='docker run --net="host" --rm --name kubectl -v /etc/hosts:/etc/hosts -v ~/.kube/config:/.kube/config bitnami/kubectl:latest'
+# 或者通过sudo docker run的方式, 获得权限(用于映射像80:8080这样的需要权限的端口)
+alias kubectl='sudo docker run --user=root --net="host" --rm  --entrypoint="kubectl" --name kubectl -v /etc/hosts:/etc/hosts -v ~/.kube/config:/.kube/config bitnami/kubectl:latest'
+
 kubectl port-forward pods/harbor-helm-core-786c9f5db5-ddbkn 8081:8080 -n harbor6
 ```
