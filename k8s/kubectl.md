@@ -64,3 +64,17 @@ users:
     client-key-data: ***
 
 ```
+
+### 通过docker使用kubectl命令
+
+```shell
+# 通过docker使用kubectl命令, 需要将kubeconfig文件挂载到容器中
+# docker run --rm -it --entrypoint=kubectl kubernetes/kubectl <kubectl-commands>
+docker run --rm --name kubectl -p 8081:8081 -v /etc/hosts:/etc/hosts -v ~/.kube/config:/.kube/config bitnami/kubectl:latest port-forward pods/harbor-helm-core-786c9f5db5-ddbkn 8081:8080 -n harbor6
+# host模式绑定主机端口
+docker run --net="host" --rm --name kubectl -v /etc/hosts:/etc/hosts -v ~/.kube/config:/.kube/config bitnami/kubectl:latest port-forward pods/harbor-helm-core-786c9f5db5-ddbkn 8081:8080 -n harbor6
+# 还可以通过设置别名的方式
+alias kubectl='docker run --rm --name kubectl -v /etc/hosts:/etc/hosts -v ~/.kube/config:/.kube/config bitnami/kubectl:latest'
+alias kubectl='docker run --net="host" --rm --name kubectl -v /etc/hosts:/etc/hosts -v ~/.kube/config:/.kube/config bitnami/kubectl:latest'
+kubectl port-forward pods/harbor-helm-core-786c9f5db5-ddbkn 8081:8080 -n harbor6
+```
