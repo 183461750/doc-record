@@ -26,3 +26,9 @@ systemctl daemon-reload
 systemctl restart containerd.service
 
 ```
+
+```bash
+# 带端口的配置
+        [plugins."io.containerd.grpc.v1.cri".registry.mirrors."harbor.harbor6:30003"]
+          endpoint = ["http://harbor.harbor6:30003"]
+```
