@@ -131,6 +131,33 @@ sudo mkdir -p /etc/harbor/ssl/
 openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/harbor/ssl/harbor.key -out /etc/harbor/ssl/harbor.crt
 ```
 
+```bash
+# (参考文章)[https://wghdr.top/?p=3700]
+
+# test示例四, cert-manage自动管理ssl(有点问题)
+
+helm upgrade --namespace harbor6 harbor-helm harbor/harbor \
+  --set database.type=external \
+  --set database.external.host=10.0.0.11 \
+  --set database.external.username=dbadmin \
+  --set database.external.password=dbadmin \
+  --set redis.type=external \
+  --set redis.external.addr=10.0.0.23:6379 \
+  --set redis.external.password=foobared \
+  --set harborAdminPassword=Harbor12345 \
+  --set externalURL=core.harbor.domain \
+  --set expose.tls.auto.commonName=letsencrypt-harbor \
+  --set expose.ingress.hosts.core=core.harbor.domain \
+  --set expose.ingress.annotations.kubernetes.io/tls-acme=true \
+  --set expose.ingress.annotations.certmanager.k8s.io/issuer=letsencrypt-harbor
+
+# 检查
+kubectl get ing -n harbor6 -o yaml | grep -A 3 tls
+kubectl get secret -n harbor6 harbor-ingress -o yaml
+
+# 配置nginx.ingress.kubernetes.io/proxy-body-size=500M, 不然上传镜像可能报错
+```
+
 - 创建初始化容器, 给trivy调整文件夹权限
 
 [参考链接](https://github.com/goharbor/harbor-helm/issues/1084)
@@ -196,4 +223,13 @@ crictl pull harbor.harbor6/lx/app-service:latest
 10.0.1.139 harbor.harbor6
 10.0.1.177 harbor.harbor6
 
+```
+
+- 镜像拉取超时的问题
+
+```bash
+wget https://github.com/goharbor/harbor/releases/download/v2.9.1/harbor-offline-installer-v2.9.1.tgz
+tar xvf harbor-offline-installer-v2.9.1.tgz
+cd harbor
+nerdctl -n k8s.io load -i harbor.v2.9.1.tar.gz
 ```
