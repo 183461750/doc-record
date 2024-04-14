@@ -79,3 +79,29 @@ helm install "${SKYWALKING_RELEASE_NAME}" \
   --set elasticsearch.config.password="" \
   --set ui.image.tag=9.2.0
 ```
+
+```bash
+
+# 设置环境变量
+export SKYWALKING_RELEASE_NAME=skywalking
+export SKYWALKING_RELEASE_NAMESPACE=skywalking
+
+helm upgrade "${SKYWALKING_RELEASE_NAME}" \
+  oci://registry-1.docker.io/apache/skywalking-helm \
+  --version "4.5.0" \
+  -n "${SKYWALKING_RELEASE_NAMESPACE}" \
+  --set oap.image.repository="apache/skywalking-oap-server" \
+  --set oap.image.tag=latest \
+  --set oap.storageType=elasticsearch \
+  --set elasticsearch.enabled=false \
+  --set elasticsearch.config.host="10.0.1.90" \
+  --set elasticsearch.config.user="" \
+  --set elasticsearch.config.password="" \
+  --set ui.image.repository="apache/skywalking-ui" \
+  --set ui.image.tag=latest \
+  --set satellite.enabled=true \
+  --set satellite.image.repository="apache/skywalking-satellite" \
+  --set satellite.image.tag=v1.2.0
+
+
+```
