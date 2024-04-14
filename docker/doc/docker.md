@@ -3,6 +3,13 @@
 ## 安装docker
 
 ```shell
+# 目前使用的方式
+sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo yum install -y docker-ce docker-ce-cli containerd.io
+```
+
+```shell
 # 使用官方安装脚本自动安装
 curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 # 使用国内 daocloud 一键安装命令
