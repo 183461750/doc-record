@@ -33,4 +33,10 @@ show max_connections;
 
 ```bash
 docker exec -it fc870c5cd426 pg_dump --dbname=iuin --create --clean --if-exists --user aaa
+# pg_dump -h your_host -p your_port -U your_username -d your_database -f dump.sql
+
+export containerId=xxx host=localhost port=5432 username=postgres password=root database=xxx
+echo "$password" | docker exec -i $containerId pg_dump -h $host -p $port -U $username -d $database -f $database.sql
+echo "$password" | docker exec -i $containerId pg_dump -h $host -p $port -U $username -d $database > ./backup/$database.sql
+
 ````

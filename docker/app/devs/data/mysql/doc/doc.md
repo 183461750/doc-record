@@ -20,6 +20,12 @@ echo "$password" | docker exec -i $container_id mysqldump -h $hostname -u $usern
 echo "$password" | docker run -i --rm mysql:5.7 mysqldump -h $hostname -u $username -p $database $table > $table.sql
 ```
 
+```bash
+# 导出整个库
+echo "$password" | docker run -i --rm mysql:5.7 mysqldump -h $hostname -u $username -p $database > ./backup/$database.sql
+
+```
+
 ## 导出数据(指定sql)
 
 ```bash
