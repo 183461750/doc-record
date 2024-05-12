@@ -1,0 +1,9 @@
+input: |-
+  http { port => 8080 }
+output: |-  
+  elasticsearch {
+      hosts => ["${ELASTICSEARCH_HOST}:${ELASTICSEARCH_PORT}"]
+      manage_template => false
+      index => "%{[@metadata][beat]}-%{+YYYY.MM.dd}"
+  }
+  stdout { }
