@@ -1,5 +1,7 @@
 # linux中使用clash记录
 
+## 安装clash-for-linux
+
 - clash文件目录[内网服务器路径备忘](/root/vpn)
   - [本地备份文件](clash-linux-amd64-v1.18.0.gz)，解压命令`gzip -d clash-linux-amd64-v1.18.0.gz`
 - 补充参考链接(以前的链接不知道哪去了，新找了些补充下)
