@@ -11,4 +11,8 @@ curl -s https://packagecloud.io/install/repositories/github/git-lfs/script.deb.s
 sudo apt-get install git-lfs
 # 让仓库支持LFS
 git lfs install
+# 为了将以示例.bigfile后缀结尾的文件使用Git LFS进行存储，需要执行track命令建立追踪：
+git lfs track "*.bigfile"
+# Tracking "*.bigfile"
+
 ```
