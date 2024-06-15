@@ -14,5 +14,8 @@ git lfs install
 # 为了将以示例.bigfile后缀结尾的文件使用Git LFS进行存储，需要执行track命令建立追踪：
 git lfs track "*.bigfile"
 # Tracking "*.bigfile"
+# 你可以取消继续跟踪某类文件，并将其从cache中清理：
+git lfs untrack "*.bigfile"
+git rm --cached "*.bigfile"
 
 ```
