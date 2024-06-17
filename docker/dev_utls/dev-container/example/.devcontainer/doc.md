@@ -3,7 +3,9 @@
 关于卷挂载
 
 ```shell
-
+"mounts": [
+		"source=/Users/fa/.ssh,target=/root/.ssh,type=bind,consistency=cached"
+	],
 ```
 
 关于ssh密钥共享
