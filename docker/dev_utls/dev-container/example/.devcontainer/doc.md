@@ -8,6 +8,8 @@
 
 关于ssh密钥共享
 [参考文章](https://code.visualstudio.com/remote/advancedcontainers/sharing-git-credentials)
+[ssh-add使用](https://raw.githubusercontent.com/183461750/doc-base/d97d6b14491ec2bcbc36bc487b3b237e653b1736/me/records/os/linux/remote.md?token=GHSAT0AAAAAACHFDDN6JNMW2C7PMWBS44QYZTPVHDA)
+   需要通过ssh-add检查是否添加了对应需要共享的密钥
 
 ```shell
 # 首先，通过在终端中运行以下命令在后台启动 SSH 代理：
