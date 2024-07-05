@@ -7,3 +7,17 @@ hostname -I | cut -f1 -d' '
 # sshpass -p root ssh -o "StrictHostKeyChecking=no" root@$(hostname -I | cut -f1 -d' ') "sudo poweroff"
 sshpass -p root ssh -o StrictHostKeyChecking=no root@10.0.16.16 sudo poweroff
 ```
+
+## yum命令
+
+- 切换yum源
+
+[参考](https://developer.aliyun.com/article/675241)
+
+```bash
+# 备份旧源
+mv CentOS-Base.repo CentOS-Base.repo.v2.bak
+# 添加新源(阿里镜像源)
+wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+
+```
