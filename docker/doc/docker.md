@@ -5,6 +5,13 @@
 ```shell
 # 目前使用的方式
 sudo yum install -y yum-utils
+sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
+sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+```
+
+```shell
+# 目前使用的方式(网络不通了)
+sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
 sudo yum install -y docker-ce docker-ce-cli containerd.io
 ```
