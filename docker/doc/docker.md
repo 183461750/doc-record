@@ -7,6 +7,21 @@
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 sudo yum install docker-ce docker-ce-cli containerd.io docker-compose-plugin
+
+# 开机自启
+systemctl enable docker
+# 启动docker
+systemctl start docker
+# 配置国内镜像源()
+sudo tee /etc/docker/daemon.json <<-'EOF'
+{
+    "registry-mirrors": [
+        "https://ipl2fa8y.mirror.aliyuncs.com"
+    ]
+}
+EOF
+sudo systemctl daemon-reload
+sudo systemctl restart docker
 ```
 
 ```shell
