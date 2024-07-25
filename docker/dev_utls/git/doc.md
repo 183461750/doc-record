@@ -26,10 +26,10 @@ rpm -qi git
 # Vendor      : CentOS
 
 # 添加 End Point Yum 存储库
-sudo yum install https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm
+sudo yum install -y https://packages.endpointdev.com/rhel/7/os/x86_64/endpoint-repo.x86_64.rpm
 
 # 安装或升级 git
-sudo yum install git
+sudo yum install -y git
 
 # 如果您没有看到可用的新 git 版本，则可能需要使用以下命令清除 Yum 缓存：
 sudo yum clean all
