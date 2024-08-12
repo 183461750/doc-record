@@ -5,6 +5,9 @@
 [java hprof文件如何导出](https://github.com/183461750/doc-record/blob/9ebb07355231f4ae916fdfec741c7e0d044c35ab/materiel/ai/java/java%E4%B8%ADhprof%E6%96%87%E4%BB%B6%E5%A6%82%E4%BD%95%E5%AF%BC%E5%87%BA.md)
 
 ```shell
+# 找pid
+ps -ef | grep xxl-job-admin
+
 # [root@10-0-1-94 data]# jmap -dump:format=b,file=/data/temp/xxl-job-admin.hprof 24663
 # 24663: Unable to open socket file: target process not responding or HotSpot VM not loaded
 # The -F option can be used when the target process is not responding
