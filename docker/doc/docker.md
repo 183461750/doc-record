@@ -395,3 +395,11 @@ export DOCKER_HOST=ssh://root@23-zq.internet.company
   - [通过ssh协议使本地docker无感控制远程docker](https://gitee.com/LFa/doc-record/raw/f0fe47892a0ac9c4ad0c5fa908f304d63f81130d/materiel/ai/docker/%E9%80%9A%E8%BF%87ssh%E5%8D%8F%E8%AE%AE%E4%BD%BF%E6%9C%AC%E5%9C%B0docker%E6%97%A0%E6%84%9F%E6%8E%A7%E5%88%B6%E8%BF%9C%E7%A8%8Bdocker.md)
   - [ssy_config的ssh配置](https://gitee.com/LFa/doc/raw/efd164a538c1ee1b3780aa870b0dac06864f0313/workspace/me/conf/ssh/company/ssy_config) `23-zq.internet.company`这个host来源于这个配置文件
   
+## docker gid 查看命令
+
+[参考地址1](https://www.doubao.com/thread/w9e714164e14f12b9)
+[参考地址2](https://github.com/influxdata/sandbox/issues/79)(PS: 貌似没啥用的样子)
+
+```bash
+stat -c '%g' /var/run/docker.sock
+```
