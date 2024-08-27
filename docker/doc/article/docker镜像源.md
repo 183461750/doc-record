@@ -20,3 +20,10 @@ docker run --rm node:14.21.1-slim --registry-mirror=http://hub-mirror.c.163.com
 docker run --rm node:14.21.1-slim --registry-mirror=https://docker.mirrors.ustc.edu.cn
 
 ```
+
+- 最新可用的docker镜像源
+  - docker.fxxk.dedyn.io
+    - 顺便研究下Cloudflare Workers的工作原理, 感觉挺有用的
+    - [相关博客](https://blog.cmliussss.com/p/CF-Workers-docker.io/)
+  - 自己部署的docker镜像源
+    - [docker镜像源](https://cf-workers-docker-io-ac6.pages.dev/)
