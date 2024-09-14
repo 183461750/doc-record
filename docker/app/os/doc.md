@@ -11,4 +11,20 @@
 
 - 相关文章
   - [开源地址](https://github.com/dockur/windows)
+
+## Linux中安装可视化虚拟机
+
+- 测试版
   
+[参考文章](https://github.com/quickemu-project/quickemu/wiki/01-Installation)
+[参考文章](https://mp.weixin.qq.com/s/W99irRFN5geQ5wHr2i4y2w)
+
+```bash
+# 没成功...可能系统不支持
+yum install -y dnf
+
+sudo dnf install bash coreutils curl edk2-tools genisoimage grep jq mesa-demos pciutils procps python3 qemu sed socat spice-gtk-tools swtpm unzip usbutils util-linux xdg-user-dirs xrandr zsync
+
+git clone https://github.com/quickemu-project/quickemu.git
+
+```
