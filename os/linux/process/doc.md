@@ -21,20 +21,19 @@ top -H
 
 - 修改用户最大进程数
 
+[参考文章](https://www.cnblogs.com/operationhome/p/11966041.html)
+
 ```bash
 # 查看资源不够的应用是由哪个用户启动的(这里示例为www用户启动)
 su www
 
-vim /etc/security/limits.d/90-nproc.conf
+# centos7版本的配置
+vim /etc/security/limits.d/20-nproc.conf
 # 写入以下内容
-# soft nproc 40960
-# hard nproc 40960
+# www        soft    nproc     40960
 
-```
+# 检查是否生效
+ulimit -a
+# max user processes              (-u) 40960
 
-- 解决权限不足的问题
-
-```bash
-# 如果是www用户没有写入权限(方法一: 直接用root用户去写入就行, 方法二: 用root用户去修改文件权限)
-chmod o+w /etc/security/limits.d/90-nproc.conf
 ```
