@@ -19,6 +19,20 @@
   - 如果你想把socks代理转换成http代理，可以用privoxy这个东东。
 
 ```bash
+# 上传密钥~/.ssh/id_ed25519_ljf
+chmod 400 ~/.ssh/id_ed25519_ljf
+
+# ~/.ssh/config
+Host mac.intranet.company
+  HostName 10.0.1.251
+  User ssy
+  IdentityFile ~/.ssh/id_ed25519_ljf
+  # PasswordAuthentication 123456
+
+# ssh mac.intranet.company 看是否联通
+```
+
+```bash
 # 登录服务器10.0.1.233
 # 后台启动ssh动态转发
 mkdir -p /tmp/ssh/proxy/
