@@ -35,8 +35,8 @@ Host mac.intranet.company
 ```bash
 # 登录服务器10.0.1.233
 # 后台启动ssh动态转发
-mkdir -p /tmp/ssh/proxy/
-nohup ssh -N -D 10.0.1.233:2000 mac.intranet.company > /tmp/ssh/proxy/nohup.out  2>&1 &
+ssh -o GatewayPorts=yes -D 2000 mac.intranet.company -NTfCg
+
 # 在本机中配置socks代理, 网络流量则会通过ssh转发到服务器上, 然后在访问互联网
 # 配置地址: 10.0.1.233:2000
 ```
