@@ -8,3 +8,5 @@
 
 # 忽略所有临时目录下的文件
 **/temp/
+
+actions-runner/_diag/
