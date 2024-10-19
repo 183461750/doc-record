@@ -10,7 +10,7 @@
 
 [github设置路径](https://github.com/183461750/doc-record/settings/actions/runners/new?arch=arm64&os=osx)
 
-> PS: 以下命令均在项目根目录下操作的
+> PS: 以下命令均在项目根目录下操作的(别再根目录操作了, 文件太多, 系统都要卡住了...)
 
 Download
 
