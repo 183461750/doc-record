@@ -4,24 +4,28 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-      args:
-        HTTP_PROXY: "http://10.0.4.120:7890"
-        HTTPS_PROXY: "http://10.0.4.120:7890"
+      # args:
+      #   HTTP_PROXY: "http://10.0.4.120:7890"
+      #   HTTPS_PROXY: "http://10.0.4.120:7890"
       #   NO_PROXY: "localhost,127.0.0.1"
     user: root
     privileged: true
     ports:
-      - "3333:22"
+      - "4444:22"
     environment:
       TZ: "Asia/Shanghai"
-      https_proxy: http://10.0.16.17:7890
-      http_proxy: http://10.0.16.17:7890
-      all_proxy: socks5://10.0.16.17:7890
+      # https_proxy: http://10.0.16.17:7890
+      # http_proxy: http://10.0.16.17:7890
+      # all_proxy: socks5://10.0.16.17:7890
       config_token: AJCNPVO4NYB7UJCX6NVDZXLHCYCRG
+      RUNNER_ALLOW_RUNASROOT: 1
     restart: always
 
+# Install dependencies
+# ./bin/installdependencies.sh
+
 # Configure
-# ./config.sh --url https://github.com/183461750/doc-record --token $config_token
+# echo -e "\n" | ./config.sh --url https://github.com/183461750/doc-record --token $config_token
 # ./run.sh
 
 # Using your self-hosted runner
