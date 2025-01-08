@@ -16,3 +16,5 @@ mkdir -p ~/.wrenai && cp .env.example ~/.wrenai/.env
 ```
 
 [自定义llm文档](https://docs.getwren.ai/oss/installation/custom_llm#running-wren-ai-with-your-custom-llm-embedder-or-document-store)
+
+> 先记录, 暂时不搞了, 配置太麻烦了
