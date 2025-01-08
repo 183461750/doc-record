@@ -39,4 +39,27 @@ ssh -o GatewayPorts=yes -D 2000 mac.intranet.company -NTfCg
 
 # 在本机中配置socks代理, 网络流量则会通过ssh转发到服务器上, 然后在访问互联网
 # 配置地址: 10.0.1.233:2000
+
+# PS: 可以配合clash一起使用, 实现通过ssh让中间机器去连接指定或多个VPN, 本机不连多余的VPN(其实是不想下载一堆的VPN相关软件), 只用clash就能透传流量过去
+port: 7890
+socks-port: 7891
+allow-lan: false
+mode: Rule
+log-level: info
+external-controller: 127.0.0.1:9090
+proxies:
+  - name: ssy_bpDev_mac
+    type: socks5
+    server: 10.0.1.233
+    port: 2000
+proxy-groups:
+  - name: ssh_g
+    type: select
+    proxies:
+      - ssy_bpDev_mac
+rules:
+ # 乐橘nacos所在服务器
+ - IP-CIDR,10.0.10.180/32,ssh_g
+ - DOMAIN-SUFFIX,yelomall.cn,ssh_g
+ 
 ```
