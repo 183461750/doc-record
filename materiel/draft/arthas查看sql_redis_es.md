@@ -22,8 +22,10 @@ watch java.sql.Statement executeQuery '{params,returnObj,throwExp}'  -x 2
 # 看到的是jpa的非本地sql
 watch javax.persistence.EntityManager createQuery '{params,returnObj,throwExp}'  -n 5  -x 3 
 
-# sql
+# jpa(完整sql)
 watch java.sql.Statement executeQuery '{params,returnObj,throwExp}'  -x 2
+# mybatis plus (参数和sql分离)
+watch org.apache.ibatis.mapping.BoundSql <init> '{params,returnObj,throwExp}' -x 2
 
 # es
 watch org.elasticsearch.client.RestHighLevelClient search '{params,throwExp}' -x 2
