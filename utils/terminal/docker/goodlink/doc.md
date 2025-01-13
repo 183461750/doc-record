@@ -17,7 +17,11 @@ docker run -d --name=goodlink --net=host --restart=always registry.cn-shanghai.a
 ## 命令方式
 
 ```bash
+chmod +x ./goodlink-linux-amd64
 ./goodlink-linux-amd64 --key=nas_202412140928
+./goodlink-linux-arm64 --local=127.0.0.1:18080 --key=nas_202412140928
+# 后台执行, 收集日志到文件中(PS: 2>&1 作用为将标准错误重定向到标准输出, 即写入goodlink.log日志文件)
+nohup ./goodlink-linux-amd64 --key=nas_202412140928 > ./goodlink.log 2>&1 &
 ```
 
 - 异常
