@@ -32,6 +32,8 @@ Host mac.intranet.company
 # ssh mac.intranet.company 看是否联通
 ```
 
+- [ssh动态代理](ssh动态代理)
+
 ```bash
 # 登录服务器10.0.1.233
 # 后台启动ssh动态转发
