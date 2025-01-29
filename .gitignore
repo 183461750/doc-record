@@ -1,0 +1,12 @@
+# Created by .ignore support plugin (hsz.mobi)
+.idea/
+.obsidian/
+.vscode/
+
+.DS_Store
+**/.DS_Store
+
+# 忽略所有临时目录下的文件
+**/temp/
+
+actions-runner/_diag/
