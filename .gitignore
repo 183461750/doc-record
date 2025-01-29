@@ -10,3 +10,6 @@
 **/temp/
 
 actions-runner/_diag/
+
+node_modules
+dist
