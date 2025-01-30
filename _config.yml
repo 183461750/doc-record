@@ -27,6 +27,37 @@ url: ""
 # 主题设置
 remote_theme: just-the-docs/just-the-docs
 
+# 导航设置
+nav:
+  enable: true
+
+# 目录设置
+collections:
+  docs:
+    output: true
+    permalink: /:collection/:path/
+
+# Just the Docs 配置
+just_the_docs:
+  collections:
+    docs:
+      name: Documentation
+
+# 启用自动生成导航
+aux_links:
+  "GitHub":
+    - "https://github.com/183461750/doc-record"
+
+# 启用自动生成目录
+nav_external_links:
+  - title: Doc Record on GitHub
+    url: https://github.com/183461750/doc-record
+    hide_icon: false
+    opens_in_new_tab: true
+
+# 目录排序方式
+nav_sort: case_sensitive
+
 # 启用搜索
 search_enabled: true
 search:
@@ -41,22 +72,8 @@ search:
 # 启用深色模式
 color_scheme: dark
 
-# 导航排序
-nav_sort: case_sensitive
-
 # 启用复制代码按钮
 enable_copy_code_button: true
-
-# 目录设置
-collections:
-  docs:
-    permalink: "/:collection/:path/"
-    output: true
-
-just_the_docs:
-  collections:
-    docs:
-      name: Documentation
 
 # 排除的文件和目录
 exclude:

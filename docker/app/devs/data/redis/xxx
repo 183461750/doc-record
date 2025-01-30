@@ -1,9 +1,0 @@
-192.168.0.4 manage-3 redis-3(7003)
-192.168.0.5 worker-1 redis-2
-192.168.0.6 manage-2 redis-1 redis-4
-192.168.0.7 manage-1 redis-6
-192.168.0.8 worker-2 redis-5 redis-cluster
-
-redis-cli --cluster create 192.168.0.6:7001 192.168.0.5:7002 192.168.0.4:7003 192.168.0.6:7004 192.168.0.8:7005 192.168.0.7:7006 --cluster-replicas 1 -a foobared
-
-redis-cli --cluster create 192.168.0.7:7001 192.168.0.7:7002 192.168.0.6:7003 192.168.0.4:7004 192.168.0.5:7005 192.168.0.8:7006 --cluster-replicas
