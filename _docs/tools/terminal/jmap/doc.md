@@ -1,8 +1,9 @@
 ---
 layout: default
-title: doc
-parent: terminal
-nav_order:       13
+title: JMap
+parent: Terminal
+grand_parent: 工具集
+nav_order: 4
 ---
 
 # jmap的使用
@@ -35,5 +36,3 @@ jmap -F -dump:format=b,file=/data/temp/xxl-job-admin.hprof 24663
 
 # HeapDumpPath 为你的工程完成路径，到出到 dump 文件夹下。
 # 运行方法后，就可以在 docs/dump 就可以看到产生的日志了。
-
-```

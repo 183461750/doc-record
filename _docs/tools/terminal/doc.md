@@ -1,8 +1,9 @@
 ---
 layout: default
-title: doc
+title: Terminal
 parent: 工具集
-nav_order:       12
+nav_order: 12
+has_children: true
 ---
 
 # 命令行使用记录文档

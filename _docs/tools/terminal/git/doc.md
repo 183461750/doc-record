@@ -1,8 +1,9 @@
 ---
 layout: default
-title: doc
-parent: terminal
-nav_order:       13
+title: Git
+parent: Terminal
+grand_parent: 工具集
+nav_order: 13
 ---
 
 # git使用记录

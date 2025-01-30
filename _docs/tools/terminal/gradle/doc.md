@@ -1,8 +1,9 @@
 ---
 layout: default
-title: doc
-parent: terminal
-nav_order:       13
+title: Gradle
+parent: Terminal
+grand_parent: 工具集
+nav_order: 2
 ---
 
 # gradle使用

@@ -1,8 +1,9 @@
 ---
 layout: default
-title: doc
-parent: softs
-nav_order:       13
+title: Clash
+parent: 软件工具
+grand_parent: 工具集
+nav_order: 2
 ---
 
 # linux中使用clash记录
@@ -68,5 +69,3 @@ export https_proxy=http://用户名1:密码1@127.0.0.1:12345 http_proxy=http://�
 # config.yaml中的这个配置为DashBoard的外部控制端口
 external-controller: :9090
 # 自己本地电脑中安装的clash可在设置中的配置界面找到远程控制器管理界面，在其中添加对应的api url（http://ip:9090）进行远程控制
-
-```

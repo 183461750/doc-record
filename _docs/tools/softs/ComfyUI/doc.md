@@ -1,8 +1,9 @@
 ---
 layout: default
-title: doc
-parent: softs
-nav_order:       13
+title: ComfyUI
+parent: 软件工具
+grand_parent: 工具集
+nav_order: 1
 ---
 
 # ComfyUI

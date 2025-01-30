@@ -1,8 +1,9 @@
 ---
 layout: default
-title: doc
-parent: softs
-nav_order:       13
+title: Cursor
+parent: 软件工具
+grand_parent: 工具集
+nav_order: 3
 ---
 
 

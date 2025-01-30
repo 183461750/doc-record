@@ -1,8 +1,9 @@
 ---
 layout: default
-title: doc
-parent: terminal
-nav_order:       13
+title: Arthas
+parent: Terminal
+grand_parent: 工具集
+nav_order: 1
 ---
 
 # arthas使用记录

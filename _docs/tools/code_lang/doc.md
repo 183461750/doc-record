@@ -1,8 +1,8 @@
 ---
 layout: default
-title: doc
+title: 编程语言
 parent: 工具集
-nav_order:       12
+nav_order: 1
 ---
 
 # 编程语言相关记录
