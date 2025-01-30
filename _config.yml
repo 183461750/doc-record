@@ -21,8 +21,8 @@
 title: Doc Record
 email: 183461750@example.com
 description: Documentation Repository
-baseurl: ""
-url: "https://183461750.github.io/doc-record"
+baseurl: "/doc-record"
+url: "https://183461750.github.io"
 twitter_username: iuin_Fa
 github_username:  '183461750'
 
