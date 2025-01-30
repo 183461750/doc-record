@@ -13,3 +13,9 @@ actions-runner/_diag/
 
 node_modules
 dist
+
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
