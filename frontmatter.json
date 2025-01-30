@@ -48,11 +48,15 @@
   ],
   "frontMatter.framework.id": "jekyll",
   "frontMatter.content.publicFolder": "assets",
-  "frontMatter.preview.host": "http://localhost:4000",
+  "frontMatter.preview.host": "http://localhost:4000/doc-record/",
   "frontMatter.content.pageFolders": [
     {
       "title": "posts",
       "path": "[[workspace]]/_posts"
+    },
+    {
+      "title": "docs",
+      "path": "[[workspace]]/_docs"
     }
   ],
   "frontMatter.git.enabled": true
