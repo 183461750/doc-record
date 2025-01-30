@@ -1,0 +1,41 @@
+# 部署哨兵（按一主多从配置）（可配合docker-compose-cluster-2.yml一起使用）
+version: '3.4'
+
+services:
+
+  sentinel:
+    image: redis:6.0
+    networks:
+      - redisdb
+    ports:
+      - 26379:26379
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+    command:
+      bash -c "echo 'port 26379' > sentinel.conf &&
+      echo 'dir /tmp' >> sentinel.conf &&
+
+      echo 'sentinel monitor master-1 master 6379 2' >> sentinel.conf &&
+
+      echo 'sentinel down-after-milliseconds master-1 5000' >> sentinel.conf &&
+      echo 'sentinel parallel-syncs master-1 1' >> sentinel.conf &&
+      echo 'sentinel failover-timeout master-1 5000' >> sentinel.conf &&
+
+      echo 'sentinel auth-pass master-1 foobared' >> sentinel.conf &&
+
+      cat sentinel.conf &&
+      redis-sentinel sentinel.conf"
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  redisdb:
+    driver: overlay
+
+# master-1 10.0.2.8
+# slave-1 10.0.2.3
+# slave-2 10.0.2.4

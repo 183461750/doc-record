@@ -1,0 +1,110 @@
+# 部署多主多从(v2)
+version: '3.8'
+services:
+
+  redis1:
+    image: redis:5.0.4
+    volumes:
+      - redis1_data:/data
+      - redis1_logs:/logs
+    networks:
+      - middleware
+    ports:
+      - target: 7001
+        published: 7001
+        protocol: tcp
+        mode: host
+      - target: 17001
+        published: 17001
+        protocol: tcp
+        mode: host
+    command:
+      bash -c "echo 'port 7001' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      echo 'cluster-announce-ip 10.0.16.17' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  redis2:
+    image: redis:5.0.4
+    volumes:
+      - redis2_data:/data
+      - redis2_logs:/logs
+    networks:
+      - middleware
+    ports:
+      - target: 7002
+        published: 7002
+        protocol: tcp
+        mode: host
+      - target: 17002
+        published: 17002
+        protocol: tcp
+        mode: host
+    command:
+      bash -c "echo 'port 7002' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      echo 'cluster-announce-ip 10.0.16.17' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+  redis3:
+    image: redis:5.0.4
+    volumes:
+      - redis3_data:/data
+      - redis3_logs:/logs
+    networks:
+      - middleware
+    ports:
+      - target: 7003
+        published: 7003
+        protocol: tcp
+        mode: host
+      - target: 17003
+        published: 17003
+        protocol: tcp
+        mode: host
+    command:
+      bash -c "echo 'port 7003' > redis.conf  &&
+      echo 'bind 0.0.0.0' >> redis.conf &&
+      echo 'protected-mode no' >> redis.conf &&
+      echo 'cluster-enabled yes' >> redis.conf &&
+      echo 'appendonly yes' >> redis.conf &&
+      echo 'requirepass foobared' >> redis.conf  &&
+      echo 'masterauth foobared' >> redis.conf  &&
+      echo 'cluster-announce-ip 10.0.16.17' >> redis.conf  &&
+      cat redis.conf &&
+      redis-server redis.conf"
+    deploy:
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  redis1_data:
+  redis1_logs:
+  redis2_data:
+  redis2_logs:
+  redis3_data:
+  redis3_logs:
+
+networks:
+  middleware:
+    external: true
+
+# 相关执行说明文档看./doc.md文件

@@ -1,0 +1,134 @@
+# docker exec -it ndb_management ndb_mgm
+# docker exec -it ndb_mysqld1 mysql -uroot -p
+# docker exec -it ndb_mysqld2 mysql -uroot -p
+version: '3'
+
+services:
+  # 服务名，在同一个网络下的docker容器之间可以通过服务名访问，
+  # 所以我在创建容器以及后面的配置文件中没有指定IP
+  ndb_management:
+    image: mysql/mysql-cluster:8.0
+    # 容器名，docker exec等命令用的
+    container_name: ndb_management
+    # 容器启动命令
+    # command会传给entrypoint.sh并启动不同的服务
+    # 这个就只是启动的 ~ $ ndb_mgmd --ndb-nodeid=1 ...
+    command: [
+      'ndb_mgmd',
+      '--ndb-nodeid=1',
+      '--reload',
+      '--initial'
+    ]
+    # 容器卷，用来配置集群
+    # 集群配置文件为mysql-cluster.cnf
+    # 对应到容器里面的/etc/mysql-cluster.cnf，至于为什么，大家可以去看下镜像的源码
+    volumes:
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
+      - ./my.cnf:/etc/my.cnf
+      - ndb_management_mysql:/var/lib/mysql
+    ports:
+      - "1186:1186"
+    # 指定网络
+    networks:
+      - my_cluster
+  
+  ndb_data1:
+    image: mysql/mysql-cluster:8.0
+    container_name: ndb_data1
+    command: [
+      'ndbd',
+      ' --initial'
+    ]
+    volumes:
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
+      - ./my.cnf:/etc/my.cnf
+      - ndb_data1_mysql:/var/lib/mysql
+    networks:
+      - my_cluster
+
+  ndb_data2:
+    image: mysql/mysql-cluster:8.0
+    container_name: ndb_data2
+    command: [
+      'ndbd',
+      ' --initial'
+    ]
+    volumes:
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
+      - ./my.cnf:/etc/my.cnf
+      - ndb_data2_mysql:/var/lib/mysql
+    networks:
+      - my_cluster
+  
+  ndb_mysqld1:
+    image: mysql/mysql-cluster:8.0
+    container_name: ndb_mysqld1
+    command: [
+      'mysqld',
+      '--default-authentication-plugin=mysql_native_password'
+    ]
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: mycluster
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
+      - ./my.cnf:/etc/my.cnf
+      - ndb_mysqld1_mysql:/var/lib/mysql
+    networks:
+      - my_cluster
+    ports:
+      - "3306:3306"
+    depends_on:
+      - ndb_management
+      - ndb_data1
+      - ndb_data2
+
+  ndb_mysqld2:
+    image: mysql/mysql-cluster:8.0
+    container_name: ndb_mysqld2
+    command: [
+      'mysqld',
+      '--default-authentication-plugin=mysql_native_password'
+    ]
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_USER: test
+      MYSQL_PASSWORD: test
+      MYSQL_ROOT_HOST: '%'
+    volumes:
+      - ./mysql-cluster.cnf:/etc/mysql-cluster.cnf
+      - ./my.cnf:/etc/my.cnf
+      - ndb_mysqld2_mysql:/var/lib/mysql
+    networks:
+      - my_cluster
+    ports:
+      - "3307:3306"
+    depends_on:
+      - ndb_management
+      - ndb_data1
+      - ndb_data2
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   ports:
+  #     - 8081:8080
+  #   links:
+  #     - ndb_mysqld1:db1
+  #     - ndb_mysqld2:db2
+  #   networks:
+  #     - my_cluster
+
+networks:
+  my_cluster:
+    driver: bridge
+
+volumes:
+  ndb_management_mysql:
+  ndb_data1_mysql:
+  ndb_data2_mysql:
+  ndb_mysqld1_mysql:
+  ndb_mysqld2_mysql:

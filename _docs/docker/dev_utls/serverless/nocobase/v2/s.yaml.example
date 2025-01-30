@@ -1,0 +1,46 @@
+edition: 1.0.0
+name: nocobase-app
+access: "default"
+
+vars: # 全局变量
+  region: {region}
+  service:
+    name: "nocobaseService"
+    nasConfig: auto
+
+services:
+  nocobaseService:
+    component: fc
+    actions:
+      post-deploy:
+        - component: fc nas upload -ro /app/nocobase/storage/db /mnt/auto/nocobase/storage/db
+    props:
+      region: ${vars.region}
+      service: ${vars.service}
+      function:
+        name: nocobaseFc
+        runtime: custom-container
+        timeout: 60
+        memorySize: 512
+        instanceConcurrency: 100
+        caPort: {CONTAINER_PORT}
+        customContainerConfig:
+          image: registry.{region}.aliyuncs.com/{IMAGE_NAMESPACE}/{IMAGE_NAME}
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+              - OPTIONS
+      customDomains:
+        - domainName: Auto
+          protocol: HTTP
+          routeConfigs:
+            - path: /*
+              

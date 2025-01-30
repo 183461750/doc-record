@@ -1,0 +1,50 @@
+---
+layout: default
+title: doc
+parent: simple
+nav_order:       18
+---
+
+# 说明文档
+
+- 简化版流程
+  - todo：要记得检查yml文件中的IP是否正确，是否变更过
+
+```shell
+
+# 启动节点
+docker stack deploy -c redis.yml redis-cluster
+
+# 搭建集群(自动拼接端口的方式)
+docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli --cluster create $(for index in {1..6}; do echo "10.0.16.17:700${index}"; done) --cluster-replicas 1 -a foobared
+
+# 查看集群是否健康
+docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli -p 7001 -a foobared cluster info
+
+### 测试执行命令
+docker exec -it $(docker ps -qf "name=redis-cluster_redis1.1") redis-cli -c -p 7001 -a foobared info Replication
+
+```
+
+- 自动输入yes
+
+```bash
+# 自动拼接并输入yes执行命令
+
+# 方式一
+yes yes | docker exec -i $(docker ps -qf "name=rds-cluster_redis1.1") redis-cli --cluster create $(docker inspect -f '{{.NetworkSettings.Networks.middleware.IPAddress}}:{{range $p, $conf := .NetworkSettings.Ports}}{{if eq (index (split $p "/") 0 | printf "%.3s") "800"}}{{(index (split $p "/") 0)}}{{end}}{{end}}' $(docker ps -qf "name=rds-cluster_redis")) --cluster-replicas 0 -a foobared
+
+# 方式二
+docker exec -i $(docker ps -qf "name=rds-cluster_redis1.1") redis-cli --cluster create $(docker inspect -f '{{.NetworkSettings.Networks.middleware.IPAddress}}:{{range $p, $conf := .NetworkSettings.Ports}}{{if eq (index (split $p "/") 0 | printf "%.3s") "800"}}{{(index (split $p "/") 0)}}{{end}}{{end}}' $(docker ps -qf "name=rds-cluster_redis")) --cluster-replicas 0 -a foobared << EOF
+yes
+EOF
+
+```
+
+- 删除指定前缀的volume
+  - grep的-o参数为只打印匹配到的字符串
+  - xargs的-r参数为如果没有参数输入，xargs命令将不会执行后面的命令。
+
+```bash
+docker volume ls | grep -o "redis-cluster.*" | xargs -r docker volume rm
+```

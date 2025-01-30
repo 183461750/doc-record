@@ -1,0 +1,17 @@
+version: "3"
+services:
+  openvpn:
+    image: curve25519xsalsa20poly1305/openvpn-socks5
+    restart: always
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 1080:1080
+    environment:
+      - OPENVPN_CONFIG=/config/config.ovpn
+      - SOCKS5_USER=liujinfa
+      - SOCKS5_PASS=liujinfa
+    volumes:
+      - ./config:/config
+    devices:
+      - /dev/net/tun

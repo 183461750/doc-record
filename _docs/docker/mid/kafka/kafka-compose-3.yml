@@ -1,0 +1,83 @@
+
+version: '3.8'
+
+services:
+  zoo1:
+    image: zookeeper
+    networks:
+      - kafka
+    hostname: zoo1
+    ports: # 端口
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
+    volumes:
+      - "zoo1conf:/conf"
+      - "zoo1data:/data"
+      - "zoo1datalog:/datalog"
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  kafka:
+    image: wurstmeister/kafka
+    depends_on:
+      - zoo1
+    ports:
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: host
+    environment:
+      HOSTNAME_COMMAND: "docker info -f '{{`{{.Swarm.NodeAddr}}`}}'"
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{HOSTNAME_COMMAND}:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true'
+      KAFKA_LOG_DIRS: /kafka/kafka_log
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - "/data/docker/kafka:/kafka"
+    networks:
+      - kafka
+    deploy:
+      mode: global
+
+  kafka-manager:
+    image: hlebalbau/kafka-manager:stable
+    ports:
+      - "9012:9000"
+    depends_on:
+      - zoo1
+    environment:
+      ZK_HOSTS: "zoo1:2181"
+      APPLICATION_SECRET: "random-secret"
+    networks:
+      - kafka
+
+volumes:
+  zoo1data:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=111.111.3.41,rw"
+      device: ":/data/docker/kafka/zoo1/data"
+  zoo1datalog:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=111.111.3.41,rw"
+      device: ":/data/docker/kafka/zoo1/datalog"
+  zoo1conf:
+    driver: local
+    driver_opts:
+      type: "nfs"
+      o: "addr=111.111.3.41,rw"
+      device: ":/data/docker/kafka/zoo1/conf"
+
+networks:
+  kafka:
+    driver: overlay
