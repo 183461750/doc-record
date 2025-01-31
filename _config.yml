@@ -27,6 +27,13 @@ url: ""
 # 主题设置
 remote_theme: just-the-docs/just-the-docs
 
+# 图片路径设置
+defaults:
+  - scope:
+      path: "assets/images"
+    values:
+      image: true
+
 # 导航设置
 nav:
   enable: true
@@ -87,6 +94,17 @@ exclude:
   - vendor/cache/
   - vendor/gems/
   - vendor/ruby/
+
+# Jekyll 资源处理
+sass:
+  style: compressed
+  
+kramdown:
+  auto_ids: true
+  input: GFM
+  hard_wrap: false
+  syntax_highlighter: rouge
+  smart_quotes: ["apos", "apos", "quot", "quot"]
 
 # 默认设置
 defaults:

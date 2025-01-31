@@ -1,0 +1,6 @@
+{% comment %}
+使用方法:
+{% include image.html name="your-image.jpg" alt="图片描述" %}
+{% endcomment %}
+
+<img src="{{ site.baseurl }}/assets/images/{{ include.name }}" alt="{{ include.alt | default: include.name }}" {% if include.width %}width="{{ include.width }}"{% endif %} {% if include.class %}class="{{ include.class }}"{% endif %} />

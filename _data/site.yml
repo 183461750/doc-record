@@ -1,0 +1,4 @@
+# 图片相关配置
+images:
+  path: /assets/images
+  default_alt: 图片
