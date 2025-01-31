@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"docker-container-permission-denied"'
+title: docker-container-permission-denied
 nav_order: 13
 description: docker容器没权限问题
 parent: doc

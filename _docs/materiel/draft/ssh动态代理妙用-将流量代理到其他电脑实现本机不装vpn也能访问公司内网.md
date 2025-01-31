@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"ssh动态代理妙用-将流量代理到其他电脑实现本机不装vpn也能访问公司内网"'
+title: ssh动态代理妙用-将流量代理到其他电脑实现本机不装vpn也能访问公司内网
 nav_order: 12
 description: ssh动态代理妙用-将流量代理到其他电脑实现本机不装vpn也能访问公司内网
 parent: materiel

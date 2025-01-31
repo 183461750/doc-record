@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 15
 description: postgresql数据库相关文档
 parent: data

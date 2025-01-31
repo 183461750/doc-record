@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"Git"'
+title: Git
 nav_order: 13
 description: git使用记录
 parent: Terminal

@@ -52,10 +52,10 @@ class DocOrganizer
     content = <<~MARKDOWN
     ---
     layout: default
-    title: "#{title}"
+    title: #{title}
     nav_order: #{order}
     has_children: true
-    permalink: "#{permalink}"
+    permalink: #{permalink}
     ---
 
     # #{title}
@@ -80,6 +80,24 @@ class DocOrganizer
     end
   end
 
+  def get_parent_dir(file)
+    rel_path = file.sub(@docs_dir, '').sub(/^\//, '')
+    parts = rel_path.split('/')
+    return nil if parts.length <= 1
+    
+    parent_path = parts[0..-2].join('/')
+    # 查找父目录中的 index.md 文件
+    parent_index = File.join(@docs_dir, parent_path, 'index.md')
+    if File.exist?(parent_index)
+      content = File.read(parent_index)
+      if content =~ /^---\s*\n(.*?)\n---\s*$/m
+        front_matter = YAML.load($1) rescue {}
+        return front_matter['title'] if front_matter['title']
+      end
+    end
+    nil
+  end
+
   def update_front_matter
     Dir.glob(File.join(@docs_dir, '**', '*.md')).each do |file|
       content = File.read(file)
@@ -99,9 +117,13 @@ class DocOrganizer
         front_matter['layout'] = 'default'
         front_matter['has_children'] = false if front_matter['has_children'].nil?
         
-        # 确保 title 有引号
+        # 设置 parent 字段
+        parent_title = get_parent_dir(file)
+        front_matter['parent'] = parent_title if parent_title
+        
+        # 处理 title，确保没有多余的引号
         if front_matter['title']
-          front_matter['title'] = %Q("#{front_matter['title']}") unless front_matter['title'].start_with?('"') || front_matter['title'].start_with?("'")
+          front_matter['title'] = front_matter['title'].to_s.gsub(/^["']|["']$/, '')
         end
         
         # 生成规范的 permalink

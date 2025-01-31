@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"curl 看连接是否通"'
+title: curl 看连接是否通
 nav_order: 15
 description: curl 看连接是否通
 parent: ai

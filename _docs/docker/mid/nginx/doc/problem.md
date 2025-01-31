@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"problem"'
+title: problem
 nav_order: 14
 description: nginx相关问题
 parent: nginx

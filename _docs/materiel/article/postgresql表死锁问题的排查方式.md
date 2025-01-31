@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"postgresql表死锁问题的排查方式"'
+title: postgresql表死锁问题的排查方式
 nav_order: 438
 description: postgresql表死锁问题的排查方式_PostgreSQL_脚本之家
 has_children: false

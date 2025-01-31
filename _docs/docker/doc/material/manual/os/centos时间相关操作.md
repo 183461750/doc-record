@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"centos时间相关操作"'
+title: centos时间相关操作
 nav_order: 15
 description: centos时间相关操作
 parent: manual

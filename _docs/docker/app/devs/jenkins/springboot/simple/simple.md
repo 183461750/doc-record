@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 16
 description: maven使用dockerfile插件构建项目- 参考项目[https://gitee.com/LFa/demo-test.git]   Jenkins配置-
   创建maven项目- Build[Goals and options -> clean install -Dmaven.test.skip=true]- Post

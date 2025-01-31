@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 13
 description: cert-manager使用记录
 parent: docs

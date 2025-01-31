@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"Cursor"'
+title: Cursor
 nav_order: 3
 description: cursor
 parent: 软件工具

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"version"'
+title: version
 nav_order: 15
 description: "- 兼容新版本"
 parent: nocouase

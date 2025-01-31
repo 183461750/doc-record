@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"firewalld"'
+title: firewalld
 nav_order: 12
 description: firewalld防火墙相关配置
 parent: Docker

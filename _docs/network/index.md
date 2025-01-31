@@ -1,9 +1,10 @@
 ---
 layout: default
-title: '"网络"'
+title: 网络
 nav_order: 7
 has_children: true
 permalink: "/network/"
+parent: '"网络"'
 ---
 
 # 网络

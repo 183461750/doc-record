@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 15
 description: 文档说明
 parent: data

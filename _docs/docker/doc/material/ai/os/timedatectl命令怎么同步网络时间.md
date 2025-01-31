@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"timedatectl命令怎么同步网络时间"'
+title: timedatectl命令怎么同步网络时间
 nav_order: 15
 description: timedatectl命令怎么同步网络时间
 parent: ai

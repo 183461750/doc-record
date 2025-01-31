@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"docker-swarm-networks"'
+title: docker-swarm-networks
 nav_order: 13
 description: docker swarm networks
 parent: doc

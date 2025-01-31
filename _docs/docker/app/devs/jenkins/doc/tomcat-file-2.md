@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"tomcat-file-2"'
+title: tomcat-file-2
 nav_order: 15
 description: 构建tomcat应用的相关记录
 parent: jenkins

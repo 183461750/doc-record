@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"Clash"'
+title: Clash
 nav_order: 2
 description: linux中使用clash记录
 parent: 软件工具

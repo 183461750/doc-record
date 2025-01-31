@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"java"'
+title: java
 nav_order: 15
 description: java 启动 相关记录
 parent: jenkins

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"centos使用date命令同步网络时间"'
+title: centos使用date命令同步网络时间
 nav_order: 15
 description: centos使用date命令同步网络时间
 parent: ai

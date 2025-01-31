@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 16
 description: Jenkins使用maven
 parent: doc

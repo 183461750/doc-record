@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"problem"'
+title: problem
 nav_order: 15
 description: jenkins部署相关问题记录
 parent: jenkins

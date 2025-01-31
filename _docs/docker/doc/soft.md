@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"soft"'
+title: soft
 nav_order: 12
 description: 软件相关
 parent: Docker

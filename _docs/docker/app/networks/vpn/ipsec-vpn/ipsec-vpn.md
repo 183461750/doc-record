@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 15
 description: ipsec-vpn
 parent: vpn

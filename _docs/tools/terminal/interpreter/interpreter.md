@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"Interpreter"'
+title: Interpreter
 nav_order: 3
 description: interpreter
 parent: Terminal

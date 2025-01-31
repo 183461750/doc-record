@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"ComfyUI"'
+title: ComfyUI
 nav_order: 1
 description: ComfyUI
 parent: 软件工具

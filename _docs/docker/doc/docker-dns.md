@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"docker-dns"'
+title: docker-dns
 nav_order: 12
 description: docker内置DNS记录
 parent: Docker

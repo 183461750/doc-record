@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"docker-registry-doc-test"'
+title: docker-registry-doc-test
 nav_order: 14
 description: 部署docker-registry相关文档
 parent: nginx

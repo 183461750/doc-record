@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 16
 description: tomcat部署war包相关文档
 parent: uackend

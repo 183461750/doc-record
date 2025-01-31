@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"docker-compose"'
+title: docker-compose
 nav_order: 12
 description: docker-compose相关记录
 parent: Docker

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"README"'
+title: README
 nav_order: 18
 description: TiDB dashboard With Grafana v5.x or later, we can use provisioning feature
   to statically provision datasources and dashboards. No need to use scripts to configure

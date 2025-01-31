@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"ssh-remote"'
+title: ssh-remote
 nav_order: 15
 description: 远程登陆
 parent: jenkins

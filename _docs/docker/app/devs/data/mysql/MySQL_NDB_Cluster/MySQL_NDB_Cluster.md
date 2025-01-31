@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 16
 description: mysql ndb cluster相关文档
 parent: mysql

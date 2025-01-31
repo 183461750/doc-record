@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"git管理子项目的方式"'
+title: git管理子项目的方式
 nav_order: 13
 description: git管理子项目的方式
 parent: ai

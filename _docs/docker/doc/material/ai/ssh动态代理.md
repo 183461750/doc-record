@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"ssh动态代理"'
+title: ssh动态代理
 nav_order: 14
 description: 以下是对命令 `ssh -o GatewayPorts=yes -D 2000 test-2023.intranet.company -NTfCg`
   的逐项解析和完整说明：

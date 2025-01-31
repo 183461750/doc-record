@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"docker-compose服务间依赖通过自定义健康检查实现顺序启动"'
+title: docker-compose服务间依赖通过自定义健康检查实现顺序启动
 nav_order: 13
 description: docker-compose服务间依赖通过自定义健康检查实现顺序启动
 parent: doc

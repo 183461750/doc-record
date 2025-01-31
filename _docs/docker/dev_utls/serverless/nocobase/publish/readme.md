@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"readme"'
+title: readme
 nav_order: 15
 description: start-nocobase 帮助文档
 parent: nocouase

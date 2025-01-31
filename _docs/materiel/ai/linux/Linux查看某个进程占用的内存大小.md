@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"Linux查看某个进程占用的内存大小"'
+title: Linux查看某个进程占用的内存大小
 nav_order: 13
 description: Linux查看某个进程占用的内存大小
 parent: ai

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"centos系统彻底卸载docker和k8s"'
+title: centos系统彻底卸载docker和k8s
 nav_order: 13
 description: centos系统彻底卸载docker和k8s
 parent: ai

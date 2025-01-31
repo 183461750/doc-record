@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"spring-data-redis中的依赖的jedis添加了optional=true需要开发者主动显式依赖的问题"'
+title: spring-data-redis中的依赖的jedis添加了optional=true需要开发者主动显式依赖的问题
 nav_order: 12
 description: spring-data-redis中的依赖的jedis添加了`<optional>true<optional>`需要开发者主动显式依赖的问题
 parent: materiel

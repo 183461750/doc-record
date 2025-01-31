@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 13
 description: firefox浏览器相关说明
 parent: app

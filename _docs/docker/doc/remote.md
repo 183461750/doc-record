@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"remote"'
+title: remote
 nav_order: 12
 description: 远程连接相关记录
 parent: Docker

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"nodeJs-doc"'
+title: nodeJs-doc
 nav_order: 15
 description: jenkins构建node项目
 parent: jenkins

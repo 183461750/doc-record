@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 16
 description: 配置docker镜像私服hosts```shellwhereis hostsvi /etc/hosts
 parent: docker_registry

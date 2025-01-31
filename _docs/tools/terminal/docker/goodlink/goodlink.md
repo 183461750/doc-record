@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 14
 description: 两台主机之间直连
 parent: Docker

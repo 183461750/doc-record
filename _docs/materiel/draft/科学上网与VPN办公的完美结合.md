@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"科学上网与VPN办公的完美结合"'
+title: 科学上网与VPN办公的完美结合
 nav_order: 12
 description: 科学上网与VPN办公的完美结合
 parent: materiel

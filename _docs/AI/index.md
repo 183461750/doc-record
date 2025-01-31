@@ -1,9 +1,10 @@
 ---
 layout: default
-title: '"AI"'
+title: AI
 nav_order: 8
 has_children: true
 permalink: "/ai/"
+parent: '"AI"'
 ---
 
 # AI

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"java-server-jar"'
+title: java-server-jar
 nav_order: 16
 description: 构建tomcat应用的相关记录
 parent: deploy

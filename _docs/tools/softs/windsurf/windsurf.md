@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"Windsurf"'
+title: Windsurf
 nav_order: 5
 description: windsurf
 parent: 软件工具

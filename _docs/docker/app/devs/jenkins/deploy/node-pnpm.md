@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"node-pnpm"'
+title: node-pnpm
 nav_order: 15
 description: 使用Jenkins构建node项目
 parent: jenkins

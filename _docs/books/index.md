@@ -1,9 +1,10 @@
 ---
 layout: default
-title: '"资料"'
+title: 资料
 nav_order: 9
 has_children: true
 permalink: "/books/"
+parent: '"资料"'
 ---
 
 # 资料

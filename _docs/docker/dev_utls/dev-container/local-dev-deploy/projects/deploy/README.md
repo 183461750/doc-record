@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"README"'
+title: README
 nav_order: 16
 description: deploy
 parent: projects

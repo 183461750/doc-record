@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"dec"'
+title: dec
 nav_order: 16
 description: docker-compose部署hadoop集群
 parent: hadoop

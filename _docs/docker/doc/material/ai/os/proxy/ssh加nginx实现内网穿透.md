@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"ssh加nginx实现内网穿透"'
+title: ssh加nginx实现内网穿透
 nav_order: 16
 description: ssh加nginx实现内网穿透
 parent: 操作系统

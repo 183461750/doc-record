@@ -1,9 +1,10 @@
 ---
 layout: default
-title: '"Kubernetes"'
+title: Kubernetes
 nav_order: 3
 has_children: true
 permalink: "/kubernetes/"
+parent: '"Kubernetes"'
 ---
 
 # Kubernetes 文档中心

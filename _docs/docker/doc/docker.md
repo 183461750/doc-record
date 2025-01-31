@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"docker"'
+title: docker
 nav_order: 12
 description: docker笔记
 parent: Docker

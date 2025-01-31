@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc-test"'
+title: doc-test
 nav_order: 14
 description: Jenkins配置```shell
 parent: devs

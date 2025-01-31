@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"arthas查看sql"'
+title: arthas查看sql
 nav_order: 12
 description: arthas查看sql
 parent: materiel

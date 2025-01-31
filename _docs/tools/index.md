@@ -1,10 +1,11 @@
 ---
 layout: default
-title: '"工具集"'
+title: 工具集
 nav_order: 5
 description: 工具集文档
 has_children: true
 permalink: "/tools/"
+parent: '"工具集"'
 ---
 
 # 工具集文档

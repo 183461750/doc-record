@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 13
 description: 部署MySQL```shell mysql开启集群的sql命令
 parent: mid

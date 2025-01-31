@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"Linux问题记录"'
+title: Linux问题记录
 nav_order: 13
 description: 问题记录
 parent: Linux系统

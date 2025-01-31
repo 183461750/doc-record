@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 14
 description: dockerfile文件相关记录
 parent: dev-container

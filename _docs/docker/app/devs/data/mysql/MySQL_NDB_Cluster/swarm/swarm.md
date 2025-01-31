@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"doc"'
+title: doc
 nav_order: 17
 description: docker swarm版部署文档
 parent: MySQL_NDB_Cluster

@@ -1,6 +1,6 @@
 ---
 layout: default
-title: '"README"'
+title: README
 nav_order: 12
 description: readme
 parent: materiel
