@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "soft"
+---
+layout: default
+title: soft
 nav_order: 12
-description: "软件相关"
-parent: "Docker"
+description: 软件相关
+parent: Docker
 has_children: false
 permalink: "/docker/doc/soft/"
 ---

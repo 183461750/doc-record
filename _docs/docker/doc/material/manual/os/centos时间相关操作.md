@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "centos时间相关操作"
+---
+layout: default
+title: centos时间相关操作
 nav_order: 15
-description: "centos时间相关操作"
-parent: "manual"
+description: centos时间相关操作
+parent: manual
 has_children: false
 permalink: "/docker/doc/material/manual/os/centos时间相关操作/"
 ---

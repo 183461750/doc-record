@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "curl 看连接是否通"
+---
+layout: default
+title: curl 看连接是否通
 nav_order: 15
-description: "curl 看连接是否通"
-parent: "ai"
+description: curl 看连接是否通
+parent: ai
 has_children: false
 permalink: "/docker/doc/material/ai/os/curl 看连接是否通/"
 ---

@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "tomcat-file"
+---
+layout: default
+title: tomcat-file
 nav_order: 15
-description: "构建tomcat应用的相关记录"
-parent: "jenkins"
+description: 构建tomcat应用的相关记录
+parent: jenkins
 has_children: false
 permalink: "/docker/app/devs/jenkins/doc/tomcat-file/"
 ---

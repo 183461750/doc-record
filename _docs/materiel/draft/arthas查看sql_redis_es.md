@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "arthas查看sql_redis_es"
+---
+layout: default
+title: arthas查看sql_redis_es
 nav_order: 12
-description: "arthas查看sql_redis_es拼接好参数的命令"
-parent: "materiel"
+description: arthas查看sql_redis_es拼接好参数的命令
+parent: materiel
 has_children: false
 permalink: "/materiel/draft/arthas查看sql_redis_es/"
 ---

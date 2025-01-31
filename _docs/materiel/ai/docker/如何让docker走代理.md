@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "如何让docker走代理"
+---
+layout: default
+title: 如何让docker走代理
 nav_order: 13
-description: "如何让docker走代理"
-parent: "ai"
+description: 如何让docker走代理
+parent: ai
 has_children: false
 permalink: "/materiel/ai/docker/如何让docker走代理/"
 ---

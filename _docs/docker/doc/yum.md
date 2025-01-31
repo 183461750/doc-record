@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "yum"
+---
+layout: default
+title: yum
 nav_order: 12
-description: "yum相关文档"
-parent: "Docker"
+description: yum相关文档
+parent: Docker
 has_children: false
 permalink: "/docker/doc/yum/"
 ---

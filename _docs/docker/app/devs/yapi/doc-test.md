@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "doc-test"
+---
+layout: default
+title: doc-test
 nav_order: 14
-description: "Jenkins配置```shell"
-parent: "devs"
+description: Jenkins配置```shell
+parent: devs
 has_children: false
 permalink: "/docker/app/devs/yapi/doc-test/"
 ---

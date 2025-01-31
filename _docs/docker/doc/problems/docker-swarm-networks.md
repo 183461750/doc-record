@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "docker-swarm-networks"
+---
+layout: default
+title: docker-swarm-networks
 nav_order: 13
-description: "docker swarm networks"
-parent: "doc"
+description: docker swarm networks
+parent: doc
 has_children: false
 permalink: "/docker/doc/problems/docker-swarm-networks/"
 ---

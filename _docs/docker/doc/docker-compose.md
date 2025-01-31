@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "docker-compose"
+---
+layout: default
+title: docker-compose
 nav_order: 12
-description: "docker-compose相关记录"
-parent: "Docker"
+description: docker-compose相关记录
+parent: Docker
 has_children: false
 permalink: "/docker/doc/docker-compose/"
 ---

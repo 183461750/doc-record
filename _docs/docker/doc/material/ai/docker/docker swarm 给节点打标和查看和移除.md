@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "Docker Swarm 节点标签管理"
+---
+layout: default
+title: Docker Swarm 节点标签管理
 nav_order: 5
-description: "Docker Swarm 节点标签管理"
-parent: "Docker"
+description: Docker Swarm 节点标签管理
+parent: Docker
 has_children: false
 permalink: "/docker/doc/material/ai/docker/docker swarm 给节点打标和查看和移除/"
 ---

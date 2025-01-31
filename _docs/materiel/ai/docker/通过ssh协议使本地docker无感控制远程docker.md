@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "通过ssh协议使本地docker无感控制远程docker"
+---
+layout: default
+title: 通过ssh协议使本地docker无感控制远程docker
 nav_order: 13
-description: "idea中Preparing Docker SSH environment...是怎么准备环境的? 原理是啥? 我要如何操作才能通过ssh的方式在本地通过docker命令远程控制内网docker"
-parent: "ai"
+description: idea中Preparing Docker SSH environment...是怎么准备环境的? 原理是啥? 我要如何操作才能通过ssh的方式在本地通过docker命令远程控制内网docker
+parent: ai
 has_children: false
 permalink: "/materiel/ai/docker/通过ssh协议使本地docker无感控制远程docker/"
 ---

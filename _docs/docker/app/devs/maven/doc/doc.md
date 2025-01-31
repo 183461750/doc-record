@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "doc"
+---
+layout: default
+title: doc
 nav_order: 15
-description: "maven使用记录"
-parent: "maven"
+description: maven使用记录
+parent: maven
 has_children: false
 permalink: "/docker/app/devs/maven/doc/doc/"
 ---

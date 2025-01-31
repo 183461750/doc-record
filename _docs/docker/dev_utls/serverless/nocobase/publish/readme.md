@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "readme"
+---
+layout: default
+title: readme
 nav_order: 15
-description: "start-nocobase 帮助文档"
-parent: "nocouase"
+description: start-nocobase 帮助文档
+parent: nocouase
 has_children: false
 permalink: "/docker/dev_utls/serverless/nocobase/publish/readme/"
 ---

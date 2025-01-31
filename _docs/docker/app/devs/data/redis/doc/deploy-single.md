@@ -1,9 +1,11 @@
 ---
-layout: "default"
-title: "deploy-single"
+---
+layout: default
+title: deploy-single
 nav_order: 16
-parent: "redis"
+parent: redis
 permalink: "/docker/app/devs/data/redis/doc/deploy-single/"
+has_children: false
 ---
 
 ### 单机部署

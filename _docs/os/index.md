@@ -1,15 +1,18 @@
 ---
-layout: "default"
-title: "操作系统"
-nav_order: 4
-description: "操作系统文档"
+---
+layout: default
+title: 操作系统
+nav_order: 2
 has_children: true
 permalink: "/os/index/"
 ---
 
-# 操作系统文档
+# 操作系统
 
-Linux、Windows 等操作系统的使用技巧和配置指南。
+这里包含了各种操作系统相关的文档：
+
+- Linux 系统相关文档
+- Windows 系统相关文档
 
 ## 内容分类
 

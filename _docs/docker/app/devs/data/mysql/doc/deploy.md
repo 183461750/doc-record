@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "deploy"
+---
+layout: default
+title: deploy
 nav_order: 16
-description: "单机部署"
-parent: "mysql"
+description: 单机部署
+parent: mysql
 has_children: false
 permalink: "/docker/app/devs/data/mysql/doc/deploy/"
 ---

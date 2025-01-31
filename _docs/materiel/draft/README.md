@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "README"
+---
+layout: default
+title: README
 nav_order: 12
-description: "readme"
-parent: "materiel"
+description: readme
+parent: materiel
 has_children: false
 permalink: "/materiel/draft/README/"
 ---

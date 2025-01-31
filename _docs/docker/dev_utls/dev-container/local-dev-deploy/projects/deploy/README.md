@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "README"
+---
+layout: default
+title: README
 nav_order: 16
-description: "deploy"
-parent: "projects"
+description: deploy
+parent: projects
 has_children: false
 permalink: "/docker/dev_utls/dev-container/local-dev-deploy/projects/deploy/README/"
 ---

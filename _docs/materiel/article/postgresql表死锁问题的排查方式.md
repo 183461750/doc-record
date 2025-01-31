@@ -1,14 +1,18 @@
 ---
-layout: "default"
-title: "postgresql表死锁问题的排查方式"
+---
+layout: default
+title: postgresql表死锁问题的排查方式
 nav_order: 438
-description: "postgresql表死锁问题的排查方式_PostgreSQL_脚本之家"
+description: postgresql表死锁问题的排查方式_PostgreSQL_脚本之家
 has_children: false
 permalink: "/materiel/article/postgresql表死锁问题的排查方式/"
-created: "2024-06-04T11:38:56 (UTC +08:00)"
-tags: ["postgresql", "表死锁", "排查"]
-source: "https://www.jb51.net/article/203560.htm"
-author: 
+created: 2024-06-04T11:38:56 (UTC +08:00)
+tags:
+- postgresql
+- 表死锁
+- 排查
+source: https://www.jb51.net/article/203560.htm
+author:
 ---
 
 # postgresql表死锁问题的排查方式_PostgreSQL_脚本之家

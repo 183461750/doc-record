@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "doc"
+---
+layout: default
+title: doc
 nav_order: 16
-description: "mysql相关记录"
-parent: "mysql"
+description: mysql相关记录
+parent: mysql
 has_children: false
 permalink: "/docker/app/devs/data/mysql/doc/doc/"
 ---

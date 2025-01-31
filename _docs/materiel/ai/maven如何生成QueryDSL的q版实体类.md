@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "maven如何生成QueryDSL的q版实体类"
+---
+layout: default
+title: maven如何生成QueryDSL的q版实体类
 nav_order: 12
-description: "maven如何生成QueryDSL的q版实体类"
-parent: "materiel"
+description: maven如何生成QueryDSL的q版实体类
+parent: materiel
 has_children: false
 permalink: "/materiel/ai/maven如何生成QueryDSL的q版实体类/"
 ---

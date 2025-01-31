@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "docker-container-permission-denied"
+---
+layout: default
+title: docker-container-permission-denied
 nav_order: 13
-description: "docker容器没权限问题"
-parent: "doc"
+description: docker容器没权限问题
+parent: doc
 has_children: false
 permalink: "/docker/doc/problems/docker-container-permission-denied/"
 ---

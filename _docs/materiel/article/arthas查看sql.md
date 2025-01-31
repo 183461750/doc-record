@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "arthas查看sql"
+---
+layout: default
+title: arthas查看sql
 nav_order: 12
-description: "arthas查看sql"
-parent: "materiel"
+description: arthas查看sql
+parent: materiel
 has_children: false
 permalink: "/materiel/article/arthas查看sql/"
 ---

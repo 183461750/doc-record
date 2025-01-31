@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "ssh加nginx实现内网穿透"
+---
+layout: default
+title: ssh加nginx实现内网穿透
 nav_order: 16
-description: "ssh加nginx实现内网穿透"
-parent: "操作系统"
+description: ssh加nginx实现内网穿透
+parent: 操作系统
 has_children: false
 permalink: "/docker/doc/material/ai/os/proxy/ssh加nginx实现内网穿透/"
 ---

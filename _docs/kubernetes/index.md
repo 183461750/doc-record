@@ -1,29 +1,29 @@
 ---
-layout: "default"
-title: "Kubernetes"
+---
+layout: default
+title: Kubernetes
 nav_order: 3
-description: "Kubernetes 文档"
-has_children: false
+has_children: true
 permalink: "/kubernetes/index/"
 ---
 
-# Kubernetes 文档
+# Kubernetes 文档中心
 
-Kubernetes 集群管理、应用部署和运维指南。
+这里包含了 Kubernetes 相关的所有文档。
 
-## 内容分类
+## 核心内容
 
-1. 集群管理
-   - 节点管理
-   - 资源配置
-   - 安全设置
+- **基础概念**: Pod、Service、Deployment 等
+- **集群管理**: 节点管理、资源调度
+- **应用部署**: 应用配置、滚动更新
+- **网络**: 网络策略、Service Mesh
+- **存储**: 持久化存储、动态供应
+- **安全**: RBAC、准入控制
 
-2. 应用部署
-   - Pod 配置
-   - Service 设置
-   - Ingress 规则
+## 最佳实践
 
-3. 运维指南
-   - 监控方案
-   - 日志收集
-   - 故障处理
+- 高可用部署方案
+- 监控告警配置
+- 日志收集方案
+- 性能调优指南
+- 故障排查流程

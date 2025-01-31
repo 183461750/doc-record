@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "plugins"
+---
+layout: default
+title: plugins
 nav_order: 15
-description: "Jenkins插件相关记录"
-parent: "jenkins"
+description: Jenkins插件相关记录
+parent: jenkins
 has_children: false
 permalink: "/docker/app/devs/jenkins/doc/plugins/"
 ---

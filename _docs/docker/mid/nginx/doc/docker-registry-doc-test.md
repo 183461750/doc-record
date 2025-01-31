@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "docker-registry-doc-test"
+---
+layout: default
+title: docker-registry-doc-test
 nav_order: 14
-description: "部署docker-registry相关文档"
-parent: "nginx"
+description: 部署docker-registry相关文档
+parent: nginx
 has_children: false
 permalink: "/docker/mid/nginx/doc/docker-registry-doc-test/"
 ---

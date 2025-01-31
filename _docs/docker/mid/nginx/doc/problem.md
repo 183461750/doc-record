@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "problem"
+---
+layout: default
+title: problem
 nav_order: 14
-description: "nginx相关问题"
-parent: "nginx"
+description: nginx相关问题
+parent: nginx
 has_children: false
 permalink: "/docker/mid/nginx/doc/problem/"
 ---

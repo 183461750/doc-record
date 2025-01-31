@@ -1,8 +1,9 @@
 ---
-layout: "default"
-title: "工具集"
+---
+layout: default
+title: 工具集
 nav_order: 5
-description: "工具集文档"
+description: 工具集文档
 has_children: true
 permalink: "/tools/index/"
 ---

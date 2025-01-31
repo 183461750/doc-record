@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "test2"
+---
+layout: default
+title: test2
 nav_order: 13
-description: "test2"
-parent: "doc"
+description: test2
+parent: doc
 has_children: false
 permalink: "/docker/doc/test/test2/"
 ---

@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "linux"
+---
+layout: default
+title: linux
 nav_order: 12
-description: "linux相关命令使用记录"
-parent: "Docker"
+description: linux相关命令使用记录
+parent: Docker
 has_children: true
 permalink: "/docker/doc/linux/"
 ---

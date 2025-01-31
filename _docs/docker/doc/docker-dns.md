@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "docker-dns"
+---
+layout: default
+title: docker-dns
 nav_order: 12
-description: "docker内置DNS记录"
-parent: "Docker"
+description: docker内置DNS记录
+parent: Docker
 has_children: false
 permalink: "/docker/doc/docker-dns/"
 ---

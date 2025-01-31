@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "proxyman和arthas结合监听java进程网络(包括feign调用等)"
+---
+layout: default
+title: proxyman和arthas结合监听java进程网络(包括feign调用等)
 nav_order: 12
-description: "使用arthas和proxyman监听java进程网络(包括feign调用等)"
-parent: "materiel"
+description: 使用arthas和proxyman监听java进程网络(包括feign调用等)
+parent: materiel
 has_children: false
 permalink: "/materiel/draft/proxyman和arthas结合监听java进程网络(包括feign调用等)/"
 ---

@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "docker-networks"
+---
+layout: default
+title: docker-networks
 nav_order: 12
-description: "创建网络```shelldocker network create -d  overlay --attachable middleware"
-parent: "Docker"
+description: 创建网络```shelldocker network create -d  overlay --attachable middleware
+parent: Docker
 has_children: false
 permalink: "/docker/doc/docker-networks/"
 ---

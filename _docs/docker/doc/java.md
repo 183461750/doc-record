@@ -1,9 +1,10 @@
 ---
-layout: "default"
-title: "java"
+---
+layout: default
+title: java
 nav_order: 12
-description: "java 相关记录"
-parent: "Docker"
+description: java 相关记录
+parent: Docker
 has_children: false
 permalink: "/docker/doc/java/"
 ---
