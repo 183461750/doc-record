@@ -1,3 +1,10 @@
+---
+layout: default
+title: 开启ssh的centos发行版的Dockerfile
+parent: ai
+nav_order:       13
+---
+
 # 帮我写个dockerfile文件, 并且开启ssh远程连接 需要centos发行版
 
 要创建一个 Dockerfile 以构建一个包含 SSH 服务的 CentOS 容器，你可以按照以下步骤操作：

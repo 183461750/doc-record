@@ -1,3 +1,10 @@
+---
+layout: default
+title: 如何让docker走代理
+parent: ai
+nav_order:       13
+---
+
 # 如何让docker走代理
 
 在使用 Docker 时让其通过代理来访问网络可以通过以下几种方法实现：

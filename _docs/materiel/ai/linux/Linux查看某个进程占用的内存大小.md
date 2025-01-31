@@ -1,3 +1,10 @@
+---
+layout: default
+title: Linux查看某个进程占用的内存大小
+parent: ai
+nav_order:       13
+---
+
 # Linux查看某个进程占用的内存大小
 
 在 Linux 系统中，有多种方法可以查看某个进程占用的内存大小，以下是一些常见的方法：

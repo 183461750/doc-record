@@ -1,3 +1,10 @@
+---
+layout: default
+title: git管理子项目的方式
+parent: ai
+nav_order:       13
+---
+
 # git管理子项目的方式
 
 在Git中管理子项目（submodules）是一种将一个Git仓库作为另一个Git仓库的子目录的方式。这种方式通常用于当你的主项目需要依赖于另一个项目，而这个被依赖的项目又有自己的独立版本控制需求时。

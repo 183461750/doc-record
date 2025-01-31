@@ -1,3 +1,10 @@
+---
+layout: default
+title: 修改docker容器的密码并且开启ssh远程连接
+parent: ai
+nav_order:       13
+---
+
 # 修改docker容器的密码, 并且开启ssh远程连接
 
 要修改Docker容器的密码并开启SSH远程连接，你需要确保容器中运行了一个SSH服务器。以下是一个基于Ubuntu镜像的示例，说明如何创建一个Docker容器，安装SSH服务器，设置一个root密码，并允许远程SSH连接。

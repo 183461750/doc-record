@@ -1,3 +1,10 @@
+---
+layout: default
+title: arthas查看sql_redis_es
+parent: materiel
+nav_order:       12
+---
+
 # arthas查看sql_redis_es拼接好参数的命令
 
 [参考文章](http://codefun007.xyz/a/article_detail/2392.htm)

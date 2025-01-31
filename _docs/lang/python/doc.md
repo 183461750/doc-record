@@ -1,3 +1,10 @@
+---
+layout: default
+title: doc
+parent: lang
+nav_order:       12
+---
+
 # python记录
 
 ## ipynb使用

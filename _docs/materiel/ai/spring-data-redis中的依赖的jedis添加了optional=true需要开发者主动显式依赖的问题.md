@@ -1,3 +1,10 @@
+---
+layout: default
+title: spring-data-redis中的依赖的jedis添加了optional=true需要开发者主动显式依赖的问题
+parent: materiel
+nav_order:       12
+---
+
 # spring-data-redis中的依赖的jedis添加了`<optional>true<optional>`需要开发者主动显式依赖的问题
 
 在 Spring Data Redis 中，`jedis` 依赖被标记为 `<optional>true</optional>` 是因为 Spring Data Redis 是一个支持多种 Redis 驱动的伞项目，包括 Jedis 和 Lettuce 等。这意味着，Spring Data Redis 本身并不强制要求项目中必须使用 Jedis，而是让开发者可以根据自己的需求选择使用哪个客户端。因此，`jedis` 依赖被设置为可选的，这样开发者只有在需要使用 Jedis 客户端时才需要显式地引入这个依赖。

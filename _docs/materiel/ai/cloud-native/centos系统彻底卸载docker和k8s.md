@@ -1,3 +1,10 @@
+---
+layout: default
+title: centos系统彻底卸载docker和k8s
+parent: ai
+nav_order:       13
+---
+
 # centos系统彻底卸载docker和k8s
 
 如果您需要在 CentOS 系统上彻底卸载 Docker 和 Kubernetes (k8s)，可以按照以下步骤操作:

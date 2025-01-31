@@ -1,3 +1,10 @@
+---
+layout: default
+title: 如何使用macos系统的沙箱环境呢?
+parent: ai
+nav_order:       13
+---
+
 # 如何使用macos系统的沙箱环境呢?
 
 使用macOS系统的沙箱环境可以通过以下步骤完成：

@@ -1,3 +1,10 @@
+---
+layout: default
+title: git只克隆指定某几个子模块到本地
+parent: ai
+nav_order:       13
+---
+
 # git只克隆指定某几个子模块到本地
 
 在 Git 中，如果您只想克隆指定的子模块到本地，可以按照以下步骤进行操作：

@@ -1,3 +1,10 @@
+---
+layout: default
+title: docker命令怎么控制远程docker
+parent: ai
+nav_order:       13
+---
+
 # docker命令怎么控制远程docker
 
 要控制远程的 Docker 实例，您需要确保 Docker 守护进程（dockerd）在远程服务器上正在运行，并且客户端有权限与之通信。以下是详细步骤：

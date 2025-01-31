@@ -1,3 +1,10 @@
+---
+layout: default
+title: java中hprof文件如何导出
+parent: ai
+nav_order:       13
+---
+
 # java hprof文件如何导出
 
 在 Java 中，要导出 `hprof` 文件可以通过以下几种方式：

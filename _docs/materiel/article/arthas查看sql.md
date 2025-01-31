@@ -1,3 +1,10 @@
+---
+layout: default
+title: arthas查看sql
+parent: materiel
+nav_order:       12
+---
+
 # arthas查看sql
 
 [参考文章](http://codefun007.xyz/a/article_detail/2392.htm)

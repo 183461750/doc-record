@@ -1,3 +1,10 @@
+---
+layout: default
+title: doc
+parent: prompts
+nav_order:       14
+---
+
 # 项目开发
 
 ## prompt

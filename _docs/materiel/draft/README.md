@@ -1,3 +1,10 @@
+---
+layout: default
+title: README
+parent: materiel
+nav_order:       12
+---
+
 # readme
 
 这是我的草稿目录

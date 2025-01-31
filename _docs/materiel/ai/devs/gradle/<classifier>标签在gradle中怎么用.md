@@ -1,3 +1,10 @@
+---
+layout: default
+title: <classifier>标签在gradle中怎么用
+parent: devs
+nav_order:       14
+---
+
 # <classifier>jpa</classifier>那这个标签在gradle中怎么用
 
 在Gradle中使用`classifier`与在Maven中略有不同，但同样可以实现。在Gradle中指定依赖时，如果需要包含`classifier`，可以通过在依赖声明中直接添加`classifier`属性来完成。以下是一个如何在Gradle项目中使用`classifier`的示例：

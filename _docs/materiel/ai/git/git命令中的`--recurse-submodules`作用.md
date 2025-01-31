@@ -1,3 +1,10 @@
+---
+layout: default
+title: git命令中的`--recurse-submodules`作用
+parent: ai
+nav_order:       13
+---
+
 # git命令中的`--recurse-submodules`作用
 
 在Git中，`--recurse-submodules`标志用于在克隆主项目的同时递归地克隆所有子模块。子模块是Git中一种将一个Git仓库作为另一个Git仓库的子目录的方式，通常用于当主项目需要依赖于其他项目时。

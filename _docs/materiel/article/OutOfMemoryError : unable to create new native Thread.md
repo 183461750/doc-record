@@ -1,3 +1,10 @@
+---
+layout: default
+title: OutOfMemoryError : unable to create new native Thread
+parent: materiel
+nav_order:       12
+---
+
 # java.lang.OutOfMemoryError : unable to create new native Thread
 
 ```bash
