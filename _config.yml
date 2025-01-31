@@ -1,25 +1,5 @@
-# Welcome to Jekyll!
-#
-# This config file is meant for settings that affect your whole blog, values
-# which you are expected to set up once and rarely edit after that. If you find
-# yourself editing this file very often, consider using Jekyll's data files
-# feature for the data you need to update frequently.
-#
-# For technical reasons, this file is *NOT* reloaded automatically when you use
-# 'bundle exec jekyll serve'. If you change this file, please restart the server process.
-#
-# If you need help with YAML syntax, here are some quick references for you:
-# https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
-# https://learnxinyminutes.com/docs/yaml/
-#
 # Site settings
-# These are used to personalize your new site. If you look in the HTML files,
-# you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
-# You can create any custom variable you would like, and they will be accessible
-# in the templates via {{ site.myvariable }}.
-
 title: Doc Record
-email: 183461750@qq.com
 description: Documentation Repository
 baseurl: "/doc-record"
 url: ""
@@ -33,12 +13,26 @@ defaults:
       path: "assets/images"
     values:
       image: true
+  - scope:
+      path: ""
+      type: "docs"
+    values:
+      layout: "page"
+      nav_order: 1000
+  - scope:
+      path: "kubernetes"
+    values:
+      nav_fold: true
+  - scope:
+      path: "docker"
+    values:
+      nav_fold: true
 
 # 导航设置
 nav:
   enable: true
 
-# 目录设置
+# 集合设置
 collections:
   docs:
     output: true
@@ -50,36 +44,23 @@ just_the_docs:
     docs:
       name: Documentation
 
-# 启用自动生成导航
+# GitHub 链接
 aux_links:
   "GitHub":
     - "https://github.com/183461750/doc-record"
 
-# 启用自动生成目录
-nav_external_links:
-  - title: Doc Record on GitHub
-    url: https://github.com/183461750/doc-record
-    hide_icon: false
-    opens_in_new_tab: true
-
-# 目录排序方式
-nav_sort: case_sensitive
-
-# 启用搜索
+# 搜索配置
 search_enabled: true
 search:
   heading_level: 3
-  previews: 3
-  preview_words_before: 5
-  preview_words_after: 10
-  tokenizer_separator: /[\s/]+/
-  rel_url: true
-  button: true
+  previews: 2
+  preview_words_before: 3
+  preview_words_after: 3
 
-# 启用深色模式
+# 主题
 color_scheme: dark
 
-# 启用复制代码按钮
+# 功能开关
 enable_copy_code_button: true
 
 # 排除的文件和目录
@@ -90,35 +71,4 @@ exclude:
   - Gemfile
   - Gemfile.lock
   - node_modules/
-  - vendor/bundle/
-  - vendor/cache/
-  - vendor/gems/
-  - vendor/ruby/
-
-# Jekyll 资源处理
-sass:
-  style: compressed
-  
-kramdown:
-  auto_ids: true
-  input: GFM
-  hard_wrap: false
-  syntax_highlighter: rouge
-  smart_quotes: ["apos", "apos", "quot", "quot"]
-
-# 默认设置
-defaults:
-  - scope:
-      path: ""
-      type: docs
-    values:
-      layout: default
-      nav_order: 1000
-  - scope:
-      path: "docker"
-    values:
-      nav_fold: true
-  - scope:
-      path: "k8s"
-    values:
-      nav_fold: true
+  - vendor/
