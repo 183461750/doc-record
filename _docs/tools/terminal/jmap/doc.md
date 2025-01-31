@@ -4,6 +4,7 @@ title: JMap
 parent: Terminal
 grand_parent: 工具集
 nav_order: 4
+slug: jmap
 ---
 
 # jmap的使用
