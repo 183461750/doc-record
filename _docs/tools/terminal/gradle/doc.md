@@ -1,9 +1,12 @@
 ---
-layout: default
-title: Gradle
-parent: Terminal
-grand_parent: 工具集
+layout: "default"
+title: "Gradle"
 nav_order: 2
+description: "gradle使用"
+parent: "Terminal"
+has_children: false
+permalink: "/tools/terminal/gradle/doc/"
+grand_parent: "工具集"
 ---
 
 # gradle使用

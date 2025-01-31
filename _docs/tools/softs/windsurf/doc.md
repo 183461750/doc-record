@@ -1,9 +1,12 @@
 ---
-layout: default
-title: Windsurf
-parent: 软件工具
-grand_parent: 工具集
+layout: "default"
+title: "Windsurf"
 nav_order: 5
+description: "windsurf"
+parent: "软件工具"
+has_children: false
+permalink: "/tools/softs/windsurf/doc/"
+grand_parent: "工具集"
 ---
 
 # windsurf

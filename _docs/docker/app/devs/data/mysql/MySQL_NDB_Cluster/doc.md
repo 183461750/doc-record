@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: mysql
-nav_order:       16
+layout: "default"
+title: "doc"
+nav_order: 16
+description: "mysql ndb cluster相关文档"
+parent: "mysql"
+has_children: false
+permalink: "/docker/app/devs/data/mysql/MySQL_NDB_Cluster/doc/"
 ---
 
 # mysql ndb cluster相关文档

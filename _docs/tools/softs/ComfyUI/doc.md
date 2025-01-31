@@ -1,9 +1,12 @@
 ---
-layout: default
-title: ComfyUI
-parent: 软件工具
-grand_parent: 工具集
+layout: "default"
+title: "ComfyUI"
 nav_order: 1
+description: "ComfyUI"
+parent: "软件工具"
+has_children: false
+permalink: "/tools/softs/ComfyUI/doc/"
+grand_parent: "工具集"
 ---
 
 # ComfyUI

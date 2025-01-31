@@ -1,8 +1,11 @@
 ---
-layout: default
-title: firewalld
-parent: Docker
-nav_order:       12
+layout: "default"
+title: "firewalld"
+nav_order: 12
+description: "firewalld防火墙相关配置"
+parent: "Docker"
+has_children: false
+permalink: "/docker/doc/firewalld/"
 ---
 
 # firewalld防火墙相关配置

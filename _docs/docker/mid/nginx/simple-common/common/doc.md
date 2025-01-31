@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: simple-common
-nav_order:       15
+layout: "default"
+title: "doc"
+nav_order: 15
+description: "nginx使用记录"
+parent: "simple-common"
+has_children: false
+permalink: "/docker/mid/nginx/simple-common/common/doc/"
 ---
 
 # nginx使用记录

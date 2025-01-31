@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: yapi
-nav_order:       15
+layout: "default"
+title: "doc"
+nav_order: 15
+description: "yapi"
+parent: "yapi"
+has_children: false
+permalink: "/docker/app/devs/yapi/simpleV2/doc/"
 ---
 
 # yapi

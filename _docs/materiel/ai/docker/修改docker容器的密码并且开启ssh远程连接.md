@@ -1,8 +1,11 @@
 ---
-layout: default
-title: 修改docker容器的密码并且开启ssh远程连接
-parent: ai
-nav_order:       13
+layout: "default"
+title: "修改docker容器的密码并且开启ssh远程连接"
+nav_order: 13
+description: "修改docker容器的密码, 并且开启ssh远程连接"
+parent: "ai"
+has_children: false
+permalink: "/materiel/ai/docker/修改docker容器的密码并且开启ssh远程连接/"
 ---
 
 # 修改docker容器的密码, 并且开启ssh远程连接

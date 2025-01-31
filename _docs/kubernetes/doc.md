@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: _docs
-nav_order:       11
+layout: "default"
+title: "doc"
+nav_order: 11
+description: "k8s相关使用记录"
+parent: "_docs"
+has_children: false
+permalink: "/kubernetes/doc/"
 ---
 
 # k8s相关使用记录

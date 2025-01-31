@@ -1,8 +1,11 @@
 ---
-layout: default
-title: java
-parent: jenkins
-nav_order:       15
+layout: "default"
+title: "java"
+nav_order: 15
+description: "java 启动 相关记录"
+parent: "jenkins"
+has_children: false
+permalink: "/docker/app/devs/jenkins/doc/java/"
 ---
 
 # java 启动 相关记录

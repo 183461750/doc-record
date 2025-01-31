@@ -1,8 +1,10 @@
 ---
-layout: default
-title: 文档首页
+layout: "default"
+title: "文档首页"
 nav_order: 1
-has_children: true
+description: "Doc Record 文档库"
+has_children: false
+permalink: "/index/"
 ---
 
 # Doc Record 文档库

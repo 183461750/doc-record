@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: mid
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "MyPerf4J是用记录"
+parent: "mid"
+has_children: false
+permalink: "/docker/mid/MyPerf4J/doc/"
 ---
 
 # MyPerf4J是用记录

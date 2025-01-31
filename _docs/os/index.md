@@ -1,8 +1,10 @@
 ---
-layout: default
-title: 操作系统
+layout: "default"
+title: "操作系统"
 nav_order: 4
+description: "操作系统文档"
 has_children: true
+permalink: "/os/index/"
 ---
 
 # 操作系统文档

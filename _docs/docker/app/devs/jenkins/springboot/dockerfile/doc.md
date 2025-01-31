@@ -1,8 +1,9 @@
 ---
-layout: default
-title: doc
-parent: springuoot
-nav_order:       16
+layout: "default"
+title: "doc"
+nav_order: 16
+parent: "springuoot"
+permalink: "/docker/app/devs/jenkins/springboot/dockerfile/doc/"
 ---
 
 ## maven使用dockerfile插件构建项目

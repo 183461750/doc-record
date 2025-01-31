@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: lang
-nav_order:       12
+layout: "default"
+title: "doc"
+nav_order: 12
+description: "python记录"
+parent: "lang"
+has_children: false
+permalink: "/lang/python/doc/"
 ---
 
 # python记录

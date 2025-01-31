@@ -1,9 +1,12 @@
 ---
-layout: default
-title: Clash
-parent: 软件工具
-grand_parent: 工具集
+layout: "default"
+title: "Clash"
 nav_order: 2
+description: "linux中使用clash记录"
+parent: "软件工具"
+has_children: false
+permalink: "/tools/softs/clash/doc/"
+grand_parent: "工具集"
 ---
 
 # linux中使用clash记录

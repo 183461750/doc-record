@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: redis
-nav_order:       16
+layout: "default"
+title: "doc"
+nav_order: 16
+description: "部署记录"
+parent: "redis"
+has_children: false
+permalink: "/docker/app/devs/data/redis/cluster/doc/"
 ---
 
 # 部署记录

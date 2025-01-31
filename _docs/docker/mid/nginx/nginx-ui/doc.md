@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: nginx
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "nginx-ui"
+parent: "nginx"
+has_children: false
+permalink: "/docker/mid/nginx/nginx-ui/doc/"
 ---
 
 # nginx-ui

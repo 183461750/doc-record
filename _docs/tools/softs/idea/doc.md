@@ -1,9 +1,12 @@
 ---
-layout: default
-title: IDEA
-parent: 软件工具
-grand_parent: 工具集
+layout: "default"
+title: "IDEA"
 nav_order: 4
+description: "idea使用记录"
+parent: "软件工具"
+has_children: false
+permalink: "/tools/softs/idea/doc/"
+grand_parent: "工具集"
 ---
 
 # idea使用记录

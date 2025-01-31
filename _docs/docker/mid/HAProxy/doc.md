@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: mid
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "部署MySQL```shell mysql开启集群的sql命令"
+parent: "mid"
+has_children: false
+permalink: "/docker/mid/HAProxy/doc/"
 ---
 
 ## 部署MySQL

@@ -1,8 +1,11 @@
 ---
-layout: default
-title: 开启ssh的centos发行版的Dockerfile
-parent: ai
-nav_order:       13
+layout: "default"
+title: "开启ssh的centos发行版的Dockerfile"
+nav_order: 13
+description: "帮我写个dockerfile文件, 并且开启ssh远程连接 需要centos发行版"
+parent: "ai"
+has_children: false
+permalink: "/materiel/ai/docker/开启ssh的centos发行版的Dockerfile/"
 ---
 
 # 帮我写个dockerfile文件, 并且开启ssh远程连接 需要centos发行版

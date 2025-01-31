@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: jenkins
-nav_order:       15
+layout: "default"
+title: "doc"
+nav_order: 15
+description: "Jenkins 相关使用记录"
+parent: "jenkins"
+has_children: false
+permalink: "/docker/app/devs/jenkins/doc/doc/"
 ---
 
 # Jenkins 相关使用记录

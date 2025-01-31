@@ -1,8 +1,11 @@
 ---
-layout: default
-title: docker镜像源
-parent: doc
-nav_order:       13
+layout: "default"
+title: "docker镜像源"
+nav_order: 13
+description: "docker镜像源"
+parent: "doc"
+has_children: false
+permalink: "/docker/doc/article/docker镜像源/"
 ---
 
 # docker镜像源

@@ -1,8 +1,11 @@
 ---
-layout: default
-title: timedatectl命令怎么同步网络时间
-parent: ai
-nav_order:       15
+layout: "default"
+title: "timedatectl命令怎么同步网络时间"
+nav_order: 15
+description: "timedatectl命令怎么同步网络时间"
+parent: "ai"
+has_children: false
+permalink: "/docker/doc/material/ai/os/timedatectl命令怎么同步网络时间/"
 ---
 
 # timedatectl命令怎么同步网络时间

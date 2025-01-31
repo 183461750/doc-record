@@ -1,8 +1,11 @@
 ---
-layout: default
-title: 如何让docker走代理
-parent: materiel
-nav_order:       12
+layout: "default"
+title: "如何让docker走代理"
+nav_order: 12
+description: "如何让docker走代理"
+parent: "materiel"
+has_children: false
+permalink: "/materiel/draft/如何让docker走代理/"
 ---
 
 # 如何让docker走代理

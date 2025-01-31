@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: app
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "metersphere使用"
+parent: "app"
+has_children: false
+permalink: "/kubernetes/app/metersphere/doc/"
 ---
 
 # metersphere使用

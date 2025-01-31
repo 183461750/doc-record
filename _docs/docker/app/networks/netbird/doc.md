@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: networks
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "netbird使用"
+parent: "networks"
+has_children: false
+permalink: "/docker/app/networks/netbird/doc/"
 ---
 
 # netbird使用

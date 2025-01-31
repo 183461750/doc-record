@@ -1,8 +1,11 @@
 ---
-layout: default
-title: remote
-parent: Docker
-nav_order:       12
+layout: "default"
+title: "remote"
+nav_order: 12
+description: "远程连接相关记录"
+parent: "Docker"
+has_children: true
+permalink: "/docker/doc/remote/"
 ---
 
 # 远程连接相关记录

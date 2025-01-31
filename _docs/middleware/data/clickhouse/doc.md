@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: data
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "clickhouse"
+parent: "data"
+has_children: false
+permalink: "/middleware/data/clickhouse/doc/"
 ---
 
 # clickhouse

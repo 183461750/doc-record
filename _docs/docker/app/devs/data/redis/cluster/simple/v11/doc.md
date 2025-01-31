@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: simple
-nav_order:       18
+layout: "default"
+title: "doc"
+nav_order: 18
+description: "说明文档"
+parent: "simple"
+has_children: false
+permalink: "/docker/app/devs/data/redis/cluster/simple/v11/doc/"
 ---
 
 # 说明文档

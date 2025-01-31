@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: devs
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "jenkins的使用"
+parent: "devs"
+has_children: false
+permalink: "/kubernetes/app/devs/jenkins/doc/"
 ---
 
 # jenkins的使用

@@ -1,8 +1,11 @@
 ---
-layout: default
-title: java-jar
-parent: simple
-nav_order:       17
+layout: "default"
+title: "java-jar"
+nav_order: 17
+description: "构建tomcat应用的相关记录"
+parent: "simple"
+has_children: false
+permalink: "/docker/app/devs/jenkins/deploy/simple/include-nothing/java-jar/"
 ---
 
 # 构建tomcat应用的相关记录

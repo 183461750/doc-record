@@ -1,8 +1,9 @@
 ---
-layout: default
-title: doc
-parent: jenkins
-nav_order:       15
+layout: "default"
+title: "doc"
+nav_order: 15
+parent: "jenkins"
+permalink: "/docker/app/devs/jenkins/springboot/doc/"
 ---
 
 ## springboot pom.xml配置

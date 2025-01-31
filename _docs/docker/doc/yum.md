@@ -1,8 +1,11 @@
 ---
-layout: default
-title: yum
-parent: Docker
-nav_order:       12
+layout: "default"
+title: "yum"
+nav_order: 12
+description: "yum相关文档"
+parent: "Docker"
+has_children: false
+permalink: "/docker/doc/yum/"
 ---
 
 # yum相关文档

@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: devs
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "camunda使用记录"
+parent: "devs"
+has_children: true
+permalink: "/docker/app/devs/camunda/doc/"
 ---
 
 # camunda使用记录

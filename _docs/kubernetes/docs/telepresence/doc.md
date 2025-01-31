@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: docs
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "Telepresence 使用记录"
+parent: "docs"
+has_children: false
+permalink: "/kubernetes/docs/telepresence/doc/"
 ---
 
 # Telepresence 使用记录

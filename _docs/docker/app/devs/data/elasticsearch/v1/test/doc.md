@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: v1
-nav_order:       17
+layout: "default"
+title: "doc"
+nav_order: 17
+description: "es部署文档"
+parent: "v1"
+has_children: false
+permalink: "/docker/app/devs/data/elasticsearch/v1/test/doc/"
 ---
 
 # es部署文档

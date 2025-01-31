@@ -1,8 +1,11 @@
 ---
-layout: default
-title: README
-parent: materiel
-nav_order:       12
+layout: "default"
+title: "README"
+nav_order: 12
+description: "readme"
+parent: "materiel"
+has_children: false
+permalink: "/materiel/draft/README/"
 ---
 
 # readme

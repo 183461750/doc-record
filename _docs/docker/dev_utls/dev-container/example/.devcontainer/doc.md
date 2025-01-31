@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: example
-nav_order:       15
+layout: "default"
+title: "doc"
+nav_order: 15
+description: "devcontainer记录"
+parent: "example"
+has_children: false
+permalink: "/docker/dev_utls/dev-container/example/.devcontainer/doc/"
 ---
 
 # devcontainer记录

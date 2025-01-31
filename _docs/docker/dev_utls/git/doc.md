@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: dev_utls
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "git相关使用"
+parent: "dev_utls"
+has_children: false
+permalink: "/docker/dev_utls/git/doc/"
 ---
 
 # git相关使用

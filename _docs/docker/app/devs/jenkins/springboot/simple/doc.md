@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: springuoot
-nav_order:       16
+layout: "default"
+title: "doc"
+nav_order: 16
+description: "maven使用dockerfile插件构建项目- 参考项目[https://gitee.com/LFa/demo-test.git]   Jenkins配置- 创建maven项目- Build[Goals and options -> clean install -Dmaven.test.skip=true]- Post Steps[Run only if build succeeds]- add post-build step[Send files or execute commands over SSH]```shell"
+parent: "springuoot"
+has_children: false
+permalink: "/docker/app/devs/jenkins/springboot/simple/doc/"
 ---
 
 ## maven使用dockerfile插件构建项目

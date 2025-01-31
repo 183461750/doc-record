@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: app
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "nacos使用记录"
+parent: "app"
+has_children: false
+permalink: "/kubernetes/app/nacos/doc/"
 ---
 
 # nacos使用记录

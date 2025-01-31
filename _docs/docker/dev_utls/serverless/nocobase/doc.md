@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: serverless
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "记录"
+parent: "serverless"
+has_children: false
+permalink: "/docker/dev_utls/serverless/nocobase/doc/"
 ---
 
 # 记录

@@ -1,8 +1,11 @@
 ---
-layout: default
-title: problem
-parent: jenkins
-nav_order:       15
+layout: "default"
+title: "problem"
+nav_order: 15
+description: "jenkins部署相关问题记录"
+parent: "jenkins"
+has_children: false
+permalink: "/docker/app/devs/jenkins/doc/problem/"
 ---
 
 # jenkins部署相关问题记录

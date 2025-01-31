@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: uackend
-nav_order:       16
+layout: "default"
+title: "doc"
+nav_order: 16
+description: "tomcat部署war包相关文档"
+parent: "uackend"
+has_children: false
+permalink: "/docker/dev_utls/dev-container/local-dev-deploy/backend/tomcat-war/doc/"
 ---
 
 # tomcat部署war包相关文档

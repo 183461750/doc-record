@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: devs
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "openHands使用记录"
+parent: "devs"
+has_children: false
+permalink: "/docker/app/devs/openHands/doc/"
 ---
 
 # openHands使用记录

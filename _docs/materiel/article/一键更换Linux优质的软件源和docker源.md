@@ -1,8 +1,11 @@
 ---
-layout: default
-title: 一键更换Linux优质的软件源和docker源
-parent: materiel
-nav_order:       12
+layout: "default"
+title: "一键更换Linux优质的软件源和docker源"
+nav_order: 12
+description: "一键更换Linux优质的软件源和docker源"
+parent: "materiel"
+has_children: false
+permalink: "/materiel/article/一键更换Linux优质的软件源和docker源/"
 ---
 
 # 一键更换Linux优质的软件源和docker源

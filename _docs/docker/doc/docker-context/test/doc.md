@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: docker-context
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "测试"
+parent: "docker-context"
+has_children: false
+permalink: "/docker/doc/docker-context/test/doc/"
 ---
 
 # 测试

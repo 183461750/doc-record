@@ -1,8 +1,11 @@
 ---
-layout: default
-title: docker-swarm
-parent: Docker
-nav_order:       12
+layout: "default"
+title: "docker-swarm"
+nav_order: 12
+description: "创建Swarm集群```shell scriptdocker swarm init --advertise-addr 192.168.31.43 --advertise-addr参数表示其它swarm中的worker节点使用此ip地址与manager联系。docker swarm init --advertise-addr enp0s8 --advertise-addr 该参数也可使用网卡名```"
+parent: "Docker"
+has_children: false
+permalink: "/docker/doc/docker-swarm/"
 ---
 
 ## 创建Swarm集群

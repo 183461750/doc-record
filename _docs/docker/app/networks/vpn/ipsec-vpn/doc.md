@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: vpn
-nav_order:       15
+layout: "default"
+title: "doc"
+nav_order: 15
+description: "ipsec-vpn"
+parent: "vpn"
+has_children: false
+permalink: "/docker/app/networks/vpn/ipsec-vpn/doc/"
 ---
 
 # ipsec-vpn

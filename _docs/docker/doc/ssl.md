@@ -1,8 +1,11 @@
 ---
-layout: default
-title: ssl
-parent: Docker
-nav_order:       12
+layout: "default"
+title: "ssl"
+nav_order: 12
+description: "开启ssl"
+parent: "Docker"
+has_children: false
+permalink: "/docker/doc/ssl/"
 ---
 
 # 开启ssl

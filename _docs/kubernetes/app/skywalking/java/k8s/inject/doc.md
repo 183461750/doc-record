@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: k8s
-nav_order:       16
+layout: "default"
+title: "doc"
+nav_order: 16
+description: "注入代理相关文档"
+parent: "k8s"
+has_children: false
+permalink: "/kubernetes/app/skywalking/java/k8s/inject/doc/"
 ---
 
 # 注入代理相关文档

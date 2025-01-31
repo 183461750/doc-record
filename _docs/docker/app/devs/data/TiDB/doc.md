@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: data
-nav_order:       15
+layout: "default"
+title: "doc"
+nav_order: 15
+description: "TiDB部署记录"
+parent: "data"
+has_children: false
+permalink: "/docker/app/devs/data/TiDB/doc/"
 ---
 
 # TiDB部署记录

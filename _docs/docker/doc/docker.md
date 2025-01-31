@@ -1,8 +1,11 @@
 ---
-layout: default
-title: docker
-parent: Docker
-nav_order:       12
+layout: "default"
+title: "docker"
+nav_order: 12
+description: "docker笔记"
+parent: "Docker"
+has_children: false
+permalink: "/docker/doc/docker/"
 ---
 
 # docker笔记

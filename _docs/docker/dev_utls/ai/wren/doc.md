@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: ai
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "wren ai"
+parent: "ai"
+has_children: false
+permalink: "/docker/dev_utls/ai/wren/doc/"
 ---
 
 # wren ai

@@ -1,8 +1,10 @@
 ---
-layout: default
-title: Docker
+layout: "default"
+title: "Docker"
 nav_order: 2
+description: "Docker 文档"
 has_children: true
+permalink: "/docker/index/"
 ---
 
 # Docker 文档

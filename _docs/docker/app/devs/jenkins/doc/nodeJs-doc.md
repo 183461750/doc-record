@@ -1,8 +1,11 @@
 ---
-layout: default
-title: nodeJs-doc
-parent: jenkins
-nav_order:       15
+layout: "default"
+title: "nodeJs-doc"
+nav_order: 15
+description: "jenkins构建node项目"
+parent: "jenkins"
+has_children: false
+permalink: "/docker/app/devs/jenkins/doc/nodeJs-doc/"
 ---
 
 # jenkins构建node项目

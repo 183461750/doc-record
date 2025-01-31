@@ -1,8 +1,11 @@
 ---
-layout: default
-title: conda
-parent: Docker
-nav_order:       12
+layout: "default"
+title: "conda"
+nav_order: 12
+description: "使用记录"
+parent: "Docker"
+has_children: false
+permalink: "/docker/doc/conda/"
 ---
 
 # 使用记录

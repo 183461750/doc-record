@@ -1,8 +1,11 @@
 ---
-layout: default
-title: ssh
-parent: manual
-nav_order:       15
+layout: "default"
+title: "ssh"
+nav_order: 15
+description: "ssh"
+parent: "manual"
+has_children: false
+permalink: "/docker/doc/material/manual/article/ssh/"
 ---
 
 # ssh

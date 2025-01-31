@@ -1,8 +1,11 @@
 ---
-layout: default
-title: docker-context
-parent: doc
-nav_order:       13
+layout: "default"
+title: "docker-context"
+nav_order: 13
+description: "docker上下文相关记录"
+parent: "doc"
+has_children: true
+permalink: "/docker/doc/docker-context/docker-context/"
 ---
 
 # docker上下文相关记录

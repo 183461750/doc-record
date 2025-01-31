@@ -1,9 +1,12 @@
 ---
-layout: default
-title: Git
-parent: Terminal
-grand_parent: 工具集
+layout: "default"
+title: "Git"
 nav_order: 13
+description: "git使用记录"
+parent: "Terminal"
+has_children: false
+permalink: "/tools/terminal/git/doc/"
+grand_parent: "工具集"
 ---
 
 # git使用记录

@@ -1,9 +1,12 @@
 ---
-layout: default
-title: Arthas
-parent: Terminal
-grand_parent: 工具集
+layout: "default"
+title: "Arthas"
 nav_order: 1
+description: "arthas使用记录"
+parent: "Terminal"
+has_children: false
+permalink: "/tools/terminal/arthas/doc/"
+grand_parent: "工具集"
 ---
 
 # arthas使用记录

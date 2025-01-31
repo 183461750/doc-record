@@ -1,8 +1,11 @@
 ---
-layout: default
-title: ssh-git
-parent: jenkins
-nav_order:       15
+layout: "default"
+title: "ssh-git"
+nav_order: 15
+description: "git通过ssh拉取代码"
+parent: "jenkins"
+has_children: false
+permalink: "/docker/app/devs/jenkins/doc/ssh-git/"
 ---
 
 # git通过ssh拉取代码

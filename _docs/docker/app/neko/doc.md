@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: app
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "neko"
+parent: "app"
+has_children: false
+permalink: "/docker/app/neko/doc/"
 ---
 
 # neko

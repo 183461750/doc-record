@@ -1,8 +1,11 @@
 ---
-layout: default
-title: 编程语言
-parent: 工具集
+layout: "default"
+title: "编程语言"
 nav_order: 1
+description: "编程语言相关记录"
+parent: "工具集"
+has_children: false
+permalink: "/tools/code_lang/doc/"
 ---
 
 # 编程语言相关记录

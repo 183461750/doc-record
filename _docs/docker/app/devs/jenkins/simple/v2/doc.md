@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: simple
-nav_order:       16
+layout: "default"
+title: "doc"
+nav_order: 16
+description: "v2版jenkins部署"
+parent: "simple"
+has_children: false
+permalink: "/docker/app/devs/jenkins/simple/v2/doc/"
 ---
 
 # v2版jenkins部署

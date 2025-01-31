@@ -1,8 +1,11 @@
 ---
-layout: default
-title: linux
-parent: Docker
-nav_order:       12
+layout: "default"
+title: "linux"
+nav_order: 12
+description: "linux相关命令使用记录"
+parent: "Docker"
+has_children: true
+permalink: "/docker/doc/linux/"
 ---
 
 # linux相关命令使用记录

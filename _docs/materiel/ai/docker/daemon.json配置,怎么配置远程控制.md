@@ -1,8 +1,11 @@
 ---
-layout: default
-title: daemon.json配置,怎么配置远程控制
-parent: ai
-nav_order:       13
+layout: "default"
+title: "daemon.json配置,怎么配置远程控制"
+nav_order: 13
+description: "/etc/docker/daemon.json配置, 怎么配置远程控制"
+parent: "ai"
+has_children: false
+permalink: "/materiel/ai/docker/daemon.json配置,怎么配置远程控制/"
 ---
 
 # /etc/docker/daemon.json配置, 怎么配置远程控制

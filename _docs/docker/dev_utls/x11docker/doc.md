@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: dev_utls
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "x11docker"
+parent: "dev_utls"
+has_children: false
+permalink: "/docker/dev_utls/x11docker/doc/"
 ---
 
 # x11docker

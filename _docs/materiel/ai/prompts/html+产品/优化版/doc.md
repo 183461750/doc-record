@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: html+产品
-nav_order:       15
+layout: "default"
+title: "doc"
+nav_order: 15
+description: "优化版"
+parent: "html+产品"
+has_children: false
+permalink: "/materiel/ai/prompts/html+产品/优化版/doc/"
 ---
 
 # 优化版

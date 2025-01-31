@@ -1,8 +1,9 @@
 ---
-layout: default
-title: samba
-parent: data
-nav_order:       15
+layout: "default"
+title: "samba"
+nav_order: 15
+parent: "data"
+permalink: "/docker/app/devs/data/nas/samba/"
 ---
 
 ```shell

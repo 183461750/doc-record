@@ -1,9 +1,11 @@
 ---
-layout: default
-title: Terminal
-parent: 工具集
+layout: "default"
+title: "Terminal"
 nav_order: 12
+description: "命令行使用记录文档"
+parent: "工具集"
 has_children: true
+permalink: "/tools/terminal/doc/"
 ---
 
 # 命令行使用记录文档

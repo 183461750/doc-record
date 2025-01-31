@@ -1,8 +1,11 @@
 ---
-layout: default
-title: README
-parent: config
-nav_order:       18
+layout: "default"
+title: "README"
+nav_order: 18
+description: "TiDB dashboard With Grafana v5.x or later, we can use provisioning feature to statically provision datasources and dashboards. No need to use scripts to configure Grafana."
+parent: "config"
+has_children: false
+permalink: "/docker/app/devs/data/TiDB/v1/config/dashboards/README/"
 ---
 
 # TiDB dashboard 

@@ -1,8 +1,11 @@
 ---
-layout: default
-title: kubectl
-parent: _docs
-nav_order:       11
+layout: "default"
+title: "kubectl"
+nav_order: 11
+description: "kubectl使用记录"
+parent: "_docs"
+has_children: false
+permalink: "/kubernetes/kubectl/"
 ---
 
 # kubectl使用记录

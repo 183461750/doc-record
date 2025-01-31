@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: elk
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "logstash使用记录"
+parent: "elk"
+has_children: false
+permalink: "/kubernetes/app/elk/logstash/doc/"
 ---
 
 # logstash使用记录

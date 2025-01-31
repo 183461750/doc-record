@@ -1,8 +1,11 @@
 ---
-layout: default
-title: java-jar-alpine
-parent: deploy
-nav_order:       16
+layout: "default"
+title: "java-jar-alpine"
+nav_order: 16
+description: "构建tomcat应用的相关记录"
+parent: "deploy"
+has_children: false
+permalink: "/docker/app/devs/jenkins/deploy/simple/java-jar-alpine/"
 ---
 
 # 构建tomcat应用的相关记录

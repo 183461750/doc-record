@@ -1,8 +1,11 @@
 ---
-layout: default
-title: 如何使用macos系统的沙箱环境呢?
-parent: ai
-nav_order:       13
+layout: "default"
+title: "如何使用macos系统的沙箱环境呢?"
+nav_order: 13
+description: "如何使用macos系统的沙箱环境呢?"
+parent: "ai"
+has_children: false
+permalink: "/materiel/ai/sandbox/如何使用macos系统的沙箱环境呢?/"
 ---
 
 # 如何使用macos系统的沙箱环境呢?

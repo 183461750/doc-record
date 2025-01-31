@@ -1,11 +1,13 @@
 ---
-layout: default
-title: Cursor
-parent: 软件工具
-grand_parent: 工具集
+layout: "default"
+title: "Cursor"
 nav_order: 3
+description: "cursor"
+parent: "软件工具"
+has_children: false
+permalink: "/tools/softs/cursor/doc/"
+grand_parent: "工具集"
 ---
-
 
 # cursor
 

@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: Docker
-nav_order:       17
+layout: "default"
+title: "doc"
+nav_order: 17
+description: "openvpn客户端"
+parent: "Docker"
+has_children: false
+permalink: "/docker/app/networks/vpn/openvpn/docker/client/doc/"
 ---
 
 # openvpn客户端

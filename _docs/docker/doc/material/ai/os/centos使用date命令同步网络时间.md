@@ -1,8 +1,11 @@
 ---
-layout: default
-title: centos使用date命令同步网络时间
-parent: ai
-nav_order:       15
+layout: "default"
+title: "centos使用date命令同步网络时间"
+nav_order: 15
+description: "centos使用date命令同步网络时间"
+parent: "ai"
+has_children: false
+permalink: "/docker/doc/material/ai/os/centos使用date命令同步网络时间/"
 ---
 
 # centos使用date命令同步网络时间

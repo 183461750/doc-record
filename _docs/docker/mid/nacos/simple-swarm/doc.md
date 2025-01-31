@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: nacos
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "docker swarm版nacos"
+parent: "nacos"
+has_children: false
+permalink: "/docker/mid/nacos/simple-swarm/doc/"
 ---
 
 # docker swarm版nacos

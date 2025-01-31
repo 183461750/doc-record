@@ -1,8 +1,10 @@
 ---
-layout: default
-title: Kubernetes
+layout: "default"
+title: "Kubernetes"
 nav_order: 3
-has_children: true
+description: "Kubernetes 文档"
+has_children: false
+permalink: "/kubernetes/index/"
 ---
 
 # Kubernetes 文档

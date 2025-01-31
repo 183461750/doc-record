@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: 操作系统
-nav_order:       12
+layout: "default"
+title: "doc"
+nav_order: 12
+description: "linux系统文档"
+parent: "操作系统"
+has_children: false
+permalink: "/os/linux/doc/"
 ---
 
 # linux系统文档

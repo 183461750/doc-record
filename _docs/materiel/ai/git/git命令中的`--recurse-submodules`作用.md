@@ -1,8 +1,11 @@
 ---
-layout: default
-title: git命令中的`--recurse-submodules`作用
-parent: ai
-nav_order:       13
+layout: "default"
+title: "git命令中的`--recurse-submodules`作用"
+nav_order: 13
+description: "git命令中的`--recurse-submodules`作用"
+parent: "ai"
+has_children: false
+permalink: "/materiel/ai/git/git命令中的`--recurse-submodules`作用/"
 ---
 
 # git命令中的`--recurse-submodules`作用

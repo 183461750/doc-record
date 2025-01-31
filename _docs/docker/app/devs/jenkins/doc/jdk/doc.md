@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: doc
-nav_order:       16
+layout: "default"
+title: "doc"
+nav_order: 16
+description: "jenkins中使用jdk"
+parent: "doc"
+has_children: false
+permalink: "/docker/app/devs/jenkins/doc/jdk/doc/"
 ---
 
 # jenkins中使用jdk

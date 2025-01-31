@@ -1,9 +1,12 @@
 ---
-layout: default
-title: Interpreter
-parent: Terminal
-grand_parent: 工具集
+layout: "default"
+title: "Interpreter"
 nav_order: 3
+description: "interpreter"
+parent: "Terminal"
+has_children: false
+permalink: "/tools/terminal/interpreter/doc/"
+grand_parent: "工具集"
 ---
 
 # interpreter

@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: doc
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "docker容器记录"
+parent: "doc"
+has_children: false
+permalink: "/docker/doc/container/doc/"
 ---
 
 # docker容器记录

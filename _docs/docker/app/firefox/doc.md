@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: app
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "firefox浏览器相关说明"
+parent: "app"
+has_children: false
+permalink: "/docker/app/firefox/doc/"
 ---
 
 # firefox浏览器相关说明

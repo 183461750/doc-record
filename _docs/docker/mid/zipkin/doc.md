@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: mid
-nav_order:       13
+layout: "default"
+title: "doc"
+nav_order: 13
+description: "zipkin"
+parent: "mid"
+has_children: false
+permalink: "/docker/mid/zipkin/doc/"
 ---
 
 # zipkin

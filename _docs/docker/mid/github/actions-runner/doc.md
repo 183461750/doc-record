@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: github
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "actions-runner"
+parent: "github"
+has_children: false
+permalink: "/docker/mid/github/actions-runner/doc/"
 ---
 
 # actions-runner

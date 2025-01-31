@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: networks
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "DoH和DoT配置- 使用Let’s Encrypt申请免费证书- 註冊了一個 abc.com 的域名，請先去 DNS 管理後台新增一條 A 記錄- 安装certbot"
+parent: "networks"
+has_children: false
+permalink: "/docker/app/networks/adguard/doc/"
 ---
 
 ## DoH和DoT配置

@@ -1,8 +1,11 @@
 ---
-layout: default
-title: git管理子项目的方式
-parent: ai
-nav_order:       13
+layout: "default"
+title: "git管理子项目的方式"
+nav_order: 13
+description: "git管理子项目的方式"
+parent: "ai"
+has_children: false
+permalink: "/materiel/ai/git/git管理子项目的方式/"
 ---
 
 # git管理子项目的方式

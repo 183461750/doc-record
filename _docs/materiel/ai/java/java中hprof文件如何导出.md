@@ -1,8 +1,11 @@
 ---
-layout: default
-title: java中hprof文件如何导出
-parent: ai
-nav_order:       13
+layout: "default"
+title: "java中hprof文件如何导出"
+nav_order: 13
+description: "java hprof文件如何导出"
+parent: "ai"
+has_children: false
+permalink: "/materiel/ai/java/java中hprof文件如何导出/"
 ---
 
 # java hprof文件如何导出

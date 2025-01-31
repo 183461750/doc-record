@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: simple
-nav_order:       18
+layout: "default"
+title: "doc"
+nav_order: 18
+description: "部署内网redis"
+parent: "simple"
+has_children: false
+permalink: "/docker/app/devs/data/redis/cluster/simple/intranet/doc/"
 ---
 
 # 部署内网redis

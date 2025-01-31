@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: data
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "Redis相关记录"
+parent: "data"
+has_children: false
+permalink: "/middleware/data/redis/doc/"
 ---
 
 # Redis相关记录

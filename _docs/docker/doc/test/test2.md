@@ -1,8 +1,11 @@
 ---
-layout: default
-title: test2
-parent: doc
-nav_order:       13
+layout: "default"
+title: "test2"
+nav_order: 13
+description: "test2"
+parent: "doc"
+has_children: false
+permalink: "/docker/doc/test/test2/"
 ---
 
 # test2

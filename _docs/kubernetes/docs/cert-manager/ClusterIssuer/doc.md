@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: cert-manager
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "ClusterIssuer记录"
+parent: "cert-manager"
+has_children: false
+permalink: "/kubernetes/docs/cert-manager/ClusterIssuer/doc/"
 ---
 
 # ClusterIssuer记录

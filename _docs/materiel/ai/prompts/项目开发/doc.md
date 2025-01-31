@@ -1,8 +1,11 @@
 ---
-layout: default
-title: doc
-parent: prompts
-nav_order:       14
+layout: "default"
+title: "doc"
+nav_order: 14
+description: "项目开发"
+parent: "prompts"
+has_children: false
+permalink: "/materiel/ai/prompts/项目开发/doc/"
 ---
 
 # 项目开发

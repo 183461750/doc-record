@@ -1,8 +1,11 @@
 ---
-layout: default
-title: crictl
-parent: _docs
-nav_order:       11
+layout: "default"
+title: "crictl"
+nav_order: 11
+description: "k8s容器运行时命令行工具"
+parent: "_docs"
+has_children: false
+permalink: "/kubernetes/crictl/"
 ---
 
 # k8s容器运行时命令行工具
