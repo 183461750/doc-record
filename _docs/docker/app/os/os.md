@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 13
 description: docker容器中部署系统相关文档
 parent: app

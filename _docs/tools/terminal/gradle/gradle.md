@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: Gradle
+title: '"Gradle"'
 nav_order: 2
 description: gradle使用
 parent: Terminal

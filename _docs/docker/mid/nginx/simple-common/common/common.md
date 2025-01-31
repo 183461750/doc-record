@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 15
 description: nginx使用记录
 parent: simple-common

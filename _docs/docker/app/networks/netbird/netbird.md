@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 14
 description: netbird使用
 parent: networks

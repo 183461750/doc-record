@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 11
 description: k8s相关使用记录
 parent: _docs

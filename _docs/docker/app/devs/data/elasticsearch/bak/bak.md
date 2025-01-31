@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 16
 description: 以下是使用Docker Swarm部署Elasticsearch集群的步骤：
 parent: elasticsearch

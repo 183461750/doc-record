@@ -1,10 +1,9 @@
 ---
----
 layout: default
-title: Docker
+title: '"Docker"'
 nav_order: 2
 has_children: true
-permalink: "/docker/index/"
+permalink: "/docker/"
 ---
 
 # Docker 文档中心

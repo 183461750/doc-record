@@ -1,12 +1,11 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 15
 description: yapi
 parent: yapi
 has_children: false
-permalink: "/docker/app/devs/yapi/simpleV2/simpleV2/"
+permalink: "/docker/app/devs/yapi/simplev2/simplev2/"
 ---
 
 # yapi

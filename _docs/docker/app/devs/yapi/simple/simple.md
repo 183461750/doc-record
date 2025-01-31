@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 15
 description: Jenkins配置```shell
 parent: yapi

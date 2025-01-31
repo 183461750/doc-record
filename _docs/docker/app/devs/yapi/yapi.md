@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 14
 description: Dockerfile```shellFROM node:12-alpine as builderWORKDIR /yapiRUN apk
   add --no-cache wget python makeENV VERSION=1.9.2RUN wget https://github.com/YMFE/yapi/archive/v${VERSION}.zipRUN

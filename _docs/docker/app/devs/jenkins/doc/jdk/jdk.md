@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 16
 description: jenkins中使用jdk
 parent: doc

@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: java-jar-alpine
+title: '"java-jar-alpine"'
 nav_order: 16
 description: 构建tomcat应用的相关记录
 parent: deploy

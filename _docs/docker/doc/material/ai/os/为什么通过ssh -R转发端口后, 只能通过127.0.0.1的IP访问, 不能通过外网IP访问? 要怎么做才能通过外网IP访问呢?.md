@@ -1,13 +1,12 @@
 ---
----
 layout: default
-title: 为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?
+title: '"为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?"'
 nav_order: 15
 description: 为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?
 parent: ai
 has_children: false
-permalink: "/docker/doc/material/ai/os/为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问?
-  要怎么做才能通过外网IP访问呢?/"
+permalink: "/docker/doc/material/ai/os/为什么通过ssh -r转发端口后, 只能通过127.0.0.1的ip访问, 不能通过外网ip访问?
+  要怎么做才能通过外网ip访问呢?/"
 ---
 
 # 为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?

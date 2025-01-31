@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: linux-network
+title: '"linux-network"'
 nav_order: 12
 description: linux网络笔记
 parent: Docker

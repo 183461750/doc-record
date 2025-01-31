@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: crictl
+title: '"crictl"'
 nav_order: 11
 description: k8s容器运行时命令行工具
 parent: _docs

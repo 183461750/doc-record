@@ -30,7 +30,7 @@ class DocOrganizer
       'os' => {title: '操作系统', order: 5},
       'tools' => {title: '工具集', order: 6},
       'network' => {title: '网络', order: 7},
-      'AI' => {title: 'AI', order: 8},
+      'ai' => {title: 'AI', order: 8},
       'books' => {title: '资料', order: 9}
     }
 
@@ -38,27 +38,30 @@ class DocOrganizer
       path = File.join(@docs_dir, dir)
       FileUtils.mkdir_p(path) unless dir.empty?
       
-      create_index_md(path, info[:title], info[:order])
+      create_index_md(path, info[:title], info[:order], dir)
     end
   end
 
-  def create_index_md(path, title, order)
+  def create_index_md(path, title, order, dir)
     index_path = File.join(path, 'index.md')
     return if File.exist?(index_path)
 
-    content = <<~YAML
+    # 生成规范的 permalink
+    permalink = dir.empty? ? "/" : "/#{dir.downcase}/"
+
+    content = <<~MARKDOWN
     ---
-    layout: "default"
+    layout: default
     title: "#{title}"
     nav_order: #{order}
     has_children: true
-    permalink: "/#{path.sub(@docs_dir, '').sub(/^\//, '')}/"
+    permalink: "#{permalink}"
     ---
 
     # #{title}
 
     这里包含了#{title}相关的所有文档。
-    YAML
+    MARKDOWN
 
     File.write(index_path, content)
   end
@@ -80,18 +83,32 @@ class DocOrganizer
   def update_front_matter
     Dir.glob(File.join(@docs_dir, '**', '*.md')).each do |file|
       content = File.read(file)
-      if content =~ /^---\s*\n(.*?)^---\s*$/m
-        front_matter = YAML.load($1) rescue {}
+      
+      # 提取现有的 front matter
+      if content =~ /^---\s*\n(.*?)\n---\s*$/m
+        yaml_content = $1
+        rest_content = content.sub(/^---\s*\n.*?\n---\s*\n/m, '')
         
-        # 更新front matter
+        begin
+          front_matter = YAML.load(yaml_content) || {}
+        rescue
+          front_matter = {}
+        end
+        
+        # 更新 front matter
         front_matter['layout'] = 'default'
         front_matter['has_children'] = false if front_matter['has_children'].nil?
         
-        # 生成相对路径作为permalink
-        rel_path = file.sub(@docs_dir, '').sub(/^\//, '').sub(/\.md$/, '')
-        front_matter['permalink'] = "/#{rel_path}/"
+        # 确保 title 有引号
+        if front_matter['title']
+          front_matter['title'] = %Q("#{front_matter['title']}") unless front_matter['title'].start_with?('"') || front_matter['title'].start_with?("'")
+        end
         
-        # 如果没有nav_order，根据目录深度和名称生成
+        # 生成规范的 permalink
+        rel_path = file.sub(@docs_dir, '').sub(/^\//, '').sub(/\.md$/, '').sub(/\/index$/, '')
+        front_matter['permalink'] = rel_path.empty? ? "/" : "/#{rel_path.downcase}/"
+        
+        # 如果没有 nav_order，根据目录深度和名称生成
         if front_matter['nav_order'].nil?
           depth = rel_path.count('/')
           @nav_order[depth] ||= 0
@@ -99,8 +116,8 @@ class DocOrganizer
           front_matter['nav_order'] = @nav_order[depth]
         end
         
-        # 更新文件
-        new_content = "---\n#{front_matter.to_yaml}---\n\n#{content.sub(/^---.*?---\s*/m, '')}"
+        # 生成新的文件内容
+        new_content = "---\n#{front_matter.to_yaml.sub(/^---\n/, '')}---\n\n#{rest_content}"
         File.write(file, new_content)
       end
     end

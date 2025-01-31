@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: nginx-nodejs
+title: '"nginx-nodejs"'
 nav_order: 16
 description: 使用Jenkins构建node项目
 parent: deploy

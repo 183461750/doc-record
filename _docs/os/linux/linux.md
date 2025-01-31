@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: Linux系统
+title: '"Linux系统"'
 nav_order: 12
 description: linux系统文档
 parent: 操作系统

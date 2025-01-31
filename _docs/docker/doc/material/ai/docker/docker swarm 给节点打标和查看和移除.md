@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: Docker Swarm 节点标签管理
+title: '"Docker Swarm 节点标签管理"'
 nav_order: 5
 description: Docker Swarm 节点标签管理
 parent: Docker

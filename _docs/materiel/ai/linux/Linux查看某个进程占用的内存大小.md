@@ -1,12 +1,11 @@
 ---
----
 layout: default
-title: Linux查看某个进程占用的内存大小
+title: '"Linux查看某个进程占用的内存大小"'
 nav_order: 13
 description: Linux查看某个进程占用的内存大小
 parent: ai
 has_children: false
-permalink: "/materiel/ai/linux/Linux查看某个进程占用的内存大小/"
+permalink: "/materiel/ai/linux/linux查看某个进程占用的内存大小/"
 ---
 
 # Linux查看某个进程占用的内存大小

@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: template-doc
+title: '"template-doc"'
 nav_order: 14
 description: nginx模板配置  - [参考文章](https://hub.docker.com/_/nginx)
 parent: nginx

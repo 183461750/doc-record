@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 16
 description: nginx相关文档  - [参考文章](https://hub.docker.com/_/nginx)
 parent: middleware

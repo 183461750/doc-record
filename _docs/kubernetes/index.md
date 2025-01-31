@@ -1,10 +1,9 @@
 ---
----
 layout: default
-title: Kubernetes
+title: '"Kubernetes"'
 nav_order: 3
 has_children: true
-permalink: "/kubernetes/index/"
+permalink: "/kubernetes/"
 ---
 
 # Kubernetes 文档中心

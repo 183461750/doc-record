@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: 软件工具
+title: '"软件工具"'
 nav_order: 2
 description: 软件工具
 parent: 工具集

@@ -1,10 +1,9 @@
 ---
----
 layout: default
-title: 网络
+title: '"网络"'
 nav_order: 7
 has_children: true
-permalink: "/network/index/"
+permalink: "/network/"
 ---
 
 # 网络

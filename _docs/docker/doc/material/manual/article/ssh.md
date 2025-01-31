@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: ssh
+title: '"ssh"'
 nav_order: 15
 description: ssh
 parent: manual

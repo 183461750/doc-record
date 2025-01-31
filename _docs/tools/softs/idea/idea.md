@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: IDEA
+title: '"IDEA"'
 nav_order: 4
 description: idea使用记录
 parent: 软件工具

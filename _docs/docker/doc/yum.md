@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: yum
+title: '"yum"'
 nav_order: 12
 description: yum相关文档
 parent: Docker

@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: docker-error
+title: '"docker-error"'
 nav_order: 12
 description: docker相关报错记录
 parent: Docker

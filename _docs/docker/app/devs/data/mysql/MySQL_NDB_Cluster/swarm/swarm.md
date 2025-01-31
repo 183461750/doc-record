@@ -1,12 +1,11 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 17
 description: docker swarm版部署文档
 parent: MySQL_NDB_Cluster
 has_children: false
-permalink: "/docker/app/devs/data/mysql/MySQL_NDB_Cluster/swarm/swarm/"
+permalink: "/docker/app/devs/data/mysql/mysql_ndb_cluster/swarm/swarm/"
 ---
 
 # docker swarm版部署文档

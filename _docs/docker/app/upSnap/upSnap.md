@@ -1,12 +1,11 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 13
 description: UpSnap使用记录
 parent: app
 has_children: false
-permalink: "/docker/app/upSnap/upSnap/"
+permalink: "/docker/app/upsnap/upsnap/"
 ---
 
 # UpSnap使用记录

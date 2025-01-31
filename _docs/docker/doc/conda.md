@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: conda
+title: '"conda"'
 nav_order: 12
 description: 使用记录
 parent: Docker

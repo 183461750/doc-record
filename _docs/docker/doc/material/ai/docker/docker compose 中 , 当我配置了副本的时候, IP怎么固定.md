@@ -1,12 +1,11 @@
 ---
----
 layout: default
-title: docker compose 中 , 当我配置了副本的时候, IP怎么固定
+title: '"docker compose 中 , 当我配置了副本的时候, IP怎么固定"'
 nav_order: 15
 description: docker compose 中 , 当我配置了副本的时候, IP怎么固定
 parent: ai
 has_children: false
-permalink: "/docker/doc/material/ai/docker/docker compose 中 , 当我配置了副本的时候, IP怎么固定/"
+permalink: "/docker/doc/material/ai/docker/docker compose 中 , 当我配置了副本的时候, ip怎么固定/"
 ---
 
 # docker compose 中 , 当我配置了副本的时候, IP怎么固定

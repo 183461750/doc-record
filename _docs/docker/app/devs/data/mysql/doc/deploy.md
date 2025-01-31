@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: deploy
+title: '"deploy"'
 nav_order: 16
 description: 单机部署
 parent: mysql

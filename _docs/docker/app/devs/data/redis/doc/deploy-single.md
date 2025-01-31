@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: deploy-single
+title: '"deploy-single"'
 nav_order: 16
 parent: redis
 permalink: "/docker/app/devs/data/redis/doc/deploy-single/"

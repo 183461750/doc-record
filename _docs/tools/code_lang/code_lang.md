@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: 编程语言
+title: '"编程语言"'
 nav_order: 1
 description: 编程语言相关记录
 parent: 工具集

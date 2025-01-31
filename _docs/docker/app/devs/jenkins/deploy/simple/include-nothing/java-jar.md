@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: java-jar
+title: '"java-jar"'
 nav_order: 17
 description: 构建tomcat应用的相关记录
 parent: simple

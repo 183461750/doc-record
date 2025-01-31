@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: plugins
+title: '"plugins"'
 nav_order: 15
 description: Jenkins插件相关记录
 parent: jenkins

@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: java-jar-remote-deploy
+title: '"java-jar-remote-deploy"'
 nav_order: 16
 description: 构建tomcat应用的相关记录
 parent: deploy

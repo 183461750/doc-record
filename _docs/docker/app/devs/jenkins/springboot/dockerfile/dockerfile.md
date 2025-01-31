@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 16
 parent: springuoot
 permalink: "/docker/app/devs/jenkins/springboot/dockerfile/dockerfile/"

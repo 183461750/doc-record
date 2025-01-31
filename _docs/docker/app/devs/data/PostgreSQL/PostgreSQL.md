@@ -1,12 +1,11 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 15
 description: postgresql数据库相关文档
 parent: data
 has_children: false
-permalink: "/docker/app/devs/data/PostgreSQL/PostgreSQL/"
+permalink: "/docker/app/devs/data/postgresql/postgresql/"
 ---
 
 # postgresql数据库相关文档

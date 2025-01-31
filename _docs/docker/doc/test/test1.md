@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: test1
+title: '"test1"'
 nav_order: 13
 description: test1
 parent: doc

@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: JMap
+title: '"JMap"'
 nav_order: 4
 description: jmap的使用
 parent: Terminal

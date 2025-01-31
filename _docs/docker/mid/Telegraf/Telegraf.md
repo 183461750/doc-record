@@ -1,12 +1,11 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 13
 description: telegraf是用记录
 parent: mid
 has_children: false
-permalink: "/docker/mid/Telegraf/Telegraf/"
+permalink: "/docker/mid/telegraf/telegraf/"
 ---
 
 # telegraf是用记录

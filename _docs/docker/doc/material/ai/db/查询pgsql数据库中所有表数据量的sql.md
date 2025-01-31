@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: 查询pgsql数据库中所有表数据量的sql
+title: '"查询pgsql数据库中所有表数据量的sql"'
 nav_order: 15
 description: 查询pgsql数据库中所有表数据量的sql
 parent: ai

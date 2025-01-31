@@ -1,12 +1,11 @@
 ---
----
 layout: default
-title: doc
+title: '"doc"'
 nav_order: 13
 description: RabbitMQ相关记录
 parent: mid
 has_children: false
-permalink: "/kubernetes/mid/RabbitMQ/RabbitMQ/"
+permalink: "/kubernetes/mid/rabbitmq/rabbitmq/"
 ---
 
 # RabbitMQ相关记录

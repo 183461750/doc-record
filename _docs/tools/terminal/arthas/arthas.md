@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: Arthas
+title: '"Arthas"'
 nav_order: 1
 description: arthas使用记录
 parent: Terminal

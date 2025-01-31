@@ -1,7 +1,6 @@
 ---
----
 layout: default
-title: kubectl
+title: '"kubectl"'
 nav_order: 11
 description: kubectl使用记录
 parent: _docs

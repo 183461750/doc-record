@@ -1,10 +1,9 @@
 ---
----
 layout: default
-title: 中间件
+title: '"中间件"'
 nav_order: 4
 has_children: true
-permalink: "/middleware/index/"
+permalink: "/middleware/"
 ---
 
 # 中间件
