@@ -1,14 +1,14 @@
 ---
 layout: "default"
-title: "doc"
+title: "Linux系统"
 nav_order: 12
 description: "linux系统文档"
 parent: "操作系统"
-has_children: false
+has_children: true
 permalink: "/os/linux/doc/"
 ---
 
-# linux系统文档
+# Linux系统文档
 
 ```bash
 # 获取系统IP

@@ -1,9 +1,9 @@
 ---
 layout: "default"
-title: "doc"
+title: "Linux问题记录"
 nav_order: 13
 description: "问题记录"
-parent: "linux"
+parent: "Linux系统"
 has_children: false
 permalink: "/os/linux/problems/doc/"
 ---
