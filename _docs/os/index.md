@@ -4,7 +4,7 @@ title: 操作系统
 nav_order: 2
 has_children: true
 permalink: "/os/"
-parent: '"操作系统"'
+parent: 操作系统
 ---
 
 # 操作系统

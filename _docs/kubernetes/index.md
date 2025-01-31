@@ -4,7 +4,7 @@ title: Kubernetes
 nav_order: 3
 has_children: true
 permalink: "/kubernetes/"
-parent: '"Kubernetes"'
+parent: Kubernetes
 ---
 
 # Kubernetes 文档中心

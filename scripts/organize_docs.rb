@@ -31,7 +31,8 @@ class DocOrganizer
       'tools' => {title: '工具集', order: 6},
       'network' => {title: '网络', order: 7},
       'ai' => {title: 'AI', order: 8},
-      'books' => {title: '资料', order: 9}
+      'books' => {title: '资料', order: 9},
+      'materiel' => {title: '素材库', order: 10}
     }
 
     main_dirs.each do |dir, info|
@@ -85,6 +86,11 @@ class DocOrganizer
     parts = rel_path.split('/')
     return nil if parts.length <= 1
     
+    # 如果文件在根目录下且不在主要目录中，则设置 parent 为 "素材库"
+    if parts.length == 1 && !%w[docker kubernetes middleware os tools network ai books materiel].include?(parts[0])
+      return "素材库"
+    end
+    
     parent_path = parts[0..-2].join('/')
     # 查找父目录中的 index.md 文件
     parent_index = File.join(@docs_dir, parent_path, 'index.md')
@@ -99,6 +105,17 @@ class DocOrganizer
   end
 
   def update_front_matter
+    # 先处理根目录下的非主要目录文件
+    Dir.glob(File.join(@docs_dir, '*.md')).each do |file|
+      basename = File.basename(file, '.md')
+      next if basename == 'index'
+      next if %w[docker kubernetes middleware os tools network ai books materiel].include?(basename)
+      
+      # 移动到 materiel 目录
+      new_path = File.join(@docs_dir, 'materiel', File.basename(file))
+      FileUtils.mv(file, new_path) unless file == new_path
+    end
+
     Dir.glob(File.join(@docs_dir, '**', '*.md')).each do |file|
       content = File.read(file)
       

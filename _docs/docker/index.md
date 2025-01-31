@@ -4,7 +4,7 @@ title: Docker
 nav_order: 2
 has_children: true
 permalink: "/docker/"
-parent: '"Docker"'
+parent: Docker
 ---
 
 # Docker 文档中心

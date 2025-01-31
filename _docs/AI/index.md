@@ -4,7 +4,7 @@ title: AI
 nav_order: 8
 has_children: true
 permalink: "/ai/"
-parent: '"AI"'
+parent: AI
 ---
 
 # AI
