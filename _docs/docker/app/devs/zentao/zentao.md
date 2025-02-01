@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: 禅道
-parent: devs
+parent: Zentao
 has_children: false
 permalink: "/docker/app/devs/zentao/zentao/"
+grand_parent: Devs
 ---
 
 # 禅道

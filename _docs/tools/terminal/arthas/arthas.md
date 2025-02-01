@@ -3,10 +3,10 @@ layout: default
 title: Arthas
 nav_order: 1
 description: arthas使用记录
-parent: Terminal
+parent: Arthas
 has_children: false
 permalink: "/tools/terminal/arthas/arthas/"
-grand_parent: 工具集
+grand_parent: Terminal
 ---
 
 # arthas使用记录

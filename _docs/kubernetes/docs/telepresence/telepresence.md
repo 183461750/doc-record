@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: Telepresence 使用记录
-parent: docs
+parent: Telepresence
 has_children: false
 permalink: "/kubernetes/docs/telepresence/telepresence/"
+grand_parent: Docs
 ---
 
 # Telepresence 使用记录

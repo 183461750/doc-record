@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: logstash使用记录
-parent: elk
+parent: Logstash
 has_children: false
 permalink: "/kubernetes/app/elk/logstash/logstash/"
+grand_parent: Elk
 ---
 
 # logstash使用记录

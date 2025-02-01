@@ -6,6 +6,7 @@ description: Docker Swarm 节点标签管理
 parent: Docker
 has_children: false
 permalink: "/docker/doc/material/ai/docker/docker swarm 给节点打标和查看和移除/"
+grand_parent: Ai
 ---
 
 # Docker Swarm 节点标签管理

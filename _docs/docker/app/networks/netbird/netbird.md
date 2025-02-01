@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: netbird使用
-parent: networks
+parent: Netbird
 has_children: false
 permalink: "/docker/app/networks/netbird/netbird/"
+grand_parent: Networks
 ---
 
 # netbird使用

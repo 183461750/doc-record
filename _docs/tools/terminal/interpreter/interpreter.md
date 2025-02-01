@@ -3,10 +3,10 @@ layout: default
 title: Interpreter
 nav_order: 3
 description: interpreter
-parent: Terminal
+parent: Interpreter
 has_children: false
 permalink: "/tools/terminal/interpreter/interpreter/"
-grand_parent: 工具集
+grand_parent: Terminal
 ---
 
 # interpreter

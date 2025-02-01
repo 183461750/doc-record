@@ -3,10 +3,10 @@ layout: default
 title: JMap
 nav_order: 4
 description: jmap的使用
-parent: Terminal
+parent: Jmap
 has_children: false
 permalink: "/tools/terminal/jmap/jmap/"
-grand_parent: 工具集
+grand_parent: Terminal
 slug: jmap
 ---
 

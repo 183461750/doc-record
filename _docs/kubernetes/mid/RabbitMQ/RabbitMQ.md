@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: RabbitMQ相关记录
-parent: mid
+parent: Rabbitmq
 has_children: false
 permalink: "/kubernetes/mid/rabbitmq/rabbitmq/"
+grand_parent: Mid
 ---
 
 # RabbitMQ相关记录

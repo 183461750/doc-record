@@ -3,9 +3,10 @@ layout: default
 title: java-jar
 nav_order: 16
 description: 构建tomcat应用的相关记录
-parent: deploy
+parent: Remote
 has_children: false
 permalink: "/docker/app/devs/jenkins/deploy/remote/java-jar/"
+grand_parent: Deploy
 ---
 
 # 构建tomcat应用的相关记录

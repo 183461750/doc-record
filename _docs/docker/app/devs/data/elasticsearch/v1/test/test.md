@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 17
 description: es部署文档
-parent: v1
+parent: Test
 has_children: false
 permalink: "/docker/app/devs/data/elasticsearch/v1/test/test/"
+grand_parent: V1
 ---
 
 # es部署文档

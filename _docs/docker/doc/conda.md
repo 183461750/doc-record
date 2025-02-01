@@ -3,9 +3,10 @@ layout: default
 title: conda
 nav_order: 12
 description: 使用记录
-parent: Docker
+parent: Doc
 has_children: false
 permalink: "/docker/doc/conda/"
+grand_parent: Docker
 ---
 
 # 使用记录

@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: 部署MySQL```shell mysql开启集群的sql命令
-parent: mid
+parent: Haproxy
 has_children: false
 permalink: "/docker/mid/haproxy/haproxy/"
+grand_parent: Mid
 ---
 
 ## 部署MySQL

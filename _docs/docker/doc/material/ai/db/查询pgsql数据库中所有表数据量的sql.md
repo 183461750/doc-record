@@ -3,9 +3,10 @@ layout: default
 title: 查询pgsql数据库中所有表数据量的sql
 nav_order: 15
 description: 查询pgsql数据库中所有表数据量的sql
-parent: ai
+parent: Db
 has_children: false
 permalink: "/docker/doc/material/ai/db/查询pgsql数据库中所有表数据量的sql/"
+grand_parent: Ai
 ---
 
 # 查询pgsql数据库中所有表数据量的sql

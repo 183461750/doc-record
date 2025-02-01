@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: cert-manager使用记录
-parent: docs
+parent: Cert-manager
 has_children: false
 permalink: "/kubernetes/docs/cert-manager/cert-manager/"
+grand_parent: Docs
 ---
 
 # cert-manager使用记录

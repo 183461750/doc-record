@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: clickhouse
-parent: data
+parent: Clickhouse
 has_children: false
 permalink: "/middleware/data/clickhouse/clickhouse/"
+grand_parent: Data
 ---
 
 # clickhouse

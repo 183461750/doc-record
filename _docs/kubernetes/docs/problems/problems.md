@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: 问题记录
-parent: docs
+parent: Problems
 has_children: false
 permalink: "/kubernetes/docs/problems/problems/"
+grand_parent: Docs
 ---
 
 # 问题记录

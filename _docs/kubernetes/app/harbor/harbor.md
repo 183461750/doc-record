@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: Harbor使用记录
-parent: app
+parent: Harbor
 has_children: false
 permalink: "/kubernetes/app/harbor/harbor/"
+grand_parent: App
 ---
 
 # Harbor使用记录

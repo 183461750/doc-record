@@ -3,9 +3,10 @@ layout: default
 title: ssh-git
 nav_order: 15
 description: git通过ssh拉取代码
-parent: jenkins
+parent: Doc
 has_children: false
 permalink: "/docker/app/devs/jenkins/doc/ssh-git/"
+grand_parent: Jenkins
 ---
 
 # git通过ssh拉取代码

@@ -3,9 +3,10 @@ layout: default
 title: docker命令怎么控制远程docker
 nav_order: 13
 description: docker命令怎么控制远程docker
-parent: ai
+parent: Docker
 has_children: false
 permalink: "/materiel/ai/docker/docker命令怎么控制远程docker/"
+grand_parent: Ai
 ---
 
 # docker命令怎么控制远程docker

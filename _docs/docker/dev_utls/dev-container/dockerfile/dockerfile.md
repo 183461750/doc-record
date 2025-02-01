@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: dockerfile文件相关记录
-parent: dev-container
+parent: Dockerfile
 has_children: false
 permalink: "/docker/dev_utls/dev-container/dockerfile/dockerfile/"
+grand_parent: Dev-container
 ---
 
 # dockerfile文件相关记录

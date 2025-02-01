@@ -3,9 +3,10 @@ layout: default
 title: linux-network
 nav_order: 12
 description: linux网络笔记
-parent: Docker
+parent: Doc
 has_children: false
 permalink: "/docker/doc/linux-network/"
+grand_parent: Docker
 ---
 
 # linux网络笔记

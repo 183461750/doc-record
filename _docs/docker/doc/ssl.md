@@ -3,9 +3,10 @@ layout: default
 title: ssl
 nav_order: 12
 description: 开启ssl
-parent: Docker
+parent: Doc
 has_children: false
 permalink: "/docker/doc/ssl/"
+grand_parent: Docker
 ---
 
 # 开启ssl

@@ -3,9 +3,10 @@ layout: default
 title: test2
 nav_order: 13
 description: test2
-parent: doc
+parent: Test
 has_children: false
 permalink: "/docker/doc/test/test2/"
+grand_parent: Doc
 ---
 
 # test2

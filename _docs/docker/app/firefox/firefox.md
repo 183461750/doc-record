@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: firefox浏览器相关说明
-parent: app
+parent: Firefox
 has_children: false
 permalink: "/docker/app/firefox/firefox/"
+grand_parent: App
 ---
 
 # firefox浏览器相关说明

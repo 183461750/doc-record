@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 18
 description: 部署内网redis
-parent: simple
+parent: Intranet
 has_children: false
 permalink: "/docker/app/devs/data/redis/cluster/simple/intranet/intranet/"
+grand_parent: Simple
 ---
 
 # 部署内网redis

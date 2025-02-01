@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: nginx-ui
-parent: nginx
+parent: Nginx-ui
 has_children: false
 permalink: "/docker/mid/nginx/nginx-ui/nginx-ui/"
+grand_parent: Nginx
 ---
 
 # nginx-ui

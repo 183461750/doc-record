@@ -3,10 +3,10 @@ layout: default
 title: Git
 nav_order: 13
 description: git使用记录
-parent: Terminal
+parent: Git
 has_children: false
 permalink: "/tools/terminal/git/git/"
-grand_parent: 工具集
+grand_parent: Terminal
 ---
 
 # git使用记录

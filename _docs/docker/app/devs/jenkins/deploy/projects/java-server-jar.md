@@ -3,9 +3,10 @@ layout: default
 title: java-server-jar
 nav_order: 16
 description: 构建tomcat应用的相关记录
-parent: deploy
+parent: Projects
 has_children: false
 permalink: "/docker/app/devs/jenkins/deploy/projects/java-server-jar/"
+grand_parent: Deploy
 ---
 
 # 构建tomcat应用的相关记录

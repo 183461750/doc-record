@@ -3,9 +3,10 @@ layout: default
 title: Linux问题记录
 nav_order: 13
 description: 问题记录
-parent: Linux系统
+parent: Problems
 has_children: false
 permalink: "/os/linux/problems/problems/"
+grand_parent: Linux
 ---
 
 # 问题记录

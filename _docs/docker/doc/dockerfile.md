@@ -4,9 +4,10 @@ title: dockerfile
 nav_order: 12
 description: dockerfile的构建命令查看(以zk镜像为示例)```shell 查看构建过程的命令docker history a10 可以查看到zk在使用dockerfile构建镜像时，设置了以下docker-entrypoint.sh文件中需要使用到的环境变量，相当于给了环境变量一个默认值，可在使用该镜像启动容器时修改```
   docker-entrypoint.sh文件参考(来自zk容器)```shell!/bin/bash
-parent: Docker
+parent: Doc
 has_children: false
 permalink: "/docker/doc/dockerfile/"
+grand_parent: Docker
 ---
 
 ## dockerfile的构建命令查看(以zk镜像为示例)

@@ -3,10 +3,10 @@ layout: default
 title: Gradle
 nav_order: 2
 description: gradle使用
-parent: Terminal
+parent: Gradle
 has_children: false
 permalink: "/tools/terminal/gradle/gradle/"
-grand_parent: 工具集
+grand_parent: Terminal
 ---
 
 # gradle使用

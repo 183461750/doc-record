@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: ciphey(一个强大的全自动解密/解码/破解工具，只需输入加密文本就能解密，Star 18K+!)
-parent: Docker
+parent: Ciphey
 has_children: false
 permalink: "/tools/terminal/docker/ciphey/ciphey/"
+grand_parent: Docker
 ---
 
 # ciphey(一个强大的全自动解密/解码/破解工具，只需输入加密文本就能解密，Star 18K+!)

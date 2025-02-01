@@ -3,9 +3,10 @@ layout: default
 title: docker compose 中 , 当我配置了副本的时候, IP怎么固定
 nav_order: 15
 description: docker compose 中 , 当我配置了副本的时候, IP怎么固定
-parent: ai
+parent: Docker
 has_children: false
 permalink: "/docker/doc/material/ai/docker/docker compose 中 , 当我配置了副本的时候, ip怎么固定/"
+grand_parent: Ai
 ---
 
 # docker compose 中 , 当我配置了副本的时候, IP怎么固定

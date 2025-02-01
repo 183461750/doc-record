@@ -3,10 +3,10 @@ layout: default
 title: ComfyUI
 nav_order: 1
 description: ComfyUI
-parent: 软件工具
+parent: Comfyui
 has_children: false
 permalink: "/tools/softs/comfyui/comfyui/"
-grand_parent: 工具集
+grand_parent: Softs
 ---
 
 # ComfyUI

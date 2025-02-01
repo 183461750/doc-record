@@ -3,9 +3,10 @@ layout: default
 title: 软件工具
 nav_order: 2
 description: 软件工具
-parent: 工具集
-has_children: true
+parent: Softs
+has_children: false
 permalink: "/tools/softs/softs/"
+grand_parent: Tools
 ---
 
 # 软件工具

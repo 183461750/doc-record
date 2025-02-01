@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: 监控
-parent: middleware
+parent: Monitoring
 has_children: false
 permalink: "/middleware/monitoring/monitoring/"
+grand_parent: Middleware
 ---
 
 # 监控

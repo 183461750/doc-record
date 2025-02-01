@@ -3,9 +3,10 @@ layout: default
 title: ssh
 nav_order: 15
 description: ssh
-parent: manual
+parent: Article
 has_children: false
 permalink: "/docker/doc/material/manual/article/ssh/"
+grand_parent: Manual
 ---
 
 # ssh

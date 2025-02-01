@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 15
 description: ipsec-vpn
-parent: vpn
+parent: Ipsec-vpn
 has_children: false
 permalink: "/docker/app/networks/vpn/ipsec-vpn/ipsec-vpn/"
+grand_parent: Vpn
 ---
 
 # ipsec-vpn

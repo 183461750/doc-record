@@ -3,9 +3,10 @@ layout: default
 title: Linux系统
 nav_order: 12
 description: linux系统文档
-parent: 操作系统
-has_children: true
+parent: Linux
+has_children: false
 permalink: "/os/linux/linux/"
+grand_parent: Os
 ---
 
 # Linux系统文档

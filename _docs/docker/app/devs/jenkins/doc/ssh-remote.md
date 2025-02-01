@@ -3,9 +3,10 @@ layout: default
 title: ssh-remote
 nav_order: 15
 description: 远程登陆
-parent: jenkins
+parent: Doc
 has_children: false
 permalink: "/docker/app/devs/jenkins/doc/ssh-remote/"
+grand_parent: Jenkins
 ---
 
 # 远程登陆

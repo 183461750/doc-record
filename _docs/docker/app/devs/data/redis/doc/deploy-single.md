@@ -2,9 +2,10 @@
 layout: default
 title: deploy-single
 nav_order: 16
-parent: redis
+parent: Doc
 permalink: "/docker/app/devs/data/redis/doc/deploy-single/"
 has_children: false
+grand_parent: Redis
 ---
 
 ### 单机部署

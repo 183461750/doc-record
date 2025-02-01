@@ -3,9 +3,10 @@ layout: default
 title: firewalld
 nav_order: 12
 description: firewalld防火墙相关配置
-parent: Docker
+parent: Doc
 has_children: false
 permalink: "/docker/doc/firewalld/"
+grand_parent: Docker
 ---
 
 # firewalld防火墙相关配置

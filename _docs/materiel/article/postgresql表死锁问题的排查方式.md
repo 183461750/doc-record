@@ -12,6 +12,8 @@ tags:
 - 排查
 source: https://www.jb51.net/article/203560.htm
 author:
+parent: Article
+grand_parent: Materiel
 ---
 
 # postgresql表死锁问题的排查方式_PostgreSQL_脚本之家

@@ -3,10 +3,10 @@ layout: default
 title: Clash
 nav_order: 2
 description: linux中使用clash记录
-parent: 软件工具
+parent: Clash
 has_children: false
 permalink: "/tools/softs/clash/clash/"
-grand_parent: 工具集
+grand_parent: Softs
 ---
 
 # linux中使用clash记录

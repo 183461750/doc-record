@@ -3,9 +3,10 @@ layout: default
 title: dec
 nav_order: 16
 description: docker-compose部署hadoop集群
-parent: hadoop
+parent: Doc
 has_children: false
 permalink: "/docker/app/devs/data/hadoop/doc/dec/"
+grand_parent: Hadoop
 ---
 
 # docker-compose部署hadoop集群

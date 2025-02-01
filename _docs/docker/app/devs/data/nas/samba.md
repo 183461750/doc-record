@@ -2,9 +2,10 @@
 layout: default
 title: samba
 nav_order: 15
-parent: data
+parent: Nas
 permalink: "/docker/app/devs/data/nas/samba/"
 has_children: false
+grand_parent: Data
 ---
 
 ```shell

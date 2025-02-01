@@ -3,9 +3,10 @@ layout: default
 title: docker-context
 nav_order: 13
 description: docker上下文相关记录
-parent: doc
-has_children: true
+parent: Docker-context
+has_children: false
 permalink: "/docker/doc/docker-context/docker-context/"
+grand_parent: Doc
 ---
 
 # docker上下文相关记录

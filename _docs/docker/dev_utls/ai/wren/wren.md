@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: wren ai
-parent: ai
+parent: Wren
 has_children: false
 permalink: "/docker/dev_utls/ai/wren/wren/"
+grand_parent: Ai
 ---
 
 # wren ai

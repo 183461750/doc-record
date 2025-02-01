@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: neko
-parent: app
+parent: Neko
 has_children: false
 permalink: "/docker/app/neko/neko/"
+grand_parent: App
 ---
 
 # neko

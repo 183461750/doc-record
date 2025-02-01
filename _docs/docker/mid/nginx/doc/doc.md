@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: Nginx
-parent: nginx
+parent: Doc
 has_children: false
 permalink: "/docker/mid/nginx/doc/doc/"
+grand_parent: Nginx
 ---
 
 # Nginx

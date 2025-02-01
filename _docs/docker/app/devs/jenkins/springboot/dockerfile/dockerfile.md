@@ -2,9 +2,10 @@
 layout: default
 title: doc
 nav_order: 16
-parent: springuoot
+parent: Dockerfile
 permalink: "/docker/app/devs/jenkins/springboot/dockerfile/dockerfile/"
 has_children: false
+grand_parent: Springboot
 ---
 
 ## maven使用dockerfile插件构建项目

@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 15
 description: Jenkins 相关使用记录
-parent: jenkins
+parent: Doc
 has_children: false
 permalink: "/docker/app/devs/jenkins/doc/doc/"
+grand_parent: Jenkins
 ---
 
 # Jenkins 相关使用记录

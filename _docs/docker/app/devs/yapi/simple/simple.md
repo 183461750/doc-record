@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 15
 description: Jenkins配置```shell
-parent: yapi
+parent: Simple
 has_children: false
 permalink: "/docker/app/devs/yapi/simple/simple/"
+grand_parent: Yapi
 ---
 
 ## Jenkins配置

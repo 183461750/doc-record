@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 15
 description: TiDB部署记录
-parent: data
+parent: Tidb
 has_children: false
 permalink: "/docker/app/devs/data/tidb/tidb/"
+grand_parent: Data
 ---
 
 # TiDB部署记录

@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: skywalking使用记录
-parent: app
+parent: Skywalking
 has_children: false
 permalink: "/kubernetes/app/skywalking/skywalking/"
+grand_parent: App
 ---
 
 # skywalking使用记录

@@ -9,113 +9,101 @@ class DocOrganizer
   end
 
   def organize
-    # 1. 创建主要目录的index.md
-    create_main_indexes
-    
-    # 2. 处理所有doc.md文件
+    # 1. 处理所有doc.md文件
     process_doc_files
     
-    # 3. 更新front matter
+    # 2. 更新front matter
     update_front_matter
   end
 
   private
 
-  def create_main_indexes
-    main_dirs = {
-      '' => {title: '首页', order: 1},
-      'docker' => {title: 'Docker', order: 2},
-      'kubernetes' => {title: 'Kubernetes', order: 3},
-      'middleware' => {title: '中间件', order: 4},
-      'os' => {title: '操作系统', order: 5},
-      'tools' => {title: '工具集', order: 6},
-      'network' => {title: '网络', order: 7},
-      'ai' => {title: 'AI', order: 8},
-      'books' => {title: '资料', order: 9},
-      'materiel' => {title: '素材库', order: 10}
-    }
-
-    main_dirs.each do |dir, info|
-      path = File.join(@docs_dir, dir)
-      FileUtils.mkdir_p(path) unless dir.empty?
+  def process_doc_files
+    Dir.glob(File.join(@docs_dir, '**', '*.md')).each do |file|
+      next if file.end_with?('index.md')
       
-      create_index_md(path, info[:title], info[:order], dir)
+      relative_path = file.sub(@docs_dir + '/', '')
+      dir_path = File.dirname(relative_path)
+      
+      # 确保每个层级都有 index.md
+      create_parent_indexes(dir_path)
+      
+      # 更新文档的 front matter
+      update_doc_front_matter(file, dir_path)
     end
   end
 
-  def create_index_md(path, title, order, dir)
+  def create_parent_indexes(dir_path)
+    return if dir_path == '.'
+    
+    parts = dir_path.split('/')
+    current_path = ''
+    
+    parts.each_with_index do |part, index|
+      current_path = current_path.empty? ? part : File.join(current_path, part)
+      full_path = File.join(@docs_dir, current_path)
+      
+      # 创建当前层级的 index.md
+      index_path = File.join(full_path, 'index.md')
+      next if File.exist?(index_path)
+      
+      # 获取父级目录
+      parent_path = index.zero? ? nil : parts[0...index].join('/')
+      
+      # 创建 index.md
+      title = part.split('_').map(&:capitalize).join(' ')
+      create_index_md(full_path, title, index + 1, current_path, parent_path)
+    end
+  end
+
+  def create_index_md(path, title, order, dir, parent = nil)
     index_path = File.join(path, 'index.md')
     return if File.exist?(index_path)
 
-    # 生成规范的 permalink
-    permalink = dir.empty? ? "/" : "/#{dir.downcase}/"
-
-    content = <<~MARKDOWN
-    ---
-    layout: default
-    title: #{title}
-    nav_order: #{order}
-    has_children: true
-    permalink: #{permalink}
-    ---
-
-    # #{title}
-
-    这里包含了#{title}相关的所有文档。
-    MARKDOWN
+    permalink = "/#{dir}/"
+    content = "---\n"
+    content += "layout: default\n"
+    content += "title: #{title}\n"
+    content += "nav_order: #{order}\n"
+    content += "has_children: true\n"
+    content += "parent: #{parent.split('_').map(&:capitalize).join(' ')}\n" if parent
+    content += "permalink: #{permalink}\n"
+    content += "---\n\n"
+    content += "# #{title}\n"
 
     File.write(index_path, content)
   end
 
-  def process_doc_files
-    Dir.glob(File.join(@docs_dir, '**', 'doc.md')).each do |file|
-      dir_name = File.basename(File.dirname(file))
-      new_name = File.join(File.dirname(file), "#{dir_name}.md")
+  def update_doc_front_matter(file, dir_path)
+    content = File.read(file)
+    if content =~ /^(---\s*\n.*?\n?)^(---\s*$\n?)/m
+      front_matter = YAML.load($1)
+      remaining_content = content[$1.length + $2.length..-1]
       
-      # 如果文件存在且内容不同，则重命名为其他名称
-      if File.exist?(new_name) && !FileUtils.identical?(file, new_name)
-        new_name = File.join(File.dirname(file), "#{dir_name}_guide.md")
+      # 更新 front matter
+      front_matter['layout'] ||= 'default'
+      front_matter['has_children'] = false
+      
+      # 设置父级页面
+      if dir_path != '.'
+        parts = dir_path.split('/')
+        parent_dir = parts[-1]
+        front_matter['parent'] = parent_dir.split('_').map(&:capitalize).join(' ')
+        
+        # 如果有多于一级的目录，设置 grand_parent
+        if parts.length > 1
+          grand_parent_dir = parts[-2]
+          front_matter['grand_parent'] = grand_parent_dir.split('_').map(&:capitalize).join(' ')
+        end
       end
       
-      FileUtils.mv(file, new_name) unless file == new_name
+      # 更新文件
+      new_content = "---\n#{front_matter.to_yaml}---\n#{remaining_content}"
+      File.write(file, new_content)
     end
-  end
-
-  def get_parent_dir(file)
-    rel_path = file.sub(@docs_dir, '').sub(/^\//, '')
-    parts = rel_path.split('/')
-    return nil if parts.length <= 1
-    
-    # 如果文件在根目录下且不在主要目录中，则设置 parent 为 "素材库"
-    if parts.length == 1 && !%w[docker kubernetes middleware os tools network ai books materiel].include?(parts[0])
-      return "素材库"
-    end
-    
-    parent_path = parts[0..-2].join('/')
-    # 查找父目录中的 index.md 文件
-    parent_index = File.join(@docs_dir, parent_path, 'index.md')
-    if File.exist?(parent_index)
-      content = File.read(parent_index)
-      if content =~ /^---\s*\n(.*?)\n---\s*$/m
-        front_matter = YAML.load($1) rescue {}
-        return front_matter['title'] if front_matter['title']
-      end
-    end
-    nil
   end
 
   def update_front_matter
-    # 先处理根目录下的非主要目录文件
-    Dir.glob(File.join(@docs_dir, '*.md')).each do |file|
-      basename = File.basename(file, '.md')
-      next if basename == 'index'
-      next if %w[docker kubernetes middleware os tools network ai books materiel].include?(basename)
-      
-      # 移动到 materiel 目录
-      new_path = File.join(@docs_dir, 'materiel', File.basename(file))
-      FileUtils.mv(file, new_path) unless file == new_path
-    end
-
     Dir.glob(File.join(@docs_dir, '**', '*.md')).each do |file|
       content = File.read(file)
       
@@ -160,6 +148,29 @@ class DocOrganizer
         File.write(file, new_content)
       end
     end
+  end
+
+  def get_parent_dir(file)
+    rel_path = file.sub(@docs_dir, '').sub(/^\//, '')
+    parts = rel_path.split('/')
+    return nil if parts.length <= 1
+    
+    # 如果文件在根目录下且不在主要目录中，则设置 parent 为 "素材库"
+    if parts.length == 1 && !%w[docker kubernetes middleware os tools network ai books materiel lang].include?(parts[0])
+      return "素材库"
+    end
+    
+    parent_path = parts[0..-2].join('/')
+    # 查找父目录中的 index.md 文件
+    parent_index = File.join(@docs_dir, parent_path, 'index.md')
+    if File.exist?(parent_index)
+      content = File.read(parent_index)
+      if content =~ /^---\s*\n(.*?)\n---\s*$/m
+        front_matter = YAML.load($1) rescue {}
+        return front_matter['title'] if front_matter['title']
+      end
+    end
+    nil
   end
 end
 

@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 16
 description: Jenkins使用maven
-parent: doc
+parent: Maven
 has_children: false
 permalink: "/docker/app/devs/jenkins/doc/maven/maven/"
+grand_parent: Doc
 ---
 
 # Jenkins使用maven

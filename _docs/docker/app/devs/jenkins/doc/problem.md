@@ -3,9 +3,10 @@ layout: default
 title: problem
 nav_order: 15
 description: jenkins部署相关问题记录
-parent: jenkins
+parent: Doc
 has_children: false
 permalink: "/docker/app/devs/jenkins/doc/problem/"
+grand_parent: Jenkins
 ---
 
 # jenkins部署相关问题记录

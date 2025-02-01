@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 14
 description: Redis相关记录
-parent: data
+parent: Redis
 has_children: false
 permalink: "/middleware/data/redis/redis/"
+grand_parent: Data
 ---
 
 # Redis相关记录

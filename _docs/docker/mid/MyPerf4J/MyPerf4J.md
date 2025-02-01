@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: MyPerf4J是用记录
-parent: mid
+parent: Myperf4j
 has_children: false
 permalink: "/docker/mid/myperf4j/myperf4j/"
+grand_parent: Mid
 ---
 
 # MyPerf4J是用记录

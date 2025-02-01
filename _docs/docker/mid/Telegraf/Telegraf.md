@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: telegraf是用记录
-parent: mid
+parent: Telegraf
 has_children: false
 permalink: "/docker/mid/telegraf/telegraf/"
+grand_parent: Mid
 ---
 
 # telegraf是用记录

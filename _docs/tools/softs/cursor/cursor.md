@@ -3,10 +3,10 @@ layout: default
 title: Cursor
 nav_order: 3
 description: cursor
-parent: 软件工具
+parent: Cursor
 has_children: false
 permalink: "/tools/softs/cursor/cursor/"
-grand_parent: 工具集
+grand_parent: Softs
 ---
 
 # cursor

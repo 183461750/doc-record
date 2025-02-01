@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 16
 description: jenkins中使用jdk
-parent: doc
+parent: Jdk
 has_children: false
 permalink: "/docker/app/devs/jenkins/doc/jdk/jdk/"
+grand_parent: Doc
 ---
 
 # jenkins中使用jdk

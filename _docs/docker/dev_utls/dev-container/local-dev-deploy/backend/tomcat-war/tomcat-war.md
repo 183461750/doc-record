@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 16
 description: tomcat部署war包相关文档
-parent: uackend
+parent: Tomcat-war
 has_children: false
 permalink: "/docker/dev_utls/dev-container/local-dev-deploy/backend/tomcat-war/tomcat-war/"
+grand_parent: Backend
 ---
 
 # tomcat部署war包相关文档

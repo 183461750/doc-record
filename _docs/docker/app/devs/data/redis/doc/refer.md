@@ -3,9 +3,10 @@ layout: default
 title: refer
 nav_order: 16
 description: 参考- [docker安装redis(单机)](https://www.cnblogs.com/marshhu/p/12636536.html)
-parent: redis
+parent: Doc
 has_children: false
 permalink: "/docker/app/devs/data/redis/doc/refer/"
+grand_parent: Redis
 ---
 
 ## 参考

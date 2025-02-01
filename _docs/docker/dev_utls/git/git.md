@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 13
 description: git相关使用
-parent: dev_utls
+parent: Git
 has_children: false
 permalink: "/docker/dev_utls/git/git/"
+grand_parent: Dev Utls
 ---
 
 # git相关使用

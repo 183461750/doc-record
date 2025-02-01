@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 15
 description: nginx使用记录
-parent: simple-common
+parent: Common
 has_children: false
 permalink: "/docker/mid/nginx/simple-common/common/common/"
+grand_parent: Simple-common
 ---
 
 # nginx使用记录

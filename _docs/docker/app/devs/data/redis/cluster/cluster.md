@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 16
 description: 部署记录
-parent: redis
+parent: Cluster
 has_children: false
 permalink: "/docker/app/devs/data/redis/cluster/cluster/"
+grand_parent: Redis
 ---
 
 # 部署记录

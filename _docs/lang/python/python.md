@@ -3,9 +3,10 @@ layout: default
 title: doc
 nav_order: 12
 description: python记录
-parent: lang
+parent: Python
 has_children: false
 permalink: "/lang/python/python/"
+grand_parent: Lang
 ---
 
 # python记录
