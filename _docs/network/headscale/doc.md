@@ -48,4 +48,51 @@ headscale nodes list
 ping -c 2 100.64.0.1
 # 在[sitting]中安装[CLl integration]后, 也可以使用 Tailscale CLI 来测试：
 tailscale ping 100.64.0.1
+
+```
+
+### 通过 Pre-Authkeys 接入
+
+```bash
+
+# 前面的接入方法都需要服务端同意，步骤比较烦琐，其实还有更简单的方法，可以直接接入，不需要服务端同意。
+# 首先在服务端生成 pre-authkey 的 token，有效期可以设置为 24 小时：
+headscale preauthkeys create -e 24h --user default
+# 查看已经生成的 key：
+headscale --user default preauthkeys list
+# 当然你也可以在 Headscale-Admin 中生成。点击客户端想加入的 User：
+# 在弹出的界面中点击「PreAuth Keys」右侧的 Create，设置一个过期时间（比如 100 年~），如果想重复利用这个 Key，可以勾选 Reusable，最后点击 ✅：
+# 创建成功后，点击红框区域便可复制该 PreAuth Key：
+# 现在新节点就可以无需服务端同意直接接入了：
+tailscale up --login-server=http://<HEADSCALE_PUB_ENDPOINT>:8080 --accept-routes=true --accept-dns=false --authkey $KEY
+
+```
+
+## 打通局域网
+
+[参考文档](https://icloudnative.io/posts/how-to-set-up-or-migrate-headscale/#%E6%89%93%E9%80%9A%E5%B1%80%E5%9F%9F%E7%BD%91)
+
+```bash
+# 配置方法很简单，首先需要设置 IPv4 与 IPv6 路由转发：
+echo 'net.ipv4.ip_forward = 1' | tee /etc/sysctl.d/ipforwarding.conf
+echo 'net.ipv6.conf.all.forwarding = 1' | tee -a /etc/sysctl.d/ipforwarding.conf
+sysctl -p /etc/sysctl.d/ipforwarding.conf
+
+# 客户端修改注册节点的命令，在原来命令的基础上加上参数 --advertise-routes=192.168.100.0/24，告诉 Headscale 服务器“我这个节点可以转发这些地址的路由”。
+tailscale up --login-server=http://<HEADSCALE_PUB_ENDPOINT>:8080 --accept-routes=true --accept-dns=false --advertise-routes=192.168.100.0/24 --reset
+
+# 在 Headscale 端查看路由，可以看到相关路由是关闭的。
+headscale nodes list|grep openwrt
+headscale routes list -i 6
+# 开启路由：
+headscale routes enable -i 6 -r "192.168.100.0/24"
+# 如果有多条路由需要用 , 隔开：
+headscale routes enable -i 6 -r "192.168.100.0/24,xxxx"
+# 也可以通过参数 -a 开启所有路由：
+headscale routes enable -i 6 -a
+# 其他节点查看路由结果：
+ip route show table 52|grep "192.168.100.0/24"
+# 其他节点启动时需要增加 --accept-routes=true 选项来声明 “我接受外部其他节点发布的路由”。
+
+# 现在你在任何一个 Tailscale 客户端所在的节点都可以 ping 通家庭内网的机器了，你在公司或者星巴克也可以像在家里一样用同样的 IP 随意访问家中的任何一个设备，就问你香不香？
 ```
