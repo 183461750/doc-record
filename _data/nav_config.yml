@@ -1,0 +1,40 @@
+# 导航排序配置
+order_by: 
+  # 可选值: title, date, custom
+  type: custom
+  # 当 type 为 custom 时，这里定义目录的显示顺序
+  custom_order:
+    - docker
+    - kubernetes
+    - middleware
+    - os
+    - tools
+    - network
+    - ai
+    - lang
+    - books
+    - materiel
+
+# 图标配置
+icons:
+  docker: 🐳
+  kubernetes: ☸️
+  middleware: 🔄
+  os: 💻
+  tools: 🛠
+  network: 🌐
+  ai: 🤖
+  lang: 📝
+  books: 📚
+  materiel: 📦
+
+# 默认展开层级 (0 表示全部折叠)
+# default_expanded_level: 0
+
+# 搜索配置
+search:
+  enabled: true
+  # 可选值: title, content, both
+  scope: both
+  # 是否支持拼音搜索
+  pinyin: true

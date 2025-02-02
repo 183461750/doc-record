@@ -1,69 +1,42 @@
-# Site settings
-title: Doc Record
-description: Documentation Repository
-baseurl: "/doc-record"
+title: doc-record
+description: doc-record
+baseurl: ""
 url: ""
 
-# 主题设置
-remote_theme: just-the-docs/just-the-docs
+# Theme settings
+theme: just-the-docs
 
-# 图片路径设置
-defaults:
-  - scope:
-      path: "assets/images"
-    values:
-      image: true
-  - scope:
-      path: ""
-      type: "docs"
-    values:
-      layout: "page"
-      nav_order: 1000
-  - scope:
-      path: "kubernetes"
-    values:
-      nav_fold: true
-  - scope:
-      path: "docker"
-    values:
-      nav_fold: true
-
-# 导航设置
-nav:
-  enable: true
-
-# 集合设置
+# Collections
 collections:
   docs:
     output: true
     permalink: /:collection/:path/
 
-# Just the Docs 配置
+# Just the Docs settings
 just_the_docs:
   collections:
     docs:
       name: Documentation
 
-# GitHub 链接
-aux_links:
-  "GitHub":
-    - "https://github.com/183461750/doc-record"
-
-# 搜索配置
+# Search settings
 search_enabled: true
 search:
-  heading_level: 3
-  previews: 2
-  preview_words_before: 3
-  preview_words_after: 3
+  heading_level: 2
+  previews: 3
+  preview_words_before: 5
+  preview_words_after: 10
+  tokenizer_separator: /[\s\-/]+/
+  rel_url: true
+  button: true
 
-# 主题
+# Back to top link
+back_to_top: true
+back_to_top_text: "回到顶部"
+
+# Color scheme
 color_scheme: dark
 
-# 功能开关
-enable_copy_code_button: true
-
-# 排除的文件和目录
+# Exclude from processing
 exclude:
   - .sass-cache/
   - .jekyll-cache/
@@ -72,3 +45,9 @@ exclude:
   - Gemfile.lock
   - node_modules/
   - vendor/
+  - README.md
+  - .git/
+  - .github/
+  - .vscode/
+  - scripts/
+  - .frontmatter/
