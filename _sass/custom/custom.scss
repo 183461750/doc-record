@@ -88,30 +88,40 @@
         display: flex;
         align-items: center;
         
-        .toggle-btn {
-          display: flex;
+        .nav-list-expander {
+          display: inline-flex;
           align-items: center;
           justify-content: center;
-          width: 24px;
-          height: 24px;
+          width: 16px;
+          height: 16px;
           padding: 0;
-          margin-left: 0.25rem;
+          margin: 0;
           background: none;
           border: none;
           cursor: pointer;
-          color: var(--text-muted);
-          transition: transform 0.2s;
+          opacity: 0.6;
+          transition: opacity 0.2s ease;
+          
+          &::before {
+            content: "";
+            width: 6px;
+            height: 6px;
+            border-right: 1.5px solid currentColor;
+            border-bottom: 1.5px solid currentColor;
+            transform: rotate(-45deg);
+            transition: transform 0.2s ease;
+          }
+          
+          &[aria-pressed="true"]::before {
+            transform: rotate(45deg);
+          }
           
           &:hover {
-            color: var(--link-color);
+            opacity: 1;
           }
           
-          &.expanded {
-            transform: rotate(90deg);
-          }
-          
-          .toggle-icon {
-            fill: currentColor;
+          svg {
+            display: none;
           }
         }
       }
@@ -151,6 +161,45 @@
       }
     }
   }
+}
+
+// Override navigation expander styles
+.nav-list-expander {
+  position: absolute;
+  right: 0;
+  width: 16px;
+  height: 16px;
+  padding: 4px;
+  color: var(--text);
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  &:hover {
+    background: none;
+    opacity: 0.8;
+  }
+
+  svg {
+    display: none;
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 6px;
+    height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: translate(-75%, -50%) rotate(-45deg);
+    transition: transform 0.2s ease;
+  }
+}
+
+.nav-list-item.active > .nav-list-expander::before {
+  transform: translate(-75%, -75%) rotate(45deg);
 }
 
 // 暗色主题
@@ -302,7 +351,6 @@ mark {
     align-items: center;
     margin: 0;
     padding: 0;
-    font-size: 0.875rem;
     
     a {
       color: var(--link-color);
@@ -1592,30 +1640,40 @@ mark {
             display: flex;
             align-items: center;
             
-            .toggle-btn {
-              display: flex;
+            .nav-list-expander {
+              display: inline-flex;
               align-items: center;
               justify-content: center;
-              width: 24px;
-              height: 24px;
+              width: 16px;
+              height: 16px;
               padding: 0;
-              margin-left: 0.25rem;
+              margin: 0;
               background: none;
               border: none;
               cursor: pointer;
-              color: var(--text-muted);
-              transition: transform 0.2s;
+              opacity: 0.6;
+              transition: opacity 0.2s ease;
+              
+              &::before {
+                content: "";
+                width: 6px;
+                height: 6px;
+                border-right: 1.5px solid currentColor;
+                border-bottom: 1.5px solid currentColor;
+                transform: rotate(-45deg);
+                transition: transform 0.2s ease;
+              }
+              
+              &[aria-pressed="true"]::before {
+                transform: rotate(45deg);
+              }
               
               &:hover {
-                color: var(--link-color);
+                opacity: 1;
               }
               
-              &.expanded {
-                transform: rotate(90deg);
-              }
-              
-              .toggle-icon {
-                fill: currentColor;
+              svg {
+                display: none;
               }
             }
           }
