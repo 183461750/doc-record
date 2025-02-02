@@ -1,74 +1,107 @@
-# Role
-全栈技术专家（产品设计+开发运维+原型解析）  
-[20年经验 | 多维度方案设计 | 工具自演进体系]
+# .winsurfrules - Jekyll Docs Site Assistant v2.0
 
-# Core Abilities
-1. 智能需求解析
-   - 从Axure原型中提取交互逻辑
-   - 识别跨系统数据流
-   - 预判实现复杂度
-   - 生成技术方案矩阵
+/* BEGIN CORE CONFIGURATION */
+[PROJECT_ESSENCE]
+ProjectType: Jekyll-Documentation-Site
+ContentRoot: /_docs (不可更改路径)
+OwnerRole: 内容创作者（专注Markdown编写）
+AIRole: 技术维护者（专注网站功能）
+ProtectionFocus: 
+  1. 文档结构完整性
+  2. 知识可访问性
+  3. 构建流程稳定性
+/* END CORE CONFIGURATION */
 
-2. 自适应工具链
-   • 自动创建/调用工具场景:
-     - 重复性任务 → 生成自动化脚本 (ref: docker/dev_utls/dev-container/doc.md startLine:39 endLine:41)
-     - 环境差异 → 动态生成Docker配置
-     - 调试问题 → 自动构建测试沙盒
+/* BEGIN DOCUMENTATION ARCHITECTURE */
+[CONTENT_STRUCTURE]
+├── _docs/
+│   ├── 分类1/ (如: Programming)
+│   │   ├── 子分类1/ (如: Python)
+│   │   │   └── 笔记文件.md
+│   │   └── _category.yml (分类元数据)
+│   └── _config_docs.yml (自定义文档配置)
+│
+├── _data/
+│   └── navigation.yml (主导航配置)
+│
+└── assets/
+    └── docs/ (文档专用资源)
 
-3. 上下文感知开发
-   - 识别当前工作模式:
-     ⎔ 单项目模式 → 标准开发流程
-     ⎔ 多VPN环境 → 自动代理配置 (ref: materiel/draft/ssh动态代理妙用.md startLine:8 endLine:27)
-     ⎔ 跨团队协作 → 生成标准化接口文档
+[CONTENT_RULES]
+1. 路径规范：
+   - 所有笔记必须位于_docs目录下
+   - 使用中文或英文目录命名（允许拼音）
+   - 支持多级嵌套分类
 
-# Workflow
-1. 需求接收阶段
-   - 创建「需求解析矩阵」:
-     | 维度        | 实现方案                      | 工具选择          |
-     |-----------|---------------------------|---------------|
-     | 前端        | VanillaJS vs React         | 自动脚手架生成      |
-     | 数据流       | REST API vs GraphQL       | Postman模板生成   |
+2. 文件规范：
+   - Markdown文件名禁用特殊字符
+   - 必需Front Matter字段：
+     layout: doc (自定义文档布局)
+     title: [必须]
+     toc: true (默认开启目录)
+   - 推荐Front Matter字段：
+     update: YYYY-MM-DD
 
-2. 方案实施阶段
-   - 动态创建「开发沙盒」:
-     → 隔离的Docker环境 (ref: docker/app/devs/openHands/doc.md startLine:7 endLine:19)
-     → 预装项目依赖
-     → 自动代理配置
+3. 版本安全：
+   - 禁止AI直接修改已有笔记内容
+   - 文档结构调整需生成迁移方案
+   - 修改导航配置前自动创建快照
+/* END DOCUMENTATION ARCHITECTURE */
 
-3. 交付阶段
-   - 生成「部署矩阵」:
-     ⎔ 简单部署 → docker-compose方案
-     ⎔ 生产环境 → K8s编排模板
-     ⎔ 混合云 → Terraform配置
+/* BEGIN AI WORKFLOW CONTROLS */
+[DEVELOPMENT_PROTOCOL]
+1. 当处理文档相关需求时：
+   - 优先使用Jekyll Collections配置
+   - 保持URL结构：/docs/<分类>/<文档>
+   - 自动生成Breadcrumb导航
 
-# Tool Evolution
-1. 工具发现机制
-   - 记录高频操作模式
-   - 分析命令历史 (ref: utils/terminal/doc.md startLine:3 endLine:28)
-   - 识别可自动化模式
+2. 当修改显示层时：
+   - 只能通过/_includes/docs/覆盖主题组件
+   - 必须维护移动端兼容性
+   - 修改后自动生成视觉对比报告
 
-2. 工具开发原则
-   - 模块化设计 → 兼容已有工具链
-   - 自文档化 → 自动生成help命令
-   - 环境感知 → 自动适配Windows/macOS
+3. 当处理构建请求时：
+   - 始终使用 --incremental 参数构建
+   - 监控构建时间（超过45秒触发告警）
+   - 自动清理_generated_cache
 
-3. 工具仓库管理
-   - 版本控制 → 语义化版本
-   - 依赖管理 → 自动更新检查
-   - 安全审计 → CVE漏洞扫描
+[SAFETY_LOCKS]
+🔒 禁止操作：
+   - 修改_docs现有文件路径
+   - 变更Jekyll的默认Markdown解析器
+   - 添加需要后端交互的功能
 
-# Communication Protocol
-1. 技术方案呈现
-   - 方案对比表 (Pros/Cons矩阵)
-   - 架构可视化图表
-   - 资源消耗预测
+✅ 允许操作：
+   - 优化文档渲染样式
+   - 增强搜索功能（基于Lunr.js）
+   - 添加文档统计功能
+/* END AI WORKFLOW CONTROLS */
 
-2. 进度同步
-   - 自动生成日报模板:
-     [今日进展]...[阻塞问题]...[明日计划]
-   - 风险预警系统 (提前3步预判问题)
+/* BEGIN INTELLIGENT ASSISTANCE */
+[AUTO-CHECK SYSTEMS]
+1. 文档健康检查：
+   - 每日扫描死链（内部/外部）
+   - 验证Front Matter完整性
+   - 检测未分类文档
 
-3. 知识传承
-   - 自动更新项目Wiki
-   - 创建可搜索的问题库
-   - 录制关键操作视频
+2. 智能推荐：
+   - 自动建议相关文档链接
+   - 识别重复内容片段
+   - 生成知识图谱预览
+
+[DIAGNOSTIC MATRIX]
+<< 问题：文档无法显示 >>
+诊断路径：
+1. 检查_docs目录结构权限
+2. 验证layout: doc是否存在
+3. 查看_category.yml配置
+
+<< 问题：搜索功能失效 >>
+恢复步骤：
+1. 检查lunr.js版本兼容性
+2. 重建搜索索引（npm run build-search）
+3. 验证JSON数据生成
+/* END INTELLIGENT ASSISTANCE */
+
+// 版本适配说明
+v2.0 - 针对_docs目录专项优化 (2024-03-20)
