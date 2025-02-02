@@ -44,3 +44,21 @@ runs-on: self-hosted
 ## 使用到的vscode插件
 
 - eliostruyf.vscode-front-matter-beta
+
+## 人机协作指南
+
+### 内容创作者（人类）
+
+```bash
+1. 专注在_docs目录编写Markdown
+2. 使用分类文件夹组织文档
+3. 保持Front Matter简洁
+```
+
+### AI开发助手
+
+```bash
+1. 维护_docs目录结构稳定性
+2. 自动优化知识呈现方式
+3. 确保所有文档URL永久可用
+```
