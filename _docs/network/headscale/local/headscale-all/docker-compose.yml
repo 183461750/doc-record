@@ -11,9 +11,9 @@ services:
       # - ./headscale/data:/var/lib/headscale
     labels:
       - traefik.enable=true
-      - traefik.http.routers.headscale-rtr.rule=Host(`headscale.127.0.0.1.nip.io`) # you might want to add: && Host(`your.domain.name`)"
+      # - traefik.http.routers.headscale-rtr.rule=Host(`headscale.127.0.0.1.nip.io`) # you might want to add: && Host(`your.domain.name`)"
       # - traefik.http.routers.headscale-rtr.rule=Host(`headscale.127.0.0.1.nip.io`) && PathPrefix(`/api`) # you might want to add: && Host(`your.domain.name`)"
-      # - traefik.http.routers.headscale-rtr.rule=PathPrefix(`/`) # you might want to add: && Host(`your.domain.name`)"
+      - traefik.http.routers.headscale-rtr.rule=PathPrefix(`/`) # you might want to add: && Host(`your.domain.name`)"
       - traefik.http.services.headscale-svc.loadbalancer.server.port=8080
 
   headscale-ui:
@@ -24,8 +24,8 @@ services:
     labels:
       - traefik.enable=true
       # - traefik.http.routers.headscale-ui-rtr.rule=Host(`headscale-ui.127.0.0.1.nip.io`) && PathPrefix(`/web`) # you might want to add: && Host(`your.domain.name`)"
-      - traefik.http.routers.headscale-ui-rtr.rule=Host(`headscale-ui.127.0.0.1.nip.io`) # you might want to add: && Host(`your.domain.name`)"
-      # - traefik.http.routers.headscale-ui-rtr.rule=PathPrefix(`/web`) # you might want to add: && Host(`your.domain.name`)"
+      # - traefik.http.routers.headscale-ui-rtr.rule=Host(`headscale-ui.127.0.0.1.nip.io`) # you might want to add: && Host(`your.domain.name`)"
+      - traefik.http.routers.headscale-ui-rtr.rule=PathPrefix(`/web`) # you might want to add: && Host(`your.domain.name`)"
       - traefik.http.services.headscale-ui-svc.loadbalancer.server.port=8080
       # - traefik.http.services.headscale-ui-svc.loadbalancer.server.port=8443
 
@@ -38,12 +38,13 @@ services:
       - --api.insecure=true # remove in production
       - --providers.docker
       - --entrypoints.web.address=:80
-      - --entrypoints.websecure.address=:443
+      # - --entrypoints.websecure.address=:443
       - --global.sendAnonymousUsage=false
     ports:
       # http://headscale-ui.127.0.0.1.nip.io:880/web/settings.html
+      # http://localhost:880/web/settings.html
       - 880:80
-      - 8443:443
+      # - 8443:443
       # http://localhost:8080/dashboard/#/
       - 8080:8080 # web UI (enabled with api.insecure)
     volumes:

@@ -25,16 +25,9 @@ docker-compose up -d
 # 验证
 curl http://127.0.0.1:9999/metrics
 
-# 
-
-# 创建默认用户
-headscale user create default
-# 查看用户列表
-headscale user list
-
-# 创建 API Key：
-headscale apikey create
-# 将 Headscale 公网域名和 API Key 填入 Headscale-Admin 的设置页面(https://headscale-xxx.sealosbja.site/admin/)，同时取消勾选 Legacy API，然后点击「Save」：
+# 创建apiKey
+docker exec -it headscale headscale apikey create
+# 将 Headscale 公网域名和 API Key 填入 Headscale-Admin 的设置页面(http://localhost:880/web/settings.html)，同时取消勾选 Legacy API，然后点击「Save」：
 # 接入成功后，点击左边侧栏的「Users」，然后点击「Create」开始创建用户：
 
 # 安装客户端
@@ -43,8 +36,9 @@ curl -fsSL https://tailscale.com/install.sh | sh
 
 # Tailscale 接入 Headscale：
 # 将 <HEADSCALE_PUB_ENDPOINT> 换成上文提到的 Sealos 中的 Headscale 公网域名
-tailscale up --login-server=https://<HEADSCALE_PUB_ENDPOINT> --accept-routes=true --accept-dns=false
+tailscale up --login-server=http://localhost:880 --accept-routes=true --accept-dns=false
 # 会打印出注册key(mkey:xxx), 需要到Headscale-Admin的[Machines]页面[Add Device][Register Machine Key]，选择上面创建的用户并将注册key填入, 点击[Register]后, 客户端控制台会打印Success.
+# PS: 如果提示字符不够就用空格替代补足(这应该是个bug)
 
 # 回到 Tailscale 客户端所在的 Linux 主机，可以看到 Tailscale 会自动创建相关的路由表和 iptables 规则。路由表可通过以下命令查看：
 ip route show table 52
