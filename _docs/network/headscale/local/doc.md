@@ -1,13 +1,32 @@
 # headscale使用记录
 
-[GitHub地址](https://github.com/juanfont/headscale)
 [参考文章](https://icloudnative.io/posts/how-to-set-up-or-migrate-headscale/#headscale-%E6%98%AF%E4%BB%80%E4%B9%88)
 
 ## 安装
 
-[sealos一键部署](https://bja.sealos.run/?openapp=system-template%3FtemplateName%3Dheadscale)
+[docker版](https://github.com/juanfont/headscale/blob/main/docs/setup/install/container.md)
 
 ```bash
+# 安装
+cd ./headscale
+
+docker run \
+  --name headscale \
+  --detach \
+  --volume $(pwd)/config:/etc/headscale/ \
+  --publish 127.0.0.1:8080:8080 \
+  --publish 127.0.0.1:9090:9090 \
+  headscale/headscale:<VERSION> \
+  serve
+
+# 或者使用docker-compose
+docker-compose up -d
+
+# 验证
+curl http://127.0.0.1:9999/metrics
+
+# 
+
 # 创建默认用户
 headscale user create default
 # 查看用户列表
