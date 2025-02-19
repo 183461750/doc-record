@@ -45,3 +45,16 @@ sudo cpolar service start
 # 安装完成
 # 在浏览器上访问本地9200端口【 http://127.0.0.1:9200 】，使用cpolar邮箱账号登录cpolar web UI管理界面，即可开始使用cpolar。
 ```
+
+## 将管理后台的端口映射到公网
+
+```bash
+# 修改配置(将website的端口由8080改为9200)
+/usr/local/etc/cpolar/cpolar.yml
+# 修改后重启服务
+sudo cpolar service restart
+# 登录后台，查看隧道地址
+# https://dashboard.cpolar.com/status
+
+# 这样就能远程管理隧道了
+```
