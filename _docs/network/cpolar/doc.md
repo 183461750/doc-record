@@ -41,6 +41,7 @@ curl -L https://www.cpolar.com/static/downloads/install-release-cpolar.sh | sudo
 sudo cpolar service install
 # 启动服务
 sudo cpolar service start
+# cpolar service <xxx>:Valid actions: ["start" "stop" "restart" "install" "uninstall"]
 # 安装完成
 # 在浏览器上访问本地9200端口【 http://127.0.0.1:9200 】，使用cpolar邮箱账号登录cpolar web UI管理界面，即可开始使用cpolar。
 ```
