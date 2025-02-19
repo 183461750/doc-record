@@ -36,7 +36,8 @@ curl -fsSL https://tailscale.com/install.sh | sh
 
 # Tailscale 接入 Headscale：
 # 将 <HEADSCALE_PUB_ENDPOINT> 换成上文提到的 Sealos 中的 Headscale 公网域名
-tailscale up --login-server=http://localhost:880 --accept-routes=true --accept-dns=false
+# tailscale up --accept-dns=false --accept-routes --login-server=https://3gmjh9nm-880.asse.devtunnels.ms --hostname=fa --accept-risk=true
+tailscale up --accept-dns=false --accept-routes --login-server=http://localhost:880 --hostname=fa
 # 会打印出注册key(mkey:xxx), 需要到Headscale-Admin的[Machines]页面[Add Device][Register Machine Key]，选择上面创建的用户并将注册key填入, 点击[Register]后, 客户端控制台会打印Success.
 # PS: 如果提示字符不够就用空格替代补足(这应该是个bug)
 

@@ -27,7 +27,6 @@ services:
       # - traefik.http.routers.headscale-ui-rtr.rule=Host(`headscale-ui.127.0.0.1.nip.io`) # you might want to add: && Host(`your.domain.name`)"
       - traefik.http.routers.headscale-ui-rtr.rule=PathPrefix(`/web`) # you might want to add: && Host(`your.domain.name`)"
       - traefik.http.services.headscale-ui-svc.loadbalancer.server.port=8080
-      # - traefik.http.services.headscale-ui-svc.loadbalancer.server.port=8443
 
   traefik:
     image: traefik:latest
@@ -43,8 +42,8 @@ services:
     ports:
       # http://headscale-ui.127.0.0.1.nip.io:880/web/settings.html
       # http://localhost:880/web/settings.html
-      - 880:80
-      # - 8443:443
+      - 80:80
+      # - 443:443
       # http://localhost:8080/dashboard/#/
       - 8080:8080 # web UI (enabled with api.insecure)
     volumes:
