@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"localhost","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="linux相关命令使用记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux">
+<meta property="og:url" content="http://localhost:4000/docker/doc/linux/index.html">
+<meta property="og:site_name" content="doc-record">
+<meta property="og:description" content="linux相关命令使用记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-23T07:43:31.178Z">
+<meta property="article:modified_time" content="2025-02-23T07:43:31.178Z">
+<meta property="article:author" content="doc-record">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://localhost:4000/docker/doc/linux/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://localhost:4000/docker/doc/linux/","path":"/docker/doc/linux/","title":"linux"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>linux | doc-record</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">doc-record</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#linux%E7%9B%B8%E5%85%B3%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">linux相关命令使用记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85docker%E5%B9%B6%E9%85%8D%E7%BD%AE%E5%8A%A0%E9%80%9F%E5%99%A8"><span class="nav-number">1.1.</span> <span class="nav-text">安装docker并配置加速器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="nav-number">1.2.</span> <span class="nav-text">修改主机名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96ip%E5%9C%B0%E5%9D%80"><span class="nav-number">1.3.</span> <span class="nav-text">获取ip地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEhosts%E6%96%87%E4%BB%B6-%E5%8F%AF%E9%85%8D%E7%BD%AE%E5%8F%AF%E4%B8%8D%E9%85%8D%E7%BD%AE"><span class="nav-number">1.4.</span> <span class="nav-text">配置hosts文件(可配置可不配置)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8scp%E5%A4%8D%E5%88%B6%E5%88%B0node%E4%B8%BB%E6%9C%BA"><span class="nav-number">1.5.</span> <span class="nav-text">使用scp复制到node主机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">1.6.</span> <span class="nav-text">查看防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-number">1.7.</span> <span class="nav-text">设置防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B7%BB%E5%8A%A0dns"><span class="nav-number">1.8.</span> <span class="nav-text">添加dns</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEyum%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.9.</span> <span class="nav-text">配置yum镜像源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85docker"><span class="nav-number">1.10.</span> <span class="nav-text">安装docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%91%E6%8E%A7%E5%91%BD%E4%BB%A4"><span class="nav-number">1.11.</span> <span class="nav-text">监控命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8D%B0%E4%BF%A1%E6%81%AF"><span class="nav-number">1.12.</span> <span class="nav-text">打印信息</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%8D%B0%E6%96%87%E4%BB%B6%E6%88%96%E6%96%87%E4%BB%B6%E5%A4%B9%E5%88%97%E8%A1%A8%E6%97%B6%EF%BC%8C%E6%8E%92%E9%99%A4%E6%96%87%E4%BB%B6%E6%88%96%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="nav-number">1.13.</span> <span class="nav-text">打印文件或文件夹列表时，排除文件或文件夹</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#nodejs%E5%AE%89%E8%A3%85"><span class="nav-number">1.14.</span> <span class="nav-text">nodejs安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90%E9%97%AE%E9%A2%98"><span class="nav-number">1.15.</span> <span class="nav-text">docker访问权限问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%AB%AF%E5%8F%A3%E5%8D%A0%E7%94%A8"><span class="nav-number">1.16.</span> <span class="nav-text">查看端口占用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9A%E4%B9%89%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><span class="nav-number">1.17.</span> <span class="nav-text">定义环境变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#crontab%E4%BD%BF%E7%94%A8"><span class="nav-number">1.18.</span> <span class="nav-text">crontab使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E7%BD%91%E7%BB%9C%E6%97%B6%E9%97%B4"><span class="nav-number">1.19.</span> <span class="nav-text">设置网络时间</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Blinux%E7%B3%BB%E7%BB%9F%E7%89%88%E6%9C%AC"><span class="nav-number">1.20.</span> <span class="nav-text">查看linux系统版本</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Linux%E6%96%87%E4%BB%B6%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%9B%BF%E6%8D%A2%E5%91%BD%E4%BB%A4"><span class="nav-number">1.21.</span> <span class="nav-text">Linux文件字符串替换命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%8D%E5%88%B6%E5%91%BD%E4%BB%A4"><span class="nav-number">1.22.</span> <span class="nav-text">复制命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#top%E5%91%BD%E4%BB%A4%E4%BD%BF%E7%94%A8"><span class="nav-number">1.23.</span> <span class="nav-text">top命令使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%B6%E9%97%B4%E7%9B%B8%E5%85%B3"><span class="nav-number">1.24.</span> <span class="nav-text">时间相关</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">doc-record</p>
+  <div class="site-description" itemprop="description">doc-record</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">476</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/docker/doc/linux/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doc-record">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doc-record">
+      <meta itemprop="description" content="doc-record">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="linux | doc-record">
+      <meta itemprop="description" content="linux相关命令使用记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          linux
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-23 15:43:31" itemprop="dateCreated datePublished" datetime="2025-02-23T15:43:31+08:00">2025-02-23</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">linux相关命令使用记录</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="linux相关命令使用记录"><a href="#linux相关命令使用记录" class="headerlink" title="linux相关命令使用记录"></a>linux相关命令使用记录</h1><h2 id="安装docker并配置加速器"><a href="#安装docker并配置加速器" class="headerlink" title="安装docker并配置加速器"></a>安装docker并配置加速器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum -y install docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="修改主机名"><a href="#修改主机名" class="headerlink" title="修改主机名"></a>修改主机名</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hostnamectl set-hostname manager43</span><br></pre></td></tr></table></figure>
+
+<h2 id="获取ip地址"><a href="#获取ip地址" class="headerlink" title="获取ip地址"></a>获取ip地址</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$(hostname -I|<span class="built_in">cut</span> -d<span class="string">&quot; &quot;</span> -f 1)</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置hosts文件-可配置可不配置"><a href="#配置hosts文件-可配置可不配置" class="headerlink" title="配置hosts文件(可配置可不配置)"></a>配置hosts文件(可配置可不配置)</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/hosts</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1   localhost localhost.localdomain localhost4 localhost4.localdomain4</span><br><span class="line">::1         localhost localhost.localdomain localhost6 localhost6.localdomain6</span><br><span class="line"> </span><br><span class="line">192.168.31.43 manager43</span><br><span class="line">192.168.31.188 node188</span><br><span class="line">192.168.31.139 node139</span><br></pre></td></tr></table></figure>
+
+<h2 id="使用scp复制到node主机"><a href="#使用scp复制到node主机" class="headerlink" title="使用scp复制到node主机"></a>使用scp复制到node主机</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp /etc/hosts root@192.168.31.188:/etc/hosts</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看防火墙"><a href="#查看防火墙" class="headerlink" title="查看防火墙"></a>查看防火墙</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`firewall-cmd --zone=public --list-ports` 和 `netstat -tlunp`</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置防火墙"><a href="#设置防火墙" class="headerlink" title="设置防火墙"></a>设置防火墙</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">systemctl disable firewalld.service</span><br><span class="line">systemctl stop firewalld.service</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">防火墙配置</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">官方文档</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">centos7采用firewalld来配置防火墙，默认不开放接口。官方文档中给出的方案比较底层。这里我们采取自定义Service的方式来配置</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建文件</span></span><br><span class="line">vi /etc/firewalld/services/docker.xml</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">加入以下内容</span></span><br><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;</span><br><span class="line">      &lt;service&gt;</span><br><span class="line">        &lt;short&gt;docker&lt;/short&gt;</span><br><span class="line">        &lt;description&gt;docker daemon for remote access&lt;/description&gt;</span><br><span class="line">        &lt;port protocol=&quot;tcp&quot; port=&quot;2375&quot;/&gt;</span><br><span class="line">      &lt;/service&gt;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看默认zone(一般是public)</span></span><br><span class="line">firewall-cmd --get-default-zone</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在zone中加入这个service</span></span><br><span class="line">firewall-cmd --zone=public --add-service=docker --permanent</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重新加载</span></span><br><span class="line">firewall-cmd --reload</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查询端口</span></span><br><span class="line">firewall-cmd --service=docker --get-ports --permanent</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">参考链接</span></span><br><span class="line">https://my.oschina.net/u/4560825/blog/4314028</span><br></pre></td></tr></table></figure>
+
+<h2 id="添加dns"><a href="#添加dns" class="headerlink" title="添加dns"></a>添加dns</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/sysconfig/network-scripts/ifcfg-enp0s3</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">DNS2=114.114.114.114</span></span><br><span class="line">systemctl restart network</span><br><span class="line">vi /etc/resolv.conf # 查看结果</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置yum镜像源"><a href="#配置yum镜像源" class="headerlink" title="配置yum镜像源"></a>配置yum镜像源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">备份你的原镜像文件，以免出错后可以恢复</span></span><br><span class="line">mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">下载新的CentOS-Base.repo 到/etc/yum.repos.d/</span></span><br><span class="line">wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">进入CentOS-Base.repo文件, 修改文件中的baseurl地址(可省略这步)</span></span><br><span class="line">vi   CentOS-Base.repo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清楚原有yum缓存</span></span><br><span class="line">yum clean all</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生成缓存</span></span><br><span class="line">yum makecache</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看配置好的yum源是否正常</span></span><br><span class="line">yum repolist</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用官方安装脚本自动安装</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装命令如下：</span></span><br><span class="line"></span><br><span class="line">curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">也可以使用国内 daocloud 一键安装命令：</span></span><br><span class="line"></span><br><span class="line">curl -sSL https://get.daocloud.io/docker | sh</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装需要的软件包， yum-util 提供yum-config-manager功能，另外两个是devicemapper驱动依赖的</span></span><br><span class="line">yum install -y yum-utils device-mapper-persistent-data lvm2</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置镜像源</span></span><br><span class="line">yum-config-manager --add-repo http://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">通过命令把https://download-stage.docker.com替换为http://mirrors.aliyun.com/docker-ce</span></span><br><span class="line">vi /etc/yum.repos.d/docker-ce.repo</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">命令如下：</span></span><br><span class="line">:%s#https://download.docker.com#http://mirrors.aliyun.com/docker-ce#g</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">更新yum缓存</span></span><br><span class="line">yum makecache fast</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">这时，可通过阿里镜像安装doker了</span></span><br><span class="line">yum install docker-ce</span><br></pre></td></tr></table></figure>
+
+<h2 id="监控命令"><a href="#监控命令" class="headerlink" title="监控命令"></a>监控命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看服务状态，一秒一次，启动之后可通过IP：端口访问界面</span></span><br><span class="line">watch -n 1 docker stack services hadoop</span><br></pre></td></tr></table></figure>
+
+<h2 id="打印信息"><a href="#打印信息" class="headerlink" title="打印信息"></a>打印信息</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">不打印正常信息，打印错误信息（/dev/null 代表空设备）</span></span><br><span class="line">xargs docker rmi &gt; /dev/null</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">正常和错误信息都不打印</span></span><br><span class="line">xargs docker rmi &amp;&gt; /dev/null</span><br></pre></td></tr></table></figure>
+
+<h2 id="打印文件或文件夹列表时，排除文件或文件夹"><a href="#打印文件或文件夹列表时，排除文件或文件夹" class="headerlink" title="打印文件或文件夹列表时，排除文件或文件夹"></a>打印文件或文件夹列表时，排除文件或文件夹</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">排除多个文件或文件夹</span></span><br><span class="line">ls | grep -v &#x27;a\|b&#x27;</span><br></pre></td></tr></table></figure>
+
+<h2 id="nodejs安装"><a href="#nodejs安装" class="headerlink" title="nodejs安装"></a>nodejs安装</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">nvm install 14.16.0</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">npm install -g nrm</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">nrm <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">nrm use taobao</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">npm config <span class="built_in">ls</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">rm</span> -rf ./node_modules</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">npm install</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">npm run build:<span class="built_in">test</span></span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="docker访问权限问题"><a href="#docker访问权限问题" class="headerlink" title="docker访问权限问题"></a>docker访问权限问题</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">sudo groupadd docker          #添加docker用户组</span><br><span class="line">sudo gpasswd -a $USER docker  #将当前用户添加至docker用户组</span><br><span class="line">newgrp docker                 #更新docker用户组</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="查看端口占用"><a href="#查看端口占用" class="headerlink" title="查看端口占用"></a>查看端口占用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看53端口的占用情况</span></span><br><span class="line">sudo netstat -anlp | grep -w LISTEN | grep 53</span><br></pre></td></tr></table></figure>
+
+<h2 id="定义环境变量"><a href="#定义环境变量" class="headerlink" title="定义环境变量"></a>定义环境变量</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export DOCKER_HOST=tcp://localhost:2375</span><br></pre></td></tr></table></figure>
+
+<h2 id="crontab使用"><a href="#crontab使用" class="headerlink" title="crontab使用"></a>crontab使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">格式</span></span><br><span class="line">minute   hour   day   month   week   command</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">添加任务</span></span><br><span class="line">crontab -e</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看任务列表</span></span><br><span class="line">crontab -l</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除任务</span></span><br><span class="line">crontab -r</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看已执行过的任务</span></span><br><span class="line">tail -f /var/log/cron</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置网络时间"><a href="#设置网络时间" class="headerlink" title="设置网络时间"></a>设置网络时间</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看当前时间</span></span><br><span class="line">date &quot;+%Y-%m-%d %H:%M:%S&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看时区</span></span><br><span class="line">date &quot;+%Z&quot;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用<span class="built_in">cat</span> /etc/sysconfig/clock查看当前时区</span></span><br><span class="line">cat /etc/sysconfig/clock</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置时区</span></span><br><span class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看硬件时间</span></span><br><span class="line">hwclock</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">同步硬件时间</span></span><br><span class="line">hwclock -w</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">同步系统时间</span></span><br><span class="line">clock -w</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ntpdate</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">即使是硬件时间也会和网络时间有差异，想要和网络时间完全一致，我们就需要获取网络时间更新本地时间。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">安装工具：</span> </span><br><span class="line">yum -y install ntp ntpdate</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">设置系统时间与网络时间同步：</span></span><br><span class="line">ntpdate cn.pool.ntp.org</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将系统时间写入硬件时间：</span></span><br><span class="line">hwclock –systohc</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">同步时间服务器</span></span><br><span class="line">ntpdate -u ntp.api.bz</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ntp常用服务器：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">中国国家授时中心：210.72.145.44</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">NTP服务器(上海) ：ntp.api.bz</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">美国： time.nist.gov</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">复旦： ntp.fudan.edu.cn</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">微软公司授时主机(美国) ：time.windows.com</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">北京邮电大学 : s1a.time.edu.cn</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清华大学 : s1b.time.edu.cn</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">北京大学 : s1c.time.edu.cn</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">台警大授时中心(台湾)：asia.pool.ntp.org</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">simple</span></span><br><span class="line">cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">ntpdate -u ntp.api.bz</span><br><span class="line">hwclock -w</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看linux系统版本"><a href="#查看linux系统版本" class="headerlink" title="查看linux系统版本"></a>查看linux系统版本</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">只适用于redhat系linux系统</span></span><br><span class="line">cat /etc/redhat-release</span><br></pre></td></tr></table></figure>
+
+<h2 id="Linux文件字符串替换命令"><a href="#Linux文件字符串替换命令" class="headerlink" title="Linux文件字符串替换命令"></a>Linux文件字符串替换命令</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">perl命令替换</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-e 执行指定的脚本。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-i 原地替换文件，并将旧文件用指定的扩展名备份。不指定扩展名则不备份。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-n 自动循环，相当于 <span class="keyword">while</span>(&lt;&gt;) &#123; 脚本; &#125;</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-p 自动循环+自动输出，相当于 <span class="keyword">while</span>(&lt;&gt;) &#123; 脚本; <span class="built_in">print</span>; &#125;</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">用法示例：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将所有C程序中的foo替换成bar，旧文件备份成.bak</span></span><br><span class="line">perl -p -i.bak -e &#x27;s/\bfoo\b/bar/g&#x27; *.c</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将当前文件夹下lishan.txt和lishan.txt.bak中的“shan”都替换为“hua”</span></span><br><span class="line">perl -p -i -e &quot;s/shan/hua/g&quot; ./lishan.txt ./lishan.txt.bak</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="comment">##################################################################</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">sed命令替换</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">-i 表示inplace edit，就地修改文件</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">s表示替换，d表示删除</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">格式: sed -i <span class="string">&quot;s/查找字段/替换字段/g&quot;</span> `grep 查找字段 -rl 路径` 文件名</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">示例：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">把当前目录下lishan.txt里的shan都替换为hua</span></span><br><span class="line">sed -i &quot;s/shan/hua/g&quot; lishan.txt</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用变量替换(使用双引号)</span></span><br><span class="line">sed -e &quot;s/$var1/$var2/g&quot; filename</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除文本中空行和空格组成的行以及#号注释的行</span></span><br><span class="line">grep -v ^# filename | sed /^[[:space:]]*$/d | sed /^$/d</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="复制命令"><a href="#复制命令" class="headerlink" title="复制命令"></a>复制命令</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_40880022/article/details/118937461">参考文章</a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">复制目录 -- 即将[/www/temp/java/BOOT-INF/lib]里面的所有内容，复制到这个[/www/temp/java/lib]目录里面</span></span><br><span class="line">cp -a  /www/temp/java/BOOT-INF/lib /www/temp/java/lib</span><br></pre></td></tr></table></figure>
+
+<h2 id="top命令使用"><a href="#top命令使用" class="headerlink" title="top命令使用"></a>top命令使用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用`1`显示每个CPU的使用情况</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用`t`显示CPU使用百分比进度条</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用`m`显示内存使用百分比进度条</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="时间相关"><a href="#时间相关" class="headerlink" title="时间相关"></a>时间相关</h2><ul>
+<li>相关文章<ul>
+<li>[[centos使用date命令同步网络时间]]</li>
+<li>[[timedatectl命令怎么同步网络时间]]</li>
+<li>[[timedatectl命令怎么同步网络时间]]</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看时间</span></span><br><span class="line">timedatectl</span><br><span class="line">date</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">修改时间</span></span><br><span class="line">date -s &quot;2024-01-19&quot;</span><br><span class="line">date -s &quot;10:30:00&quot;</span><br><span class="line">timedatectl set-time &quot;YYYY-MM-DD HH:MM:SS&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开启自动同步时间</span></span><br><span class="line">timedatectl set-ntp true</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">手动同步网络时间</span></span><br><span class="line">date -s &quot;$(curl -s --head http://www.baidu.com | grep &#x27;^Date:&#x27; | cut -d&#x27; &#x27; -f3-6)Z&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/docker/doc/ssl/" rel="prev" title="ssl">
+                  <i class="fa fa-angle-left"></i> ssl
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/docker/doc/container/" rel="next" title="Container">
+                  Container <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">doc-record</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

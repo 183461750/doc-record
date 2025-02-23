@@ -1,0 +1,55 @@
+# 启动命令
+# docker-compose --compatibility up -d
+version: '3'
+
+services:
+  mysql57:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: nacos
+      MYSQL_USER: root
+      MYSQL_PASSWORD: root
+    ports:
+      - 3307:3306
+    volumes: # 挂载持久化地址（个人理解）
+      - ./docker/mysql/:/var/lib/mysql/
+      - ./docker/conf/:/etc/mysql/
+  nacos:
+    image: nacos/nacos-server:1.2.1
+    restart: always
+    depends_on:
+      - mysql57
+    environment:
+      PREFER_HOST_MODE: hostname #如果支持主机名可以使用hostname,否则使用ip，默认也是ip
+      SPRING_DATASOURCE_PLATFORM: mysql #数据源平台 仅支持mysql或不保存empty
+      MODE: standalone
+      MYSQL_SERVICE_HOST: mysql57
+      MYSQL_SERVICE_DB_NAME: nacos
+      MYSQL_SERVICE_PORT: 3307
+      MYSQL_SERVICE_USER: root
+      MYSQL_SERVICE_PASSWORD: root
+      NACOS_APPLICATION_PORT: 9999
+      JVM_XMS: 512m
+      JVM_MMS: 320m
+    volumes:
+      - ./docker/nacos/standalone-logs/:/home/nacos/logs
+      - ./docker/nacos/plugins/:/home/nacos/plugins
+      - ./docker/nacos/conf/application.properties:/home/nacos/conf/application.properties
+    ports:
+      - "9999:9999"
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - ./docker/nacos/prometheus/prometheus-standalone.yaml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    depends_on:
+      - nacos
+    restart: on-failure
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - 3000:3000
+    restart: on-failure

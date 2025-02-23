@@ -1,0 +1,33 @@
+# .cursorrules for Markdown Documentation Project
+
+# General
+- Use descriptive headings and subheadings to organize content within markdown files.
+- Follow a consistent style guide for markdown syntax, such as spacing around headers, lists, and code blocks.
+
+# Markdown Content
+- Utilize markdown features like bullet points, number lists, and tables for structured data.
+- Use internal links for navigation within related markdown documents.
+- Embed images effectively by using markdown image syntax.
+- Code blocks should specify the language for syntax highlighting.
+
+# File Naming and Organization
+- Keep markdown filenames reflective of their content, using lowercase and dashes (e.g., "project-overview.md").
+- Organize markdown files in directories according to topics or sections.
+- Use a numbering system for index files when sequence matters (e.g., "01-introduction.md", "02-getting-started.md").
+
+# Versioning and Comments
+- Use version control (e.g., git) to manage changes in documentation.
+- Add comments in code blocks for extended explanations where necessary.
+
+# Documentation Tools Integration
+- Recommend the use of tools like Sphinx, Jupyter Notebook, or other markdown-compatible documentation tools.
+
+# Accessibility and SEO
+- Add alt text for images to improve accessibility.
+- Use keywords appropriately for SEO purpose if published online.
+
+# Collaboration
+- Encourage peer reviews for major updates in markdown files to maintain quality.
+
+# Metadata
+- Use YAML front matter for additional metadata where applicable.

@@ -1,0 +1,64 @@
+version: '3.8'
+
+services:
+  zoo1:
+    image: zookeeper
+    networks:
+      - kafka
+    hostname: zoo1
+    ports: # 端口
+      - 2181:2181
+    environment:
+      ZOO_MY_ID: 1
+      ZOO_SERVERS: server.1=0.0.0.0:2888:3888;2181
+    deploy:
+      mode: replicated
+      replicas: 1
+
+  kafka:
+    image: wurstmeister/kafka
+    depends_on:
+      - zoo1
+    ports:
+      - target: 9094
+        published: 9094
+        protocol: tcp
+        mode: host
+    environment:
+      # HOSTNAME_COMMAND: "docker info | grep ^Name: | cut -d' ' -f 2"
+      HOSTNAME_COMMAND: "nsenter --mount=/hostip/1/ns/mnt --net=/hostip/1/ns/net ip a | grep "10.0.0" | cut -d '/' -f 1 | cut -d ' ' -f 6"
+      # HOSTNAME_COMMAND: "docker info -f '{{`{{.Swarm.NodeAddr}}`}}'"
+      #BROKER_ID_COMMAND : "docker info -f '{{`{{.Name}}`}}' | sed 's/kafka//g'"
+      KAFKA_ZOOKEEPER_CONNECT: zoo1:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      # KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://10.0.0.69:9094
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://:9092,OUTSIDE://_{{HOSTNAME_COMMAND}}:9094
+      KAFKA_LISTENERS: INSIDE://:9092,OUTSIDE://:9094
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: 'true' # 自动创建topics
+      KAFKA_LOG_DIRS: /kafka/kafka_log
+      #      BROKER_ID_COMMAND: "hostname | awk -F'-' '{print $$2}'" # broker_id 使用hostname的值
+      #      KAFKA_BROKER_ID: 1002 # 设置brokerId的值
+       volumes:
+         - /proc:/hostip/:ro
+      # - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - kafka
+    deploy:
+      mode: global
+
+  kafka-manager:
+    image: hlebalbau/kafka-manager:stable
+    ports:
+      - "9012:9000"
+    depends_on:
+      - kafka
+    environment:
+      ZK_HOSTS: "zoo1:2181"
+      APPLICATION_SECRET: "random-secret"
+    networks:
+      - kafka
+
+networks:
+  kafka:
+    driver: overlay

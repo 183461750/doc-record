@@ -1,0 +1,22 @@
+# 从日志文件输入日志
+filebeat.inputs:
+- type: log
+  enabled: true
+  paths:
+    - /Users/wuhanxue/Downloads/*.log
+  tags: ["user-log"]
+  exclude_lines: ['^$']
+  multiline:
+    type: pattern
+    pattern: '^[0-9]{4}-[0-9]{2}-[0-9]{2}'
+    negate: true
+    match: after
+setup.template.settings:
+# 设置主分片数
+  index.number_of_shards: 1
+# 因为测试环境只有一个es节点，所以将副本分片设置为0，否则集群会报黄
+  index.number_of_replicas: 0
+# 输出到logstash
+output.logstash:
+# logstash所在服务器的ip和端口
+  hosts: ["172.16.188.6:5044"]

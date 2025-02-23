@@ -1,0 +1,124 @@
+version: "3.5"
+
+services:
+
+  mysql_m1:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+    command:
+      bash -c "
+      tee /etc/mysql/conf.d/haproxy.cnf <<-'EOF'
+      [mysqld]
+      # Disabling symbolic-links is recommended to prevent assorted security risks
+      symbolic-links=0
+      EOF
+      "
+    ports:
+      - target: 3306
+        published: 33061
+        mode: host
+    networks:
+      middleware:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - mariadb_mysql_m1:/var/lib/mysql
+
+  mysql_m2:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+    command:
+      bash -c "
+      tee /etc/mysql/conf.d/haproxy.cnf <<-'EOF'
+      [mysqld]
+      # Disabling symbolic-links is recommended to prevent assorted security risks
+      symbolic-links=0
+      EOF
+      "
+    ports:
+      - target: 3306
+        published: 33062
+        mode: host
+    networks:
+      middleware:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - mariadb_mysql_m2:/var/lib/mysql
+
+  haproxy:
+    image: haproxy:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+      - MYSQL_PASSWORD=root
+    command:
+      bash -c "
+      tee /usr/local/etc/haproxy/haproxy.cfg <<-'EOF'
+      global    # 全局配置
+        log 127.0.0.1 local0 # 日志文件
+        # user haproxy
+        # group haproxy
+      defaults
+        log global
+        retries 2
+        timeout connect 3000
+        timeout server 5000
+        timeout client 5000
+      listen mysql-cluster
+        bind *:3308    # 监听地址
+        mode tcp
+        #option mysql-check user haproxy_check  (This is not needed as for Layer 4 balancing)
+        option tcp-check
+        balance roundrobin
+        # The below nodes would be hit on 1:1 ratio. If you want it to be 1:2 then add 'weight 2' just after the line.
+        server mysql-master1 mysql_m1:3306 check    # 代理地址
+        server mysql-master2 mysql_m2:3306 check        # 代理地址
+      # Enable cluster status
+      listen mysql-clusterstats    # 管理页面配置
+        bind *:8080
+        mode http
+        stats enable
+        stats uri /
+        stats realm Strictly\ Private
+        stats auth admin:admin
+
+      EOF
+      "
+    ports:
+      - target: 3308
+        published: 3308
+        mode: host
+      - target: 8080
+        published: 80801
+        mode: host
+    depends_on:
+      - mysql_m1
+      - mysql_m2
+    networks:
+      middleware:
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+volumes:
+  mariadb_mysql_m1:
+  mariadb_mysql_m2:
+
+networks:
+  middleware:
+    external: true

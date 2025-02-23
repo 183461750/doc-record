@@ -4,6 +4,12 @@
 
 记录一些文档, 关于docker, k8s, 以及一些其他工具的文档.
 
+## 启动项目
+
+```bash
+hexo clean && hexo generate && hexo server
+```
+
 ## github pages
 
 ### 自定义host

@@ -1,0 +1,37 @@
+edition: 1.0.0
+
+services:
+  nocobaseService:
+    component: fc
+    props:
+      region: {region}
+      service:
+        name: nocobaseService
+        role: acs:ram::{FC_ACCOUNT}:role/aliyunfcdefaultrole
+      function:
+        name: nocobaseFc
+        runtime: custom-container
+        timeout: 60
+        memorySize: 512
+        instanceConcurrency: 100
+        caPort: {CONTAINER_PORT}
+        customContainerConfig:
+          image: registry.{region}.aliyuncs.com/{IMAGE_NAMESPACE}/{IMAGE_NAME}
+      triggers:
+        - name: httpTrigger
+          type: http
+          config:
+            authType: anonymous
+            methods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - HEAD
+              - OPTIONS
+      customDomains:
+        - domainName: Auto
+          protocol: HTTP
+          routeConfigs:
+            - path: /*
+              

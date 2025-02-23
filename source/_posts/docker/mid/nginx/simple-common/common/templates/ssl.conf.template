@@ -1,0 +1,11 @@
+ssl_certificate   ${SSL_CERT_PEM_PATH};
+ssl_certificate_key  ${SSL_CERT_KEY_PATH};
+
+ssl_session_timeout 5m;
+
+#表示使用的TLS协议的类型。
+ssl_protocols TLSv1.1 TLSv1.2 TLSv1.3;
+#表示使用的加密套件的类型。
+ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+
+ssl_prefer_server_ciphers on;

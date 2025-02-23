@@ -1,0 +1,36 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: 3G
+  labels:
+    app: harbor
+    app.kubernetes.io/managed-by: Helm
+    chart: harbor
+    component: nginx
+    heritage: Helm
+    k8s.kuboard.cn/name: harbor-helm-nginx
+    release: harbor-helm
+  name: harbor-helm-nginx
+  namespace: harbor6
+  resourceVersion: '12665691'
+spec:
+  defaultBackend:
+    service:
+      name: harbor-helm-nginx
+      port:
+        number: 8080
+  ingressClassName: lingxi-ingress-nginx
+  rules:
+    - host: harbor.shushangyun.com
+      http:
+        paths:
+          - backend:
+              service:
+                name: harbor-helm-nginx
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
+

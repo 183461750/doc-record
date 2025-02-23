@@ -1,0 +1,99 @@
+version: '3.5'
+
+services:
+  wap:
+    build:
+      context: ../wap
+      dockerfile: $PWD/wap/Dockerfile
+    restart: on-failure
+    environment:
+      TZ: "Asia/Shanghai"
+    networks:
+      middleware:
+      self-network:
+        ipv4_address: 10.0.3.10
+  web:
+    build:
+      context: ../web
+      dockerfile: $PWD/web/Dockerfile
+    restart: on-failure
+    environment:
+      TZ: "Asia/Shanghai"
+    networks:
+      middleware:
+      self-network:
+        ipv4_address: 10.0.3.11
+  wap-api:
+    build:
+      context: ../wap-api
+      dockerfile: $PWD/wap-api/Dockerfile
+    restart: on-failure
+    environment:
+      TZ: "Asia/Shanghai"
+    networks:
+      middleware:
+      self-network:
+        ipv4_address: 10.0.3.12
+    extra_hosts: # 在/etc/hosts中添加一行记录 <host-gateway的ip> host.docker.internal
+      - host.docker.internal:host-gateway
+  web-api:
+    build:
+      context: ../web-api
+      dockerfile: $PWD/web-api/Dockerfile
+    restart: on-failure
+    environment:
+      TZ: "Asia/Shanghai"
+    volumes:
+      - /home/data/file:/usr/local/tmp/web-api/uploads/
+    networks:
+      middleware:
+      self-network:
+          ipv4_address: 10.0.3.13
+  nginx:
+    image: nginx:1.20
+    user: root
+    privileged: true
+    restart: on-failure
+    environment:
+      TZ: "Asia/Shanghai"
+    command:
+      bash -c "mkdir -p /usr/lib/nginx/proxy_tmp && \
+      mkdir -p /usr/lib/nginx/proxy_cache/imgcache && \
+      chown -R nginx:nginx /usr/lib/nginx/proxy* && \
+      /docker-entrypoint.sh nginx -g 'daemon off;'"
+    depends_on:
+      - wap-api
+      - web-api
+      - wap
+      - web
+    networks:
+      middleware:
+      self-network:
+          ipv4_address: 10.0.3.14
+    ports:
+      - target: 8888
+        published: 8888
+        mode: host
+      - target: 9999
+        published: 9999
+        mode: host
+    volumes:
+      - "nginx_log:/var/log/"
+      - "./nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "./nginx/conf/cors.conf:/etc/nginx/cors.conf"
+      - "./nginx/conf/conf.d/:/etc/nginx/conf.d/"
+      - /home/data/file/:/etc/nginx/data/uploads
+
+volumes:
+  nginx_log:
+
+networks:
+  middleware:
+    external: true
+  self-network:
+    driver: overlay
+    attachable: true
+    ipam:
+      config:
+        - subnet: 10.0.3.0/24
+          gateway: 10.0.3.1

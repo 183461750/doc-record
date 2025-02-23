@@ -1,0 +1,47 @@
+version: '3.5'
+services:
+
+  mongo:
+    image: mongo
+    ports:
+      - target: 27017
+        published: 27017
+        mode: host
+    volumes:
+      - ./setup:/docker-entrypoint-initdb.d/
+    environment:  # admin账号和密码
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: DoNotPeek
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  # 如果不需要MongoDB的网页端，以下内容可以不加
+  mongo-express:
+    image: mongo-express
+    ports:
+      - target: 8081
+        published: 8081
+        mode: host
+    environment:  # 这里只能使用与上方MONGO_INITDB_ROOT_USERNAME相同的root账号
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: DoNotPeek
+    depends_on:
+      - mongo
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  middleware:
+    external: true

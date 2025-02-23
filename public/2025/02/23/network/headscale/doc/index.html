@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"localhost","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="headscale使用记录GitHub地址参考文章 安装sealos一键部署 123456789101112131415161718192021222324252627282930313233343536373839404142# 创建默认用户headscale user create default# 查看用户列表headscale user list# 创建 API Key：headscale">
+<meta property="og:type" content="article">
+<meta property="og:title" content="doc-record">
+<meta property="og:url" content="http://localhost:4000/2025/02/23/network/headscale/doc/index.html">
+<meta property="og:site_name" content="doc-record">
+<meta property="og:description" content="headscale使用记录GitHub地址参考文章 安装sealos一键部署 123456789101112131415161718192021222324252627282930313233343536373839404142# 创建默认用户headscale user create default# 查看用户列表headscale user list# 创建 API Key：headscale">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-23T07:43:31.746Z">
+<meta property="article:modified_time" content="2025-02-23T07:43:31.747Z">
+<meta property="article:author" content="doc-record">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://localhost:4000/2025/02/23/network/headscale/doc/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://localhost:4000/2025/02/23/network/headscale/doc/","path":"2025/02/23/network/headscale/doc/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | doc-record</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">doc-record</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#headscale%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">headscale使用记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87-Pre-Authkeys-%E6%8E%A5%E5%85%A5"><span class="nav-number">1.1.1.</span> <span class="nav-text">通过 Pre-Authkeys 接入</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E9%80%9A%E5%B1%80%E5%9F%9F%E7%BD%91"><span class="nav-number">1.2.</span> <span class="nav-text">打通局域网</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">doc-record</p>
+  <div class="site-description" itemprop="description">doc-record</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">476</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/2025/02/23/network/headscale/doc/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doc-record">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doc-record">
+      <meta itemprop="description" content="doc-record">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | doc-record">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-23 15:43:31" itemprop="dateCreated datePublished" datetime="2025-02-23T15:43:31+08:00">2025-02-23</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="headscale使用记录"><a href="#headscale使用记录" class="headerlink" title="headscale使用记录"></a>headscale使用记录</h1><p><a target="_blank" rel="noopener" href="https://github.com/juanfont/headscale">GitHub地址</a><br><a target="_blank" rel="noopener" href="https://icloudnative.io/posts/how-to-set-up-or-migrate-headscale/#headscale-%E6%98%AF%E4%BB%80%E4%B9%88">参考文章</a></p>
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p><a target="_blank" rel="noopener" href="https://bja.sealos.run/?openapp=system-template?templateName=headscale">sealos一键部署</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 创建默认用户</span></span><br><span class="line">headscale user create default</span><br><span class="line"><span class="comment"># 查看用户列表</span></span><br><span class="line">headscale user list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建 API Key：</span></span><br><span class="line">headscale apikey create</span><br><span class="line"><span class="comment"># 将 Headscale 公网域名和 API Key 填入 Headscale-Admin 的设置页面(https://headscale-xxx.sealosbja.site/admin/)，同时取消勾选 Legacy API，然后点击「Save」：</span></span><br><span class="line"><span class="comment"># 接入成功后，点击左边侧栏的「Users」，然后点击「Create」开始创建用户：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装客户端</span></span><br><span class="line"><span class="comment">## Linux</span></span><br><span class="line">curl -fsSL https://tailscale.com/install.sh | sh</span><br><span class="line"></span><br><span class="line"><span class="comment"># Tailscale 接入 Headscale：</span></span><br><span class="line"><span class="comment"># 将 &lt;HEADSCALE_PUB_ENDPOINT&gt; 换成上文提到的 Sealos 中的 Headscale 公网域名</span></span><br><span class="line">tailscale up --login-server=https://&lt;HEADSCALE_PUB_ENDPOINT&gt; --accept-routes=<span class="literal">true</span> --accept-dns=<span class="literal">false</span></span><br><span class="line"><span class="comment"># 会打印出注册key(mkey:xxx), 需要到Headscale-Admin的[Machines]页面[Add Device][Register Machine Key]，选择上面创建的用户并将注册key填入, 点击[Register]后, 客户端控制台会打印Success.</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 回到 Tailscale 客户端所在的 Linux 主机，可以看到 Tailscale 会自动创建相关的路由表和 iptables 规则。路由表可通过以下命令查看：</span></span><br><span class="line">ip route show table 52</span><br><span class="line"><span class="comment"># 查看 iptables 规则：</span></span><br><span class="line">iptables -S</span><br><span class="line">iptables -S -t nat</span><br><span class="line"></span><br><span class="line"><span class="comment">## macOS</span></span><br><span class="line"><span class="comment"># 安装完 GUI 版应用后还需要做一些骚操作，才能让 Tailscale 使用 Headscale 作为控制服务器。当然，Headscale 已经给我们提供了详细的操作步骤，你只需要在浏览器中打开 URL：https://&lt;HEADSCALE_PUB_ENDPOINT&gt;/apple，便会出现如下的界面：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 长按「option」键，然后点击顶部菜单栏的 Tailscale 图标，然后将鼠标指针悬停在「Debug」菜单上。</span></span><br><span class="line"><span class="comment"># 在「Custom Login Server」下方选择「Add Account…」。</span></span><br><span class="line"><span class="comment"># 在打开的弹窗中填入 Headscale 的公网域名，然后点击「Add Account」。</span></span><br><span class="line"><span class="comment"># 然后立马就会跳转到浏览器并打开一个页面</span></span><br><span class="line"><span class="comment"># 接下来与之前 Linux 客户端相同，回到 Headscale 所在的机器执行浏览器中的命令即可，注册成功：</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 回到 Headscale 所在主机，查看注册的节点：</span></span><br><span class="line">headscale nodes list</span><br><span class="line"></span><br><span class="line"><span class="comment"># 回到 macOS，测试是否能 ping 通对端节点：</span></span><br><span class="line">ping -c 2 100.64.0.1</span><br><span class="line"><span class="comment"># 在[sitting]中安装[CLl integration]后, 也可以使用 Tailscale CLI 来测试：</span></span><br><span class="line">tailscale ping 100.64.0.1</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="通过-Pre-Authkeys-接入"><a href="#通过-Pre-Authkeys-接入" class="headerlink" title="通过 Pre-Authkeys 接入"></a>通过 Pre-Authkeys 接入</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 前面的接入方法都需要服务端同意，步骤比较烦琐，其实还有更简单的方法，可以直接接入，不需要服务端同意。</span></span><br><span class="line"><span class="comment"># 首先在服务端生成 pre-authkey 的 token，有效期可以设置为 24 小时：</span></span><br><span class="line">headscale preauthkeys create -e 24h --user default</span><br><span class="line"><span class="comment"># 查看已经生成的 key：</span></span><br><span class="line">headscale --user default preauthkeys list</span><br><span class="line"><span class="comment"># 当然你也可以在 Headscale-Admin 中生成。点击客户端想加入的 User：</span></span><br><span class="line"><span class="comment"># 在弹出的界面中点击「PreAuth Keys」右侧的 Create，设置一个过期时间（比如 100 年~），如果想重复利用这个 Key，可以勾选 Reusable，最后点击 ✅：</span></span><br><span class="line"><span class="comment"># 创建成功后，点击红框区域便可复制该 PreAuth Key：</span></span><br><span class="line"><span class="comment"># 现在新节点就可以无需服务端同意直接接入了：</span></span><br><span class="line">tailscale up --login-server=http://&lt;HEADSCALE_PUB_ENDPOINT&gt;:8080 --accept-routes=<span class="literal">true</span> --accept-dns=<span class="literal">false</span> --authkey <span class="variable">$KEY</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="打通局域网"><a href="#打通局域网" class="headerlink" title="打通局域网"></a>打通局域网</h2><p><a target="_blank" rel="noopener" href="https://icloudnative.io/posts/how-to-set-up-or-migrate-headscale/#%E6%89%93%E9%80%9A%E5%B1%80%E5%9F%9F%E7%BD%91">参考文档</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 配置方法很简单，首先需要设置 IPv4 与 IPv6 路由转发：</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;net.ipv4.ip_forward = 1&#x27;</span> | <span class="built_in">tee</span> /etc/sysctl.d/ipforwarding.conf</span><br><span class="line"><span class="built_in">echo</span> <span class="string">&#x27;net.ipv6.conf.all.forwarding = 1&#x27;</span> | <span class="built_in">tee</span> -a /etc/sysctl.d/ipforwarding.conf</span><br><span class="line">sysctl -p /etc/sysctl.d/ipforwarding.conf</span><br><span class="line"></span><br><span class="line"><span class="comment"># 客户端修改注册节点的命令，在原来命令的基础上加上参数 --advertise-routes=192.168.100.0/24，告诉 Headscale 服务器“我这个节点可以转发这些地址的路由”。</span></span><br><span class="line">tailscale up --login-server=http://&lt;HEADSCALE_PUB_ENDPOINT&gt;:8080 --accept-routes=<span class="literal">true</span> --accept-dns=<span class="literal">false</span> --advertise-routes=192.168.100.0/24 --reset</span><br><span class="line"></span><br><span class="line"><span class="comment"># 在 Headscale 端查看路由，可以看到相关路由是关闭的。</span></span><br><span class="line">headscale nodes list|grep openwrt</span><br><span class="line">headscale routes list -i 6</span><br><span class="line"><span class="comment"># 开启路由：</span></span><br><span class="line">headscale routes <span class="built_in">enable</span> -i 6 -r <span class="string">&quot;192.168.100.0/24&quot;</span></span><br><span class="line"><span class="comment"># 如果有多条路由需要用 , 隔开：</span></span><br><span class="line">headscale routes <span class="built_in">enable</span> -i 6 -r <span class="string">&quot;192.168.100.0/24,xxxx&quot;</span></span><br><span class="line"><span class="comment"># 也可以通过参数 -a 开启所有路由：</span></span><br><span class="line">headscale routes <span class="built_in">enable</span> -i 6 -a</span><br><span class="line"><span class="comment"># 其他节点查看路由结果：</span></span><br><span class="line">ip route show table 52|grep <span class="string">&quot;192.168.100.0/24&quot;</span></span><br><span class="line"><span class="comment"># 其他节点启动时需要增加 --accept-routes=true 选项来声明 “我接受外部其他节点发布的路由”。</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 现在你在任何一个 Tailscale 客户端所在的节点都可以 ping 通家庭内网的机器了，你在公司或者星巴克也可以像在家里一样用同样的 IP 随意访问家中的任何一个设备，就问你香不香？</span></span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/02/23/network/iepose/doc/" rel="prev" title="">
+                  <i class="fa fa-angle-left"></i> 
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/02/23/network/headscale/local/doc/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">doc-record</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

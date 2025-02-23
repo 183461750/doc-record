@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"localhost","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="docker笔记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker">
+<meta property="og:url" content="http://localhost:4000/docker/doc/docker/index.html">
+<meta property="og:site_name" content="doc-record">
+<meta property="og:description" content="docker笔记">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-23T07:43:31.200Z">
+<meta property="article:modified_time" content="2025-02-23T07:43:31.200Z">
+<meta property="article:author" content="doc-record">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://localhost:4000/docker/doc/docker/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://localhost:4000/docker/doc/docker/","path":"/docker/doc/docker/","title":"docker"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>docker | doc-record</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">doc-record</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker%E7%AC%94%E8%AE%B0"><span class="nav-number">1.</span> <span class="nav-text">docker笔记</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85docker"><span class="nav-number">1.1.</span> <span class="nav-text">安装docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AEdocker%E5%BC%80%E6%9C%BA%E8%87%AA%E5%90%AF"><span class="nav-number">1.2.</span> <span class="nav-text">设置docker开机自启</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEdocker%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">1.3.</span> <span class="nav-text">配置docker镜像源</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2"><span class="nav-number">1.4.</span> <span class="nav-text">部署</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A0%E9%99%A4%E7%A9%BA%E9%95%9C%E5%83%8F"><span class="nav-number">1.5.</span> <span class="nav-text">删除空镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%BE%E9%95%9C%E5%83%8F%E7%9A%84%E5%9C%B0%E5%9D%80"><span class="nav-number">1.6.</span> <span class="nav-text">找镜像的地址</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BF%AE%E6%94%B9%E5%AE%BF%E4%B8%BB%E6%9C%BA%E7%9A%84docker%E9%85%8D%E7%BD%AE%EF%BC%8C%E8%AE%A9%E5%85%B6%E5%8F%AF%E4%BB%A5%E8%BF%9C%E7%A8%8B%E8%AE%BF%E9%97%AE"><span class="nav-number">1.7.</span> <span class="nav-text">修改宿主机的docker配置，让其可以远程访问</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-compose%E6%96%87%E4%BB%B6root%E7%94%A8%E6%88%B7%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="nav-number">1.8.</span> <span class="nav-text">docker compose文件root用户权限控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-compose%E6%96%87%E4%BB%B6%E8%B5%84%E6%BA%90%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="nav-number">1.9.</span> <span class="nav-text">docker compose文件资源权限控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%95%9C%E5%83%8F%E4%BB%93%E5%BA%93"><span class="nav-number">1.10.</span> <span class="nav-text">镜像仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8Bdocker%E5%AE%B9%E5%99%A8"><span class="nav-number">1.11.</span> <span class="nav-text">查看docker容器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%A3%81%E7%9B%98%E5%8D%A0%E7%94%A8"><span class="nav-number">1.12.</span> <span class="nav-text">查看磁盘占用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E7%A9%BA%E9%97%B4%E6%B8%85%E7%90%86"><span class="nav-number">1.13.</span> <span class="nav-text">磁盘空间清理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-%E5%B7%A5%E4%BD%9C%E6%A0%B9%E7%9B%AE%E5%BD%95"><span class="nav-number">1.14.</span> <span class="nav-text">docker 工作根目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%A9%E7%94%A8docker-run-%E2%80%93rm-%E5%91%BD%E4%BB%A4%E5%AE%9E%E7%8E%B0%E4%BD%BF%E7%94%A8%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B8%AD%E6%B2%A1%E6%9C%89%E7%9A%84%E5%91%BD%E4%BB%A4"><span class="nav-number">1.15.</span> <span class="nav-text">利用docker run –rm 命令实现使用宿主机中没有的命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E3%80%81%E4%BF%9D%E5%AD%98%E5%92%8C%E5%8A%A0%E8%BD%BD%E9%95%9C%E5%83%8F"><span class="nav-number">1.16.</span> <span class="nav-text">下载、保存和加载镜像</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0docker%E5%91%BD%E4%BB%A4%E6%97%A0%E6%84%9F%E8%BF%9C%E7%A8%8B%E6%8E%A7%E5%88%B6%E6%9C%8D%E5%8A%A1%E5%99%A8docker"><span class="nav-number">1.17.</span> <span class="nav-text">本地docker命令无感远程控制服务器docker</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#docker-gid-%E6%9F%A5%E7%9C%8B%E5%91%BD%E4%BB%A4"><span class="nav-number">1.18.</span> <span class="nav-text">docker gid 查看命令</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">doc-record</p>
+  <div class="site-description" itemprop="description">doc-record</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">476</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/docker/doc/docker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doc-record">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doc-record">
+      <meta itemprop="description" content="doc-record">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="docker | doc-record">
+      <meta itemprop="description" content="docker笔记">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          docker
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-23 15:43:31" itemprop="dateCreated datePublished" datetime="2025-02-23T15:43:31+08:00">2025-02-23</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">docker笔记</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="docker笔记"><a href="#docker笔记" class="headerlink" title="docker笔记"></a>docker笔记</h1><h2 id="安装docker"><a href="#安装docker" class="headerlink" title="安装docker"></a>安装docker</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">目前使用的方式</span></span><br><span class="line">sudo yum install -y yum-utils</span><br><span class="line">sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo</span><br><span class="line">sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">开机自启</span></span><br><span class="line">systemctl enable docker</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">启动docker</span></span><br><span class="line">systemctl start docker</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置国内镜像源(阿里镜像源)</span></span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">    &quot;registry-mirrors&quot;: [</span><br><span class="line">        &quot;https://ipl2fa8y.mirror.aliyuncs.com&quot;</span><br><span class="line">    ]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">目前使用的方式(网络不通了)</span></span><br><span class="line">sudo yum install -y yum-utils</span><br><span class="line">sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo</span><br><span class="line">sudo yum install -y docker-ce docker-ce-cli containerd.io</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用官方安装脚本自动安装</span></span><br><span class="line">curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用国内 daocloud 一键安装命令</span></span><br><span class="line">curl -sSL https://get.daocloud.io/docker | sh</span><br></pre></td></tr></table></figure>
+
+<h2 id="设置docker开机自启"><a href="#设置docker开机自启" class="headerlink" title="设置docker开机自启"></a>设置docker开机自启</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl enable docker</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置docker镜像源"><a href="#配置docker镜像源" class="headerlink" title="配置docker镜像源"></a>配置docker镜像源</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">sudo mkdir -p /etc/docker</span><br><span class="line">sudo tee /etc/docker/daemon.json &lt;&lt;-&#x27;EOF&#x27;</span><br><span class="line">&#123;</span><br><span class="line">  &quot;registry-mirrors&quot;: [&quot;https://ipl2fa8y.mirror.aliyuncs.com&quot;]</span><br><span class="line">&#125;</span><br><span class="line">EOF</span><br><span class="line">sudo systemctl daemon-reload</span><br><span class="line">sudo systemctl restart docker</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">docker镜像源</span></span><br><span class="line">https://docker.mirrors.ustc.edu.cn</span><br></pre></td></tr></table></figure>
+
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">对性能要求高 用 --net=host(对应docker-stack.yml文件下的(service.serviceName.network_mode=host)network_mode: <span class="string">&quot;host&quot;</span>) ， 不用-p</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">参考网上的测试：上次对对使用Docker的两台Redis做压力测试，A台使用-p，B台使用--net=host。但是发现A的效率只有B的1/3-2/3 ，这么大的性能影响，-p应该不适合生产环境吧？望大师们指教。谢谢。</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="删除空镜像"><a href="#删除空镜像" class="headerlink" title="删除空镜像"></a>删除空镜像</h2><figure class="highlight shell"><figcaption><span>script</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">sudo docker images | awk &#x27;&#123;if($2==&quot;&lt;none&gt;&quot;) print $3&#125;&#x27; | xargs sudo docker rmi</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">您需要先停止运行容器然后将其删除</span></span><br><span class="line">docker stop $(docker ps -a -q)</span><br><span class="line">docker rm $(docker ps -a -q)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">对于图像，请尝试删除悬空图像</span></span><br><span class="line">docker rmi $(docker images -f dangling=true -q)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除所有未被使用的镜像</span></span><br><span class="line">docker image prune  -a </span><br></pre></td></tr></table></figure>
+
+<h2 id="找镜像的地址"><a href="#找镜像的地址" class="headerlink" title="找镜像的地址"></a>找镜像的地址</h2><p>  <a target="_blank" rel="noopener" href="https://hub.docker.com/">https://hub.docker.com/</a></p>
+<h2 id="修改宿主机的docker配置，让其可以远程访问"><a href="#修改宿主机的docker配置，让其可以远程访问" class="headerlink" title="修改宿主机的docker配置，让其可以远程访问"></a>修改宿主机的docker配置，让其可以远程访问</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">默认,我们的linux的 docker ,IDEA 是不可以访问的,所以需要修改下配置,让我们的IDEA 可以访问</span></span><br><span class="line">vi /lib/systemd/system/docker.service</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在 其中的ExecStart=后添加配置 &gt; tip: 2375是为Docker开启的远程访问API的端口</span></span><br><span class="line">-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">刷新配置，重启服务</span></span><br><span class="line">systemctl daemon‐reload  # 刷新服务</span><br><span class="line">systemctl restart docker # 重新启动docker</span><br><span class="line">docker start registry  # 启动registry</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="docker-compose文件root用户权限控制"><a href="#docker-compose文件root用户权限控制" class="headerlink" title="docker compose文件root用户权限控制"></a>docker compose文件root用户权限控制</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">containers:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="attr">name:</span> <span class="string">snake</span></span><br><span class="line">        <span class="attr">image:</span> <span class="string">docker.io/kelysa/snake:lastest</span></span><br><span class="line">        <span class="attr">imagePullPolicy:</span> <span class="string">Always</span></span><br><span class="line">        <span class="attr">securityContext:</span></span><br><span class="line">          <span class="attr">privileged:</span> <span class="literal">true</span></span><br><span class="line">          <span class="attr">capabilities:</span></span><br><span class="line">            <span class="attr">add:</span> [<span class="string">&quot;NET_ADMIN&quot;</span>,<span class="string">&quot;NET_RAW&quot;</span>]</span><br><span class="line">            </span><br><span class="line"><span class="comment"># Linux capabilities</span></span><br><span class="line"><span class="comment">#  在linux中，root权限被分割成一下29中能力：</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_CHOWN:修改文件属主的权限</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_DAC_OVERRIDE:忽略文件的DAC访问限制</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_DAC_READ_SEARCH:忽略文件读及目录搜索的DAC访问限制</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_FOWNER：忽略文件属主ID必须和进程用户ID相匹配的限制</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_FSETID:允许设置文件的setuid位</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_KILL:允许对不属于自己的进程发送信号</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SETGID:允许改变进程的组ID</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SETUID:允许改变进程的用户ID</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SETPCAP:允许向其他进程转移能力以及删除其他进程的能力</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_LINUX_IMMUTABLE:允许修改文件的IMMUTABLE和APPEND属性标志</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_NET_BIND_SERVICE:允许绑定到小于1024的端口</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_NET_BROADCAST:允许网络广播和多播访问</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_NET_ADMIN:允许执行网络管理任务</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_NET_RAW:允许使用原始套接字</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_IPC_LOCK:允许锁定共享内存片段</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_IPC_OWNER:忽略IPC所有权检查</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_MODULE:允许插入和删除内核模块</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_RAWIO:允许直接访问/devport,/dev/mem,/dev/kmem及原始块设备</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_CHROOT:允许使用chroot()系统调用</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_PTRACE:允许跟踪任何进程</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_PACCT:允许执行进程的BSD式审计</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_ADMIN:允许执行系统管理任务，如加载或卸载文件系统、设置磁盘配额等</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_BOOT:允许重新启动系统</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_NICE:允许提升优先级及设置其他进程的优先级</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_RESOURCE:忽略资源限制</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_TIME:允许改变系统时钟</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_SYS_TTY_CONFIG:允许配置TTY设备</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_MKNOD:允许使用mknod()系统调用</span></span><br><span class="line"><span class="comment">#</span></span><br><span class="line"><span class="comment">#  CAP_LEASE:允许修改文件锁的FL_LEASE标志</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="docker-compose文件资源权限控制"><a href="#docker-compose文件资源权限控制" class="headerlink" title="docker compose文件资源权限控制"></a>docker compose文件资源权限控制</h2><figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">containers:</span></span><br><span class="line">    <span class="attr">security_opt:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">apparmor:unconfined</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="镜像仓库"><a href="#镜像仓库" class="headerlink" title="镜像仓库"></a>镜像仓库</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">地址https://cr.console.aliyun.com/cn-hangzhou/instance/credentials</span></span><br><span class="line">registry.cn-hangzhou.aliyuncs.com/fa</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">registry.cn-hangzhou.aliyuncs.com</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="查看docker容器"><a href="#查看docker容器" class="headerlink" title="查看docker容器"></a>查看docker容器</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查询已死亡的docker容器</span></span><br><span class="line">docker ps -aq -f status=dead</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查询已退出的docker容器</span></span><br><span class="line">docker ps -aq -f status=exited</span><br></pre></td></tr></table></figure>
+
+<h2 id="查看磁盘占用"><a href="#查看磁盘占用" class="headerlink" title="查看磁盘占用"></a>查看磁盘占用</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">linux命令</span></span><br><span class="line">df -h</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Docker 的内置 CLI 指令</span></span><br><span class="line">docker system df</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查看详情</span></span><br><span class="line">docker system df -v</span><br></pre></td></tr></table></figure>
+
+<h2 id="磁盘空间清理"><a href="#磁盘空间清理" class="headerlink" title="磁盘空间清理"></a>磁盘空间清理</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/longailk/article/details/122728982">参考文章</a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 通过 Docker 内置的 CLI 指令docker system prune来进行自动空间清理。</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">该指令默认会清除所有如下资源：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">已停止的容器（container）</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">未被任何容器所使用的卷（volume）</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">未被任何容器所关联的网络（network）</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">所有悬空镜像（image）。</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">使用这个命令查看帮助 docker system prune --<span class="built_in">help</span></span></span><br><span class="line">docker system prune -a</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除无用的卷</span></span><br><span class="line">docker volume prune</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除无用的网络</span></span><br><span class="line">docker network prune</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 手动清除</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">镜像清理</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除所有悬空镜像，不删除未使用镜像：</span></span><br><span class="line">docker rmi $(docker images -f &quot;dangling=true&quot; -q)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除所有未使用镜像和悬空镜像</span></span><br><span class="line">docker rmi $(docker images -q)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">清理卷</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除所有未被容器引用的卷</span></span><br><span class="line">docker volume rm $(docker volume ls -qf dangling=true)</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">容器清理</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除所有已退出的容器：</span></span><br><span class="line">docker rm -v $(docker ps -aq -f status=exited)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除所有状态为dead的容器</span></span><br><span class="line">docker rm -v $(docker ps -aq -f status=dead)</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">删除孤立的容器</span></span><br><span class="line">docker container prune</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 查找系统中的大文件【以上三步仍然不可以的时候执行】</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">查找指定目录下所有大于100M的所有文件</span></span><br><span class="line">find /var/lib/docker/overlay2/ -type f -size +100M -print0 | xargs -0 du -h | sort -nr</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 对标准输入日志大小与数量进行限制</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">新建或修改/etc/docker/daemon.json，添加log-dirver和log-opts参数</span></span><br><span class="line">vi /etc/docker/daemon.json</span><br><span class="line">    &#123;</span><br><span class="line">       &quot;log-driver&quot;:&quot;json-file&quot;,</span><br><span class="line">       &quot;log-opts&quot;: &#123;&quot;max-size&quot;:&quot;3m&quot;, &quot;max-file&quot;:&quot;1&quot;&#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重启docker的守护线程</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 实在没办法，只有把/var目录下所有日志文件清空</span></span></span><br><span class="line">for i in `find /var -name *.log*`;do &gt;$i;done</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">然后重启node节点，因为有些日志文件被占用，清空后空间仍然无法释放</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="docker-工作根目录"><a href="#docker-工作根目录" class="headerlink" title="docker 工作根目录"></a>docker 工作根目录</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_32820767/article/details/81196250">参考文章</a></li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 迁移 /var/lib/docker 目录。</span></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">停止docker服务。</span></span><br><span class="line">systemctl stop docker</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">创建新的docker目录，执行命令<span class="built_in">df</span> -h,找一个大的磁盘。 我在 /home目录下面建了 /home/docker/lib目录，执行的命令是：</span></span><br><span class="line">mkdir -p /home/docker/lib</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">迁移/var/lib/docker目录下面的文件到 /home/docker/lib：</span></span><br><span class="line">rsync -avz /var/lib/docker /home/docker/lib/</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">配置 /etc/systemd/system/docker.service.d/devicemapper.conf。查看 devicemapper.conf 是否存在。如果不存在，就新建。</span></span><br><span class="line">sudo mkdir -p /etc/systemd/system/docker.service.d/</span><br><span class="line">sudo vi /etc/systemd/system/docker.service.d/devicemapper.conf</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">然后在 devicemapper.conf 写入：（同步的时候把父文件夹一并同步过来，实际上的目录应在 /home/docker/lib/docker ）</span></span><br><span class="line">[Service]</span><br><span class="line">ExecStart=</span><br><span class="line">ExecStart=/usr/bin/dockerd  --graph=/home/docker/lib/docker</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">重新加载 docker</span></span><br><span class="line">systemctl daemon-reload</span><br><span class="line">systemctl restart docker</span><br><span class="line">systemctl enable docker</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">检查Docker 的根目录.它将被更改为 /home/docker/lib/docker</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">Docker Root Dir: /home/docker/lib/docker</span></span><br><span class="line">docker info</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">再确认之前的镜像还在：</span></span><br><span class="line">docker images</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">确定容器没问题后删除/var/lib/docker/目录中的文件。</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">改回去的方法：</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">将4.5中：--graph=/home/docker/lib/docker改为--graph=/var/lib/docker</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">systemctl daemon-reload</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">systemctl restart docker</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">systemctl <span class="built_in">enable</span> docker</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">ps：不建议改docker配置，可将/var/lib/docker迁移后重新挂载，比较保险。</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">/var/lib/docker拷贝到目标目录中，可以直接把目标目录mount到/var/lib/docker里。修改/etc/fstab设置为开机自动挂载，这样docker的配置文件一点都不用动了</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="利用docker-run-–rm-命令实现使用宿主机中没有的命令"><a href="#利用docker-run-–rm-命令实现使用宿主机中没有的命令" class="headerlink" title="利用docker run –rm 命令实现使用宿主机中没有的命令"></a>利用docker run –rm 命令实现使用宿主机中没有的命令</h2><ul>
+<li>使用容器中的jar命令解压jar包，并将解压内容输出到挂载在宿主机中的目录里</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">docker run -it --name java -v /www/temp/java:/www/temp/java openjdk:11-jdk-slim sh -c &quot;cd /www/temp/java &amp;&amp; jar -xvf /www/temp/java/mall-server.jar&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>使用宿主机中没有的nmap命令来通过端口找IP</li>
+</ul>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">在10.0.16.*范围内找开放了50000端口的IP，并将结果输出到宿主机的output.txt文件中</span></span><br><span class="line">docker run --rm --name nmap securecodebox/nmap sh -c &quot;nmap -p 50000 10.0.16.0/24&quot; &gt; output.txt</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">直接筛选已开放指定端口的内容</span></span><br><span class="line">docker run --rm --name nmap securecodebox/nmap sh -c &quot;nmap -p 9200 10.7.7.0/24 | grep -C 5 open&quot;</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">以下为部分结果，状态为open则对应端口被开放(即10.0.16.27则是目标IP)</span></span><br><span class="line">&quot;</span><br><span class="line">Nmap scan report for 10.0.16.26</span><br><span class="line">Host is up (0.00065s latency).</span><br><span class="line"></span><br><span class="line">PORT      STATE    SERVICE</span><br><span class="line">50000/tcp filtered ibm-db2</span><br><span class="line"></span><br><span class="line">Nmap scan report for 10.0.16.27</span><br><span class="line">Host is up (0.0017s latency).</span><br><span class="line"></span><br><span class="line">PORT      STATE SERVICE</span><br><span class="line">50000/tcp open  ibm-db2</span><br><span class="line">&quot;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="下载、保存和加载镜像"><a href="#下载、保存和加载镜像" class="headerlink" title="下载、保存和加载镜像"></a>下载、保存和加载镜像</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 下载 Docker 镜像</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 使用 docker pull 命令来下载 Docker 镜像，例如：</span></span></span><br><span class="line"></span><br><span class="line">docker pull nginx:latest</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 以上命令将下载 Nginx 最新版本的镜像。</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 保存 Docker 镜像</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 使用 docker save 命令将 Docker 镜像保存为 tar 归档文件，例如：</span></span></span><br><span class="line"></span><br><span class="line">docker save nginx:latest &gt; nginx_latest.tar</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 以上命令将保存 Nginx 最新版本的镜像为 nginx_latest.tar 文件。</span></span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">1. 加载 Docker 镜像</span></span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 使用 docker load 命令将已保存的 Docker 镜像加载到本地镜像库中，例如：</span></span></span><br><span class="line"></span><br><span class="line">docker load &lt; nginx_latest.tar</span><br><span class="line"><span class="meta prompt_"></span></span><br><span class="line"><span class="meta prompt_">#</span><span class="language-bash"><span class="comment"># 以上命令将加载 nginx_latest.tar 文件中的 Nginx 最新版本镜像到本地。加载完成后，可以通过 docker images 命令查看本地镜像库中是否存在该镜像。</span></span></span><br></pre></td></tr></table></figure>
+
+<h2 id="本地docker命令无感远程控制服务器docker"><a href="#本地docker命令无感远程控制服务器docker" class="headerlink" title="本地docker命令无感远程控制服务器docker"></a>本地docker命令无感远程控制服务器docker</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_"># </span><span class="language-bash">两种协议, 把这个配置添加到环境变量中, `~/.zshrc`和`~/.bash_profile`</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">一种是tcp协议，需要先在服务器上开放2375端口，然后在本机上执行</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash"><span class="built_in">export</span> DOCKER_HOST=tcp://127.0.0.1:2375</span></span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">另一种是ssh协议，需要在本机上安装sshpass工具，然后在本机上执行(PS: AI写的, 不知道sshpass工具是啥, 我貌似没安装)</span></span><br><span class="line">export DOCKER_HOST=ssh://root@23-zq.internet.company</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>相关文章<ul>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/LFa/doc-record/raw/f0fe47892a0ac9c4ad0c5fa908f304d63f81130d/materiel/ai/docker/%E9%80%9A%E8%BF%87ssh%E5%8D%8F%E8%AE%AE%E4%BD%BF%E6%9C%AC%E5%9C%B0docker%E6%97%A0%E6%84%9F%E6%8E%A7%E5%88%B6%E8%BF%9C%E7%A8%8Bdocker.md">通过ssh协议使本地docker无感控制远程docker</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/LFa/doc/raw/efd164a538c1ee1b3780aa870b0dac06864f0313/workspace/me/conf/ssh/company/ssy_config">ssy_config的ssh配置</a> <code>23-zq.internet.company</code>这个host来源于这个配置文件</li>
+</ul>
+</li>
+</ul>
+<h2 id="docker-gid-查看命令"><a href="#docker-gid-查看命令" class="headerlink" title="docker gid 查看命令"></a>docker gid 查看命令</h2><p><a target="_blank" rel="noopener" href="https://www.doubao.com/thread/w9e714164e14f12b9">参考地址1</a><br><a target="_blank" rel="noopener" href="https://github.com/influxdata/sandbox/issues/79">参考地址2</a>(PS: 貌似没啥用的样子)</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">stat</span> -c <span class="string">&#x27;%g&#x27;</span> /var/run/docker.sock</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/docker/doc/article/docker-compose%E6%9C%8D%E5%8A%A1%E9%97%B4%E4%BE%9D%E8%B5%96%E9%80%9A%E8%BF%87%E8%87%AA%E5%AE%9A%E4%B9%89%E5%81%A5%E5%BA%B7%E6%A3%80%E6%9F%A5%E5%AE%9E%E7%8E%B0%E9%A1%BA%E5%BA%8F%E5%90%AF%E5%8A%A8/" rel="prev" title="docker-compose服务间依赖通过自定义健康检查实现顺序启动">
+                  <i class="fa fa-angle-left"></i> docker-compose服务间依赖通过自定义健康检查实现顺序启动
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/docker/doc/firewalld/" rel="next" title="firewalld">
+                  firewalld <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">doc-record</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

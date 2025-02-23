@@ -1,0 +1,9 @@
+server:
+  port: 8880
+logging:
+  level:
+    root: info
+spring:
+  application:
+    name: @project.name@
+#    com.example.demo.repository.UserRepository: debug

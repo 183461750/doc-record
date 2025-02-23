@@ -1,0 +1,130 @@
+version: "3"
+
+services:
+
+  jssdk:
+    image: "docker.shushangyun.com/ssyma/jssdk:latest"
+    networks:
+      shushangyun:
+    environment:
+      TZ: "Asia/Shanghai"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.client==true
+
+  admin-h5:
+    image: "docker.shushangyun.com/ssyma/admin-h5:zhongtou"
+    volumes:
+      - "/data/wwwroot/shushangyun/uploads:/data/wwwroot/shushangyun/uploads"
+    networks:
+      shushangyun:
+    environment:
+      TZ: "Asia/Shanghai"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.wap-api==true
+
+  admin-api:
+    image: "docker.shushangyun.com/ssyma/admin-api:zhongtou"
+    volumes:
+      - "./shushangyun/uploads:/data/wwwroot/shushangyun/admin/api/public/uploads"
+    networks:
+      shushangyun:
+    environment:
+      TZ: "Asia/Shanghai"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.merchant==true
+
+  wap-api:
+    image: "docker.shushangyun.com/ssyma/wap-api:zhongtou"
+    volumes:
+      - "wap_api_logs:/data/wwwroot/shushangyun/logs"
+    networks:
+      shushangyun:
+    environment:
+      TZ: "Asia/Shanghai"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.wap-api==true
+
+  wap-h5:
+    image: "docker.shushangyun.com/ssyma/wap-h5:zhongtou"
+    networks:
+      shushangyun:
+    environment:
+      TZ: "Asia/Shanghai"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.client==true
+
+  web-api:
+    image: "docker.shushangyun.com/ssyma/web-api:zhongtou"
+    volumes:
+      - "/etc/localtime:/etc/localtime"
+      - "/data/wwwroot/shushangyun/uploads:/data/wwwroot/shushangyun/uploads"
+      - "web_api_logs:/data/wwwroot/shushangyun/logs"
+    networks:
+      shushangyun:
+    environment:
+      UMASK: "0022"
+      TZ: "Asia/Shanghai"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.web-api==true
+
+  web-h5:
+    image: "docker.shushangyun.com/ssyma/web-h5:zhongtou"
+    networks:
+      shushangyun:
+    environment:
+      TZ: "Asia/Shanghai"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.merchant==true
+
+  madata:
+    image: "docker.shushangyun.com/ssyma/madata:latest"
+    volumes:
+      - "/etc/localtime:/etc/localtime"
+      - "madata:/project"
+    networks:
+      shushangyun:
+    environment:
+      TZ: "Asia/Shanghai"
+    deploy:
+      mode: replicated
+      replicas: 1
+      placement:
+        constraints:
+          - node.labels.merchant==true
+
+networks:
+  shushangyun:
+    external: true
+
+volumes:
+  wap_api_logs:
+  web_api_logs:
+  madata:

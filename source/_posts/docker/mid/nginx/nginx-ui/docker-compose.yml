@@ -1,0 +1,25 @@
+services:
+    nginx-ui:
+        stdin_open: true
+        tty: true
+        container_name: nginx-ui
+        restart: always
+        environment:
+            - TZ=Asia/Shanghai
+        volumes:
+            - ng_ui_nginx:/etc/nginx
+            - ng_ui_nginx-ui:/etc/nginx-ui
+            - ng_ui_www:/var/www
+        ports:
+          - target: 80
+            published: 8080
+            mode: host
+          - target: 443
+            published: 8443
+            mode: host
+        image: 'uozi/nginx-ui:latest'
+
+volumes:
+  ng_ui_nginx:
+  ng_ui_nginx-ui:
+  ng_ui_www:

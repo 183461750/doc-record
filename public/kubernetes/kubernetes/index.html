@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"localhost","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="k8s相关使用记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="doc">
+<meta property="og:url" content="http://localhost:4000/kubernetes/kubernetes/index.html">
+<meta property="og:site_name" content="doc-record">
+<meta property="og:description" content="k8s相关使用记录">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-23T07:43:31.450Z">
+<meta property="article:modified_time" content="2025-02-23T07:43:31.451Z">
+<meta property="article:author" content="doc-record">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://localhost:4000/kubernetes/kubernetes/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://localhost:4000/kubernetes/kubernetes/","path":"/kubernetes/kubernetes/","title":"doc"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>doc | doc-record</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">doc-record</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#k8s%E7%9B%B8%E5%85%B3%E4%BD%BF%E7%94%A8%E8%AE%B0%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">k8s相关使用记录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#k8s%E5%AE%89%E8%A3%85"><span class="nav-number">1.1.</span> <span class="nav-text">k8s安装</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#yum%E5%AE%89%E8%A3%85k8s"><span class="nav-number">1.2.</span> <span class="nav-text">yum安装k8s</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#helm%E5%91%BD%E4%BB%A4"><span class="nav-number">1.3.</span> <span class="nav-text">helm命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#minikube"><span class="nav-number">1.4.</span> <span class="nav-text">minikube</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#kuboard%E5%8F%AF%E8%A7%86%E5%8C%96%E7%95%8C%E9%9D%A2"><span class="nav-number">1.5.</span> <span class="nav-text">kuboard可视化界面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E9%93%BE%E6%8E%A5"><span class="nav-number">1.5.1.</span> <span class="nav-text">参考链接</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">doc-record</p>
+  <div class="site-description" itemprop="description">doc-record</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">476</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/kubernetes/kubernetes/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doc-record">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doc-record">
+      <meta itemprop="description" content="doc-record">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="doc | doc-record">
+      <meta itemprop="description" content="k8s相关使用记录">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          doc
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-23 15:43:31" itemprop="dateCreated datePublished" datetime="2025-02-23T15:43:31+08:00">2025-02-23</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">k8s相关使用记录</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="k8s相关使用记录"><a href="#k8s相关使用记录" class="headerlink" title="k8s相关使用记录"></a>k8s相关使用记录</h1><h2 id="k8s安装"><a href="#k8s安装" class="headerlink" title="k8s安装"></a>k8s安装</h2><ul>
+<li>通过<code>KuboardSpray</code>安装<ul>
+<li><a target="_blank" rel="noopener" href="https://kuboard-spray.cn/">官网地址</a></li>
+</ul>
+</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 进入指定目录</span></span><br><span class="line"><span class="built_in">cd</span> /data/docker/k8s</span><br><span class="line"><span class="comment"># 快速安装</span></span><br><span class="line">docker run -d \</span><br><span class="line">  --dns=223.5.5.5 \</span><br><span class="line">  --privileged \</span><br><span class="line">  --restart=unless-stopped \</span><br><span class="line">  --name=kuboard-spray \</span><br><span class="line">  -p 80:80/tcp \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -e https_proxy=http://10.0.16.17:7890 \</span><br><span class="line">  -e http_proxy=http://10.0.16.17:7890 \</span><br><span class="line">  -e all_proxy=socks5://10.0.16.17:7890 \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">  -v ~/kuboard-spray-data:/data \</span><br><span class="line">  eipwork/kuboard-spray:latest-amd64</span><br><span class="line"><span class="comment"># 在浏览器地址栏中输入 http://这台机器的IP地址，输入用户名 admin，默认密码 Kuboard123</span></span><br><span class="line">docker run -d \</span><br><span class="line">  --dns=223.5.5.5 \</span><br><span class="line">  --privileged \</span><br><span class="line">  --restart=unless-stopped \</span><br><span class="line">  --name=kuboard-spray \</span><br><span class="line">  -p 80:80/tcp \</span><br><span class="line">  -e TZ=Asia/Shanghai \</span><br><span class="line">  -v /var/run/docker.sock:/var/run/docker.sock \</span><br><span class="line">  eipwork/kuboard-spray:latest-amd64</span><br></pre></td></tr></table></figure>
+
+<h2 id="yum安装k8s"><a href="#yum安装k8s" class="headerlink" title="yum安装k8s"></a>yum安装k8s</h2><ul>
+<li><a href="./docs/temp/yum%E5%AE%89%E8%A3%85k8s.md">文档详情地址</a>(PS: AI提供的内容，还未测试过)</li>
+</ul>
+<h2 id="helm命令"><a href="#helm命令" class="headerlink" title="helm命令"></a>helm命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装</span></span><br><span class="line">brew install helm</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装</span></span><br><span class="line">helm install my-release skywalking -n &lt;namespace&gt;</span><br><span class="line"><span class="comment"># 查看列表</span></span><br><span class="line">helm list</span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">$ helm uninstall my-release -n &lt;namespace&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="minikube"><a href="#minikube" class="headerlink" title="minikube"></a>minikube</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 安装(需要依赖docker)</span></span><br><span class="line">curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64</span><br><span class="line"><span class="built_in">sudo</span> install minikube-linux-amd64 /usr/local/bin/minikube</span><br><span class="line"><span class="comment"># 请注意，这种方法会继续以root权限运行minikube，但它可能会带来安全风险，因为&quot;docker&quot;驱动不应该以root权限使用。</span></span><br><span class="line">minikube start --force</span><br><span class="line"><span class="comment"># 仪表盘</span></span><br><span class="line">minikube dashboard</span><br></pre></td></tr></table></figure>
+
+<h2 id="kuboard可视化界面"><a href="#kuboard可视化界面" class="headerlink" title="kuboard可视化界面"></a>kuboard可视化界面</h2><ul>
+<li><a href="./kuboard/doc.md">也可以使用helm方式部署</a></li>
+<li>docker 方式安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># KUBOARD_ENDPOINT=&quot;http://内网IP:80&quot;</span></span><br><span class="line">docker run -d \</span><br><span class="line">  --restart=unless-stopped \</span><br><span class="line">  --name=kuboard \</span><br><span class="line">  -p 80:80/tcp \</span><br><span class="line">  -p 10081:10081/tcp \</span><br><span class="line">  -e KUBOARD_ENDPOINT=<span class="string">&quot;http://10.0.16.17:80&quot;</span> \</span><br><span class="line">  -e KUBOARD_AGENT_SERVER_TCP_PORT=<span class="string">&quot;10081&quot;</span> \</span><br><span class="line">  -v /root/kuboard-data:/data \</span><br><span class="line">  eipwork/kuboard:v3</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>kubectl 方式安装</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 部署</span></span><br><span class="line">kubectl apply -f https://addons.kuboard.cn/kuboard/kuboard-v3.yaml</span><br><span class="line"><span class="comment"># 查看</span></span><br><span class="line">kubectl get pods -n kuboard</span><br><span class="line"><span class="comment"># 卸载</span></span><br><span class="line">kubectl delete -f https://addons.kuboard.cn/kuboard/kuboard-v3.yaml</span><br><span class="line">  <span class="comment"># 清理遗留数据</span></span><br><span class="line">    <span class="comment"># 在 master 节点以及带有 k8s.kuboard.cn/role=etcd 标签的节点上执行</span></span><br><span class="line"><span class="built_in">rm</span> -rf /usr/share/kuboard</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="comment">## 常见问题</span></span><br><span class="line"><span class="comment"># 查看节点</span></span><br><span class="line">kubectl get nodes</span><br><span class="line"><span class="comment"># 打标</span></span><br><span class="line">kubectl label nodes docker-desktop k8s.kuboard.cn/role=etcd</span><br><span class="line"></span><br><span class="line">---</span><br><span class="line"></span><br><span class="line"><span class="comment">## 访问 Kuboard</span></span><br><span class="line"><span class="comment"># 在浏览器中打开链接 http://your-node-ip-address:30080 (eg: http://localhost:30080)</span></span><br><span class="line"><span class="comment"># 输入初始用户名和密码，并登录</span></span><br><span class="line"><span class="comment"># 用户名： admin</span></span><br><span class="line"><span class="comment"># 密码： Kuboard123</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="参考链接"><a href="#参考链接" class="headerlink" title="参考链接"></a>参考链接</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://kuboard.cn/install/v3/install-in-k8s.html#%E5%AE%89%E8%A3%85">官方链接</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/docker/doc/soft/" rel="prev" title="soft">
+                  <i class="fa fa-angle-left"></i> soft
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/kubernetes/crictl/" rel="next" title="crictl">
+                  crictl <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">doc-record</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

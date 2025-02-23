@@ -1,0 +1,95 @@
+version: "3.5"
+
+services:
+
+  grafana:
+    image: grafana/grafana
+    networks:
+      middleware:
+    ports:
+      - target: 3000
+        published: 3001
+        protocol: tcp
+        mode: host
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - grafana_log:/var/log/grafana
+
+  prometheus:
+    image: prom/prometheus:v2.27.1
+    networks:
+      middleware:
+    ports:
+      - target: 9090
+        published: 9090
+        protocol: tcp
+        mode: host
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/rules:/etc/prometheus/rules
+
+  influxdb:
+    image: influxdb:1.8
+    networks:
+      middleware:
+    ports:
+      - target: 8086
+        published: 8086
+        protocol: tcp
+        mode: host
+    environment:
+      - INFLUXDB_DB=prometheus
+      - INFLUXDB_ADMIN_ENABLED=true
+      - INFLUXDB_ADMIN_USER=admin
+      - INFLUXDB_ADMIN_PASSWORD=admin
+      - INFLUXDB_USER=root
+      - INFLUXDB_USER_PASSWORD=root
+    command: -config /etc/influxdb/influxdb.conf
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./influxdb/conf/influxdb.conf:/etc/influxdb/influxdb.conf
+      - ./influxdb:/var/lib/influxdb
+
+  alertmanager:
+    image: docker.io/prom/alertmanager:latest
+    networks:
+      middleware:
+    ports:
+      - target: 9093
+        published: 9093
+        protocol: tcp
+        mode: host
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+    volumes:
+      - ./alertmanager/alertmanager.yml:/etc/alertmanager/alertmanager.yml
+      - ./alertmanager/storage:/data/alertmanager/storage
+      - ./alertmanager/template:/etc/alertmanager/template
+
+volumes:
+  grafana_log:
+
+networks:
+  middleware:
+    external: true

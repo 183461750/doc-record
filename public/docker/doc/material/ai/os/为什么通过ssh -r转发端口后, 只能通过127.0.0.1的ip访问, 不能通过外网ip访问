@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"localhost","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?">
+<meta property="og:type" content="article">
+<meta property="og:title" content="为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?">
+<meta property="og:url" content="http://localhost:4000/docker/doc/material/ai/os/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%9A%E8%BF%87ssh%20-r%E8%BD%AC%E5%8F%91%E7%AB%AF%E5%8F%A3%E5%90%8E,%20%E5%8F%AA%E8%83%BD%E9%80%9A%E8%BF%87127.0.0.1%E7%9A%84ip%E8%AE%BF%E9%97%AE,%20%E4%B8%8D%E8%83%BD%E9%80%9A%E8%BF%87%E5%A4%96%E7%BD%91ip%E8%AE%BF%E9%97%AE">
+<meta property="og:site_name" content="doc-record">
+<meta property="og:description" content="为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-23T07:43:31.439Z">
+<meta property="article:modified_time" content="2025-02-23T07:43:31.445Z">
+<meta property="article:author" content="doc-record">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://localhost:4000/docker/doc/material/ai/os/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%9A%E8%BF%87ssh%20-r%E8%BD%AC%E5%8F%91%E7%AB%AF%E5%8F%A3%E5%90%8E,%20%E5%8F%AA%E8%83%BD%E9%80%9A%E8%BF%87127.0.0.1%E7%9A%84ip%E8%AE%BF%E9%97%AE,%20%E4%B8%8D%E8%83%BD%E9%80%9A%E8%BF%87%E5%A4%96%E7%BD%91ip%E8%AE%BF%E9%97%AE">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://localhost:4000/docker/doc/material/ai/os/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%9A%E8%BF%87ssh%20-r%E8%BD%AC%E5%8F%91%E7%AB%AF%E5%8F%A3%E5%90%8E,%20%E5%8F%AA%E8%83%BD%E9%80%9A%E8%BF%87127.0.0.1%E7%9A%84ip%E8%AE%BF%E9%97%AE,%20%E4%B8%8D%E8%83%BD%E9%80%9A%E8%BF%87%E5%A4%96%E7%BD%91ip%E8%AE%BF%E9%97%AE?%20%E8%A6%81%E6%80%8E%E4%B9%88%E5%81%9A%E6%89%8D%E8%83%BD%E9%80%9A%E8%BF%87%E5%A4%96%E7%BD%91ip%E8%AE%BF%E9%97%AE%E5%91%A2?/","path":"/docker/doc/material/ai/os/为什么通过ssh -r转发端口后, 只能通过127.0.0.1的ip访问, 不能通过外网ip访问? 要怎么做才能通过外网ip访问呢?/","title":"为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢? | doc-record</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">doc-record</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%9A%E8%BF%87ssh-R%E8%BD%AC%E5%8F%91%E7%AB%AF%E5%8F%A3%E5%90%8E-%E5%8F%AA%E8%83%BD%E9%80%9A%E8%BF%87127-0-0-1%E7%9A%84IP%E8%AE%BF%E9%97%AE-%E4%B8%8D%E8%83%BD%E9%80%9A%E8%BF%87%E5%A4%96%E7%BD%91IP%E8%AE%BF%E9%97%AE-%E8%A6%81%E6%80%8E%E4%B9%88%E5%81%9A%E6%89%8D%E8%83%BD%E9%80%9A%E8%BF%87%E5%A4%96%E7%BD%91IP%E8%AE%BF%E9%97%AE%E5%91%A2"><span class="nav-number">1.</span> <span class="nav-text">为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="nav-number">1.1.</span> <span class="nav-text">相关问题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">doc-record</p>
+  <div class="site-description" itemprop="description">doc-record</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">476</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/docker/doc/material/ai/os/%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%9A%E8%BF%87ssh%20-r%E8%BD%AC%E5%8F%91%E7%AB%AF%E5%8F%A3%E5%90%8E,%20%E5%8F%AA%E8%83%BD%E9%80%9A%E8%BF%87127.0.0.1%E7%9A%84ip%E8%AE%BF%E9%97%AE,%20%E4%B8%8D%E8%83%BD%E9%80%9A%E8%BF%87%E5%A4%96%E7%BD%91ip%E8%AE%BF%E9%97%AE?%20%E8%A6%81%E6%80%8E%E4%B9%88%E5%81%9A%E6%89%8D%E8%83%BD%E9%80%9A%E8%BF%87%E5%A4%96%E7%BD%91ip%E8%AE%BF%E9%97%AE%E5%91%A2?/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doc-record">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doc-record">
+      <meta itemprop="description" content="doc-record">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢? | doc-record">
+      <meta itemprop="description" content="为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-23 15:43:31" itemprop="dateCreated datePublished" datetime="2025-02-23T15:43:31+08:00">2025-02-23</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="为什么通过ssh-R转发端口后-只能通过127-0-0-1的IP访问-不能通过外网IP访问-要怎么做才能通过外网IP访问呢"><a href="#为什么通过ssh-R转发端口后-只能通过127-0-0-1的IP访问-不能通过外网IP访问-要怎么做才能通过外网IP访问呢" class="headerlink" title="为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?"></a>为什么通过ssh -R转发端口后, 只能通过127.0.0.1的IP访问, 不能通过外网IP访问? 要怎么做才能通过外网IP访问呢?</h1><p>通过ssh -R转发端口后，只能通过127.0.0.1的IP访问，而不能通过外网IP访问的原因是默认情况下，SSH服务器只会监听本地回环地址（127.0.0.1）上的转发端口。这是为了安全考虑，防止未经授权的访问。</p>
+<p>要通过外网IP访问转发的端口，需要进行以下步骤：</p>
+<ol>
+<li><p>在SSH服务器上修改配置文件：打开SSH服务器的配置文件（通常是&#x2F;etc&#x2F;ssh&#x2F;sshd_config），找到并修改以下行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">GatewayPorts yes</span><br></pre></td></tr></table></figure>
+
+<p>这将允许SSH服务器监听所有网络接口上的转发端口，而不仅仅是本地回环地址。</p>
+</li>
+<li><p>重启SSH服务器：保存配置文件修改后，重启SSH服务器以使修改生效。可以使用以下命令重启SSH服务器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo service ssh restart</span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">或者</span></span><br><span class="line">systemctl restart sshd</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>在客户端使用外网IP访问：现在，你可以使用SSH客户端通过外网IP访问转发的端口。例如，如果你将端口转发到SSH服务器的端口2222，并且SSH服务器的外网IP是203.0.113.1，你可以使用以下命令连接到转发的端口：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -p 2222 user@203.0.113.1</span><br></pre></td></tr></table></figure>
+
+<p>这将连接到SSH服务器，并将流量转发到转发的端口。</p>
+</li>
+</ol>
+<p>请注意，修改SSH服务器的配置文件可能需要管理员权限。此外，开放SSH服务器的转发端口可能会带来安全风险，请确保只允许受信任的主机访问转发的端口。</p>
+<hr>
+<p>Learn more:</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/398993211">ssh如何实现内网访问外网? - 知乎</a></li>
+<li><a target="_blank" rel="noopener" href="https://jeremyxu2010.github.io/2018/12/ssh%E7%9A%84%E4%B8%89%E7%A7%8D%E7%AB%AF%E5%8F%A3%E8%BD%AC%E5%8F%91/">SSH的三种端口转发 - jeremy的技术点滴</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/memphise/articles/6472207.html">通过ssh反向连接内网主机的方法(防火墙的主机) - memphise - 博客园</a></li>
+</ol>
+<h2 id="相关问题"><a href="#相关问题" class="headerlink" title="相关问题"></a>相关问题</h2><blockquote>
+<p>sudo service ssh restart<br>这句命令执行失败了, 并且已经安装了ssh, 怎么解决<br>Failed to restart ssh.service: Unit not found.</p>
+</blockquote>
+<p>根据搜索结果，”Failed to restart ssh.service: Unit not found”错误可能是由于使用了错误的命令或系统版本不同导致的。以下是解决此问题的几种可能方法：</p>
+<ol>
+<li><p>使用正确的命令：根据您的系统版本，尝试使用适当的命令来重启SSH服务。在CentOS 7及更高版本中，应使用以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart sshd</span><br></pre></td></tr></table></figure>
+
+<p>在Ubuntu 16.04及更高版本中，应使用以下命令：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl restart ssh</span><br></pre></td></tr></table></figure>
+
+<p>如果仍然出现相同的错误，请继续以下步骤。</p>
+</li>
+<li><p>检查SSH服务的状态：使用以下命令检查SSH服务的状态，确保它已正确安装并正在运行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo systemctl status sshd</span><br></pre></td></tr></table></figure>
+
+<p>如果SSH服务未安装或未运行，请尝试重新安装SSH服务器并启动服务。</p>
+</li>
+<li><p>重新安装SSH服务器：如果SSH服务已正确安装但仍无法启动，请尝试重新安装SSH服务器。首先，卸载现有的SSH服务器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get purge openssh-server</span><br></pre></td></tr></table></figure>
+
+<p>然后，重新安装SSH服务器：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install openssh-server</span><br></pre></td></tr></table></figure>
+
+<p>最后，尝试重新启动SSH服务。</p>
+</li>
+</ol>
+<p>如果问题仍然存在，请提供更多详细信息，例如错误消息的完整内容和任何相关的日志文件，以便我们能够更好地帮助您解决问题。</p>
+<hr>
+<p>Learn more:</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u010433704/article/details/120057040">Failed to restart ssh.service: Unit not found.-CSDN博客</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Courage129/p/14073162.html">Failed to start ssh.service: Unit not found. - 等不到的口琴 - 博客园</a></li>
+<li><a target="_blank" rel="noopener" href="https://serverfault.com/questions/904430/cannot-start-sshd-service-failed-to-start-openssh-service-unit-not-found">ssh - Cannot start sshd service: Failed to start openssh.service: Unit not found - Server Fault</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/docker/doc/material/ai/os/proxy/" rel="prev" title="Proxy">
+                  <i class="fa fa-angle-left"></i> Proxy
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/docker/doc/material/ai/os/curl%20%E7%9C%8B%E8%BF%9E%E6%8E%A5%E6%98%AF%E5%90%A6%E9%80%9A/" rel="next" title="curl 看连接是否通">
+                  curl 看连接是否通 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">doc-record</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

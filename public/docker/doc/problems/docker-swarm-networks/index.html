@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 7.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha256-dABdfBfUoC8vJUBOwGVdm8L9qlMWaHTIfXt+7GnZCIo=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"localhost","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.22.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="docker swarm networks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="docker-swarm-networks">
+<meta property="og:url" content="http://localhost:4000/docker/doc/problems/docker-swarm-networks/index.html">
+<meta property="og:site_name" content="doc-record">
+<meta property="og:description" content="docker swarm networks">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-02-23T07:43:31.177Z">
+<meta property="article:modified_time" content="2025-02-23T07:43:31.177Z">
+<meta property="article:author" content="doc-record">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://localhost:4000/docker/doc/problems/docker-swarm-networks/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://localhost:4000/docker/doc/problems/docker-swarm-networks/","path":"/docker/doc/problems/docker-swarm-networks/","title":"docker-swarm-networks"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>docker-swarm-networks | doc-record</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">doc-record</p>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#docker-swarm-networks"><span class="nav-number">1.</span> <span class="nav-text">docker swarm networks</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%AE%B5%E5%86%B2%E7%AA%81%E9%97%AE%E9%A2%98%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88"><span class="nav-number">1.1.</span> <span class="nav-text">网段冲突问题解决方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%BF%E4%B8%BB%E6%9C%BA%E4%B8%8E%E5%AE%B9%E5%99%A8%E4%B8%8D%E9%80%9A%E9%97%AE%E9%A2%98"><span class="nav-number">1.2.</span> <span class="nav-text">宿主机与容器不通问题</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">doc-record</p>
+  <div class="site-description" itemprop="description">doc-record</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">476</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://localhost:4000/docker/doc/problems/docker-swarm-networks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="doc-record">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="doc-record">
+      <meta itemprop="description" content="doc-record">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="docker-swarm-networks | doc-record">
+      <meta itemprop="description" content="docker swarm networks">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          docker-swarm-networks
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-02-23 15:43:31" itemprop="dateCreated datePublished" datetime="2025-02-23T15:43:31+08:00">2025-02-23</time>
+    </span>
+
+  
+</div>
+
+            <div class="post-description">docker swarm networks</div>
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="docker-swarm-networks"><a href="#docker-swarm-networks" class="headerlink" title="docker swarm networks"></a>docker swarm networks</h1><h2 id="网段冲突问题解决方案"><a href="#网段冲突问题解决方案" class="headerlink" title="网段冲突问题解决方案"></a>网段冲突问题解决方案</h2><p>根据搜索结果，以下是关于如何更改Docker Ingress网络默认子网范围的解决方案：</p>
+<ol>
+<li><p>首先，我们需要确认当前Docker Ingress网络的默认子网范围。可以使用以下命令检查网络配置信息：<code>docker network inspect ingress</code> <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/42954017/how-to-change-ip-address-range-of-docker-swarm-ingress-network">[1]</a>。</p>
+</li>
+<li><p>如果默认子网范围与您的计算机子网范围冲突，您可以尝试以下方法来更改Docker Ingress网络的子网范围：</p>
+<ul>
+<li>方法一：使用Docker Swarm命令行选项来指定子网范围。在初始化或加入Docker Swarm时，可以使用<code>--default-addr-pool</code>选项来指定子网范围。例如：<code>docker swarm init --default-addr-pool 192.168.0.0/16</code> <a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/42954017/how-to-change-ip-address-range-of-docker-swarm-ingress-network">[1]</a>。</li>
+<li>方法二：编辑Docker的守护进程配置文件<code>daemon.json</code>来指定子网范围。您可以使用以下步骤进行操作：<ul>
+<li><p>使用文本编辑器打开<code>/etc/docker/daemon.json</code>文件（在Windows上是<code>C:\ProgramData\Docker\config\daemon.json</code>）。</p>
+</li>
+<li><p>添加以下内容到文件中：</p>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;default-address-pools&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">    <span class="punctuation">&#123;</span><span class="attr">&quot;base&quot;</span><span class="punctuation">:</span><span class="string">&quot;192.168.0.0/16&quot;</span><span class="punctuation">,</span><span class="attr">&quot;size&quot;</span><span class="punctuation">:</span><span class="number">24</span><span class="punctuation">&#125;</span></span><br><span class="line">  <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p>将<code>192.168.0.0/16</code>替换为您想要的子网范围。</p>
+</li>
+<li><p>保存文件并重启Docker服务，以使更改生效。在Linux上，可以使用<code>sudo systemctl restart docker</code>命令来重启Docker服务，在Windows上，可以通过Docker桌面界面的”Troubleshoot”选项来重启Docker Desktop <a target="_blank" rel="noopener" href="https://support.hyperglance.com/knowledge/changing-the-default-docker-subnet">[2]</a>。</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+<p>请注意，更改Docker网络的子网范围可能会影响到已经运行的容器和网络连接，请谨慎操作并确保备份重要数据。</p>
+<hr>
+<p>Learn more:</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/42954017/how-to-change-ip-address-range-of-docker-swarm-ingress-network">networking - How to change ip address range of docker swarm ingress network - Stack Overflow</a></li>
+<li><a target="_blank" rel="noopener" href="https://support.hyperglance.com/knowledge/changing-the-default-docker-subnet">How to change the default docker subnet IP range</a></li>
+<li><a target="_blank" rel="noopener" href="https://cylab.be/blog/277/changing-dockers-default-subnet-ip-range">Changing Docker’s default subnet IP range | cylab.be</a></li>
+</ol>
+<h2 id="宿主机与容器不通问题"><a href="#宿主机与容器不通问题" class="headerlink" title="宿主机与容器不通问题"></a>宿主机与容器不通问题</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方式一：添加路由</span></span><br><span class="line"><span class="comment"># route add -net 192.168.1.0 netmask 255.255.255.0 gw 172.20.0.1 dev docker_gwbridge # dev 是用来指定网络接口的参数。它用于指定要添加路由的网络接口设备。</span></span><br><span class="line">route add -net &lt;容器IP网段&gt; netmask &lt;容器IP网段的子网掩码&gt; gw &lt;docker_gwbridge的网关IP&gt;  dev docker_gwbridge</span><br><span class="line">  <span class="comment">## 查看路由</span></span><br><span class="line">route -n</span><br><span class="line"></span><br><span class="line"><span class="comment">## 更多操作</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 端口转发问题(上面解决了路由的问题，若还有端口访问不通，则按下面方式解决)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 查看nat转发的规则</span></span><br><span class="line">iptables -t nat -nvL</span><br><span class="line"></span><br><span class="line"><span class="comment"># 添加nat转发规则(实现宿主机访问容器中未开放的端口(即docker run时未添加-p参数))</span></span><br><span class="line">iptables -t nat -A DOCKER -p tcp -m tcp --dport 8088 -j DNAT --to-destination 10.0.0.2:8088</span><br><span class="line"><span class="comment"># 删除nat</span></span><br><span class="line">  <span class="comment">## 查看规则编号</span></span><br><span class="line">  iptables -t nat -nL --line-number</span><br><span class="line">  <span class="comment">## 删除编号</span></span><br><span class="line">  iptables -t nat -D DOCKER 4 </span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/docker/doc/erlang/erlang/" rel="prev" title="doc">
+                  <i class="fa fa-angle-left"></i> doc
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/docker/doc/virtualbox/" rel="next" title="virtualBox">
+                  virtualBox <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">doc-record</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/sidebar.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

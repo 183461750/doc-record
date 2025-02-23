@@ -1,0 +1,14 @@
+version: '3'
+services:
+  mysql:
+    image: "docker.io/mysql:latest"
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+      MYSQL_USER: 'root' # 用于配置普通用户
+      MYSQL_PASS: 'root' # 用于配置普通用户
+    ports:
+      - "3306:3306"
+    volumes:
+    - $PWD/conf:/etc/mysql/conf.d
+    - $PWD/logs:/logs
+    - $PWD/data:/var/lib/mysql

@@ -1,0 +1,87 @@
+version: '3.5'
+services:
+  rmqnamesrv:
+    image: foxiswho/rocketmq:4.8.0
+    ports:
+      - 9876:9876
+    volumes:
+      - rmqnamesrv_logs:/opt/logs
+      - rmqnamesrv_store:/opt/store
+    environment:
+      JAVA_OPT_EXT: "-Xms512M -Xmx512M -Xmn128m"
+    command: mqnamesrv
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  rmqbroker:
+    image: foxiswho/rocketmq:4.8.0
+    ports:
+      - 10909:10909
+      - 10911:10911
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /bin/docker:/bin/docker
+      - rmqbroker_logs:/opt/logs
+      - rmqbroker_store:/opt/store
+    environment:
+      # HOSTNAME_COMMAND: "{{`docker info --format '{{json .Swarm.NodeAddr}}'`}}"
+      HOSTNAME_COMMAND: "{{`docker info -f '{{.Swarm.NodeAddr}}'`}}"
+      NAMESRV_ADDR: "rmqnamesrv:9876"
+      JAVA_OPTS: " -Duser.home=/opt"
+      JAVA_OPT_EXT: "-Xms512M -Xmx512M -Xmn128m"
+    command:
+      bash -c "echo 'brokerClusterName = DefaultCluster' > broker.conf  &&
+      echo 'brokerName = broker-a' >> broker.conf  &&
+      echo 'brokerId = 0' >> broker.conf  &&
+      echo 'deleteWhen = 04' >> broker.conf  &&
+      echo 'fileReservedTime = 48' >> broker.conf  &&
+      echo 'brokerRole = ASYNC_MASTER' >> broker.conf  &&
+      echo 'flushDiskType = ASYNC_FLUSH' >> broker.conf  &&
+
+      echo "brokerIP1=`$HOSTNAME_COMMAND`" >> broker.conf  && # todo 不生效，可能是environment在command之后执行的原因
+
+      cat broker.conf &&
+      mqbroker -c broker.conf"
+    depends_on:
+      - rmqnamesrv
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+  rmqconsole:
+    image: styletang/rocketmq-console-ng
+    ports:
+      - 8080:8080
+    environment:
+      JAVA_OPTS: "-Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
+    depends_on:
+      - rmqnamesrv
+    networks:
+      - middleware
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+      restart_policy:
+        condition: on-failure
+
+networks:
+  middleware:
+    external: true
+
+volumes:
+  rmqbroker_logs:
+  rmqbroker_store:
+  rmqnamesrv_logs:
+  rmqnamesrv_store:

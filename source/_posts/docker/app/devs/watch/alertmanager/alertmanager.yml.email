@@ -1,0 +1,30 @@
+global:
+  resolve_timeout: 5m
+  smtp_smarthost: 'smtp.163.com:465'
+  smtp_from: 'xxx@163.com'
+  smtp_auth_username: 'xxx@163.com'
+  smtp_auth_password: '认证码'
+  smtp_require_tls: false
+
+templates:
+  - './template/*.tmpl'
+
+route:
+  group_by: ['alertname']
+  group_wait: 10s
+  group_interval: 10s
+  repeat_interval: 59s
+  receiver: 'mail'
+receivers:
+- name: 'mail'
+  email_configs:
+    - to: '{{ template "email.to" . }}'
+      html: '{{ template "email.to.html" . }}'
+      send_resolved: true
+
+inhibit_rules:
+  - source_match:
+      severity: 'critical'
+    target_match:
+      severity: 'warning'
+    equal: ['alertname', 'dev', 'instance']
