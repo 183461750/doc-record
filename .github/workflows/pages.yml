@@ -22,18 +22,26 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # 获取完整的 git 历史
+          submodules: true # 如果有子模块，一并检出
       
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
-          cache: npm
+          node-version: "18" # 降级到更稳定的版本
+          cache: 'npm'
+          cache-dependency-path: package-lock.json # 指定 package-lock.json 路径
       
       - name: Install Dependencies
-        run: npm install
+        run: |
+          npm cache clean --force
+          npm install
       
       - name: Build
-        run: npm run build
+        run: |
+          npm run clean
+          npm run build
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
