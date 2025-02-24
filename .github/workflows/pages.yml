@@ -32,6 +32,11 @@ jobs:
           cache: 'npm'
           cache-dependency-path: npm-shrinkwrap.json
       
+      - name: Clean cache
+        run: |
+          npm cache clean --force
+          rm -rf .deploy_git
+      
       - name: Install Dependencies
         run: |
           rm -rf node_modules
@@ -41,6 +46,8 @@ jobs:
         run: |
           npm run clean
           npm run build
+        env:
+          NODE_ENV: production
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

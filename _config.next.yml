@@ -1,0 +1,41 @@
+# Scheme
+scheme: Mist
+
+# Menu
+menu:
+  home: / || fa fa-home
+  archives: /archives/ || fa fa-archive
+  tags: /tags/ || fa fa-tags
+
+# Sidebar
+sidebar:
+  position: left
+  display: always
+
+# CDN Settings
+vendors:
+  # Internal version: local
+  internal: local
+  # Plugin version: local
+  plugins: local
+
+# Disable unused features
+motion:
+  enable: false
+
+# Local Search
+local_search:
+  enable: true
+
+# Post meta display settings
+post_meta:
+  item_text: false
+  created_at: true
+  updated_at: false
+  categories: true
+  tags: true
+
+# Assets
+css: css
+js: js
+images: images 

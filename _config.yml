@@ -10,8 +10,8 @@ language: zh-CN
 timezone: 'Asia/Shanghai'
 
 # URL
-url: http://localhost:4000
-root: /
+url: https://183461750.github.io/doc-record
+root: /doc-record/
 permalink: :title/
 
 # Directory
@@ -57,6 +57,19 @@ theme_config:
     home: / || home
     archives: /archives/ || archive
     tags: /tags/ || tags
+  
+  # 添加资源 CDN 配置
+  vendors:
+    internal: local
+    plugins: local
+  
+  # 禁用不必要的第三方服务
+  motion: false
+  lazyload: false
+  pangu: false
+  pjax: false
+  fancybox: false
+  mediumzoom: false
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
