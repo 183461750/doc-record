@@ -51,6 +51,12 @@ per_page: 15
 
 # Extensions
 theme: next
+theme_config:
+  scheme: Mist
+  menu:
+    home: / || home
+    archives: /archives/ || archive
+    tags: /tags/ || tags
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
