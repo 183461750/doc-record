@@ -3,9 +3,9 @@ scheme: Mist
 
 # Menu
 menu:
-  home: / || fa fa-home
-  archives: /archives/ || fa fa-archive
-  tags: /tags/ || fa fa-tags
+  home: /doc-record/ || fa fa-home
+  archives: /doc-record/archives/ || fa fa-archive
+  tags: /doc-record/tags/ || fa fa-tags
 
 # Sidebar
 sidebar:
@@ -26,6 +26,10 @@ motion:
 # Local Search
 local_search:
   enable: true
+  path: search.xml
+  top_n_per_article: 1
+  unescape: false
+  preload: false
 
 # Post meta display settings
 post_meta:
@@ -38,4 +42,32 @@ post_meta:
 # Assets
 css: css
 js: js
-images: images 
+images: images
+
+# Disable all third-party integrations
+creative_commons:
+  enable: false
+busuanzi_count:
+  enable: false
+github_banner:
+  enable: false
+follow_me:
+  enable: false
+baidu_analytics:
+  enable: false
+google_analytics:
+  enable: false
+
+# Disable comments
+comments:
+  enable: false
+
+# Disable unnecessary features
+quicklink:
+  enable: false
+mediumzoom:
+  enable: false
+lazyload:
+  enable: false
+fancybox:
+  enable: false 

@@ -31,7 +31,10 @@ new_post_name: :title.md
 default_layout: post
 external_link:
   enable: true
-post_asset_folder: false
+  field: site
+  exclude: ''
+post_asset_folder: true
+relative_link: false
 highlight:
   enable: true
   line_number: false
@@ -51,25 +54,13 @@ per_page: 15
 
 # Extensions
 theme: next
-theme_config:
-  scheme: Mist
-  menu:
-    home: / || home
-    archives: /archives/ || archive
-    tags: /tags/ || tags
-  
-  # 添加资源 CDN 配置
-  vendors:
-    internal: local
-    plugins: local
-  
-  # 禁用不必要的第三方服务
-  motion: false
-  lazyload: false
-  pangu: false
-  pjax: false
-  fancybox: false
-  mediumzoom: false
+
+# Search
+search:
+  path: search.xml
+  field: post
+  content: true
+  format: html
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
