@@ -7,6 +7,16 @@ menu:
   archives: /doc-record/archives/ || fa fa-archive
   tags: /doc-record/tags/ || fa fa-tags
 
+# HTML5 doctype
+head:
+  meta:
+    - name: renderer
+      content: webkit
+    - name: force-rendering
+      content: webkit
+    - name: X-UA-Compatible
+      content: IE=edge,chrome=1
+
 # Sidebar
 sidebar:
   position: left

@@ -1,3 +1,17 @@
+---
+title: SSH -w 参数使用指南：配置文件与参数详解
+date: 2024-02-24
+categories:
+  - materiel
+  - ai
+  - ssh
+tags:
+  - ssh
+  - vpn
+  - tunnel
+  - configuration
+---
+
 # ssh -w要怎么使用ssh config配置文件配置, 以及它有哪些参数
 
 以下是关于如何在 SSH 配置文件中使用 `-w` 参数（隧道设备转发）的详细说明，包括参数解释和配置示例：
