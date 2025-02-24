@@ -11,6 +11,8 @@ menu:
 sidebar:
   position: left
   display: always
+  padding: 18
+  offset: 12
 
 # CDN Settings
 vendors:
@@ -43,6 +45,31 @@ post_meta:
 css: css
 js: js
 images: images
+
+# Post Settings
+post:
+  # Enable the text alignment in posts / tables.
+  text_align:
+    desktop: justify
+    mobile: justify
+  # Post meta display settings
+  meta:
+    item_text: false
+    created_at: true
+    updated_at: false
+    categories: true
+    tags: true
+
+# Code Highlight
+codeblock:
+  theme:
+    light: default
+    dark: tomorrow-night
+  copy_button:
+    enable: true
+    style: default
+  fold:
+    enable: false
 
 # Disable all third-party integrations
 creative_commons:

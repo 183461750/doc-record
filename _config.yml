@@ -12,7 +12,7 @@ timezone: 'Asia/Shanghai'
 # URL
 url: https://183461750.github.io/doc-record
 root: /doc-record/
-permalink: :title/
+permalink: :year/:month/:day/:title/
 
 # Directory
 source_dir: source
@@ -39,6 +39,8 @@ highlight:
   enable: true
   line_number: false
   wrap: true
+  auto_detect: true
+  hljs: false
 prismjs:
   enable: false
 
@@ -61,6 +63,21 @@ search:
   field: post
   content: true
   format: html
+
+# Markdown
+markdown:
+  render:
+    html: true
+    xhtmlOut: false
+    breaks: true
+    linkify: true
+    typographer: true
+  plugins:
+    - markdown-it-footnote
+    - markdown-it-sup
+    - markdown-it-sub
+    - markdown-it-abbr
+    - markdown-it-emoji
 
 # Deployment
 ## Docs: https://hexo.io/docs/one-command-deployment
