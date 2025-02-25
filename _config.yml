@@ -10,8 +10,8 @@ language: zh-CN
 timezone: 'Asia/Shanghai'
 
 # URL
-url: http://localhost:4000
-root: /
+url: https://183461750.github.io
+root: /doc-record/
 permalink: :year/:month/:day/:title/
 
 # Directory
