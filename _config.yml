@@ -10,8 +10,8 @@ language: zh-CN
 timezone: 'Asia/Shanghai'
 
 # URL
-url: https://183461750.github.io/doc-record
-root: /doc-record/
+url: http://localhost:4000
+root: /
 permalink: :year/:month/:day/:title/
 
 # Directory
@@ -25,6 +25,7 @@ skip_render:
   - "**/templates/**"
   - "**/*.yaml"
   - "**/*.yml"
+  - "**/dockerfile/**"
 
 # Writing
 new_post_name: :title.md
@@ -35,14 +36,15 @@ external_link:
   exclude: ''
 post_asset_folder: true
 relative_link: false
+
+# Syntax Highlighting
 highlight:
-  enable: true
-  line_number: false
-  wrap: true
-  auto_detect: true
-  hljs: false
-prismjs:
   enable: false
+prismjs:
+  enable: true
+  preprocess: true
+  line_number: false
+  tab_replace: ''
 
 # Category & Tag
 default_category: uncategorized

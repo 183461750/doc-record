@@ -3,9 +3,9 @@ scheme: Mist
 
 # Menu
 menu:
-  home: /doc-record/ || fa fa-home
-  archives: /doc-record/archives/ || fa fa-archive
-  tags: /doc-record/tags/ || fa fa-tags
+  home: / || fa fa-home
+  archives: /archives/ || fa fa-archive
+  tags: /tags/ || fa fa-tags
 
 # HTML5 doctype
 head:
@@ -74,7 +74,7 @@ post:
 codeblock:
   theme:
     light: default
-    dark: tomorrow-night
+    dark: default
   copy_button:
     enable: true
     style: default
@@ -88,8 +88,10 @@ busuanzi_count:
   enable: false
 github_banner:
   enable: false
-follow_me:
-  enable: false
+
+# Follow me
+follow_me: false
+
 baidu_analytics:
   enable: false
 google_analytics:
@@ -107,4 +109,4 @@ mediumzoom:
 lazyload:
   enable: false
 fancybox:
-  enable: false 
+  enable: false
