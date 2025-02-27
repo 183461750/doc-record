@@ -414,3 +414,30 @@ export DOCKER_HOST=ssh://root@23-zq.internet.company
 ```bash
 stat -c '%g' /var/run/docker.sock
 ```
+
+## 启用Docker BuildKit
+
+```shell
+# 查看Docker版本及BuildKit支持状态
+docker --version
+docker buildx version  # 若输出包含"buildx"则支持BuildKit
+
+# 设置环境变量以启用BuildKit：
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
+
+# 永久启用（用户级配置）
+# 修改shell配置文件（如\~/.bashrc）：
+echo "export DOCKER_BUILDKIT=1" >> \~/.bashrc
+source \~/.bashrc
+
+# 系统级默认启用
+# 修改Docker守护进程配置：
+sudo tee /etc/docker/daemon.json <<EOF
+{
+  "features": {"buildkit": true}
+}
+EOF
+sudo systemctl restart docker
+
+```
