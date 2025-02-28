@@ -100,3 +100,22 @@ sudo systemctl daemon-reload
 sudo systemctl restart docker
 
 ```
+
+- 通过Dockerfile构建镜像时设置代理(亲测有效)
+
+```bash
+# docker build . \
+#     --build-arg "HTTP_PROXY=http://proxy.example.com:8080/" \
+#     --build-arg "HTTPS_PROXY=http://proxy.example.com:8080/" \
+#     --build-arg "NO_PROXY=localhost,127.0.0.1,.example.com" \
+#     -t your/image:tag
+
+docker build -f Dockerfile.cpu -t vllm-cpu-env --shm-size=4g . --build-arg "HTTP_PROXY=http://10.0.4.191:9090" --build-arg "HTTPS_PROXY=http://10.0.4.191:9090"
+
+# Dockerfile中需显式声明这些参数才能生效。在Dockerfile中添加以下代码确保代理生效：(PS: 主要是得加上这两个参数, 配合上面的配置文件一起使用)
+ARG HTTP_PROXY
+ARG HTTPS_PROXY
+ENV HTTP_PROXY=$HTTP_PROXY
+ENV HTTPS_PROXY=$HTTPS_PROXY
+
+```
