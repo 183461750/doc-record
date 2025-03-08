@@ -4,6 +4,18 @@
 
 记录一些文档, 关于docker, k8s, 以及一些其他工具的文档.
 
+## 安装
+
+```bash
+npm install -g hexo-cli
+```
+
+```bash
+hexo init <project-name>
+cd <project-name>
+npm install
+```
+
 ## 启动项目
 
 ```bash
