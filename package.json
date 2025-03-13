@@ -3,49 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "build": "hexo generate",
-    "clean": "hexo clean",
-    "deploy": "hexo deploy",
-    "server": "hexo server",
     "generate-sidebar": "python generate_sidebar.py",
     "serve": "npm run generate-sidebar && docsify serve docs"
   },
-  "hexo": {
-    "version": "7.3.0"
-  },
   "dependencies": {
-    "@creativecommons/vocabulary": "^2020.11.3",
-    "@fancyapps/ui": "^5.0.36",
-    "@fortawesome/fontawesome-free": "^6.7.2",
-    "@next-theme/pjax": "^0.6.0",
-    "@next-theme/plugins": "^8.22.0",
-    "algoliasearch": "^5.20.3",
-    "animate.css": "^4.1.1",
-    "disqusjs": "^3.0.3-canary.1",
-    "firebase": "^11.3.1",
-    "gitalk": "^1.8.0",
-    "hexo": "^7.0.0",
-    "hexo-generator-archive": "^2.0.0",
-    "hexo-generator-category": "^2.0.0",
-    "hexo-generator-index": "^3.0.0",
-    "hexo-generator-searchdb": "^1.4.1",
-    "hexo-generator-tag": "^2.0.0",
-    "hexo-renderer-ejs": "^2.0.0",
-    "hexo-renderer-marked": "^6.0.0",
-    "hexo-renderer-stylus": "^3.0.0",
-    "hexo-server": "^3.0.0",
-    "hexo-theme-next": "^8.18.2",
-    "katex": "^0.16.21",
-    "lozad": "^1.16.0",
-    "mathjax": "^3.2.2",
-    "medium-zoom": "^1.1.0",
-    "mermaid": "^11.4.1",
-    "pace-js": "^1.2.4",
-    "pangu": "^4.0.7",
-    "pdfobject": "^2.3.1",
-    "prismjs": "^1.29.0",
-    "quicklink": "^2.3.0",
-    "ribbon.js": "^1.0.2",
-    "wavedrom": "^3.5.0"
+    "docsify-cli": "^4.4.4"
   }
 }
