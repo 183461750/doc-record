@@ -1,0 +1,7 @@
+- [doc-record](README.md)
+- AI
+    - [AI](AI/index.md)
+    - fine-tuning
+    - prompts
+        - [Prompts](AI/prompts/index.md)
+        - [提示词](AI/prompts/prompts.md)

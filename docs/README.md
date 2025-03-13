@@ -7,22 +7,19 @@
 ## 安装
 
 ```bash
-npm i docsify-cli -g
-# 初始化
-docsify init ./docs
-# 启动项目
-docsify serve docs
-# 插件列表链接
-https://docsify.js.org/#/awesome?id=plugins
+npm install -g hexo-cli
 ```
 
-- 生成侧边栏
-  - [相关文档](./generate_sidebar.md)
-    - 目前使用方法三
+```bash
+hexo init <project-name>
+cd <project-name>
+npm install
+```
+
+## 启动项目
 
 ```bash
-# 启动命令由`docsify serve docs`变更为
-npm run serve
+hexo clean && hexo generate && hexo server
 ```
 
 ## github pages
