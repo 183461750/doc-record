@@ -16,7 +16,7 @@ def get_markdown_title(file_path):
     # 如果没有找到标题，返回文件名
     return os.path.splitext(os.path.basename(file_path))[0]
 
-def process_directory(dir_path, base_path, level=0, base_url='/doc-record/'):
+def process_directory(dir_path, base_path, level=0):
     """递归处理目录及其子目录"""
     result = []
     indent = '    ' * level
@@ -29,8 +29,10 @@ def process_directory(dir_path, base_path, level=0, base_url='/doc-record/'):
         index_path = dir_path / index_file
         if index_path.exists():
             title = get_markdown_title(index_path)
+            # 使用以 / 开头的路径
             relative_path = os.path.relpath(index_path, base_path)
-            result.append(f'{indent}- [{title}]({base_url}{relative_path})')
+            relative_path = '/' + relative_path.replace('\\', '/')
+            result.append(f'{indent}- [{title}]({relative_path})')
             has_index = True
             has_content = True
             break
@@ -53,7 +55,7 @@ def process_directory(dir_path, base_path, level=0, base_url='/doc-record/'):
     sub_dir_results = []
     for sub_dir in dirs:
         # 递归处理子目录
-        sub_content = process_directory(sub_dir, base_path, level + 1, base_url)
+        sub_content = process_directory(sub_dir, base_path, level + 1)
         
         # 只有当子目录有内容时才添加
         if sub_content:
@@ -68,8 +70,10 @@ def process_directory(dir_path, base_path, level=0, base_url='/doc-record/'):
     # 处理markdown文件
     for md_file in md_files:
         title = get_markdown_title(md_file)
+        # 使用以 / 开头的路径
         relative_path = os.path.relpath(md_file, base_path)
-        result.append(f'{indent}- [{title}]({base_url}{relative_path})')
+        relative_path = '/' + relative_path.replace('\\', '/')
+        result.append(f'{indent}- [{title}]({relative_path})')
 
     # 如果是根目录，即使没有内容也返回结果
     if level == 0 or has_content:
