@@ -1,16 +1,8 @@
----
-layout: default
-title: 首页
-nav_order: 1
-has_children: true
-permalink: "/index/"
----
+![logo](favicon.ico)
 
-# Doc Record
+# docsify <small>4.13.1</small>
 
-欢迎来到文档中心！这里收集了各类技术文档和解决方案。
-
-## 主要分类
+> 欢迎来到文档中心！这里收集了各类技术文档和解决方案。
 
 - **Docker**: 容器化相关文档
 - **Kubernetes**: 容器编排与管理
@@ -21,3 +13,6 @@ permalink: "/index/"
 - **网络**: 网络配置和问题解决
 - **AI**: AI 相关技术和应用
 - **资料**: 各类技术资料和学习笔记
+
+[GitHub](https://github.com/183461750/doc-record)
+[Getting Started](README)

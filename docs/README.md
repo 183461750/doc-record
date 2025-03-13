@@ -1,82 +1,23 @@
-# doc-record
+---
+layout: default
+title: 首页
+nav_order: 1
+has_children: true
+permalink: "/index/"
+---
 
-## 介绍
+# Doc Record
 
-记录一些文档, 关于docker, k8s, 以及一些其他工具的文档.
+欢迎来到文档中心！这里收集了各类技术文档和解决方案。
 
-## 安装
+## 主要分类
 
-```bash
-npm install -g hexo-cli
-```
-
-```bash
-hexo init <project-name>
-cd <project-name>
-npm install
-```
-
-## 启动项目
-
-```bash
-hexo clean && hexo generate && hexo server
-```
-
-## github pages
-
-### 自定义host
-
-[github设置路径](https://github.com/183461750/doc-record/settings/actions/runners/new?arch=arm64&os=osx)
-
-> PS: 以下命令均在项目根目录下操作的(别再根目录操作了, 文件太多, 系统都要卡住了...)
-
-Download
-
-```bash
-# Create a folder
-$ mkdir actions-runner && cd actions-runner
-Copied!# Download the latest runner package
-$ curl -o actions-runner-osx-arm64-2.320.0.tar.gz -L https://github.com/actions/runner/releases/download/v2.320.0/actions-runner-osx-arm64-2.320.0.tar.gz
-Copied! # Optional: Validate the hash
-$ echo "14e2600c07ad76a1c9f6d9e498edf14f1c63f7f7f8d55de0653e450f64caa854  actions-runner-osx-arm64-2.320.0.tar.gz" | shasum -a 256 -c
-Copied! # Extract the installer
-$ tar xzf ./actions-runner-osx-arm64-2.320.0.tar.gz
-```
-
-Configure
-
-```bash
-# Create the runner and start the configuration experience
-$ ./config.sh --url https://github.com/183461750/doc-record --token AJCNPVOFCKIXJHNU4XPGEX3HCO3O4
-Copied!# Last step, run it!
-$ ./run.sh
-```
-
-Using your self-hosted runner
-
-```bash
-# Use this YAML in your workflow file for each job
-runs-on: self-hosted
-```
-
-## 使用到的vscode插件
-
-- eliostruyf.vscode-front-matter-beta
-
-## 人机协作指南
-
-### 内容创作者（人类）
-
-```bash
-1. 专注在_docs目录编写Markdown
-2. 使用分类文件夹组织文档
-3. 保持Front Matter简洁
-```
-
-### AI开发助手
-
-```bash
-1. 维护_docs目录结构稳定性
-2. 自动优化知识呈现方式
-3. 确保所有文档URL永久可用
-```
+- **Docker**: 容器化相关文档
+- **Kubernetes**: 容器编排与管理
+- **操作系统**: Linux、Windows 等系统配置和使用
+- **中间件**: 各类中间件的配置和使用
+- **工具**: 开发工具和实用程序
+- **编程语言**: 各类编程语言的使用指南
+- **网络**: 网络配置和问题解决
+- **AI**: AI 相关技术和应用
+- **资料**: 各类技术资料和学习笔记

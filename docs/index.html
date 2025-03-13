@@ -6,6 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta name="description" content="Description">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="icon" type="image/png" href="./favicon.ico">
   <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
 
   <!-- 添加的样式 -->
@@ -28,6 +29,11 @@
     window.$docsify = {
       name: 'doc-record',
       repo: 'https://github.com/183461750/doc-record',
+      coverpage: true,
+      loadNavbar: true,
+      relativePath: true,
+      auto2top: true,
+      routerMode: 'history',
       loadSidebar: true,
       themeColor: "#42b983",
       // docsify-copy-code (defaults)
