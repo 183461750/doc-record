@@ -45,16 +45,9 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-          npm install -g docsify-cli
       
       - name: Generate Sidebar
         run: npm run generate-sidebar
-      
-      - name: Build
-        run: |
-          docsify generate docs
-        env:
-          NODE_ENV: production
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
