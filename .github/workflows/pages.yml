@@ -1,4 +1,4 @@
-name: Deploy Hexo site to Pages
+name: Deploy Docsify site to Pages
 
 on:
   push:
@@ -32,27 +32,36 @@ jobs:
           cache: 'npm'
           cache-dependency-path: npm-shrinkwrap.json
       
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+          cache: 'pip'
+      
       - name: Clean cache
         run: |
           npm cache clean --force
-          rm -rf .deploy_git
+          rm -rf node_modules
       
       - name: Install Dependencies
         run: |
-          rm -rf node_modules
           npm install
+          npm install -g docsify-cli
+          pip install -r requirements.txt
+      
+      - name: Generate Sidebar
+        run: npm run generate-sidebar
       
       - name: Build
         run: |
-          npm run clean
-          npm run build
+          docsify generate docs
         env:
           NODE_ENV: production
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./public
+          path: ./docs
 
   deploy:
     environment:
