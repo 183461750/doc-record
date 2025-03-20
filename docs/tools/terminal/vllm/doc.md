@@ -75,6 +75,21 @@ docker run -it \
              vllm-cpu-env
 ```
 
+- docker安装(openai版镜像)(亲测可用)
+
+```bash
+docker run -it --rm vllm/vllm-openai:v0.7.3 --device cpu
+# docker run -it --rm vllm/vllm-openai:v0.7.3 --device cpu --model Qwen/Qwen2.5-1.5B-Instruct
+# 进入容器, 启动模型
+vllm serve Qwen/Qwen2.5-1.5B-Instruct
+
+# 其他用法
+# docker run带上代理的环境变量
+docker run -d -e http_proxy=http://10.0.5.93:9090 -e https_proxy=http://10.0.5.93:9090 vllm/vllm-openai:v0.7.3 --device cpu --model hf.co/sesame/csm-1b
+# 还需要把端口映射出来
+docker run -d -e http_proxy=http://10.0.5.93:9090 -e https_proxy=http://10.0.5.93:9090 -p 8000:8000 vllm/vllm-openai:v0.7.3 --device cpu --model sesame/csm-1b
+```
+
 ## 使用
 
 ```bash
