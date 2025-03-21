@@ -96,6 +96,10 @@ docker run -d -e http_proxy=http://10.0.5.93:9090 -e https_proxy=http://10.0.5.9
 # Run the following command to start the vLLM server with the Qwen2.5-1.5B-Instruct model:
 vllm serve Qwen/Qwen2.5-1.5B-Instruct
 vllm serve BAAI/bge-reranker-v2-m3
+
+vllm serve Qwen/Qwen2.5-1.5B-Instruct --device cpu
+vllm serve Qwen/Qwen2.5-1.5B-Instruct --enforce_eager
+vllm serve Qwen/Qwen2.5-1.5B-Instruct --device cpu --enforce_eager
 ```
 
 ## 异常问题
