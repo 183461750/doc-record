@@ -90,6 +90,18 @@ docker run -d -e http_proxy=http://10.0.5.93:9090 -e https_proxy=http://10.0.5.9
 docker run -d -e http_proxy=http://10.0.5.93:9090 -e https_proxy=http://10.0.5.93:9090 -p 8000:8000 vllm/vllm-openai:v0.7.3 --device cpu --model sesame/csm-1b
 ```
 
+- uv方式安装
+
+```bash
+uv venv vllm_env --python 3.12 --seed
+source vllm_env/bin/activate
+uv pip install vllm
+
+# 另一种令人愉快的方法是使用带有 --with [dependency] 选项的 uv run，它允许你运行诸如 vllm serve 之类的命令，而无需创建环境：
+uv run --with vllm vllm --help
+
+```
+
 ## 使用
 
 ```bash
