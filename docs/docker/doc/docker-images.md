@@ -9,7 +9,10 @@ vi /etc/docker/daemon.json
 ```json
 {
     "registry-mirrors": [
-             "https://[你的加速器ID].mirror.swr.myhuaweicloud.com",
+            "https://docker.1ms.run",
+            "http://mirrors.ustc.edu.cn",
+            "https://docker.xuanyuan.me"
+            "https://[你的加速器ID].mirror.swr.myhuaweicloud.com",
             "https://[你的加速器ID].mirror.aliyuncs.com",
             "https://huecker.io"
     ]
