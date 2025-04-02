@@ -270,6 +270,8 @@ hwclock -w
 ```shell
 # 只适用于redhat系linux系统
 cat /etc/redhat-release
+# 方式二
+rpm -q centos-release
 ```
 
 ## Linux文件字符串替换命令
