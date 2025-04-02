@@ -13,8 +13,8 @@ rclone config
 rclone rcd --rc-web-gui
 
 # 远程挂载
-mkdir -p ~/mount/xxx
-rclone mount alioss: ~/mount/xxx --vfs-cache-mode writes &
+mkdir -p ~/mount/aliyun-oss-rclone
+rclone mount alioss: ~/mount/aliyun-oss-rclone --vfs-cache-mode writes &
 ```
 
 - 高级
@@ -22,13 +22,13 @@ rclone mount alioss: ~/mount/xxx --vfs-cache-mode writes &
 ```bash
 
 # 创建挂载点目录（如果尚未创建）
-mkdir -p ~/mount/xxx ~/.rclone/logs
+mkdir -p ~/mount/aliyun-oss-rclone ~/.rclone/logs
 
 # 使用 --no-check-links 标志（某些 rclone 版本支持）：忽略符号链接（推荐）
-rclone mount alioss: ~/mount/xxx --vfs-cache-mode writes --no-check-links &
+rclone mount alioss: ~/mount/aliyun-oss-rclone --vfs-cache-mode writes --no-check-links &
 
 # 挂载阿里云 OSS 并启用符号链接支持
-rclone mount alioss: ~/mount/xxx --vfs-cache-mode writes --links --log-level INFO --log-file ~/.rclone/logs/rclone.log &
+rclone mount alioss: ~/mount/aliyun-oss-rclone --vfs-cache-mode writes --links --log-level INFO --log-file ~/.rclone/logs/rclone.log &
 # 2. 启用符号链接支持
 # 如果你需要保留并访问 OSS 存储桶中的符号链接，可以在挂载时添加 --links 标志。这将允许 rclone 处理符号链接，但需要注意以下几点：
 
