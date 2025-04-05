@@ -62,17 +62,37 @@ docker run --runtime nvidia --gpus all \
 
 - 源码安装
 
+[环境变量参数说明](https://docs.vllm.ai/en/latest/getting_started/installation/cpu.html#related-runtime-environment-variables)
+
 ```bash
 # 启用Docker BuildKit
 #    export DOCKER_BUILDKIT=1
 #    export COMPOSE_DOCKER_CLI_BUILD=1
-docker build -f Dockerfile.cpu -t vllm-cpu-env --shm-size=4g .
-docker run -it \
-             --rm \
-             --network=host \
-             --cpuset-cpus=<cpu-id-list, optional> \
-             --cpuset-mems=<memory-node, optional> \
-             vllm-cpu-env
+docker build -f docker/Dockerfile.cpu --tag vllm-cpu-env --target vllm-openai .
+# 启用代理, 并且不使用缓存
+# 在 Dockerfile 中添加以下代码确保代理生效：
+# ARG HTTP_PROXY
+# ARG HTTPS_PROXY
+# ENV HTTP_PROXY=$HTTP_PROXY
+# ENV HTTPS_PROXY=$HTTPS_PROXY
+#
+docker build \
+    --build-arg "HTTP_PROXY=http://10.0.4.59:9090" \
+    --build-arg "HTTPS_PROXY=http://10.0.4.59:9090" \
+    --no-cache \
+    -f docker/Dockerfile.cpu --tag vllm-cpu-env --target vllm-openai .
+docker run --rm \
+             --privileged=true \
+             --shm-size=4g \
+             -p 8000:8000 \
+             # 表示 KV 缓存空间为 8 GiB
+             -e VLLM_CPU_KVCACHE_SPACE=8 \
+             # 表示将有 32 个 OpenMP 线程绑定在 0-31 个 CPU 内核上。
+             -e VLLM_CPU_OMP_THREADS_BIND=0-31 \
+             vllm-cpu-env \
+             --model=meta-llama/Llama-3.2-1B-Instruct \
+             --dtype=bfloat16 \
+             other vLLM OpenAI server arguments
 ```
 
 - docker安装(openai版镜像)(亲测可用)
@@ -82,12 +102,17 @@ docker run -it --rm vllm/vllm-openai:v0.7.3 --device cpu
 # docker run -it --rm vllm/vllm-openai:v0.7.3 --device cpu --model Qwen/Qwen2.5-1.5B-Instruct
 # 进入容器, 启动模型
 vllm serve Qwen/Qwen2.5-1.5B-Instruct
+# 自定义key
+vllm serve NousResearch/Meta-Llama-3-8B-Instruct --dtype auto --api-key token-abc123
 
 # 其他用法
 # docker run带上代理的环境变量
 docker run -d -e http_proxy=http://10.0.5.93:9090 -e https_proxy=http://10.0.5.93:9090 vllm/vllm-openai:v0.7.3 --device cpu --model hf.co/sesame/csm-1b
 # 还需要把端口映射出来
 docker run -d -e http_proxy=http://10.0.5.93:9090 -e https_proxy=http://10.0.5.93:9090 -p 8000:8000 vllm/vllm-openai:v0.7.3 --device cpu --model sesame/csm-1b
+
+# 差授权
+docker run -d -e http_proxy=http://10.0.4.59:9090 -e https_proxy=http://10.0.4.59:9090 -e HUGGING_FACE_HUB_TOKEN=<TOKEN> -p 8000:8000 vllm/vllm-openai --device cpu --model google/gemma-3-1b-it
 ```
 
 - uv方式安装
