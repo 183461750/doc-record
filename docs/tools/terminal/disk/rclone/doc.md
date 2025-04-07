@@ -28,7 +28,10 @@ mkdir -p ~/mount/aliyun-oss-rclone ~/.rclone/logs
 rclone mount alioss: ~/mount/aliyun-oss-rclone --vfs-cache-mode writes --no-check-links &
 
 # 挂载阿里云 OSS 并启用符号链接支持
+#  --vfs-cache-mode writes 标志：启用 VFS 缓存模式，以提高性能和兼容性。
 rclone mount alioss: ~/mount/aliyun-oss-rclone --vfs-cache-mode writes --links --log-level INFO --log-file ~/.rclone/logs/rclone.log &
+#  --allow-other 标志：允许其他用户访问挂载的文件系统。请注意，这需要在 Linux 上使用 FUSE 时设置相应的权限。
+rclone mount alioss: ~/mount/aliyun-oss-rclone --vfs-cache-mode writes --allow-other --links --log-level INFO --log-file ~/.rclone/logs/rclone.log &
 # 2. 启用符号链接支持
 # 如果你需要保留并访问 OSS 存储桶中的符号链接，可以在挂载时添加 --links 标志。这将允许 rclone 处理符号链接，但需要注意以下几点：
 
