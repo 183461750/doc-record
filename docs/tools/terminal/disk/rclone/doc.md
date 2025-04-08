@@ -38,3 +38,11 @@ rclone mount alioss: ~/mount/aliyun-oss-rclone --vfs-cache-mode writes --allow-o
 # 性能影响：处理符号链接可能会增加文件系统的开销，尤其是在大量符号链接存在的情况下。
 # 安全性：确保符号链接不会导致安全漏洞，特别是在多用户环境中。
 ```
+
+```bash
+# 使用 --daemon 标志：在后台运行挂载进程
+rclone mount alioss: ~/mount/aliyun-oss-rclone --vfs-cache-mode writes --daemon --allow-other --links --log-level INFO --log-file ~/.rclone/logs/rclone.log &
+
+# --checkers 8 --transfers 16：增加并发检查器和传输数量，以提高性能。(这个配置跟CPU和带宽有关, 1 Gbps 及以上建议8 到 16, 然后 CPU8核建议8到16, 不超过16, 最后, 通常，--checkers 可以设置为 --transfers 的一半左右，以避免检查过程成为瓶颈。)
+rclone mount alioss: ~/mount/aliyun-oss-rclone --daemon --allow-other --links --vfs-cache-mode writes --checkers 8 --transfers 16 --log-level INFO --log-file ~/.rclone/logs/rclone.log &
+```
