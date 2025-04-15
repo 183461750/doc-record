@@ -6,6 +6,7 @@ services:
         network_mode: host
         container_name: stars.client
         environment:
+            # 这里的账号密码需要到平台的管理后台上注册账号后创建成员才行
             - STARS_USER=admin
             - STARS_PASS=admin.
         image: registry.cn-beijing.aliyuncs.com/ld_beijing/stars.client:5.1.1
