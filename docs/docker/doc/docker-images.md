@@ -14,7 +14,8 @@ vi /etc/docker/daemon.json
             "https://docker.xuanyuan.me"
             "https://[你的加速器ID].mirror.swr.myhuaweicloud.com",
             "https://[你的加速器ID].mirror.aliyuncs.com",
-            "https://huecker.io"
+            "https://huecker.io",
+            "https://docker.1panel.live"
     ]
 }
 ```
