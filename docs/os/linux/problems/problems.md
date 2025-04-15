@@ -41,6 +41,17 @@ http://mirrors.aliyun.com/centos/7/os/x86_64/repodata/repomd.xml: [Errno 12] Tim
 curl -o /etc/yum.repos.d/CentOS-Base.repo https://mirrors.tencent.com/repo/centos7_base.repo
 ```
 
+```bash
+# 切换使用腾讯的SCLo的yum源(访问不了, 先注释)
+# wget -O /etc/yum.repos.d/CentOS-SCLo-scl.repo http://mirrors.cloud.tencent.com/repo/CentOS-SCLo-scl.repo
+# wget -O /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo http://mirrors.cloud.tencent.com/repo/CentOS-SCLo-scl-rh.repo
+```
+
+```bash
+yum clean all
+yum makecache
+```
+
 ## vm.max_map_count作用
 
 vm.max_map_count 是 Linux 内核的一个参数，用于控制一个进程可以拥有的最大内存映射区域（memory map areas）的数量。这个参数对于某些应用程序（特别是 Java 应用程序）非常重要，因为这些应用程序在运行时需要创建大量的内存映射区域。
