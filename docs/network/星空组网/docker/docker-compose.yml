@@ -1,0 +1,11 @@
+version: '3'
+services:
+    stars.client:
+        restart: always
+        privileged: true
+        network_mode: host
+        container_name: stars.client
+        environment:
+            - STARS_USER=admin
+            - STARS_PASS=admin.
+        image: registry.cn-beijing.aliyuncs.com/ld_beijing/stars.client:5.1.1
