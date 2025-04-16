@@ -6,3 +6,11 @@
 docker exec -it headscale headscale user create USERNAME
 docker exec -it headscale headscale nodes register --user USERNAME --key qWrn3RY86bXG5BAcik7V7MoX
 ```
+
+```bash
+# linux客户端(可以在服务端那台电脑上使用, 用来连接服务端)
+docker exec -it headscale headscale user create fa.ssy 
+docker exec -it headscale headscale preauthkeys create -e 24h --user fa.ssy 
+# 将上面生成的key复制到下面的命令中
+tailscale up --accept-dns=false --accept-routes --login-server=http://127.0.0.1:8888 --hostname=fa.ssy --force-reauth  --authkey d69d58c009190358df704e7b3d867c1be0b022c038bc89be
+```
