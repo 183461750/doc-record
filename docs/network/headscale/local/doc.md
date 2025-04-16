@@ -7,6 +7,16 @@
 [docker版](https://github.com/juanfont/headscale/blob/main/docs/setup/install/container.md)
 
 ```bash
+
+# server_url: http://127.0.0.1:8080
+server_url: https://5d37b78.r3.cpolar.top
+
+# listen_addr: 127.0.0.1:8080
+listen_addr: 0.0.0.0:8080
+
+```
+
+```bash
 # 安装
 cd ./headscale
 
