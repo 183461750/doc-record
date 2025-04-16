@@ -1,0 +1,9 @@
+services:  
+  netclient:    
+    image: gravitl/netclient:v0.24.1    
+    network_mode: host    
+    privileged: true    
+    environment:
+      - TOKEN={ENROLLMENT_KEY}
+    volumes: 
+      - ./netclient:/etc/netclient
