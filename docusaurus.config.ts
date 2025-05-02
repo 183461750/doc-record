@@ -28,6 +28,10 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/', // 将文档设置为首页
+        //   remarkPlugins: [
+        //     // 解决Markdown文件中{xxx}变量被错误解析的问题。
+        //     [require('remark-mdx'), {parseFrontmatter: true}]
+        //   ],
         },
         blog: false, // 禁用博客功能
         theme: {
