@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 13
-description: kuboard使用
-parent: Kuboard
-has_children: false
-permalink: "/kubernetes/app/kuboard/kuboard/"
-grand_parent: App
----
 
 # kuboard使用
 

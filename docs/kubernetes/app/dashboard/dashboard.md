@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 13
-description: k8s dashboard
-parent: Dashboard
-has_children: false
-permalink: "/kubernetes/app/dashboard/dashboard/"
-grand_parent: App
----
 
 # k8s dashboard
 

@@ -1,13 +1,3 @@
----
-layout: default
-title: README
-nav_order: 16
-description: deploy
-parent: Deploy
-has_children: false
-permalink: "/docker/dev_utls/dev-container/local-dev-deploy/projects/deploy/readme/"
-grand_parent: Projects
----
 
 # deploy
 

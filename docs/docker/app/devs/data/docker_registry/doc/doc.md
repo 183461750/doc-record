@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 16
-description: 配置docker镜像私服hosts```shellwhereis hostsvi /etc/hosts
-parent: Doc
-has_children: false
-permalink: "/docker/app/devs/data/docker_registry/doc/doc/"
-grand_parent: Docker Registry
----
 
 ## 配置docker镜像私服hosts
 ```shell

@@ -1,13 +1,3 @@
----
-layout: default
-title: git只克隆指定某几个子模块到本地
-nav_order: 13
-description: git只克隆指定某几个子模块到本地
-parent: Git
-has_children: false
-permalink: "/materiel/ai/git/git只克隆指定某几个子模块到本地/"
-grand_parent: Ai
----
 
 # git只克隆指定某几个子模块到本地
 

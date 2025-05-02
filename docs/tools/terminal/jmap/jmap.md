@@ -1,14 +1,3 @@
----
-layout: default
-title: JMap
-nav_order: 4
-description: jmap的使用
-parent: Jmap
-has_children: false
-permalink: "/tools/terminal/jmap/jmap/"
-grand_parent: Terminal
-slug: jmap
----
 
 # jmap的使用
 

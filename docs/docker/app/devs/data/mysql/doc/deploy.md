@@ -1,13 +1,3 @@
----
-layout: default
-title: deploy
-nav_order: 16
-description: 单机部署
-parent: Doc
-has_children: false
-permalink: "/docker/app/devs/data/mysql/doc/deploy/"
-grand_parent: Mysql
----
 
 ## 单机部署
 

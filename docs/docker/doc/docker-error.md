@@ -1,13 +1,3 @@
----
-layout: default
-title: docker-error
-nav_order: 12
-description: docker相关报错记录
-parent: Doc
-has_children: false
-permalink: "/docker/doc/docker-error/"
-grand_parent: Docker
----
 
 # docker相关报错记录
 

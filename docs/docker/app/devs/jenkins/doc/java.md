@@ -1,13 +1,3 @@
----
-layout: default
-title: java
-nav_order: 15
-description: java 启动 相关记录
-parent: Doc
-has_children: false
-permalink: "/docker/app/devs/jenkins/doc/java/"
-grand_parent: Jenkins
----
 
 # java 启动 相关记录
 

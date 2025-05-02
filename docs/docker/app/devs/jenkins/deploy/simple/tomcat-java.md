@@ -1,13 +1,3 @@
----
-layout: default
-title: tomcat-java
-nav_order: 16
-description: 构建tomcat应用的相关记录
-parent: Simple
-has_children: false
-permalink: "/docker/app/devs/jenkins/deploy/simple/tomcat-java/"
-grand_parent: Deploy
----
 
 # 构建tomcat应用的相关记录
 

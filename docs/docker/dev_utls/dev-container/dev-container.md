@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 13
-description: 开发容器相关记录
-parent: Dev-container
-has_children: false
-permalink: "/docker/dev_utls/dev-container/dev-container/"
-grand_parent: Dev Utls
----
 
 # 开发容器相关记录
 

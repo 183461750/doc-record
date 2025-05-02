@@ -1,13 +1,3 @@
----
-layout: default
-title: node-pnpm
-nav_order: 15
-description: 使用Jenkins构建node项目
-parent: Deploy
-has_children: false
-permalink: "/docker/app/devs/jenkins/deploy/node-pnpm/"
-grand_parent: Jenkins
----
 
 # 使用Jenkins构建node项目
 

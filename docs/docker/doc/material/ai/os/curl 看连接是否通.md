@@ -1,13 +1,3 @@
----
-layout: default
-title: curl 看连接是否通
-nav_order: 15
-description: curl 看连接是否通
-parent: Os
-has_children: false
-permalink: "/docker/doc/material/ai/os/curl 看连接是否通/"
-grand_parent: Ai
----
 
 # curl 看连接是否通
 

@@ -1,16 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 14
-description: Dockerfile```shellFROM node:12-alpine as builderWORKDIR /yapiRUN apk
-  add --no-cache wget python makeENV VERSION=1.9.2RUN wget https://github.com/YMFE/yapi/archive/v${VERSION}.zipRUN
-  unzip v${VERSION}.zip && mv yapi-${VERSION} vendorsRUN cd /yapi/vendors && cp config_example.json
-  ../config.json && npm install --production --registry https://registry.npm.taobao.org
-parent: Yapi
-has_children: false
-permalink: "/docker/app/devs/yapi/yapi/"
-grand_parent: Devs
----
 
 ## Dockerfile
 ```shell

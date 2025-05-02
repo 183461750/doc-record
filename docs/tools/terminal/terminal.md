@@ -1,13 +1,3 @@
----
-layout: default
-title: Terminal
-nav_order: 12
-description: 命令行使用记录文档
-parent: Terminal
-has_children: false
-permalink: "/tools/terminal/terminal/"
-grand_parent: Tools
----
 
 # 命令行使用记录文档
 

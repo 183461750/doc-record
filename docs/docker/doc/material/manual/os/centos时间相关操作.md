@@ -1,13 +1,3 @@
----
-layout: default
-title: centos时间相关操作
-nav_order: 15
-description: centos时间相关操作
-parent: Os
-has_children: false
-permalink: "/docker/doc/material/manual/os/centos时间相关操作/"
-grand_parent: Manual
----
 
 # centos时间相关操作
 
@@ -41,7 +31,7 @@ ntpdate -u  pool.ntp.org
 date
 ```
 
-另外再分享下几个常用的ntp server，如果需要更多可以前往：<http://www.ntp.org.cn>获取
+另外再分享下几个常用的ntp server，如果需要更多可以前往：[ntp官网](http://www.ntp.org.cn)获取
 
 ```shell
 #中国

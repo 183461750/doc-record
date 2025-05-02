@@ -1,13 +1,3 @@
----
-layout: default
-title: 科学上网与VPN办公的完美结合
-nav_order: 12
-description: 科学上网与VPN办公的完美结合
-parent: Draft
-has_children: false
-permalink: "/materiel/draft/科学上网与vpn办公的完美结合/"
-grand_parent: Materiel
----
 
 # 科学上网与VPN办公的完美结合
 

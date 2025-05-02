@@ -1,13 +1,3 @@
----
-layout: default
-title: centos系统彻底卸载docker和k8s
-nav_order: 13
-description: centos系统彻底卸载docker和k8s
-parent: Cloud-native
-has_children: false
-permalink: "/materiel/ai/cloud-native/centos系统彻底卸载docker和k8s/"
-grand_parent: Ai
----
 
 # centos系统彻底卸载docker和k8s
 

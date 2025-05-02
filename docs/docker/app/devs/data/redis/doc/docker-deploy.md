@@ -1,15 +1,3 @@
----
-layout: default
-title: docker-deploy
-nav_order: 16
-description: 创建 6 个 Redis 容器```shelldocker create --name redis-node1 --net host -v
-  /data/redis-data/node1:/data redis:5.0.5 --cluster-enabled yes --cluster-config-file
-  nodes-node-1.conf --port 6379
-parent: Doc
-has_children: false
-permalink: "/docker/app/devs/data/redis/doc/docker-deploy/"
-grand_parent: Redis
----
 
 ## 创建 6 个 Redis 容器
 ```shell

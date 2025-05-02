@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 13
-description: 进程
-parent: Process
-has_children: false
-permalink: "/os/linux/process/process/"
-grand_parent: Linux
----
 
 # 进程
 

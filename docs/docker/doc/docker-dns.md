@@ -1,13 +1,3 @@
----
-layout: default
-title: docker-dns
-nav_order: 12
-description: docker内置DNS记录
-parent: Doc
-has_children: false
-permalink: "/docker/doc/docker-dns/"
-grand_parent: Docker
----
 
 # docker内置DNS记录
 

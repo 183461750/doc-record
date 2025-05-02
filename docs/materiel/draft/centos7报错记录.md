@@ -1,13 +1,3 @@
----
-layout: default
-title: centos7报错记录
-nav_order: 12
-description: centos7报错记录
-parent: Draft
-has_children: false
-permalink: "/materiel/draft/centos7报错记录/"
-grand_parent: Materiel
----
 
 # centos7报错记录
 

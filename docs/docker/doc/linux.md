@@ -1,13 +1,3 @@
----
-layout: default
-title: linux
-nav_order: 12
-description: linux相关命令使用记录
-parent: Doc
-has_children: false
-permalink: "/docker/doc/linux/"
-grand_parent: Docker
----
 
 # linux相关命令使用记录
 

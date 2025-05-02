@@ -1,19 +1,3 @@
----
-title: Dockerfile 文件相关记录
-date: 2024-02-24
-nav_order: 14
-description: dockerfile文件相关记录
-categories:
-  - docker
-  - dev_utls
-  - dev-container
-  - dockerfile
-tags:
-  - docker
-  - dockerfile
-  - ssh
-  - centos
----
 
 # dockerfile文件相关记录
 

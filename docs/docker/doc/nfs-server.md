@@ -1,14 +1,3 @@
----
-layout: default
-title: nfs-server
-nav_order: 12
-description: 服务端安装NFS服务步骤：- 第一步：安装NFS和rpc。```shell[root@localhost ~] yum install -y  nfs-utils   安装nfs服务[root@localhost
-  ~] yum install -y rpcbind安装rpc服务
-parent: Doc
-has_children: false
-permalink: "/docker/doc/nfs-server/"
-grand_parent: Docker
----
 
 ## 服务端安装NFS服务步骤：
 - 第一步：安装NFS和rpc。

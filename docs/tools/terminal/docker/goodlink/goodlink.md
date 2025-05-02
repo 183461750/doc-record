@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 14
-description: 两台主机之间直连
-parent: Goodlink
-has_children: false
-permalink: "/tools/terminal/docker/goodlink/goodlink/"
-grand_parent: Docker
----
 
 # 两台主机之间直连
 

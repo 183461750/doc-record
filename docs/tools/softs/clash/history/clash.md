@@ -1,13 +1,3 @@
----
-layout: default
-title: Clash
-nav_order: 2
-description: linux中使用clash记录
-parent: Clash
-has_children: false
-permalink: "/tools/softs/clash/clash/"
-grand_parent: Softs
----
 
 # linux中使用clash记录
 

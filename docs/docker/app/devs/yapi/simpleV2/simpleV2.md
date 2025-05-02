@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 15
-description: yapi
-parent: Simplev2
-has_children: false
-permalink: "/docker/app/devs/yapi/simplev2/simplev2/"
-grand_parent: Yapi
----
 
 # yapi
 

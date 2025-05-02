@@ -1,20 +1,10 @@
----
-layout: default
-title: problem
-nav_order: 15
-description: jenkins部署相关问题记录
-parent: Doc
-has_children: false
-permalink: "/docker/app/devs/jenkins/doc/problem/"
-grand_parent: Jenkins
----
 
 # jenkins部署相关问题记录
 
 ## 该jenkins实例似乎已离线
 
     安装插件那个页面，就是提示你offline的那个页面，不要动。
-    然后打开一个新的tab，输入网址http://192.168.211.103:8080/jenkins/pluginManager/advanced。 
+    然后打开一个新的tab，输入网址 `http://192.168.211.103:8080/jenkins/pluginManager/advanced`。 
     这里面最底下有个【升级站点】，把其中的链接由https改成http的就好了，http://updates.jenkins.io/update-center.json。 
     然后在服务列表中关闭jenkins，再tomcat重新启动，这样就能正常联网了
 
@@ -36,8 +26,8 @@ grand_parent: Jenkins
 
 ## npm镜像源问题
 
-- <https://registry.npmmirror.com/>(淘宝镜像源)
-- <https://registry.npm.taobao.org>(淘宝cnpm镜像源)
+- [淘宝镜像源](https://registry.npmmirror.com/)
+- [淘宝cnpm镜像源](https://registry.npm.taobao.org)
 - [参考文章](https://cloud.tencent.com/developer/article/1372949)
 
 ## Dockerfile给服务器配置文件追加内容

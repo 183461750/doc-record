@@ -1,13 +1,3 @@
----
-layout: default
-title: "<classifier>标签在gradle中怎么用"
-nav_order: 14
-description: "<classifier>jpa</classifier>那这个标签在gradle中怎么用"
-parent: Gradle
-has_children: false
-permalink: "/materiel/ai/devs/gradle/<classifier>标签在gradle中怎么用/"
-grand_parent: Devs
----
 
 # <classifier>jpa</classifier>那这个标签在gradle中怎么用
 

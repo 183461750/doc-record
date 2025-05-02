@@ -1,14 +1,3 @@
----
-layout: default
-title: ssh动态代理
-nav_order: 14
-description: 以下是对命令 `ssh -o GatewayPorts=yes -D 2000 test-2023.intranet.company -NTfCg`
-  的逐项解析和完整说明：
-parent: Ai
-has_children: false
-permalink: "/docker/doc/material/ai/ssh动态代理/"
-grand_parent: Material
----
 
 以下是对命令 `ssh -o GatewayPorts=yes -D 2000 test-2023.intranet.company -NTfCg` 的逐项解析和完整说明：
 

@@ -1,13 +1,3 @@
----
-layout: default
-title: problem
-nav_order: 14
-description: nginx相关问题
-parent: Doc
-has_children: false
-permalink: "/docker/mid/nginx/doc/problem/"
-grand_parent: Nginx
----
 
 # nginx相关问题
 

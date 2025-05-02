@@ -1,13 +1,3 @@
----
-layout: default
-title: README
-nav_order: 12
-description: readme
-parent: Draft
-has_children: false
-permalink: "/materiel/draft/readme/"
-grand_parent: Materiel
----
 
 # readme
 

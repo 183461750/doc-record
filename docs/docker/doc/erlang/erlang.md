@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 13
-description: yum安装erlang
-parent: Erlang
-has_children: false
-permalink: "/docker/doc/erlang/erlang/"
-grand_parent: Doc
----
 
 # yum安装erlang
 

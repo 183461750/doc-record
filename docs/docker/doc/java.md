@@ -1,13 +1,3 @@
----
-layout: default
-title: java
-nav_order: 12
-description: java 相关记录
-parent: Doc
-has_children: false
-permalink: "/docker/doc/java/"
-grand_parent: Docker
----
 
 # java 相关记录
 

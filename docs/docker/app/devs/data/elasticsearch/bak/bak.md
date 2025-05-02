@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 16
-description: 以下是使用Docker Swarm部署Elasticsearch集群的步骤：
-parent: Bak
-has_children: false
-permalink: "/docker/app/devs/data/elasticsearch/bak/bak/"
-grand_parent: Elasticsearch
----
 
 以下是使用Docker Swarm部署Elasticsearch集群的步骤：
 

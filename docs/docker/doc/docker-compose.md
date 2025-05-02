@@ -1,13 +1,3 @@
----
-layout: default
-title: docker-compose
-nav_order: 12
-description: docker-compose相关记录
-parent: Doc
-has_children: false
-permalink: "/docker/doc/docker-compose/"
-grand_parent: Docker
----
 
 # docker-compose相关记录
 

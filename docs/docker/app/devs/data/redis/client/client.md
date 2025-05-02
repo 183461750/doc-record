@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 16
-description: redis 官方客户端
-parent: Client
-has_children: false
-permalink: "/docker/app/devs/data/redis/client/client/"
-grand_parent: Redis
----
 
 # redis 官方客户端
 

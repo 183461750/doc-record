@@ -1,13 +1,3 @@
----
-layout: default
-title: 如何让docker走代理
-nav_order: 13
-description: 如何让docker走代理
-parent: Docker
-has_children: false
-permalink: "/materiel/ai/docker/如何让docker走代理/"
-grand_parent: Ai
----
 
 # 如何让docker走代理
 
@@ -25,7 +15,7 @@ grand_parent: Ai
 
 2. 对于 Windows 系统：
    - 可以在系统环境变量中设置 `HTTP_PROXY` 和 `HTTPS_PROXY`。
-   - 打开“控制面板”->“系统和安全”->“系统”->“高级系统设置”->“环境变量”。在“系统变量”中新建两个变量，变量名分别为 `HTTP_PROXY` 和 `HTTPS_PROXY`，变量值设置为你的代理地址和端口，例如“http://127.0.0.1:8080”。
+   - 打开“控制面板”->“系统和安全”->“系统”->“高级系统设置”->“环境变量”。在“系统变量”中新建两个变量，变量名分别为 `HTTP_PROXY` 和 `HTTPS_PROXY`，变量值设置为你的代理地址和端口，例如`http://127.0.0.1:8080`。
 
 **二、Docker 守护进程配置法（适用于 Linux）**
 

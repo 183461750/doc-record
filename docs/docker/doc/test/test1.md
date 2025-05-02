@@ -1,13 +1,3 @@
----
-layout: default
-title: test1
-nav_order: 13
-description: test1
-parent: Test
-has_children: false
-permalink: "/docker/doc/test/test1/"
-grand_parent: Doc
----
 
 # test1
 

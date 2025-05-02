@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 14
-description: ClusterIssuer记录
-parent: Clusterissuer
-has_children: false
-permalink: "/kubernetes/docs/cert-manager/clusterissuer/clusterissuer/"
-grand_parent: Cert-manager
----
 
 # ClusterIssuer记录
 

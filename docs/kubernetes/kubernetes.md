@@ -1,12 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 11
-description: k8s相关使用记录
-parent: Kubernetes
-has_children: false
-permalink: "/kubernetes/kubernetes/"
----
 
 # k8s相关使用记录
 

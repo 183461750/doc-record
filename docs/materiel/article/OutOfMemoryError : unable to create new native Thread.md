@@ -1,13 +1,3 @@
----
-layout: default
-title: 'OutOfMemoryError : unable to create new native Thread'
-nav_order: 792
-description: 'java.lang.OutOfMemoryError : unable to create new native Thread'
-has_children: false
-permalink: "/materiel/article/outofmemoryerror : unable to create new native thread/"
-parent: Article
-grand_parent: Materiel
----
 
 # java.lang.OutOfMemoryError : unable to create new native Thread
 

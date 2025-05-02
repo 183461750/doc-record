@@ -1,13 +1,3 @@
----
-layout: default
-title: ComfyUI
-nav_order: 1
-description: ComfyUI
-parent: Comfyui
-has_children: false
-permalink: "/tools/softs/comfyui/comfyui/"
-grand_parent: Softs
----
 
 # ComfyUI
 

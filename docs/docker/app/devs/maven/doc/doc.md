@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 15
-description: maven使用记录
-parent: Doc
-has_children: false
-permalink: "/docker/app/devs/maven/doc/doc/"
-grand_parent: Maven
----
 
 # maven使用记录
 

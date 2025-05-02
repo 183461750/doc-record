@@ -1,13 +1,3 @@
----
-layout: default
-title: IDEA
-nav_order: 4
-description: idea使用记录
-parent: Idea
-has_children: false
-permalink: "/tools/softs/idea/idea/"
-grand_parent: Softs
----
 
 # idea使用记录
 

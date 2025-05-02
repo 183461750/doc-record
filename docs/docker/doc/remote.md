@@ -1,13 +1,3 @@
----
-layout: default
-title: remote
-nav_order: 12
-description: 远程连接相关记录
-parent: Doc
-has_children: false
-permalink: "/docker/doc/remote/"
-grand_parent: Docker
----
 
 # 远程连接相关记录
 

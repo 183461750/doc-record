@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 17
-description: openvpn客户端
-parent: Client
-has_children: false
-permalink: "/docker/app/networks/vpn/openvpn/docker/client/client/"
-grand_parent: Docker
----
 
 # openvpn客户端
 

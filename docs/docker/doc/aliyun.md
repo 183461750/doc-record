@@ -1,13 +1,3 @@
----
-layout: default
-title: aliyun
-nav_order: 12
-description: 阿里云相关记录
-parent: Doc
-has_children: false
-permalink: "/docker/doc/aliyun/"
-grand_parent: Docker
----
 
 # 阿里云相关记录
 

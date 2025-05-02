@@ -1,13 +1,3 @@
----
-layout: default
-title: tomcat-file-2
-nav_order: 15
-description: 构建tomcat应用的相关记录
-parent: Doc
-has_children: false
-permalink: "/docker/app/devs/jenkins/doc/tomcat-file-2/"
-grand_parent: Jenkins
----
 
 # 构建tomcat应用的相关记录
 

@@ -1,12 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 15
-parent: Springboot
-permalink: "/docker/app/devs/jenkins/springboot/springboot/"
-has_children: false
-grand_parent: Jenkins
----
 
 ## springboot pom.xml配置
 ```xml

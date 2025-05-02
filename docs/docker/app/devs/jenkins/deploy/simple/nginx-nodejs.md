@@ -1,13 +1,3 @@
----
-layout: default
-title: nginx-nodejs
-nav_order: 16
-description: 使用Jenkins构建node项目
-parent: Simple
-has_children: false
-permalink: "/docker/app/devs/jenkins/deploy/simple/nginx-nodejs/"
-grand_parent: Deploy
----
 
 # 使用Jenkins构建node项目
 

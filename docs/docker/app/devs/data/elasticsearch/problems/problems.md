@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 16
-description: 问题记录
-parent: Problems
-has_children: false
-permalink: "/docker/app/devs/data/elasticsearch/problems/problems/"
-grand_parent: Elasticsearch
----
 
 # 问题记录
 

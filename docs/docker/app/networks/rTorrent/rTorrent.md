@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 14
-description: BT种子下载
-parent: Rtorrent
-has_children: false
-permalink: "/docker/app/networks/rtorrent/rtorrent/"
-grand_parent: Networks
----
 
 # BT种子下载
 

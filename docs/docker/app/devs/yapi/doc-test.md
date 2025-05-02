@@ -1,13 +1,3 @@
----
-layout: default
-title: doc-test
-nav_order: 14
-description: Jenkins配置```shell
-parent: Yapi
-has_children: false
-permalink: "/docker/app/devs/yapi/doc-test/"
-grand_parent: Devs
----
 
 ## Jenkins配置
 ```shell

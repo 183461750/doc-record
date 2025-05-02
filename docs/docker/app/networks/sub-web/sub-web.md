@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 14
-description: sub-web
-parent: Sub-web
-has_children: false
-permalink: "/docker/app/networks/sub-web/sub-web/"
-grand_parent: Networks
----
 
 # sub-web
 

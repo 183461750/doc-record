@@ -1,16 +1,3 @@
----
-title: SSH -w 参数使用指南：配置文件与参数详解
-date: 2024-02-24
-categories:
-  - materiel
-  - ai
-  - ssh
-tags:
-  - ssh
-  - vpn
-  - tunnel
-  - configuration
----
 
 # ssh -w要怎么使用ssh config配置文件配置, 以及它有哪些参数
 

@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 14
-description: nacos
-parent: Simple
-has_children: false
-permalink: "/docker/mid/nacos/simple/simple/"
-grand_parent: Nacos
----
 
 # nacos
 

@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 15
-description: 使用记录
-parent: Publish
-has_children: false
-permalink: "/docker/dev_utls/serverless/nocobase/publish/publish/"
-grand_parent: Nocobase
----
 
 # 使用记录
 

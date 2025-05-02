@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 15
-description: 文档说明
-parent: Nas
-has_children: false
-permalink: "/docker/app/devs/data/nas/nas/"
-grand_parent: Data
----
 
 # 文档说明
 

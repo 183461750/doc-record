@@ -1,12 +1,3 @@
----
-layout: default
-title: samba
-nav_order: 15
-parent: Nas
-permalink: "/docker/app/devs/data/nas/samba/"
-has_children: false
-grand_parent: Data
----
 
 ```shell
 docker run -it \

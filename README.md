@@ -7,13 +7,10 @@
 ## 安装
 
 ```bash
-npm i docsify-cli -g
-# 初始化
-docsify init ./docs
-# 启动项目
-docsify serve docs
-# 插件列表链接
-https://docsify.js.org/#/awesome?id=plugins
+npx create-docusaurus@latest doc-record classic
+cd doc-record
+npm install
+npm run start
 ```
 
 - 生成侧边栏
@@ -21,8 +18,8 @@ https://docsify.js.org/#/awesome?id=plugins
     - 目前使用方法三
 
 ```bash
-# 启动命令由`docsify serve docs`变更为
-npm run serve
+# 启动项目
+npm run start
 ```
 
 ## github pages

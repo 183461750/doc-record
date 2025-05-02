@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 13
-description: docker容器中部署系统相关文档
-parent: Os
-has_children: false
-permalink: "/docker/app/os/os/"
-grand_parent: App
----
 
 # docker容器中部署系统相关文档
 

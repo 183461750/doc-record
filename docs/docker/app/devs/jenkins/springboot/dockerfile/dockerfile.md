@@ -1,12 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 16
-parent: Dockerfile
-permalink: "/docker/app/devs/jenkins/springboot/dockerfile/dockerfile/"
-has_children: false
-grand_parent: Springboot
----
 
 ## maven使用dockerfile插件构建项目
 - 参考项目[https://gitee.com/LFa/demo-test.git]

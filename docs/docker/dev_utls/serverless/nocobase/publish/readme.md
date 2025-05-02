@@ -1,13 +1,3 @@
----
-layout: default
-title: readme
-nav_order: 15
-description: start-nocobase 帮助文档
-parent: Publish
-has_children: false
-permalink: "/docker/dev_utls/serverless/nocobase/publish/readme/"
-grand_parent: Nocobase
----
 
 # start-nocobase 帮助文档
 

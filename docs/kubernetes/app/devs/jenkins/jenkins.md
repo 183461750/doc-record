@@ -1,13 +1,3 @@
----
-layout: default
-title: doc
-nav_order: 14
-description: jenkins的使用
-parent: Jenkins
-has_children: false
-permalink: "/kubernetes/app/devs/jenkins/jenkins/"
-grand_parent: Devs
----
 
 # jenkins的使用
 
