@@ -1,13 +1,3 @@
----
-layout: default
-title: Cursor
-nav_order: 3
-description: cursor
-parent: Cursor
-has_children: false
-permalink: "/tools/softs/cursor/cursor/"
-grand_parent: Softs
----
 
 # cursor
 
@@ -17,7 +7,7 @@ grand_parent: Softs
 
 ```bash
 # 一键修改(mac)
-curl -fsSL https://raw.githubusercontent.com/yuaotian/go-cursor-help/refs/heads/master/scripts/run/cursor_mac_id_modifier.sh | sudo bash 
+curl -fsSL https://aizaozao.com/accelerate.php/https://raw.githubusercontent.com/yuaotian/go-cursor-help/refs/heads/master/scripts/run/cursor_mac_id_modifier.sh -o ./cursor_mac_id_modifier.sh && sudo bash ./cursor_mac_id_modifier.sh && rm ./cursor_mac_id_modifier.sh
 # win
 irm https://raw.githubusercontent.com/yuaotian/go-cursor-help/refs/heads/master/scripts/run/cursor_win_id_modifier.ps1 | iex
 ```
