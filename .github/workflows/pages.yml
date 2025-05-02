@@ -39,13 +39,13 @@ jobs:
         run: |
           npm install
       
-      - name: Generate Sidebar
-        run: npm run generate-sidebar
+      - name: Build Docusaurus
+        run: npm run build
       
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./docs
+          path: ./build
 
   deploy:
     environment:
@@ -56,4 +56,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4 
+        uses: actions/deploy-pages@v4
