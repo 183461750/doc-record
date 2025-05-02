@@ -2,6 +2,9 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
+// const math = require('remark-math');
+// const katex = require('rehype-katex');
+
 const config: Config = {
   title: 'Doc Record',
   tagline: '个人文档记录',
@@ -13,7 +16,7 @@ const config: Config = {
   organizationName: 'your-github-username', 
   projectName: 'doc-record',
 
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
@@ -28,9 +31,37 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/', // 将文档设置为首页
-        //   remarkPlugins: [
-        //     // 解决Markdown文件中{xxx}变量被错误解析的问题。
-        //     [require('remark-mdx'), {parseFrontmatter: true}]
+          editUrl: 'https://github.com/183461750/doc-record',
+          remarkPlugins: [
+            // // 解决Markdown文件中{xxx}变量被错误解析的问题
+            // [
+            //     math,
+            //     {
+            //         skipExport: true
+            //     }
+            // ],
+            // // 自动转义Markdown中的特殊字符
+            // [
+            //     require('remark-stringify'),
+            //     {
+            //         escape: ['\\{', '\\}', '\\$']
+            //     }
+            // ],
+            // 忽略所有代码块解析
+            [
+                require('remark-parse'),
+                {
+                    blocks: false
+                }
+            ],
+          ],
+        //   rehypePlugins: [
+        //     [
+        //       katex,
+        //       {
+        //         strict: false, // 可以根据需要调整选项
+        //       },
+        //     ],
         //   ],
         },
         blog: false, // 禁用博客功能

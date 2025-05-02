@@ -1,7 +1,11 @@
 
+# dockerfile
+
 ## maven使用dockerfile插件构建项目
+
 - 参考项目[https://gitee.com/LFa/demo-test.git]
 - springboot pom.xml配置
+
 ```xml
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -125,7 +129,7 @@ other_args="-H tcp://0.0.0.0:2375 -H unix:///var/run/docker.sock"
 //重启docker服务
 service docker restart
 ```
-- 在windows系统环境变量中新建DOCKER_HOST值为tcp://<docker_ip≥:2375，将这里的<docker_ip>，替换为docker所在的centos服务器IP或主机名（用主机名，需要windows配置hosts)，可能需要重启系统。
+- 在windows系统环境变量中新建DOCKER_HOST值为tcp://[docker_ip]:2375，将这里的[docker_ip]，替换为docker所在的centos服务器IP或主机名（用主机名，需要windows配置hosts)，可能需要重启系统。
 - 修改/usr/lib/systemd/system/docker.service文件
 ```shell
 sudo vi /usr/lib/systemd/system/docker.service

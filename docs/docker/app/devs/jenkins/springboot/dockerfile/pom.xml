@@ -1,0 +1,39 @@
+<properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <maven.test.skip>true</maven.test.skip>
+        <spring-cloud.version>Finchley.RELEASE</spring-cloud.version>
+        <dockerfile.maven.version>1.4.3</dockerfile.maven.version>
+        <!-- 首先确保，配置的docker.image.prefix时正确的，即配置了绑定仓库。 -->
+        <docker.image.prefix>registry.docker.com:5000</docker.image.prefix>
+        <appPort>8880</appPort>
+    </properties>
+    <!-- build -->
+    <finalName>${project.name}</finalName>
+    <!-- build -> plugins -->
+    <plugin>
+        <groupId>com.spotify</groupId>
+        <artifactId>dockerfile-maven-plugin</artifactId>
+        <version>1.4.13</version>
+        <executions>
+            <execution>
+                <id>default</id>
+                <goals>
+                    <goal>build</goal>
+                    <goal>push</goal>
+                </goals>
+            </execution>
+        </executions>
+        <configuration>
+            <!-- 注意，repository的格式必须为：<username>/<repository_name>
+             username就是登录Docker Hub的用户名，例如我的用户名是longyonggang。
+            repository_name就是上一步在Docker Hub上创建的repository名字。 -->
+            <repository>${docker.image.prefix}/${project.build.finalName}</repository>
+            <tag>${project.version}</tag>
+            <buildArgs>
+                <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                <APP_PORT>${appPort}</APP_PORT>
+            </buildArgs>
+        </configuration>
+    </plugin>
