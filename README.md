@@ -80,3 +80,8 @@ runs-on: self-hosted
 2. 自动优化知识呈现方式
 3. 确保所有文档URL永久可用
 ```
+
+## TODO
+
+- 接入AI搜索
+  - [参考页面](https://docs.orama.com/cloud/data-sources/native-integrations/docusaurus)
