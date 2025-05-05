@@ -8,7 +8,6 @@ RUN sed -i s/mirror.centos.org/vault.centos.org/g /etc/yum.repos.d/*.repo && \
     sed -i s/^#.*baseurl=http/baseurl=http/g /etc/yum.repos.d/*.repo && \
     sed -i s/^mirrorlist=http/#mirrorlist=http/g /etc/yum.repos.d/*.repo && \
     yum install -y wget && \
-    cp /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.bak && \
     wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
 
 # 安装必要的软件包
@@ -26,23 +25,6 @@ RUN /usr/sbin/sshd-keygen
 RUN curl -L https://www.cpolar.com/static/downloads/install-release-cpolar.sh | bash
 
 COPY cpolar.yml /usr/local/etc/cpolar/cpolar.yml
-
-RUN tee /etc/systemd/system/cpolar.service <<-'EOF'
-[Unit]
-Description=Cpolar Service
-Documentation=https://www.cpolar.com/docs
-After=network.target nss-lookup.target
-
-[Service]
-User=nobody
-NoNewPrivileges=true
-ExecStart=/usr/local/bin/cpolar start-all -dashboard=on -daemon=on -config=/usr/local/etc/cpolar/cpolar.yml -log=/var/log/cpolar/access.log
-Restart=on-failure
-RestartPreventExitStatus=23
-
-[Install]
-WantedBy=multi-user.target
-EOF
 
 # 开启服务后, /usr/sbin/init命令会自动帮忙启动服务
 RUN systemctl enable cpolar.service
