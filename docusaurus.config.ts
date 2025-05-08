@@ -2,8 +2,7 @@ import {themes as prismThemes} from 'prism-react-renderer';
 import type {Config} from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
-// const math = require('remark-math');
-// const katex = require('rehype-katex');
+const defaultLocale = 'zh-Hans';
 
 const config: Config = {
   title: 'Doc Record',
@@ -20,8 +19,8 @@ const config: Config = {
   onBrokenMarkdownLinks: 'warn',
 
   i18n: {
-    defaultLocale: 'zh-Hans',
-    locales: ['zh-Hans'],
+    defaultLocale: defaultLocale,
+    locales: [defaultLocale, 'en'],
   },
 
   plugins: [
@@ -46,22 +45,13 @@ const config: Config = {
         docs: {
           sidebarPath: './sidebars.ts',
           routeBasePath: '/', // 将文档设置为首页
-          editUrl: 'https://github.com/183461750/doc-record',
+          editUrl: ({locale, versionDocsDirPath, docPath}) => {
+            // if (locale !== defaultLocale) {
+            //   return `https://github.com/183461750/doc-record/${locale}`;
+            // }
+            return `https://github.com/183461750/doc-record/blob/main/${versionDocsDirPath}/${docPath}`;
+          },
           remarkPlugins: [
-            // // 解决Markdown文件中{xxx}变量被错误解析的问题
-            // [
-            //     math,
-            //     {
-            //         skipExport: true
-            //     }
-            // ],
-            // // 自动转义Markdown中的特殊字符
-            // [
-            //     require('remark-stringify'),
-            //     {
-            //         escape: ['\\{', '\\}', '\\$']
-            //     }
-            // ],
             // 忽略所有代码块解析
             [
                 require('remark-parse'),
@@ -70,14 +60,6 @@ const config: Config = {
                 }
             ],
           ],
-        //   rehypePlugins: [
-        //     [
-        //       katex,
-        //       {
-        //         strict: false, // 可以根据需要调整选项
-        //       },
-        //     ],
-        //   ],
         },
         blog: false, // 禁用博客功能
         theme: {
@@ -88,25 +70,6 @@ const config: Config = {
   ],
 
   themeConfig: {
-    /* 
-    要使用Algolia DocSearch，请按照以下步骤操作：
-    1. 注册Algolia账号：https://www.algolia.com/
-    2. 创建新应用并获取API密钥
-    3. 申请DocSearch爬虫：https://docsearch.algolia.com/apply/
-      或者设置自己的爬虫：https://docsearch.algolia.com/docs/run-your-own
-    4. 收到确认邮件后，使用下面的配置（替换为您的实际值）
-    */
-    
-    // 启用Algolia搜索（取消注释并填入您的实际信息）
-    // algolia: {
-    //   appId: '6DU1M1NH74',           // 您的Algolia应用ID
-    //   apiKey: '56a89ad14a148334e4d1b317a8b10026',   // 您的搜索API密钥（非管理API密钥）
-    //   indexName: 'doc-record',    // 您的索引名称
-    //   contextualSearch: true,          // 启用上下文搜索
-    //   // 可选配置
-    //   searchParameters: {},            // 附加搜索参数
-    //   searchPagePath: 'search',        // 搜索页面路径
-    // },
     navbar: {
       title: 'Doc Record',
       logo: {
@@ -126,6 +89,10 @@ const config: Config = {
           position: 'right',
         },
       ],
+    },
+    announcementBar: {
+      content:
+        '⭐️ If you like DocSearch, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/183461750/doc-record">GitHub</a>! ⭐️',
     },
     footer: {
       style: 'dark',
