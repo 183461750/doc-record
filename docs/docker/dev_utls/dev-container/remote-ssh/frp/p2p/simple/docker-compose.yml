@@ -2,9 +2,7 @@
 services:
 
   frp-p2p-ssh-exposed:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/frpc-p2p-ssh:latest
     # ports:
     #   - "2522:22"
     environment:
@@ -21,9 +19,7 @@ services:
     privileged: true 
 
   frp-p2p-ssh-accesser:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/frpc-p2p-ssh:latest
     # ports:
     #   - "6000:6000"
     environment:

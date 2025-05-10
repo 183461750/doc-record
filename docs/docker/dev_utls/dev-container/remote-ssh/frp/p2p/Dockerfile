@@ -46,7 +46,7 @@ serverPort = ${serverPort}
 
 [[${client_title}]]
 name = ${client_name}
-type = "xtcp"
+type = ${client_type}
 secretKey = ${secretKey}
 ${localIP_exposed_line}
 ${localPort_exposed_line}
@@ -91,6 +91,7 @@ sed -i "s/\${client_title}/${client_title}/g" /www/frp/frpc.toml
 sed -i "s/\${serverAddr}/${serverAddr}/g" /www/frp/frpc.toml
 sed -i "s/\${serverPort}/${serverPort}/g" /www/frp/frpc.toml
 sed -i "s/\${client_name}/${client_name}/g" /www/frp/frpc.toml
+sed -i "s/\${client_type}/${client_type}/g" /www/frp/frpc.toml
 sed -i "s/\${secretKey}/${secretKey}/g" /www/frp/frpc.toml
 sed -i "s/\${localIP_exposed_line}/${localIP_exposed_line}/g" /www/frp/frpc.toml
 sed -i "s/\${localPort_exposed_line}/${localPort_exposed_line}/g" /www/frp/frpc.toml
