@@ -1,0 +1,11 @@
+
+services:
+  frp-ssh:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/frp-ssh:v2
+    environment:
+      - TZ="Asia/Shanghai"
+      - serverAddr="116.1.1.1"
+      - serverPort=7000
+      - ssh_remotePort=6000
+    restart: unless-stopped
+    privileged: true 
