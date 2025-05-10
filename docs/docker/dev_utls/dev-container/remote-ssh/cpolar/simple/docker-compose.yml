@@ -1,0 +1,6 @@
+
+services:
+  cpolar-ssh:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/cpolar-ssh:latest
+    restart: unless-stopped
+    privileged: true

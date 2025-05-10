@@ -1,0 +1,15 @@
+
+services:
+  cpolar-ssh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "2288:22"
+    environment:
+      - TZ="Asia/Shanghai"
+      # - CPOLAR_AUTH_TOKEN=${CPOLAR_AUTH_TOKEN:-MzM2YmY5NzktNDQ4Ny00Y2VlLTllYzAtZWE1MjMwODQwMTJk}
+      # - https_proxy=http://127.0.0.1:9090
+      # - http_proxy=http://127.0.0.1:9090
+    restart: unless-stopped
+    privileged: true 

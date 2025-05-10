@@ -1,0 +1,14 @@
+
+services:
+  cpolar-ssh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - TZ="Asia/Shanghai"
+      - CPOLAR_AUTH_TOKEN=xxx
+      - CPOLAR_CONTANER_SSH_NAME=contaner_ssh_1
+    restart: unless-stopped
+    privileged: true 
+    volumes:
+      - ./cpolar.yml:/usr/local/etc/cpolar/cpolar.yml
