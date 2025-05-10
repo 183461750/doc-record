@@ -1,0 +1,11 @@
+
+services:
+  frps-ssh:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/frps-ssh:latest
+    ports:
+      - "7000:7000"
+    environment:
+      - TZ="Asia/Shanghai"
+      - bindPort=7000
+    restart: unless-stopped
+    privileged: true 
