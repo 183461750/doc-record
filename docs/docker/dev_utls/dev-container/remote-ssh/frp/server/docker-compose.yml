@@ -1,0 +1,13 @@
+
+services:
+  frp-ssh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "7000:7000"
+    environment:
+      - TZ="Asia/Shanghai"
+      - bindPort=7000
+    restart: unless-stopped
+    privileged: true 
