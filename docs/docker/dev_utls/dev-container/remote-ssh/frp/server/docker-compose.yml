@@ -1,6 +1,6 @@
 
 services:
-  frp-ssh:
+  frps-ssh:
     build:
       context: .
       dockerfile: Dockerfile
