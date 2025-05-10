@@ -1,6 +1,0 @@
-tunnels:
-  ${CPOLAR_CONTANER_SSH_NAME}:
-    proto: tcp
-    addr: "22"
-    bind_tls: both
-    start_type: enable

@@ -1,9 +1,0 @@
-
-services:
-  cpolar-ssh:
-    image: registry.cn-hangzhou.aliyuncs.com/iuin/cpolar-ssh:latest
-    environment:
-      - TZ="Asia/Shanghai"
-      - CPOLAR_AUTH_TOKEN=xxx
-    restart: unless-stopped
-    privileged: true
