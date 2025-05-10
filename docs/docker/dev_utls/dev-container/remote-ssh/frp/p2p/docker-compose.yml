@@ -1,0 +1,41 @@
+
+services:
+
+  frp-p2p-ssh-exposed:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # ports:
+    #   - "2522:22"
+    environment:
+      - TZ="Asia/Shanghai"
+      - client_title=proxies
+      - serverAddr="129.204.8.61"
+      - serverPort=7000
+      - secretKey="ssh"
+      - client_name="ssh-exposed"
+      - localIP_exposed_line=localIP="127.0.0.1"
+      - localPort_exposed_line=localPort=22
+    restart: unless-stopped
+    privileged: true 
+
+  frp-p2p-ssh-accesser:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "6000:6000"
+    environment:
+      - TZ="Asia/Shanghai"
+      - client_title=visitors
+      - serverAddr="129.204.8.61"
+      - serverPort=7000
+      - secretKey="ssh"
+      - client_name="ssh-accesser"
+      - serverName_accesser_line=serverName="ssh-exposed"
+      - bindAddr_accesser_line=bindAddr="127.0.0.1"
+      - bindPort_accesser_line=bindPort=6000
+    restart: unless-stopped
+    privileged: true 
+
+# ssh -oPort=6000 root@127.0.0.1
