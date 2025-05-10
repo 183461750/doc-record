@@ -10,7 +10,7 @@ services:
     environment:
       - TZ="Asia/Shanghai"
       - client_title=proxies
-      - serverAddr="129.204.8.61"
+      - serverAddr="129.204.8.8"
       - serverPort=7000
       - secretKey="ssh"
       - client_name="ssh-exposed"
@@ -23,12 +23,12 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    ports:
-      - "6000:6000"
+    # ports:
+    #   - "6000:6000"
     environment:
       - TZ="Asia/Shanghai"
       - client_title=visitors
-      - serverAddr="129.204.8.61"
+      - serverAddr="129.204.8.8"
       - serverPort=7000
       - secretKey="ssh"
       - client_name="ssh-accesser"
