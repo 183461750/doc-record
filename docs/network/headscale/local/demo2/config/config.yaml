@@ -399,3 +399,10 @@ logtail:
 # default static port 41641. This option is intended as a workaround for some buggy
 # firewall devices. See https://tailscale.com/kb/1181/firewalls/ for more information.
 randomize_client_port: false
+
+# PS: 用于配置p2p, 但好像并没有看到效果
+acl:
+  rules:
+    - action: accept
+      users: ["*"]  # 允许所有用户
+      peers: ["*"]  # 允许所有设备

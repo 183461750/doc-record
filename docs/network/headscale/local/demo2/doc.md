@@ -14,3 +14,12 @@ docker exec -it headscale headscale preauthkeys create -e 24h --user fa.ssy
 # 将上面生成的key复制到下面的命令中
 tailscale up --accept-dns=true --accept-routes --login-server=http://127.0.0.1:8888 --hostname=fa.ssy --force-reauth  --authkey d69d58c009190358df704e7b3d867c1be0b022c038bc89be
 ```
+
+```bash
+# 查看节点
+docker exec -it headscale headscale nodes list
+# 删除节点(通过ID)
+docker exec -it headscale headscale nodes delete --identifier 3
+# 重命名节点(通过ID)
+docker exec -it headscale headscale nodes rename --identifier 4 hubeigongyinglian
+```
