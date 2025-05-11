@@ -23,3 +23,7 @@ docker exec -it headscale headscale nodes delete --identifier 3
 # 重命名节点(通过ID)
 docker exec -it headscale headscale nodes rename --identifier 4 hubeigongyinglian
 ```
+
+## 容器使用host模式
+
+端口冲突的话, 可以在config.yml中更换端口

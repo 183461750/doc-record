@@ -2,6 +2,7 @@
 services:
   tailscale-ssh:
     image: registry.cn-hangzhou.aliyuncs.com/iuin/tailscale-ssh:latest
+    network_mode: "host"  # 直接使用宿主机网络
     # ports:
     #   - "2222:22"
     environment:
