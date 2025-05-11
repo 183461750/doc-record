@@ -1,0 +1,18 @@
+
+services:
+  cpolar-ssh:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/frpc-ssh:latest
+    environment:
+      TZ: "Asia/Shanghai"
+      serverAddr: '"129.204.8.8"'
+      client_title: proxies
+      serverPort: 7000
+      client_name: '"ssh-accesser"'
+      client_type: '"tcp"'
+      localIP_proxies_line: localIP="127.0.0.1"
+      localPort_proxies_line: localPort=22
+      remotePort_proxies_tcp_line: remotePort=6001
+    restart: unless-stopped
+    privileged: true 
+    volumes:
+      - ./.ssh/authorized_keys:/root/.ssh/authorized_keys
