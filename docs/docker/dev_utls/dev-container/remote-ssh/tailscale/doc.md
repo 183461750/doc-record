@@ -2,9 +2,9 @@
 
 ## 相关部署配置
 
-[服务端doc](https://github.com/183461750/doc-record/blob/main/docs/network/headscale/local/demo2/doc.md)
-[服务端docker-compose.yml](https://github.com/183461750/doc-record/blob/main/docs/network/headscale/local/demo2/docker-compose.yml)
-[客户端docker-compose.yml](https://github.com/183461750/doc-record/blob/main/docs/docker/dev_utls/dev-container/remote-ssh/tailscale/simple/docker-compose.yml)
+- [服务端doc](https://github.com/183461750/doc-record/blob/main/docs/network/headscale/local/demo2/doc.md)
+- [服务端docker-compose.yml](https://github.com/183461750/doc-record/blob/main/docs/network/headscale/local/demo2/docker-compose.yml)
+- [客户端docker-compose.yml](https://github.com/183461750/doc-record/blob/main/docs/docker/dev_utls/dev-container/remote-ssh/tailscale/simple/docker-compose.yml)
 
 ## 使用
 
