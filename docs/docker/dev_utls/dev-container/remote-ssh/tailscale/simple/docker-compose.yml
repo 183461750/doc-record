@@ -1,0 +1,13 @@
+
+services:
+  tailscale-ssh:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/tailscale-ssh:latest
+    # ports:
+    #   - "2222:22"
+    environment:
+      - TZ="Asia/Shanghai"
+      - login_server=http://129.204.8.8:8888
+      - hostname=tailscale-ssh
+      - authkey=xxx
+    restart: unless-stopped
+    privileged: true 
