@@ -268,6 +268,7 @@ dns:
   # `base_domain` must be a FQDN, without the trailing dot.
   # The FQDN of the hosts will be
   # `hostname.base_domain` (e.g., _myhost.example.com_).
+  # 使用示例: ssh root@headscale.fa.internet.company.example.com(headscale.fa.internet.company为hostname)
   base_domain: example.com
 
   # List of DNS servers to expose to clients.
