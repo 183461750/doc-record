@@ -1,6 +1,11 @@
 
 # linux相关命令使用记录
 
+## Linux镜像
+
+一键安装docker, 一键换软件源等
+[LinuxMirrors](https://github.com/SuperManito/LinuxMirrors)
+
 ## 安装docker并配置加速器
 
 ```shell

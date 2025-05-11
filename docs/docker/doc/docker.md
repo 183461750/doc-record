@@ -3,8 +3,13 @@
 
 ## 安装docker
 
+[LinuxMirrors](https://github.com/SuperManito/LinuxMirrors)
+
 ```shell
-# 目前使用的方式
+# 一键安装
+bash <(curl -sSL https://linuxmirrors.cn/docker.sh)
+
+# 目前使用的方式(常规)
 sudo yum install -y yum-utils
 sudo yum-config-manager --add-repo https://mirrors.aliyun.com/docker-ce/linux/centos/docker-ce.repo
 sudo yum install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
