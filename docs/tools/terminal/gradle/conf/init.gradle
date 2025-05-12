@@ -1,0 +1,19 @@
+
+allprojects { 
+    repositories { 
+        mavenLocal()
+        maven {  
+            url 'http://maven.aliyun.com/nexus/content/repositories/central/'
+            allowInsecureProtocol = true
+        }
+		maven {  
+			credentials {
+				username 'admin'
+				password 'xxx'
+			}
+			
+			url 'http://111.222.333.444/nexus/repository/maven-public/' 
+            allowInsecureProtocol = true
+		}
+    }
+}
