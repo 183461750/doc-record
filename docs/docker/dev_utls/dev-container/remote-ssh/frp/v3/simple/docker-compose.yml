@@ -1,6 +1,6 @@
 
 services:
-  cpolar-ssh:
+  frpc-ssh:
     image: registry.cn-hangzhou.aliyuncs.com/iuin/frpc-ssh:latest
     environment:
       TZ: "Asia/Shanghai"

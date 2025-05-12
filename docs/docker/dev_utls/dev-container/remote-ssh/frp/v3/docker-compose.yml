@@ -1,6 +1,6 @@
 
 services:
-  cpolar-ssh:
+  frpc-ssh:
     build:
       context: .
       dockerfile: Dockerfile
