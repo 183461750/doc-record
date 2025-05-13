@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     environment:
       TZ: "Asia/Shanghai"
-      serverAddr: '"129.204.8.61"'
+      serverAddr: '"129.204.8.8"'
       client_title: proxies
       serverPort: 7000
       client_name: '"frpc-ssh-v4"'
