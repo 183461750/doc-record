@@ -32,3 +32,23 @@ export serverAddr='"129.204.8.8"'
     #   TZ: "Asia/Shanghai"
     #   serverAddr: ${serverAddr}
 ```
+
+## 域名配置
+
+```bash
+# dev-jumpbox容器的hosts配置(/etc/hosts)
+# 通过docker compose中配置
+    # extra_hosts:
+    # #   - "host.docker.internal:host-gateway"
+    #   - "me.host:host-gateway"
+
+# ssh config(~/.ssh/config)
+# 这里的HostName之所以使用本地hosts配置而不是IP的原因是, 我们需要在多个内网服务器中使用这个方法的话, 本地hnown_hosts会冲突(~/.ssh/known_hosts)
+# Host frp.fa.internet.company
+#   # HostName host.docker.internal
+#   HostName me.host
+#   User root
+#   IdentityFile ~/.ssh/id_ed25519_iu
+#   ProxyJump frp.container6002.fa.internet.company
+#   ForwardAgent yes
+```
