@@ -26,7 +26,7 @@ docker exec -it dev-jumpbox bash -c "echo 'ssh-ed25519 xxx xxx' > /root/.ssh/aut
 
 ```bash
 # 宿主机执行
-export serverAddr='"129.204.8.61"'
+export serverAddr='"129.204.8.8"'
 # docker-compose.yml对应配置改为
     # environment:
     #   TZ: "Asia/Shanghai"
