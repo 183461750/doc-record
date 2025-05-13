@@ -2,6 +2,7 @@
 services:
   dev-jumpbox:
     image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:frpc-ssh
+    container_name: dev-jumpbox
     environment:
       TZ: "Asia/Shanghai"
       serverAddr: '"129.204.8.61"'
