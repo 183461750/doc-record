@@ -14,5 +14,3 @@ services:
       remotePort_proxies_tcp_line: remotePort=6001
     restart: unless-stopped
     privileged: true 
-    volumes:
-      - ./.ssh/authorized_keys:/root/.ssh/authorized_keys
