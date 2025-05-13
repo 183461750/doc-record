@@ -1,0 +1,15 @@
+
+services:
+  dev-jumpbox:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:frpc-ssh
+    environment:
+      TZ: "Asia/Shanghai"
+      serverAddr: '"129.204.8.61"'
+      client_title: proxies
+      serverPort: 7000
+      client_name: '"dev-jumpbox-6002"'
+      client_type: '"tcp"'
+      localIP_proxies_line: localIP="127.0.0.1"
+      localPort_proxies_line: localPort=22
+      remotePort_proxies_tcp_line: remotePort=6002
+    restart: unless-stopped

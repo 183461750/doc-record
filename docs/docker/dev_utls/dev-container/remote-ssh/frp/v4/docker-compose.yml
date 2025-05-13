@@ -1,0 +1,19 @@
+
+services:
+  frpc-ssh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TZ: "Asia/Shanghai"
+      serverAddr: '"129.204.8.61"'
+      client_title: proxies
+      serverPort: 7000
+      client_name: '"frpc-ssh-v4"'
+      client_type: '"tcp"'
+      localIP_proxies_line: localIP="127.0.0.1"
+      localPort_proxies_line: localPort=22
+      remotePort_proxies_tcp_line: remotePort=6002
+    restart: unless-stopped
+    volumes:
+      - ./.ssh/authorized_keys:/root/.ssh/authorized_keys
