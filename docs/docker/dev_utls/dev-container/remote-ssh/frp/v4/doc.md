@@ -21,3 +21,14 @@ docker-compose up -d
 # 将本地电脑生成的ssh公钥上传到开发跳板盒子中(~/.ssh/id_ed25519.pub)
 docker exec -it dev-jumpbox bash -c "echo 'ssh-ed25519 xxx xxx' > /root/.ssh/authorized_keys"
 ```
+
+## 环境变量
+
+```bash
+# 宿主机执行
+export serverAddr='"129.204.8.61"'
+# docker-compose.yml对应配置改为
+    # environment:
+    #   TZ: "Asia/Shanghai"
+    #   serverAddr: ${serverAddr}
+```
