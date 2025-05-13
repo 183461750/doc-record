@@ -5,9 +5,15 @@ WORKDIR /www
 
 # 安装必要的软件包
 RUN apt-get update && \
-    apt-get install -y openssh-server openssh-client curl wget gettext tini && \
+    apt-get install -y openssh-server openssh-client curl wget locales gettext tini && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# 生成 en_US.UTF-8 locale
+RUN locale-gen en_US.UTF-8
+
+# 设置环境变量
+ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
 # 解压frp
 COPY ./frp_0.62.1_linux_amd64.tar.gz ./frp_0.62.1_linux_amd64.tar.gz

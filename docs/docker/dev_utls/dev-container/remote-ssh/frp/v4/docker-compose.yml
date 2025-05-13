@@ -6,6 +6,9 @@ services:
       dockerfile: Dockerfile
     environment:
       TZ: "Asia/Shanghai"
+      # LANG: en_US.UTF-8
+      # LC_ALL: en_US.UTF-8
+      # LANGUAGE: en_US.UTF-8
       serverAddr: '"129.204.8.8"'
       client_title: proxies
       serverPort: 7000
