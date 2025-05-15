@@ -14,6 +14,5 @@ services:
       localPort_proxies_line: localPort=22
       remotePort_proxies_tcp_line: remotePort=6002
     extra_hosts:
-    #   - "host.docker.internal:host-gateway"
       - "me.host:host-gateway"
     restart: unless-stopped
