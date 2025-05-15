@@ -341,3 +341,9 @@ timedatectl set-ntp true
 date -s "$(curl -s --head http://www.baidu.com | grep '^Date:' | cut -d' ' -f3-6)Z"
 
 ```
+
+## 查看域名对应IP
+
+```bash
+ping -c 1 example.com
+```
