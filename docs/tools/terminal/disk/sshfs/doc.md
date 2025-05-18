@@ -27,7 +27,7 @@ diskutil unmount /path/to/mountpoint
 - 其他参数
 
 ```bash
-# 后台运行
+# 前台操作
 sshfs -f [user@]host:[dir] mountpoint
 # 自动重连
 sshfs -o reconnect [user@]host:[dir] mountpoint
@@ -53,5 +53,5 @@ sshfs -p 2222 [user@]host:[dir] mountpoint
 - 示例
 
 ```bash
-sshfs -f -o reconnect -o cache=yes -o kernel_cache -o auto_cache  -o max_conns=4 example.com:/home/user/data /mnt/remote_data
+sshfs -o reconnect -o cache=yes -o kernel_cache -o auto_cache  -o max_conns=4 example.com:/home/user/data /mnt/remote_data
 ```
