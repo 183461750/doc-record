@@ -81,6 +81,15 @@ runs-on: self-hosted
 3. 确保所有文档URL永久可用
 ```
 
+## 备注
+
+- vscode搜索
+
+```bash
+# 需要排除的搜索项
+./.smart-connections, ./.smart-env, ./doc-record/.docusaurus
+```
+
 ## TODO
 
 - 接入AI搜索
