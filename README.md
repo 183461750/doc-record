@@ -87,7 +87,21 @@ runs-on: self-hosted
 
 ```bash
 # 需要排除的搜索项
-./.smart-connections, ./.smart-env, ./doc-record/.docusaurus
+
+# 如果只是想排除 所有以 . 开头的文件和目录，最简单的写法是：
+**/.*
+# 但如果某些 .xxx 文件需要保留，可以结合 ! 排除规则：
+**/.*, !./.some-important-dot-file
+
+## 写入项目的 .vscode/settings.json 文件，这样只有当前项目会应用这些排除规则，而不会影响其他项目或全局设置。
+{
+    "search.exclude": {
+        "**/node_modules": true,
+        "**/.*": true,  // 排除所有以 . 开头的文件和目录
+        // "!**/temp/**": true,  // 允许搜索所有 temp 文件夹（默认允许）
+    }
+}
+
 ```
 
 ## TODO
