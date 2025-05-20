@@ -98,8 +98,10 @@ runs-on: self-hosted
     "search.exclude": {
         "**/node_modules": true,
         "**/.*": true,  // 排除所有以 . 开头的文件和目录
+        // 加了下面这个, temp目录下的文件还是不能被搜索到
         // "!**/temp/**": true,  // 允许搜索所有 temp 文件夹（默认允许）
-    }
+    },
+    "search.useIgnoreFiles": false  // 关闭忽略文件的影响
 }
 
 ```
