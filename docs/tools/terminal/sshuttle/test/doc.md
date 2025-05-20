@@ -11,6 +11,8 @@ sshuttle --sudoers-no-modify
 # 执行后会打印配置内容
 # 执行以下命令, 将配置内容写入到以下文件中
 visudo /etc/sudoers.d/sshuttle_auto
+# 给指定用户添加配置(指定用户john)(好像指定用户sshuttle的免密才能生效)
+sudo visudo /etc/sudoers.d/sshuttle_auto_john
 
 # 免密使用(fa为免密用户, 需指定)(配合ssh config使用)
 # PS: 貌似并没有免密
