@@ -1,0 +1,10 @@
+
+services:
+  dev-jumpbox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TZ: "Asia/Shanghai"
+      token: 'eyJhIjoiMWU0MWJhOGQzMmFmMjU0ZTUwY2EyZjY1MjkyYWRmZTEiLCJ0IjoiNDdlZmRlMTYtYjNlZi00MDNjLWE4YWQtYzFlN2IzNGFiMzY2IiwicyI6Ik1qQXdaVGRoWVdZdE1HVTRZUzAwWlRrMUxXSTRZelF0TXpVNU5qQXpaVFpqTjJZNCJ9'
+    restart: unless-stopped

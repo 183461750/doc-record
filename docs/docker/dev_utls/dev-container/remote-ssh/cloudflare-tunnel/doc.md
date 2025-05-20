@@ -8,3 +8,5 @@
 # macos
 brew install cloudflared
 ```
+
+> PS: 这种方式暂时不搞了, 国外的渠道, 延迟估计不小
