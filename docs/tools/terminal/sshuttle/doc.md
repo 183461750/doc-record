@@ -21,3 +21,10 @@ sshuttle --sudoers-user fa -r mac.intranet.company 10.0.10.0/24 --dns --method a
 # -D后台运行
 sshuttle --sudoers-user fa -r mac.intranet.company 10.0.10.0/24 --dns --method auto --auto-hosts --auto-nets -D
 ```
+
+- 最佳实践
+
+```bash
+# 只添加必要配置, 其他均用默认值就好
+sshuttle --dns --auto-hosts --auto-nets -D -r mac.intranet.company 10.0.10.0/24
+```
