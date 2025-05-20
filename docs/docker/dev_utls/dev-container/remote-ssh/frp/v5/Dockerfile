@@ -1,4 +1,3 @@
-
 FROM debian:trixie-slim
 
 WORKDIR /www
@@ -9,8 +8,10 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# 生成 en_US.UTF-8 locale
-RUN locale-gen en_US.UTF-8
+# 生成并配置 locale
+RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+    locale-gen && \
+    update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
 # 设置环境变量
 ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
@@ -44,7 +45,7 @@ RUN tee /entrypoint.sh <<-'EOF'
 envsubst < /www/frp/frpc.toml > /tmp/frpc.toml.tmp && mv /tmp/frpc.toml.tmp /www/frp/frpc.toml
 
 # 确保目录存在
-mkdir /var/run/sshd
+[ ! -d "/var/run/sshd" ] && mkdir -p /var/run/sshd
 # 启动 SSH（后台运行）
 /usr/sbin/sshd -D &
 
