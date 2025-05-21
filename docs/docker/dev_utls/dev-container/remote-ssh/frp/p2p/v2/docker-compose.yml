@@ -25,7 +25,7 @@ services:
       secretKey_stcp_line: secretKey = "ssh"
       client_name: '"ssh-visitors"'
       client_type: '"stcp"'
-      serverName_visitors_line: serverName="ssh-exposed"
+      serverName_visitors_line: serverName="ssh-proxies"
       bindAddr_visitors_line: bindAddr="127.0.0.1"
       bindPort_visitors_line: bindPort=6000
       # 好像没有这个字段
