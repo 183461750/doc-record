@@ -18,7 +18,7 @@ ENV LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8 LANGUAGE=en_US.UTF-8
 
 # 解压frp
 COPY ./frp_0.62.1_linux_amd64.tar.gz ./frp_0.62.1_linux_amd64.tar.gz
-RUN tar -xzf ./frp_0.62.1_linux_amd64.tar.gz && \
+RUN tar -xzf ./frp_0.62.1_linux_amd64.tar.gz && rm -rf ./frp_0.62.1_linux_amd64.tar.gz && \
     mv frp_0.62.1_linux_amd64 frp
 
 # 创建包装服务
@@ -35,6 +35,7 @@ ${localPort_proxies_line}
 ${serverName_visitors_line}
 ${bindAddr_visitors_line}
 ${bindPort_visitors_line}
+${keepTunnelOpen_visitors_line}
 ${remotePort_proxies_tcp_line}
 EOF
 
@@ -50,7 +51,7 @@ envsubst < /www/frp/frpc.toml > /tmp/frpc.toml.tmp && mv /tmp/frpc.toml.tmp /www
 /usr/sbin/sshd -D &
 
 # 启动 FRPC
-/www/frp/frpc -c /www/frp/frpc.toml
+/www/frp/frpc -c ${frpc_config_path:-/www/frp/frpc.toml}
 
 # 保持容器运行
 wait

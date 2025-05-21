@@ -20,3 +20,4 @@ services:
     restart: unless-stopped
     volumes:
       - ./.ssh/authorized_keys:/root/.ssh/authorized_keys
+      - ./frpc.toml:/www/frp/temp/frpc.toml
