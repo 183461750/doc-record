@@ -1,0 +1,37 @@
+
+services:
+
+  frp-p2p-ssh-proxies:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:frpc-ssh-v5.1
+    network_mode: "host"
+    environment:
+      TZ: "Asia/Shanghai"
+      client_title: proxies
+      serverAddr: '"129.204.8.8"'
+      serverPort: 7000
+      secretKey_stcp_line: secretKey = "ssh"
+      client_name: '"ssh-proxies"'
+      client_type: '"xtcp"'
+      localIP_proxies_line: localIP="127.0.0.1"
+      localPort_proxies_line: localPort=22
+    restart: unless-stopped
+
+  frp-p2p-ssh-visitors:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:frpc-ssh-v5.1
+    network_mode: "host"
+    environment:
+      TZ: "Asia/Shanghai"
+      client_title: visitors
+      serverAddr: '"129.204.8.8"'
+      serverPort: 7000
+      secretKey_stcp_line: secretKey = "ssh"
+      client_name: '"ssh-visitors"'
+      client_type: '"xtcp"'
+      serverName_visitors_line: serverName="ssh-proxies"
+      bindAddr_visitors_line: bindAddr="127.0.0.1"
+      bindPort_visitors_line: bindPort=6000
+      # 好像没有这个字段
+      # keepTunnelOpen_visitors_line: keepTunnelOpen = true
+    restart: unless-stopped
+
+# ssh -oPort=6000 root@127.0.0.1
