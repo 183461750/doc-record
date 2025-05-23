@@ -12,6 +12,7 @@ RUN apt-get update && \
 RUN mkdir /var/run/sshd && \
     echo 'root:password' | chpasswd && \
     sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed -i 's/#Port 22/Port 2222/' /etc/ssh/sshd_config && \
     sed -i 's/#PasswordAuthentication no/PasswordAuthentication yes/' /etc/ssh/sshd_config
 
 # RUN wget -O ./frp_0.62.1_linux_amd64.tar.gz https://github.com/fatedier/frp/releases/download/v0.62.1/frp_0.62.1_linux_amd64.tar.gz && \
@@ -26,6 +27,13 @@ RUN tar -xzf ./frp_0.62.1_linux_amd64.tar.gz && \
 # 创建包装服务
 RUN tee /www/frp/frps.toml <<-'EOF'
 bindPort = ${bindPort}
+
+sshTunnelGateway.bindPort = 22
+# sshTunnelGateway.privateKeyFile = ""
+# sshTunnelGateway.autoGenPrivateKeyPath = ""
+# sshTunnelGateway.authorizedKeysFile = "~/.ssh/authorized_keys"
+
+auth.token = "xxx"
 EOF
 
 
@@ -51,7 +59,7 @@ RUN systemctl enable frps.service
 
 
 # 暴露 SSH 端口
-EXPOSE 22
+EXPOSE 22 2222
 # 启动ssh和cpolar服务
 # ENTRYPOINT [ "/usr/sbin/init" ]
 

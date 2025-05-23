@@ -1,0 +1,17 @@
+
+services:
+  dev-jumpbox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TZ: "Asia/Shanghai"
+      serverAddr: 129.204.8.8
+      proxy_name: '"ssh-v1"'
+      remotePort: 6022
+      frp_token: xxx
+    extra_hosts:
+      - "me.host:host-gateway"
+    restart: unless-stopped
+    volumes:
+      - ./.ssh/:/root/.ssh/

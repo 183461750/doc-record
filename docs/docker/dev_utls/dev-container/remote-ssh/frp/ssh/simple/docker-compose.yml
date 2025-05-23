@@ -1,0 +1,15 @@
+
+services:
+  dev-jumpbox:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:ssh-v5.1
+    environment:
+      TZ: "Asia/Shanghai"
+      serverAddr: 129.204.8.8
+      proxy_name: '"ssh-v1"'
+      remotePort: 6022
+      frp_token: xxx
+    extra_hosts:
+      - "me.host:host-gateway"
+    restart: unless-stopped
+    volumes:
+      - ./.ssh/authorized_keys:/root/.ssh/authorized_keys

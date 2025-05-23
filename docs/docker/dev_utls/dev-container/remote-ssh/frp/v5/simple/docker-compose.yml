@@ -1,7 +1,7 @@
 
 services:
   dev-jumpbox:
-    image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:frpc-ssh-v5
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:frpc-ssh-v5.1
     container_name: dev-jumpbox
     environment:
       TZ: "Asia/Shanghai"
