@@ -25,6 +25,7 @@ RUN tar -xzf ./frp_0.62.1_linux_amd64.tar.gz && rm -rf ./frp_0.62.1_linux_amd64.
 RUN tee /www/frp/frpc.toml <<-'EOF'
 serverAddr = ${serverAddr}
 serverPort = ${serverPort}
+${auth_token_line}
 
 [[${client_title}]]
 name = ${client_name}

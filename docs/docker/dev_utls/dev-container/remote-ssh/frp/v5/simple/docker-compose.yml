@@ -8,6 +8,7 @@ services:
       serverAddr: '"129.204.8.8"'
       client_title: proxies
       serverPort: 7000
+      auth_token_line: auth.token = "xxx"
       client_name: '"dev-jumpbox-6002"'
       client_type: '"tcp"'
       localIP_proxies_line: localIP="127.0.0.1"
