@@ -4,12 +4,12 @@ WORKDIR /www
 
 # 安装必要的软件包
 RUN apt-get update && \
-    apt-get install -y openssh-server openssh-client curl wget locales gettext tini && \
+    apt-get install -y openssh-server openssh-client curl wget locales gettext tini python3 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
 # 生成并配置 locale
-RUN sed -i '/en_US.UTF-8/s/^# //g' /etc/locale.gen && \
+RUN echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
     locale-gen && \
     update-locale LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 
@@ -49,13 +49,13 @@ envsubst < /www/frp/frpc.toml > /tmp/frpc.toml.tmp && mv /tmp/frpc.toml.tmp /www
 # 确保目录存在
 [ ! -d "/var/run/sshd" ] && mkdir -p /var/run/sshd
 # 启动 SSH（后台运行）
-/usr/sbin/sshd -D &
+/usr/sbin/sshd
 
 # 启动 FRPC
 /www/frp/frpc -c ${frpc_config_path:-/www/frp/frpc.toml}
 
 # 保持容器运行
-wait
+tail -f /dev/null
 EOF
 
 RUN chmod +x /entrypoint.sh
