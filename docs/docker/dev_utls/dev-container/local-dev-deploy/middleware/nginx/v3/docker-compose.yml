@@ -1,0 +1,19 @@
+
+services:
+
+  nginx:
+    image: nginx:latest
+    environment:
+      TZ: "Asia/Shanghai"
+    ports:
+      - "18000:80"
+      - "12222:12222"
+    restart: unless-stopped
+    volumes:
+      - "./conf/nginx.conf:/etc/nginx/nginx.conf"
+      - "./conf/cors.conf:/etc/nginx/cors.conf"
+      - "./conf/conf.d/:/etc/nginx/conf.d/"
+      - "./conf/stream.d/:/etc/nginx/stream.d/"
+      - "./html:/usr/share/nginx/html"
+    extra_hosts:
+      - "fa.intranet.company:10.0.16.146"
