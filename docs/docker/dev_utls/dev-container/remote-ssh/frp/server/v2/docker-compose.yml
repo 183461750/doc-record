@@ -1,0 +1,29 @@
+
+services:
+  frps-ssh:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/frps-ssh:v2
+    # ports:
+    #   - "18700:7000"
+    #   - "12200:2200"
+    environment:
+      - TZ="Asia/Shanghai"
+      - auth_token_line=auth.token = "lx-frps-ssh"
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:latest
+    environment:
+      TZ: "Asia/Shanghai"
+    ports:
+      # - "18000:18000"
+      # - "12222:443"
+      - "18000:443"
+    restart: unless-stopped
+    volumes:
+      - "./nginx/conf/stream.d/:/etc/nginx/stream.d/"
+      # - "./nginx/conf/conf.d/:/etc/nginx/conf.d/"
+      - "./nginx/conf/nginx.conf:/etc/nginx/nginx.conf"
+    extra_hosts:
+      - "fa.intranet.company:10.0.16.146"
+    depends_on:
+      - frps-ssh

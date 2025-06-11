@@ -1,0 +1,24 @@
+
+services:
+  dev-jumpbox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      TZ: "Asia/Shanghai"
+      serverAddr: '"frps.shushangyun.com"'
+      client_title: proxies
+      serverPort: 18000
+      auth_token_line: auth.token = "xxx"
+      client_name: '"frpc-ssh-v6"'
+      client_type: '"tcp"'
+      localIP_proxies_line: localIP="127.0.0.1"
+      localPort_proxies_line: localPort=22
+      remotePort_proxies_tcp_line: remotePort=12222
+      # frpc_config_path: /www/frp/temp/frpc.toml
+    extra_hosts:
+      - "me.host:host-gateway"
+    restart: unless-stopped
+    volumes:
+      - ./.ssh/authorized_keys:/root/.ssh/authorized_keys
+      # - ./frpc.toml:/www/frp/temp/frpc.toml

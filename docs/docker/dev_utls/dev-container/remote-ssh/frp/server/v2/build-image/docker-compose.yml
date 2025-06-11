@@ -1,0 +1,12 @@
+
+services:
+  frps-ssh:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    # ports:
+    #   - "17000:7000"
+    environment:
+      - TZ="Asia/Shanghai"
+      - auth_token_line=auth.token = "xxx"
+    restart: unless-stopped
