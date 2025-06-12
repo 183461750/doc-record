@@ -4,7 +4,7 @@ services:
     image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:frpc-ssh-v6
     environment:
       TZ: "Asia/Shanghai"
-      serverAddr: '"frps.shushangyun.com"'
+      serverAddr: '"10.1.1.11"'
       client_title: proxies
       serverPort: 18000
       auth_token_line: auth.token = "xxx"

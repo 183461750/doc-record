@@ -6,7 +6,7 @@ services:
       dockerfile: Dockerfile
     environment:
       TZ: "Asia/Shanghai"
-      serverAddr: '"frps.shushangyun.com"'
+      serverAddr: '"frps.xxx.com"'
       client_title: proxies
       serverPort: 18000
       auth_token_line: auth.token = "xxx"
