@@ -4,7 +4,7 @@ WORKDIR /www
 
 # 安装必要的软件包
 RUN apt-get update && \
-    apt-get install -y openssh-server openssh-client curl wget locales gettext tini && \
+    apt-get install -y openssh-server openssh-client curl wget net-tools locales gettext tini && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -47,6 +47,13 @@ envsubst < /www/frp/frpc.toml > /tmp/frpc.toml.tmp && mv /tmp/frpc.toml.tmp /www
 [ ! -d "/var/run/sshd" ] && mkdir -p /var/run/sshd
 # 启动 SSH（后台运行）
 /usr/sbin/sshd
+
+# 生成ssh公私钥
+ssh-keygen -t ed25519 -C "frp" -f ~/.ssh/id_ed25519_frp -N ""
+
+# 设置authorized_keys
+cat ~/.ssh/id_ed25519_frp.pub > ~/.ssh/authorized_keys
+chmod 600 ~/.ssh/authorized_keys
 
 # 启动 FRPC
 /www/frp/frpc -c ${frpc_config_path:-/www/frp/frpc.toml}
