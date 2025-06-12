@@ -7,7 +7,7 @@ services:
     #   - "12200:2200"
     environment:
       - TZ="Asia/Shanghai"
-      - auth_token_line=auth.token = "lx-frps-ssh"
+      - auth_token_line=auth.token = "xxx"
     restart: unless-stopped
 
   nginx:
