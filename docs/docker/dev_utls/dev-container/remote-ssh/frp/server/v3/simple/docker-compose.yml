@@ -2,6 +2,7 @@
 services:
   frps-ssh:
     image: registry.cn-hangzhou.aliyuncs.com/iuin/frps-ssh:v3
+    network_mode: host
     # ports:
     #   - "18700:7000"
     #   - "12200:2200"
