@@ -1,0 +1,11 @@
+
+services:
+  frps-ssh:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/frps-ssh:v4
+    ports:
+      - "18000:7000"
+      - "12222:5002"
+    environment:
+      - TZ="Asia/Shanghai"
+      - auth_token="xxx"
+    restart: unless-stopped
