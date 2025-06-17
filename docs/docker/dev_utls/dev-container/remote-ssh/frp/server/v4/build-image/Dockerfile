@@ -38,7 +38,7 @@ RUN tee /entrypoint.sh <<-'EOF'
 export bindPort=${bindPort:-7000}
 export tcpmuxHTTPConnectPort=${tcpmuxHTTPConnectPort:-5002}
 export sshTunnelGateway_bindPort=${sshTunnelGateway_bindPort:-22}
-export auth_token=${auth_token:-"token"}
+export auth_token=${auth_token:-'"token"'}
 
 # 替换环境变量的值
 envsubst < /www/frp/frps.toml > /tmp/frps.toml.tmp && mv /tmp/frps.toml.tmp /www/frp/frps.toml
