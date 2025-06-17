@@ -1,0 +1,11 @@
+
+services:
+  frps-ssh:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/frps-ssh:tcpmux
+    network_mode: host
+    environment:
+      - TZ="Asia/Shanghai"
+      - auth_token="xxx"
+      - bindPort=18000
+      - tcpmuxHTTPConnectPort=12222
+    restart: unless-stopped
