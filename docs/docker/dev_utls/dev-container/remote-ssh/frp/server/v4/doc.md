@@ -6,6 +6,8 @@
 
 [v3 doc](https://github.com/183461750/doc-record/blob/main/docs/docker/dev_utls/dev-container/remote-ssh/frp/server/v3/doc.md)
 
+[network_mode(目前使用的方式)](https://github.com/183461750/doc-record/blob/main/docs/docker/dev_utls/dev-container/remote-ssh/frp/server/v4/simple/network_mode/docker-compose.yml)
+
 ```bash
 # 启动即可
 docker-compose up -d

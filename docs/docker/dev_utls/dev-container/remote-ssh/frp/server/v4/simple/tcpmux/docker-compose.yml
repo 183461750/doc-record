@@ -7,5 +7,5 @@ services:
       - "12222:5002"
     environment:
       - TZ="Asia/Shanghai"
-      - auth_token="fa-frps-ssh"
+      - auth_token="xxx"
     restart: unless-stopped
