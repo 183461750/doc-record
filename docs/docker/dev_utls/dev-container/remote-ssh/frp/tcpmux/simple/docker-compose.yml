@@ -2,6 +2,7 @@
 services:
   dev-jumpbox:
     image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:tcpmux
+    container_name: dev-jumpbox
     environment:
       TZ: "Asia/Shanghai"
       serverAddr: '"55.44.33.33"'
