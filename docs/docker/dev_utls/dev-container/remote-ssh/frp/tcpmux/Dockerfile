@@ -56,10 +56,10 @@ envsubst < /www/frp/frpc.toml > /tmp/frpc.toml.tmp && mv /tmp/frpc.toml.tmp /www
 /usr/sbin/sshd
 
 # 生成ssh公私钥
-ssh-keygen -t ed25519 -C "frp" -f ~/.ssh/id_ed25519_frp -N ""
+ssh-keygen -t ed25519 -C "container" -f ~/.ssh/id_ed25519_container -N ""
 
 # 设置authorized_keys
-cat ~/.ssh/id_ed25519_frp.pub > ~/.ssh/authorized_keys
+cat ~/.ssh/id_ed25519_container.pub > ~/.ssh/authorized_keys
 chmod 600 ~/.ssh/authorized_keys
 
 # 启动 FRPC
