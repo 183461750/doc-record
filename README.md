@@ -106,7 +106,12 @@ runs-on: self-hosted
 
 ```
 
+## 使用到的项目
+
+- [docusaurus](https://docusaurus.io/)
+
 ## TODO
 
 - 接入AI搜索
+  - [官方搜索相关文档](https://docusaurus.io/docs/search)
   - [参考页面](https://docs.orama.com/cloud/data-sources/native-integrations/docusaurus)
