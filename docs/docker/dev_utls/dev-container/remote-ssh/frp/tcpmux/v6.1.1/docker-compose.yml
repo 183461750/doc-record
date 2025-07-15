@@ -1,0 +1,17 @@
+
+services:
+  dev-jumpbox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dev-jumpbox-v6.1.1
+    environment:
+      TZ: "Asia/Shanghai"
+      serverAddr: '"55.44.33.33"'
+      serverPort: 18000
+      auth_token: '"frps-ssh"'
+      client_name: '"frpc-ssh-fa"'
+      customDomains: '["fa.intranet.company"]'
+    extra_hosts:
+      - "me.host:host-gateway"
+    restart: unless-stopped

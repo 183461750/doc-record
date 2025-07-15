@@ -1,0 +1,21 @@
+
+services:
+  dev-jumpbox:
+    image: registry.cn-hangzhou.aliyuncs.com/iuin/dev-jumpbox:frpc-ssh-v6.1.1
+    container_name: dev-jumpbox
+    environment:
+      TZ: "Asia/Shanghai"
+      serverAddr: '"10.1.1.11"'
+      client_title: proxies
+      serverPort: 18000
+      auth_token_line: auth.token = "xxx"
+      # 一个客户端一个名称, 不能重复
+      client_name: '"frpc-ssh-v6"'
+      client_type: '"tcp"'
+      localIP_proxies_line: localIP="127.0.0.1"
+      localPort_proxies_line: localPort=22
+      # 开放服务端外网端口后配置到这里, 一个客户端占用一个端口
+      remotePort_proxies_tcp_line: remotePort=12222
+    extra_hosts:
+      - "me.host:host-gateway"
+    restart: unless-stopped

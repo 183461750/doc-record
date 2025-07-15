@@ -1,0 +1,21 @@
+
+services:
+  dev-jumpbox:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: dev-jumpbox-v6.1.1
+    environment:
+      TZ: "Asia/Shanghai"
+      serverAddr: '"jumpboxs.xxx.com"'
+      client_title: proxies
+      serverPort: 18000
+      auth_token_line: auth.token = "xxx"
+      client_name: '"jumpboxc-ssh-v6"'
+      client_type: '"tcp"'
+      localIP_proxies_line: localIP="127.0.0.1"
+      localPort_proxies_line: localPort=22
+      remotePort_proxies_tcp_line: remotePort=12222
+    extra_hosts:
+      - "me.host:host-gateway"
+    restart: unless-stopped
