@@ -1,0 +1,12 @@
+services:
+  skyoffice:
+    image: wbsu2003/skyoffice:latest
+    container_name: skyoffice
+    ports:
+      # 后端服务端口
+      - "2567:2567"
+      # 前端访问端口
+      - "3000:3000"
+    environment:
+      - BACKEND_URL=ws://你的服务器IP:2567
+    restart: unless-stopped
