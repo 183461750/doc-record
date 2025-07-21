@@ -27,3 +27,40 @@ pip --version
 退出虚拟环境：`deactivate`
 
 ```
+
+### anaconda
+
+```bash
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh   # Miniconda（轻量版，推荐）  
+# 或（若需完整版Anaconda）  
+# wget https://repo.anaconda.com/archive/Anaconda3-latest-Linux-x86_64.sh 
+# 运行安装脚本  
+bash Miniconda3-latest-Linux-x86_64.sh  
+
+# 按照提示进行安装(默认即可, 最后一步, 选择yes, 用于更新.bashrc或.zshrc文件)
+# You can undo this by running `conda init --reverse $SHELL`? [yes|no]
+# [no] >>> yes
+
+# 激活Conda
+source ~/.bashrc  # 若使用zsh，执行`source ~/.zshrc`  
+# 验证安装
+conda --version  # 输出版本号即成功  
+# （可选）配置国内镜像源（加速下载）
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/pkgs/main/   
+conda config --add channels https://mirrors.tuna.tsinghua.edu.cn/anaconda/cloud/conda-forge/   
+conda config --set show_channel_urls yes  
+
+```
+
+```bash
+# 创建虚拟环境
+conda create -n myenv python=3.8
+# 激活虚拟环境
+conda activate myenv
+# 安装依赖
+pip install -r requirements.txt
+# 运行应用
+python main.py
+# 退出虚拟环境
+conda deactivate
+```
