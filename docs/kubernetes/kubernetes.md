@@ -3,8 +3,45 @@
 
 ## k8s安装
 
-- 通过`KuboardSpray`安装
-  - [官网地址](https://kuboard-spray.cn/)
+### 通过`KubeKey`安装
+
+[kubekey](https://github.com/kubesphere/kubekey)
+
+```bash
+# 	Kubernetes 版本 ≥ 1.18
+# socat	必须安装
+# conntrack	必须安装
+# 验证: socat -V && conntrack --version
+sudo apt install socat conntrack -y
+
+
+# 使用脚本获取 KubeKey
+export KKZONE=cn
+curl -sfL https://get-kk.kubesphere.io | sh -
+# 创建集群(快速开始)
+export KKZONE=cn
+# ./kk create cluster [--with-kubernetes version] [--with-kubesphere version]
+# 使用默认版本创建一个纯 Kubernetes 集群
+./kk create cluster
+# 创建一个部署了 KubeSphere 的 Kubernetes 集群 （例如 --with-kubesphere v3.1.0）
+./kk create cluster --with-kubesphere
+
+
+# Console: http://10.0.16.146:30880
+# Account: admin
+# Password: P@88w0rd
+
+# Please check the result using the command:
+kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l 'app in (ks-install, ks-installer)' -o jsonpath='{.items[0].metadata.name}') -f
+
+
+# 删除集群
+./kk delete cluster
+```
+
+### 通过`KuboardSpray`安装
+
+[官网地址](https://kuboard-spray.cn/)
 
 ```bash
 # 进入指定目录
@@ -35,7 +72,7 @@ docker run -d \
   eipwork/kuboard-spray:latest-amd64
 ```
 
-## yum安装k8s
+### yum安装k8s
 
 - [文档详情地址](./docs/temp/yum安装k8s.md)(PS: AI提供的内容，还未测试过)
 
