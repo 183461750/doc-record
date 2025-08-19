@@ -25,6 +25,8 @@ export KKZONE=cn
 ./kk create cluster
 # 创建一个部署了 KubeSphere 的 Kubernetes 集群 （例如 --with-kubesphere v3.1.0）
 ./kk create cluster --with-kubesphere
+# 使用配置文件创建集群
+./kk create cluster -f ~/myfolder/config-sample.yaml
 
 
 # Console: http://10.0.16.146:30880
@@ -38,6 +40,8 @@ kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l 'app
 # 删除集群
 ./kk delete cluster
 ```
+
+### 通过
 
 ### 通过`KuboardSpray`安装
 
