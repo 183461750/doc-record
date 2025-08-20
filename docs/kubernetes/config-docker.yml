@@ -21,10 +21,12 @@ spec:
     address: ""
     port: 6443
   kubernetes:
-    version: v1.33.1
+    # version: v1.33.1
+    version: v1.23.17
     clusterName: cluster.local
     autoRenewCerts: true
-    containerManager: containerd
+    # containerManager: containerd
+    containerManager: docker
   etcd:
     type: kubekey
   network:

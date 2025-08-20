@@ -41,6 +41,19 @@ kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l 'app
 ./kk delete cluster
 ```
 
+#### 问题
+
+```bash
+# FATA[0000] validate service connection: validate CRI v1 image API for endpoint "unix:///run/containerd/containerd.sock": rpc error: code = Unimplemented desc = unknown service runtime.v1.ImageService: Process exited with status 1
+
+vi /etc/containerd/config.toml
+
+# disabled_plugins = []  # 确保未禁用 CRI
+# 重启 Containerd：
+sudo systemctl restart containerd
+
+```
+
 ### 通过
 
 ### 通过`KuboardSpray`安装
