@@ -54,7 +54,9 @@ sudo systemctl restart containerd
 
 ```
 
-### 通过
+### 通过`RKE`安装
+
+[官方文档](https://docs.rancher.cn/docs/rke/example-yamls/_index)
 
 ### 通过`KuboardSpray`安装
 
@@ -172,3 +174,7 @@ kubectl label nodes docker-desktop k8s.kuboard.cn/role=etcd
 ### 参考链接
 
 - [官方链接](https://kuboard.cn/install/v3/install-in-k8s.html#%E5%AE%89%E8%A3%85)
+
+### v4版安装
+
+[官方快速开始页面](https://www.kuboard.cn/v4/install/quickstart.html#%E9%9B%86%E6%88%90%E5%A4%96%E9%83%A8%E7%94%A8%E6%88%B7%E5%BA%93)
