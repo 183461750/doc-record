@@ -436,3 +436,14 @@ EOF
 sudo systemctl restart docker
 
 ```
+
+## 停止和禁用 Docker 服务
+
+```bash
+systemctl stop docker.service docker.socket
+systemctl disable docker.service docker.socket
+systemctl status docker.service docker.socket
+# 启动
+systemctl start docker.service docker.socket
+systemctl enable docker.service docker.socket
+```
