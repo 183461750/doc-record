@@ -1,5 +1,7 @@
 # 远程调试
 
+主要是为了本地不需要安转office等套件
+
 ```Dockerfile
 FROM registry.cn-guangzhou.aliyuncs.com/iuin/oraclejdk17:libreoffice-skywalking
 
