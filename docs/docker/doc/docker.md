@@ -44,6 +44,13 @@ curl -fsSL https://get.docker.com | bash -s docker --mirror Aliyun
 curl -sSL https://get.daocloud.io/docker | sh
 ```
 
+## 卸载
+
+```bash
+apt-get remove -y docker* containerd.io runc && apt-get autoremove
+yum remove -y docker* containerd.io podman* runc
+```
+
 ## 设置docker开机自启
 
 ```shell

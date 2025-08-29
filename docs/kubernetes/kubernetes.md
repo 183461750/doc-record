@@ -39,6 +39,8 @@ kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l 'app
 
 # 删除集群
 ./kk delete cluster
+# 有时候可能还需要主动删除这个文件夹
+rm -rf /etc/kubernetes/
 ```
 
 #### 问题
@@ -52,6 +54,15 @@ vi /etc/containerd/config.toml
 # 重启 Containerd：
 sudo systemctl restart containerd
 
+
+## /etc/etcd.env(可能需要手动创建这个文件)(文件在当前文档目录下)
+
+# 证书问题
+sudo mkdir -p /etc/ssl/certs
+sudo chmod 755 /etc/ssl/certs
+apt update && sudo apt install ca-certificates
+sudo update-ca-certificates
+## 如果用了docker 可能还需要重启docker(systemctl restart docker)
 ```
 
 ### 通过`RKE`安装
