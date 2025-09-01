@@ -103,6 +103,8 @@ journalctl -u etcd.service -f
 
 ## 证书问题2
 
+> PS: 这个问题会导致docker拉不了镜像, 其实就是https证书的问题, 影响方面应该挺广的
+
 ```bash
 # 证书问题
 sudo mkdir -p /etc/ssl/certs
