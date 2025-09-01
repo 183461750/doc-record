@@ -195,8 +195,6 @@ done
 
 略
 
-
-
 # 安装kubeasz
 
 介绍略......
@@ -204,7 +202,7 @@ done
 ## 设置版本kubeasz版本
 
 ```bash
-export release=3.6.2
+export release=3.6.7
 ```
 
 ## 下载安装工具
@@ -245,7 +243,7 @@ docker exec -it kubeasz ezctl new k8s-batar
 
 ```yaml
 vim /etc/kubeasz/clusters/k8s-batar/hosts
-# PS: 改IP就好了
+# PS: 改IP就好了(改成域名可能有问题)
 # 'etcd' cluster should have odd member(s) (1,3,5,...)
 [etcd]
 192.168.50.7
