@@ -1,0 +1,64 @@
+[Unit]
+Description=support-service - 企业级支撑服务
+After=network.target syslog.target mysql.service  # 明确依赖服务，确保启动顺序
+Wants=mysql.service  # 弱依赖数据库，数据库故障不影响本服务启动但会尝试等待
+Documentation=https://internal-docs.example.com/support-service  # 文档地址
+
+[Service]
+# 基础运行环境
+User=www
+Group=www
+WorkingDirectory=/data/yihaixing/support-service
+EnvironmentFile=/data/yihaixing/.config
+EnvironmentFile=/data/yihaixing/support-service/support-service-env
+Environment="LANG=zh_CN.utf8"
+Environment="LC_ALL=zh_CN.utf8"
+Environment="TZ=Asia/Shanghai"
+Environment="JVM_OPTS=-XX:+UseG1GC -XX:MaxGCPauseMillis=200 -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/var/log/support-service/heapdump.hprof -XX:+ExitOnOutOfMemoryError"
+
+# 核心启动配置（已修复重复-jar问题）
+ExecStart=/usr/bin/java \
+          $JVM_OPTS \
+          -Duser.language=zh \
+          -Dserver.port=${UN_PORT} \
+          -Xms${XMS} \
+          -Xmx${XMX} \
+          -jar ${JAR_NAME} \
+          --spring.profiles.active=${CONFIG}
+
+# 生命周期管理优化
+Type=simple
+PIDFile=/var/run/support-service.pid  # 记录PID便于监控
+ExecStop=/bin/kill -15 $MAINPID  # 优雅停止
+ExecReload=/bin/kill -HUP $MAINPID  # 支持平滑重载配置
+TimeoutStartSec=60  # 启动超时（根据应用启动时间调整）
+TimeoutStopSec=60  # 停止超时（确保有足够时间处理收尾）
+KillMode=mixed  # 先优雅终止，超时后强制终止
+
+# 重启策略优化（避免OOM后无限重启风暴）
+Restart=on-failure  # 仅在失败时重启
+RestartSec=30  # 重启间隔30秒，逐步递增可配置systemd.service的StartLimitInterval
+StartLimitInterval=5min  # 5分钟内最多允许5次重启
+StartLimitBurst=5
+
+# 资源限制优化（解决OOM核心配置）
+MemoryLimit=2G  # 系统级内存上限（根据实际需求调整，建议大于Xmx）
+MemoryHigh=1800M  # 内存使用超过此值时系统会尝试回收（小于MemoryLimit）
+LimitNPROC=4096  # 进程数限制（避免fork炸弹）
+LimitNOFILE=65536  # 文件描述符限制（解决高并发下"too many open files"）
+LimitMEMLOCK=infinity  # 允许JVM锁定内存（避免GC时内存页交换）
+LimitCORE=infinity  # 允许生成核心转储（用于故障分析）
+
+# 安全增强
+PrivateTmp=true  # 隔离临时目录
+ProtectSystem=full  # 只读挂载系统目录
+ProtectHome=true  # 保护用户家目录
+NoNewPrivileges=true  # 禁止权限提升
+
+# 日志配置（结合journald和应用日志）
+StandardOutput=append:/var/log/support-service/stdout.log
+StandardError=append:/var/log/support-service/stderr.log
+SyslogIdentifier=support-service  # 日志标识，便于筛选
+
+[Install]
+WantedBy=multi-user.target
