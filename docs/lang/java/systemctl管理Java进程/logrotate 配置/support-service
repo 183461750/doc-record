@@ -1,0 +1,41 @@
+/var/log/support-service/*.log {
+    # 轮转频率：每天轮转（可选：hourly, daily, weekly, monthly）
+    daily
+    
+    # 保留最近30天的日志（根据磁盘空间调整）
+    rotate 30
+    
+    # 日志文件达到100MB时强制轮转（即使不到一天）
+    size 100M
+    
+    # 压缩旧日志（节省磁盘空间，使用gzip压缩）
+    compress
+    # 延迟压缩（当天日志不压缩，便于临时查看）
+    delaycompress
+    
+    # 日志缺失时不报错（避免手动删除日志后脚本报错）
+    missingok
+    
+    # 空日志不轮转
+    notifempty
+    
+    # 轮转前备份文件的权限（与原日志保持一致）
+    create 0640 www www
+    
+    # 轮转后让应用重新打开日志文件（关键：避免日志写入旧文件）
+    postrotate
+        # 向Java进程发送信号，触发日志重新打开（需应用支持）
+        # 方式1：通过PID文件获取进程ID（推荐）
+        if [ -f /var/run/support-service.pid ]; then
+            kill -USR1 $(cat /var/run/support-service.pid) > /dev/null 2>&1 || true
+        fi
+        
+        # 方式2：如果没有PID文件，通过服务名查找进程（备选）
+        # pkill -f "support-service" -USR1 > /dev/null 2>&1 || true
+    endscript
+    
+    # 轮转前执行的脚本（可选：如备份到远程存储）
+    # prerotate
+    #   /usr/local/bin/backup-log.sh $1 > /dev/null 2>&1
+    # endscript
+}
