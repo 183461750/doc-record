@@ -1,5 +1,8 @@
 # systemctl管理Java进程
 
+[support-service.service文件地址](https://github.com/183461750/doc-record/blob/main/docs/lang/java/systemctl%E7%AE%A1%E7%90%86Java%E8%BF%9B%E7%A8%8B/support-service.service)
+
+[相关OOM问题分析](https://github.com/183461750/doc-record/blob/main/materiel/ai/java/systemctl%E7%AE%A1%E7%90%86Java%E8%BF%9B%E7%A8%8B%E6%97%A0%E9%99%90%E9%87%8D%E5%90%AF%E9%97%AE%E9%A2%98.md)
 
 ## 结合之前给你的systemctl配置, 以及后面的OOM问题, 帮忙提供一份生产级更优的Java应用systemctl配置(AI提供)
 
