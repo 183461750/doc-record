@@ -34,7 +34,13 @@ bash base.sh
 
 ### 结合gradle使用
 
-参考配置`build.gradle`文件
+项目根目录的`build.gradle`文件添加相关任务(配置已在上面提供的地址中了)
+
+```bash
+# 项目根目录执行
+mkdir script
+# 将`base.sh`和`update-service.sh`文件添加进去(配置已在上面提供的地址中了)
+```
 
 ```bash
 # bash ./gradlew :pay-service:publishToTest --info
