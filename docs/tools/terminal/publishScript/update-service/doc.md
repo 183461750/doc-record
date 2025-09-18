@@ -6,6 +6,8 @@
 - 支持配合idea于gradle使用
   - 双击即可发布服务到测试环境
 
+[相关配置文件地址](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/update-service)
+
 ## 使用说明
 
 ```bash
