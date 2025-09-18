@@ -11,6 +11,17 @@
 ## 使用说明
 
 ```bash
+vi ~/.ssh/config
+
+# 开发环境
+Host xxx.dev.iuin
+  HostName 1.0.1.1
+  User root
+  IdentityFile ~/.ssh/id_ed25519_iu
+
+```
+
+```bash
 bash base.sh
 ```
 
