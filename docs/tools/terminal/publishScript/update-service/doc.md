@@ -22,3 +22,5 @@ bash base.sh
 # bash ./gradlew :pay-service:publishToTest --info
 bash ./gradlew :pay-service:publishToTest
 ```
+
+[gradle示例](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/update-service/imgs/gradle-demo.png)
