@@ -22,6 +22,13 @@ Host xxx.dev.iuin
 ```
 
 ```bash
+# 根据项目更新`base.sh`文件中的环境变量
+项目目录: LOCAL_BASE_DIR="/Users/fa/dev/projects/IdeaProjects/company/iuin/lingxi/private-deploy/xxx-sbbc"
+远程服务地址: REMOTE_SERVER="xxx.dev.iuin"
+远程服务目录前缀: REMOTE_BASE_DIR="/data/xxx"
+```
+
+```bash
 bash base.sh
 ```
 
