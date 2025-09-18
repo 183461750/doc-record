@@ -29,6 +29,7 @@ Host xxx.dev.iuin
 ```
 
 ```bash
+chmod +x base.sh
 bash base.sh
 ```
 
