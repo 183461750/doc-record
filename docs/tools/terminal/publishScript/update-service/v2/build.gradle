@@ -1,0 +1,49 @@
+// group 'com.iuin'
+// version '2.0.0'
+
+subprojects {
+    task publishToTest(type: Exec) {
+        // 脚本所在目录（绝对路径）
+        def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+        def baseScriptPath = new File(scriptDir, "base.sh").absolutePath
+
+        doFirst {
+            def scriptFile = file(baseScriptPath)
+            if (!scriptFile.exists()) {
+                throw new GradleException("脚本文件不存在: ${baseScriptPath}")
+            }
+            if (!scriptFile.canExecute()) {
+                throw new GradleException("脚本没有执行权限: ${baseScriptPath}")
+            }
+        }
+
+        // 关键：指定脚本执行的工作目录（脚本所在目录）
+        workingDir = scriptDir
+
+        // 执行命令
+        commandLine 'bash', '-c', "set -x; ./base.sh -d ${rootProject.rootDir} -s ${project.name}"
+
+        // 核心配置：忽略命令的非零退出码，继续执行
+        ignoreExitValue = true
+
+        // 捕获输出
+        def output = new ByteArrayOutputStream()
+        def error = new ByteArrayOutputStream()
+        standardOutput = output
+        errorOutput = error
+
+        doLast {
+            println "脚本输出:\n${output.toString()}"
+            if (error.toString().trim().length() > 0) {
+                // 仅打印错误，不终止执行
+                println "脚本错误:\n${error.toString()}"
+            }
+
+            // 可选：根据退出码做不同处理
+            def exitCode = executionResult.get().exitValue
+            if (exitCode != 0) {
+                println "注意：脚本执行返回非零退出码 ${exitCode}，但已忽略错误继续执行"
+            }
+        }
+    }
+}
