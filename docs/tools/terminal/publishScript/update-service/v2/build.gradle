@@ -3,6 +3,14 @@
 
 subprojects {
     task publishToTest(type: Exec) {
+
+        // 配置依赖关系 - 确保 bootJar 任务存在时先执行它
+        afterEvaluate {
+            if (project.tasks.findByName('bootJar')) {
+                dependsOn 'bootJar'
+            }
+        }
+
         // 脚本所在目录（绝对路径）
         def scriptDir = new File(rootProject.rootDir, "script").absolutePath
         def baseScriptPath = new File(scriptDir, "base.sh").absolutePath
