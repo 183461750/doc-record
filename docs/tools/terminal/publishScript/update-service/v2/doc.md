@@ -1,9 +1,11 @@
 # 一键快速发布服务:配合idea与gradle使用
 
 > **v2版本更新**
-当存在bootJar任务时, 优先使用bootJar打包的jar文件
-配合gradle使用时, 不再需要配置`LOCAL_BASE_DIR`环境变量, 改为了自动获取
-启动服务命令改为了systemctl(因为新版jar服务被systemctl管理了, 并且systemctl启动配置中指定了www用户启动)
+> Date: 2025-09-19
+>
+> - 当存在bootJar任务时, 优先使用bootJar打包的jar文件
+> - 配合gradle使用时, 不再需要配置`LOCAL_BASE_DIR`环境变量, 改为了自动获取
+> - 启动服务命令改为了systemctl(因为新版jar服务被systemctl管理了, 并且systemctl启动配置中指定了www用户启动)
 
 - 支持指定服务的更新
 - 支持更新所有服务
