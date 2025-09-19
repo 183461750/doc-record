@@ -3,8 +3,8 @@ set -x  # 输出所有执行的命令，便于调试
 set -euo pipefail  # 严格错误检查
 
 # 环境变量配置
-export REMOTE_SERVER="haimingwei.dev.ssy"
-export REMOTE_BASE_DIR="/data/haimingwei"
+export REMOTE_SERVER="xxx.dev.iuin"
+export REMOTE_BASE_DIR="/data/xxx"
 LOCAL_BASE_DIR=""  # 初始化本地目录变量
 declare -a SERVICES=()  # 存储服务名数组
 

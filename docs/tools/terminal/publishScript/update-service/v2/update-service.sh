@@ -19,7 +19,7 @@ if [ -z "$LOCAL_BASE_DIR" ]; then
 fi
 
 # 处理远程服务器配置
-REMOTE_SERVER="${REMOTE_SERVER:-xxx.dev.ssy}"
+REMOTE_SERVER="${REMOTE_SERVER:-xxx.dev.iuin}"
 REMOTE_BASE_DIR="${REMOTE_BASE_DIR:-/data/xxx}"
 
 # 检查本地目录是否存在
