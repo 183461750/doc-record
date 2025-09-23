@@ -1,4 +1,12 @@
-FROM registry.cn-hangzhou.aliyuncs.com/iuin/libreoffice-jre:7.6.7-17
+# FROM ghcr.io/linuxserver/libreoffice:7.6.7
+FROM linuxserver/libreoffice:7.6.7
+
+## 安装OpenJDK 17
+#RUN apk update && apk add --no-cache openjdk17-jdk && \
+#    rm -rf /var/cache/apk/*
+# 安装OpenJre 17
+RUN apk add --no-cache openjdk17-jre && \
+   rm -rf /var/cache/apk/*
 
 COPY build/libs/*.jar /data/app.jar
 
@@ -7,5 +15,6 @@ ENV JAVA_TOOL_OPTIONS="$JAVA_TOOL_OPTIONS -agentlib:jdwp=transport=dt_socket,ser
 ENV OFFICE_HOME="/usr/lib/libreoffice"
 
 ENTRYPOINT ["java","-Xms512m","-Xmx4096m","-XX:+UseG1GC","-jar","-Duser.language=zh","-Dserver.port=$PORT","-Djdk.attach.allowAttachSelf=true","-Dnet.bytebuddy.agent.attacher.dump=/tmp/arthas.dump","/data/app.jar"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
 
 EXPOSE $PORT 1$PORT 2$PORT
