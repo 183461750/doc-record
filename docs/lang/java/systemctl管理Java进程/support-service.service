@@ -8,9 +8,9 @@ Documentation=https://internal-docs.example.com/support-service  # 文档地址
 # 基础运行环境
 User=www
 Group=www
-WorkingDirectory=/data/yihaixing/support-service
-EnvironmentFile=/data/yihaixing/.config
-EnvironmentFile=/data/yihaixing/support-service/support-service-env
+WorkingDirectory=/data/xxx/support-service
+EnvironmentFile=/data/xxx/.config
+EnvironmentFile=/data/xxx/support-service/support-service-env
 Environment="LANG=zh_CN.utf8"
 Environment="LC_ALL=zh_CN.utf8"
 Environment="TZ=Asia/Shanghai"

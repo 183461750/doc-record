@@ -44,4 +44,4 @@ journalctl -u manage-service.service --since "2025-09-03 00:00:00" | grep "Main 
 - 如果出现 `Killed process 12345 (java) total-vm:2048M, ...`，可能是因为内存超过 `MemoryLimit=1024M` 限制被系统杀死。
 - 如果出现 `Stopped support-service.` 后紧接着 `Started support-service.`，说明服务被主动停止后重启（可能是手动操作或其他进程触发）。
 
-结合应用程序自身的日志（通常在 `/data/yihaixing/support-service` 目录下），可以更全面地定位重启原因（例如 OOM 错误、未捕获的异常等）。
+结合应用程序自身的日志（通常在 `/data/xxx/support-service` 目录下），可以更全面地定位重启原因（例如 OOM 错误、未捕获的异常等）。
