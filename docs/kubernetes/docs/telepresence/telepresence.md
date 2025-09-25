@@ -9,8 +9,8 @@
 
 ```shell
 # 设置集群
-kubectl config set-cluster ocms-dsu --kubeconfig ~/dev/projects/IdeaProjects/company/ssy/lingxi/outsource-deploy/snow/ocms-dsu.yaml
-kubectl config set-context ocms-dsu --kubeconfig ~/dev/projects/IdeaProjects/company/ssy/lingxi/outsource-deploy/snow/ocms-dsu.yaml
+kubectl config set-cluster ocms-dsu --kubeconfig ~/dev/projects/IdeaProjects/company/iuin/mall/outsource-deploy/snow/ocms-dsu.yaml
+kubectl config set-context ocms-dsu --kubeconfig ~/dev/projects/IdeaProjects/company/iuin/mall/outsource-deploy/snow/ocms-dsu.yaml
 # 查看当前集群
 kubectl config current-context
 

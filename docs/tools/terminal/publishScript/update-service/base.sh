@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 环境变量配置（保持固定值，也可改为${VAR:-默认值}形式保留环境变量优先级）
-export LOCAL_BASE_DIR="/Users/fa/dev/projects/IdeaProjects/company/iuin/lingxi/private-deploy/xxx-sbbc"
+export LOCAL_BASE_DIR="/Users/fa/dev/projects/IdeaProjects/company/iuin/mall/private-deploy/xxx-sbbc"
 export REMOTE_SERVER="xxx.dev.iuin"
 export REMOTE_BASE_DIR="/data/xxx"
 

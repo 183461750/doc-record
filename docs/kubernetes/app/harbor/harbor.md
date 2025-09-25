@@ -184,13 +184,13 @@ initContainers:
 
 ```bash
 # 打标
-docker tag SOURCE_IMAGE[:TAG] core.harbor.domain/lx/REPOSITORY[:TAG]
+docker tag SOURCE_IMAGE[:TAG] core.harbor.domain/mall/REPOSITORY[:TAG]
 # 推送
-docker push core.harbor.domain/lx/REPOSITORY[:TAG]
+docker push core.harbor.domain/mall/REPOSITORY[:TAG]
 # 示例
 docker login -u admin -p Harbor12345 core.harbor.domain:8080
-docker tag app-service:latest core.harbor.domain:8080/lx/app-service:latest
-docker push core.harbor.domain:8080/lx/app-service:latest
+docker tag app-service:latest core.harbor.domain:8080/mall/app-service:latest
+docker push core.harbor.domain:8080/mall/app-service:latest
 ```
 
 ```bash
@@ -200,7 +200,7 @@ docker push core.harbor.domain:8080/lx/app-service:latest
 kubectl port-forward pods/harbor-helm-nginx-cc76b85fb-mzj7z 80:8080 -n harbor6
 docker login -u admin -p Harbor12345 harbor.harbor6
 # 拉取镜像
-docker pull harbor.harbor6/lx/app-service:latest
+docker pull harbor.harbor6/mall/app-service:latest
 ```
 
 - k8s中拉取镜像
@@ -212,7 +212,7 @@ kubectl port-forward pods/harbor-helm-nginx-cc76b85fb-mzj7z 80:8080 -n harbor6
 127.0.0.1 harbor.harbor6
 # 设置不安全容器镜像仓库[参考文档](https://github.com/183461750/doc-record/blob/c80d519ba5e1d55e5ee385a867211800ea118c4b/k8s/crictl.md)
 # 拉取镜像
-crictl pull harbor.harbor6/lx/app-service:latest
+crictl pull harbor.harbor6/mall/app-service:latest
 ```
 
 - NodePort服务类型的访问

@@ -26,7 +26,7 @@ chmod 400 ~/.ssh/id_ed25519_iu
 # ~/.ssh/config
 Host mac.intranet.company
   HostName 10.0.1.251
-  User ssy
+  User iuin
   IdentityFile ~/.ssh/id_ed25519_iu
   # PasswordAuthentication 123456
 
@@ -51,7 +51,7 @@ mode: Rule
 log-level: info
 external-controller: 127.0.0.1:9090
 proxies:
-  - name: ssy_bpDev_mac
+  - name: iuin_bpDev_mac
     type: socks5
     server: 10.0.1.233
     port: 2000
@@ -59,7 +59,7 @@ proxy-groups:
   - name: ssh_g
     type: select
     proxies:
-      - ssy_bpDev_mac
+      - iuin_bpDev_mac
 rules:
  # 乐橘nacos所在服务器
  - IP-CIDR,10.0.10.180/32,ssh_g

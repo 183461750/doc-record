@@ -13,5 +13,5 @@ spec:
       - http01:
           ingress:
             # 这里应该是要填IngresClass列表中的名称
-            class: lingxi-ingress-nginx
+            class: mall-ingress-nginx
 

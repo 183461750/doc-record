@@ -95,9 +95,9 @@ metadata:
   namespace: middleware
   resourceVersion: '14196210'
 spec:
-  ingressClassName: lingxi-ingress-nginx
+  ingressClassName: mall-ingress-nginx
   rules:
-    - host: rabbit.ssy.com
+    - host: rabbit.iuin.com
       http:
         paths:
           - backend:

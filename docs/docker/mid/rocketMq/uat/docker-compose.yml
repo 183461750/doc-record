@@ -11,7 +11,7 @@ services:
       - "/etc/localtime:/etc/localtime"
       - "rmqnamesrv:/root"
     networks:
-      shushangyun:
+      iuin:
     deploy:
       placement:
         constraints:
@@ -29,7 +29,7 @@ services:
       - "./rocketmq/broker.conf:/opt/rocketmq-4.4.0/conf/broker.conf"
       - "rmqbroker:/root"
     networks:
-      shushangyun:
+      iuin:
     deploy:
       placement:
         constraints:
@@ -42,13 +42,13 @@ services:
     environment:
       JAVA_OPTS: "-Drocketmq.namesrv.addr=rmqnamesrv:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false"
     networks:
-      shushangyun:
+      iuin:
     deploy:
       placement:
         constraints:
           - node.labels.mq==true
 networks:
-  shushangyun:
+  iuin:
     external: true
 
 volumes:

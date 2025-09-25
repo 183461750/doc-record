@@ -1,10 +1,10 @@
 #!/bin/bash
 
-chmod -R 777 ./shushangyun/uploads/
-chmod -R 777 ./shushangyun/logs/
+chmod -R 777 ./iuin/uploads/
+chmod -R 777 ./iuin/logs/
 
 ## create network in swarm manager
-docker network create -d  overlay --attachable shushangyun
+docker network create -d  overlay --attachable iuin
 
 ## create mysql service
 #docker stack up -c ./mysql.yml mysql

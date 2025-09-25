@@ -37,7 +37,7 @@ spec:
               value: 'skywalking-skywalking-helm-oap.skywalking:30004'
             - name: SW_AGENT_NAME
               value: app-service
-          image: 'harbor.harbor6/lx/app-service:latest'
+          image: 'harbor.harbor6/mall/app-service:latest'
           imagePullPolicy: IfNotPresent
           name: app-service
           ports:

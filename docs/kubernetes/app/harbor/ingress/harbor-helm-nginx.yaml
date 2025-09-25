@@ -21,9 +21,9 @@ spec:
       name: harbor-helm-nginx
       port:
         number: 8080
-  ingressClassName: lingxi-ingress-nginx
+  ingressClassName: mall-ingress-nginx
   rules:
-    - host: harbor.shushangyun.com
+    - host: harbor.iuin.com
       http:
         paths:
           - backend:
