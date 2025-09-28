@@ -6,6 +6,9 @@ subprojects {
 
         // 配置依赖关系 - 确保 bootJar 任务存在时先执行它
         afterEvaluate {
+            if (project.tasks.findByName('clean')) {
+                dependsOn 'clean'
+            }
             if (project.tasks.findByName('bootJar')) {
                 dependsOn 'bootJar'
             }
