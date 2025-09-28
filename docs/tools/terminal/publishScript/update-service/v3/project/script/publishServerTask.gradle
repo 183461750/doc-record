@@ -1,0 +1,30 @@
+
+subprojects {
+
+    def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+
+    apply from: scriptDir + '/publishServer.gradle'
+
+    // 发布到指定环境(./gradlew publishToTest -Dprofile=dev(默认开发环境))
+    task publishServer(type: Exec) {
+        def profile = project.hasProperty('profile') ? project.property('profile') : 'dev'
+
+        // 应用公共配置
+        configurePublishTask(it, profile)
+
+    }
+
+    // 发布到demo环境
+    task publishServerByDemo(type: Exec) {
+        def profile = 'demo'
+
+        // 应用公共配置
+        configurePublishTask(it, profile)
+
+    }
+
+    // 发布到其他环境
+    // ...
+
+}
+
