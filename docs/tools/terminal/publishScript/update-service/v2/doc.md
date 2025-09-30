@@ -24,8 +24,15 @@ vi ~/.ssh/config
 Host xxx.dev.iuin
   HostName 1.0.1.1
   User root
-  IdentityFile ~/.ssh/id_ed25519_iu
+  IdentityFile ~/.ssh/id_ed25519
 
+```
+
+```bash
+# 上传公钥, 开启免密登录(其实就是将公钥`~/.ssh/id_ed25519.pub`内容上传到服务器的`~/.ssh/authorized_keys`文件中, 手动复制进去也行的)
+ssh-copy-id xxx.dev.iuin -i ~/.ssh/id_ed25519
+# 然后, 通过ssh免密登录
+ssh xxx.dev.iuin
 ```
 
 ```bash
