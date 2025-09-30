@@ -64,8 +64,8 @@ def configurePublishTask = { task, profile ->
     task.environment([
             // 配置环境变量
             LOCAL_BASE_DIR: rootProject.rootDir.absolutePath,
-            REMOTE_SERVER: project.property('remote.server'),
-            REMOTE_BASE_DIR: project.property('remote.base.dir')
+            REMOTE_SERVER: project.hasProperty('remote.server') ? project.property('remote.server') : '',
+            REMOTE_BASE_DIR: project.hasProperty('remote.base.dir') ? project.property('remote.base.dir') : ''
     ])
 
     // 执行命令
