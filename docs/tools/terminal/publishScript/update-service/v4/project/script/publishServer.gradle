@@ -1,0 +1,126 @@
+
+def updateServiceScriptName = 'update-service'
+// 脚本所在目录（绝对路径）
+def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+def updateServiceScriptPath = new File(scriptDir, updateServiceScriptName + ".sh").absolutePath
+
+
+def envLoad = { env ->
+
+    def gradleEnvProp = rootProject.rootDir.absolutePath + "/gradle-${env}.properties"
+    def envPropsFile = file(gradleEnvProp)
+
+    if (!envPropsFile.exists()) {
+        return false
+    }
+
+    def props = new Properties()
+    envPropsFile.withInputStream { props.load(it) }
+    props.each { key, value ->
+        project.ext.set(key, value)
+    }
+    return true
+}
+
+def configurePublishTask = { task, profile ->
+
+    // 确保发布任务在 bootJar 任务存在时才执行
+    task.onlyIf {
+        return task.project.tasks.findByName('bootJar')
+    }
+
+    // 加载环境配置
+    envLoad(profile)
+
+    // 确保发布任务在发布环境配置文件存在时才执行
+    task.onlyIf {
+        println "正在发布项目 ${task.project.name} 到 ${profile} 环境 服务器为 ${project.property('remote.server')} 基础目录为 ${project.property('remote.base.dir')}"
+        return project.hasProperty('remote.server') && project.property('remote.server') != null
+    }
+
+    // 配置依赖关系 - 确保 bootJar 任务存在时先执行它
+    afterEvaluate {
+//        if (project.tasks.findByName('clean')) {
+//            task.dependsOn 'clean'
+//        }
+        if (task.project.tasks.findByName('bootJar')) {
+            task.dependsOn 'bootJar'
+        }
+    }
+
+    task.doFirst {
+        def scriptFile = file(updateServiceScriptPath)
+        if (!scriptFile.exists()) {
+            throw new GradleException("脚本文件不存在: ${updateServiceScriptPath}")
+        }
+        if (!scriptFile.canExecute()) {
+            throw new GradleException("脚本没有执行权限: ${updateServiceScriptPath}")
+        }
+    }
+
+    // 关键：指定脚本执行的工作目录（脚本所在目录）
+    task.workingDir = scriptDir
+
+    task.environment([
+            // 配置环境变量
+            LOCAL_BASE_DIR: rootProject.rootDir.absolutePath,
+            REMOTE_SERVER: project.hasProperty('remote.server') ? project.property('remote.server') : '',
+            REMOTE_BASE_DIR: project.hasProperty('remote.base.dir') ? project.property('remote.base.dir') : ''
+    ])
+
+    // 执行命令
+    task.commandLine 'bash', '-c', "chmod +x update-service.sh"
+    task.commandLine 'bash', '-c', "./update-service.sh ${task.project.name}"
+
+    // 核心配置：忽略命令的非零退出码，继续执行
+    task.ignoreExitValue = true
+
+    task.doLast {
+        // 实时输出 stdout 和 stderr
+        task.standardOutput = System.out
+        task.errorOutput = System.err
+
+        // 可选：同时保存输出到变量以供后续处理
+        def output = new ByteArrayOutputStream()
+        def error = new ByteArrayOutputStream()
+
+        // 使用继承IO的方式实现实时输出
+        task.standardOutput = new OutputStream() {
+            @Override
+            void write(int b) throws IOException {
+                System.out.write(b)
+                output.write(b)
+            }
+        }
+
+        task.errorOutput = new OutputStream() {
+            @Override
+            void write(int b) throws IOException {
+                System.err.write(b)
+                error.write(b)
+            }
+        }
+
+        // 等待任务完成后再处理结果
+        task.doLast {
+            // 根据退出码做不同处理
+            def exitCode = task.executionResult.get().exitValue
+            if (exitCode != 0) {
+                println "注意：脚本执行返回非零退出码 ${exitCode}"
+            }
+        }
+    }
+}
+
+// 将方法导出到外部使用
+//ext {
+//    envLoad = envLoad
+//    configurePublishTask = configurePublishTask
+//}
+
+ext.scriptDir = scriptDir
+ext.updateServiceScriptPath = updateServiceScriptPath
+
+ext.envLoad = envLoad
+ext.configurePublishTask = configurePublishTask
+

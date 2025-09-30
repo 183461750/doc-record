@@ -1,0 +1,8 @@
+// group 'com.iuin'
+// version '2.0.0'
+
+
+def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+
+apply from: scriptDir + '/publishServerTask.gradle'
+
