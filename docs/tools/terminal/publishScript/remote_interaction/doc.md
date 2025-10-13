@@ -46,3 +46,8 @@ bash ./gradlew :pay-service:publishToTest
 ```
 
 ![gradle task示例](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/remote_interaction/imgs/gradle_task.png?raw=true)
+
+### 结合arthas命令查看sql, Redis, es命令
+
+[参考查看sql命令地址](https://github.com/183461750/doc-record/blob/main/docs/materiel/article/arthas查看sql.md)
+[参考查看sql_redis_es命令地址](https://github.com/183461750/doc-record/blob/main/docs/materiel/draft/arthas查看sql_redis_es.md)
