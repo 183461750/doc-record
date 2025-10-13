@@ -45,4 +45,4 @@ mkdir script
 bash ./gradlew :pay-service:publishToTest
 ```
 
-![gradle task示例](https://github.com/183461750/doc-record/docs/tools/terminal/publishScript/remote_interaction/imgs/gradle_task.png?raw=true)
+![gradle task示例](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/remote_interaction/imgs/gradle_task.png?raw=true)
