@@ -1,9 +1,6 @@
 
-def arthasScriptName = 'arthas'
-def arthasScriptFileName = arthasScriptName + ".sh"
 // 脚本所在目录（绝对路径）
 def scriptDir = new File(rootProject.rootDir, "script").absolutePath
-def arthasScriptPath = new File(scriptDir, arthasScriptFileName).absolutePath
 
 /**
  * 加载环境配置
@@ -38,21 +35,7 @@ def arthasTask = { task, profile ->
         return task.project.tasks.findByName('bootJar')
     }
 
-    // 关键：指定脚本执行的工作目录（脚本所在目录）
-//    task.workingDir = scriptDir
-
-    // 核心配置：忽略命令的非零退出码，继续执行
-//    task.ignoreExitValue = true
-
     task.doFirst {
-        def scriptFile = file(arthasScriptPath)
-        if (!scriptFile.exists()) {
-            throw new GradleException("脚本文件不存在: ${arthasScriptPath}")
-        }
-        if (!scriptFile.canExecute()) {
-            // 确保脚本有执行权限
-            scriptFile.setExecutable(true)
-        }
 
         // 加载环境配置
         envLoad(task, profile)
@@ -66,18 +49,6 @@ def arthasTask = { task, profile ->
             }
             throw new GradleException("环境变量不存在，当前所有属性: ${allProperties}")
         }
-
-//        task.environment([
-//                // 配置环境变量
-//                LOCAL_BASE_DIR: rootProject.rootDir.absolutePath,
-//                REMOTE_SERVER: task.ext.has('remote.server') ? task.ext.get('remote.server') : '',
-//                REMOTE_BASE_DIR: task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : ''
-//        ])
-
-
-        // 启用交互式执行 - 直接执行脚本而不是通过 bash -c
-//        task.commandLine './' + arthasScriptFileName, task.project.name
-
 
     }
 
