@@ -1,0 +1,119 @@
+
+def publishServiceScriptName = 'publish-service'
+// 脚本所在目录（绝对路径）
+def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+def publishServiceScriptPath = new File(scriptDir, publishServiceScriptName + ".sh").absolutePath
+
+/**
+ * 加载环境配置
+ * @param profile 环境名称
+ * @return 是否成功加载
+ */
+def envLoad = { task, profile ->
+
+    def gradleEnvProp = rootProject.rootDir.absolutePath + "/gradle-${profile}.properties"
+    println "[publish][envLoad] - 项目: ${project.name} 环境: ${profile} 属性文件: ${gradleEnvProp}"
+
+    def envPropsFile = file(gradleEnvProp)
+
+    if (!envPropsFile.exists()) {
+        return false
+    }
+
+    def props = new Properties()
+    envPropsFile.withInputStream { props.load(it) }
+    props.each { key, value ->
+        task.ext.set(key, value)
+        // 打印日志
+//        println "[publish] - 项目: ${project.name} 环境: ${profile} key: ${key} value: ${value} 服务器: ${project.ext.has('remote.server') ? project.ext.get('remote.server') : ''} 基础目录: ${project.ext.has('remote.base.dir') ? project.ext.get('remote.base.dir') : ''}"
+    }
+    return true
+}
+
+def configurePublishTask = { task, profile ->
+
+//    println "[publish] - 项目: ${project.name} 环境: ${profile} "
+
+    // 确保发布任务在 bootJar 任务存在时才执行
+    task.onlyIf {
+        return task.project.tasks.findByName('bootJar')
+    }
+
+    // 配置依赖关系 - 确保 bootJar 任务存在时先执行它
+    afterEvaluate {
+//        if (project.tasks.findByName('clean')) {
+//            task.dependsOn 'clean'
+//        }
+        if (task.project.tasks.findByName('bootJar')) {
+            task.dependsOn 'bootJar'
+        }
+    }
+
+    // 关键：指定脚本执行的工作目录（脚本所在目录）
+    task.workingDir = scriptDir
+
+    // 核心配置：忽略命令的非零退出码，继续执行
+    task.ignoreExitValue = true
+
+    task.doFirst {
+
+        def scriptFile = file(publishServiceScriptPath)
+        if (!scriptFile.exists()) {
+            throw new GradleException("脚本文件不存在: ${publishServiceScriptPath}")
+        }
+        if (!scriptFile.canExecute()) {
+            throw new GradleException("脚本没有执行权限: ${publishServiceScriptPath}")
+        }
+
+        // 加载环境配置
+        envLoad(task, profile)
+
+        println "[publish][configurePublishTask] - 项目: ${task.project.name} 环境: ${profile} 服务器: ${task.ext.has('remote.server') ? task.ext.get('remote.server') : '未设置'} 基础目录: ${task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : '未设置'}"
+        if (!task.ext.has('remote.server')) {
+            // 收集所有扩展属性信息
+            def allProperties =[:]
+            task.extensions.extraProperties.properties.each { key, value ->
+                allProperties[key] = value
+            }
+            throw new GradleException("环境变量不存在，当前所有属性: ${allProperties}")
+        }
+
+        task.environment([
+                // 配置环境变量
+                LOCAL_BASE_DIR: rootProject.rootDir.absolutePath,
+                REMOTE_SERVER: task.ext.has('remote.server') ? task.ext.get('remote.server') : '',
+                REMOTE_BASE_DIR: task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : ''
+        ])
+
+
+        // 执行命令
+        task.commandLine 'bash', '-c', "chmod +x publish-service.sh"
+        task.commandLine 'bash', '-c', "./publish-service.sh ${task.project.name}"
+
+    }
+
+    task.doLast {
+
+        // 等待任务完成后再处理结果
+        task.doLast {
+            // 根据退出码做不同处理
+            def exitCode = task.executionResult.get().exitValue
+            if (exitCode != 0) {
+                println "注意：脚本执行返回非零退出码 ${exitCode}"
+            }
+        }
+    }
+}
+
+// 将方法导出到外部使用
+//ext {
+//    envLoad = envLoad
+//    configurePublishTask = configurePublishTask
+//}
+
+ext.scriptDir = scriptDir
+ext.publishServiceScriptPath = publishServiceScriptPath
+
+ext.envLoad = envLoad
+ext.configurePublishTask = configurePublishTask
+

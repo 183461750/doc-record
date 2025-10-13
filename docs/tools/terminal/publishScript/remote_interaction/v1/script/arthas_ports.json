@@ -1,0 +1,6 @@
+{
+  "commodity-service": "8900",
+  "pay-service": "8901",
+  "shop-service": "8911",
+  "order-service": "8902"
+}

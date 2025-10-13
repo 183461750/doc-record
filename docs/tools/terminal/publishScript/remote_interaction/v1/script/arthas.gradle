@@ -1,0 +1,210 @@
+
+def arthasScriptName = 'arthas'
+def arthasScriptFileName = arthasScriptName + ".sh"
+// 脚本所在目录（绝对路径）
+def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+def arthasScriptPath = new File(scriptDir, arthasScriptFileName).absolutePath
+
+/**
+ * 加载环境配置
+ * @param profile 环境名称
+ * @return 是否成功加载
+ */
+def envLoad = { task, profile ->
+
+    def gradleEnvProp = rootProject.rootDir.absolutePath + "/gradle-${profile}.properties"
+    println "[arthas][envLoad] - 项目: ${project.name} 环境: ${profile} 属性文件: ${gradleEnvProp}"
+
+    def envPropsFile = file(gradleEnvProp)
+
+    if (!envPropsFile.exists()) {
+        return false
+    }
+
+    def props = new Properties()
+    envPropsFile.withInputStream { props.load(it) }
+    props.each { key, value ->
+        task.ext.set(key, value)
+        // 打印日志
+//        println "[arthas] - 项目: ${project.name} 环境: ${profile} key: ${key} value: ${value} 服务器: ${project.ext.has('remote.server') ? project.ext.get('remote.server') : ''} 基础目录: ${project.ext.has('remote.base.dir') ? project.ext.get('remote.base.dir') : ''}"
+    }
+    return true
+}
+
+def arthasTask = { task, profile ->
+
+    // 确保发布任务在 bootJar 任务存在时才执行
+    task.onlyIf {
+        return task.project.tasks.findByName('bootJar')
+    }
+
+    // 关键：指定脚本执行的工作目录（脚本所在目录）
+//    task.workingDir = scriptDir
+
+    // 核心配置：忽略命令的非零退出码，继续执行
+//    task.ignoreExitValue = true
+
+    task.doFirst {
+        def scriptFile = file(arthasScriptPath)
+        if (!scriptFile.exists()) {
+            throw new GradleException("脚本文件不存在: ${arthasScriptPath}")
+        }
+        if (!scriptFile.canExecute()) {
+            // 确保脚本有执行权限
+            scriptFile.setExecutable(true)
+        }
+
+        // 加载环境配置
+        envLoad(task, profile)
+
+        println "[arthas][configurePublishTask] - 项目: ${task.project.name} 环境: ${profile} 服务器: ${task.ext.has('remote.server') ? task.ext.get('remote.server') : '未设置'} 基础目录: ${task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : '未设置'}"
+        if (!task.ext.has('remote.server')) {
+            // 收集所有扩展属性信息
+            def allProperties =[:]
+            task.extensions.extraProperties.properties.each { key, value ->
+                allProperties[key] = value
+            }
+            throw new GradleException("环境变量不存在，当前所有属性: ${allProperties}")
+        }
+
+//        task.environment([
+//                // 配置环境变量
+//                LOCAL_BASE_DIR: rootProject.rootDir.absolutePath,
+//                REMOTE_SERVER: task.ext.has('remote.server') ? task.ext.get('remote.server') : '',
+//                REMOTE_BASE_DIR: task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : ''
+//        ])
+
+
+        // 启用交互式执行 - 直接执行脚本而不是通过 bash -c
+//        task.commandLine './' + arthasScriptFileName, task.project.name
+
+
+    }
+
+    task.doLast {
+        // 服务名，从项目名称获取
+        String serviceName = task.project.name
+        // 远程服务器
+        String remoteServer = task.ext.get('remote.server')
+        // JSON配置文件路径
+        def configFile = file(scriptDir + '/arthas_ports.json')
+
+        // 检查配置文件是否存在
+        if (!configFile.exists()) {
+            throw new GradleException("配置文件不存在: ${configFile.absolutePath}")
+        }
+
+        // 检查jq工具是否存在
+        Process jqCheckProcess = "which jq".execute()
+        jqCheckProcess.waitFor()
+        if (jqCheckProcess.exitValue() != 0) {
+            throw new GradleException("未找到jq工具，请先安装jq (https://stedolan.github.io/jq/)")
+        }
+
+        // 使用jq工具获取端口
+        String[] jqCommand = ["jq", "-r", ".\"${serviceName}\"", configFile.absolutePath]
+        ProcessBuilder portProcessBuilder = new ProcessBuilder()
+        portProcessBuilder.command(jqCommand)
+        portProcessBuilder.redirectErrorStream(true)
+        Process portProcess = portProcessBuilder.start()
+        portProcess.waitFor()
+
+        // 读取命令输出和错误
+        String output = portProcess.inputStream.text.trim()
+        int exitCode = portProcess.exitValue()
+
+        // 调试信息
+        // println "jq命令: ${jqCommand.join(' ')}"
+        // println "jq退出码: ${exitCode}"
+        // println "jq输出: [${output}]"
+
+        // 正确判断端口是否有效
+        if (exitCode != 0 || output == 'null' || output.isEmpty()) {
+            throw new GradleException("未找到服务 ${serviceName} 对应的端口，配置文件内容: ${configFile.text}")
+        }
+
+        // 拼接1，因为Arthas端口以1开头
+        String arthasPort = 1 + output
+
+        println "找到服务 ${serviceName} 的Arthas端口: ${arthasPort}"
+        println "正在通过SSH连接到 ${remoteServer} 并启动Arthas..."
+
+        // 直接通过SSH连接到远程服务器并访问Arthas
+        // 命令解释: 连接到远程服务器，然后通过telnet访问本地的Arthas端口
+        String[] sshCommand = [
+                "ssh",
+                remoteServer,
+                "telnet localhost ${arthasPort}"
+        ]
+
+        ProcessBuilder sshProcessBuilder = new ProcessBuilder()
+        sshProcessBuilder.command(sshCommand)
+        sshProcessBuilder.redirectErrorStream(true)
+        Process sshProcess = sshProcessBuilder.start()
+
+        println "已建立到 ${remoteServer} 的SSH连接 (PID: ${sshProcess.pid})"
+
+        // 注册进程关闭钩子，确保资源释放
+        Runnable shutdownHook = {
+            sshProcess.destroy()
+            println "SSH连接已关闭"
+        }
+        Thread shutdownThread = new Thread(shutdownHook)
+        Runtime.getRuntime().addShutdownHook(shutdownThread)
+
+        try {
+            // 处理输出
+            Thread outputThread = Thread.start {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(sshProcess.inputStream))
+                String line
+                while ((line = reader.readLine()) != null) {
+                    println "[Arthas] ${line}"
+                }
+            }
+
+            // 将Gradle的输入转发到SSH进程
+            Thread inputThread = Thread.start {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))
+                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sshProcess.outputStream))
+                String line
+                try {
+                    while ((line = reader.readLine()) != null) {
+                        writer.write(line + "\n")
+                        writer.flush()
+                        // 退出命令处理
+                        if (line.trim().equalsIgnoreCase('exit')) {
+                            // 给服务器足够时间处理退出命令
+                            Thread.sleep(500)
+                            sshProcess.destroy()
+                            Runtime.getRuntime().removeShutdownHook(shutdownThread)
+                            return
+                        }
+                    }
+                } catch (Exception e) {
+                    println "输入处理异常: ${e.message}"
+                } finally {
+                    writer.close()
+                }
+            }
+
+            // 等待SSH进程结束
+            sshProcess.waitFor()
+            println "SSH连接已关闭，退出码: ${sshProcess.exitValue()}"
+
+        } catch (InterruptedException e) {
+            println "操作被中断: ${e.message}"
+            Thread.currentThread().interrupt()
+        } finally {
+            // 确保SSH进程被终止
+            if (sshProcess.alive) {
+                sshProcess.destroy()
+            }
+            Runtime.getRuntime().removeShutdownHook(shutdownThread)
+            println "SSH连接已关闭"
+        }
+    }
+}
+
+// 将方法导出到外部使用
+ext.arthasTask = arthasTask
+
