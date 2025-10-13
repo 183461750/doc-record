@@ -7,7 +7,7 @@ subprojects {
     apply from: scriptDir + '/arthas.gradle'
 
     // 发布到指定环境(./gradlew publishToTest -Dprofile=dev(默认开发环境))
-    tasks.register('publish', Exec) {
+    task publish(type: Exec) {
         // 设置任务分组
         group = 'remote'
 
@@ -19,7 +19,7 @@ subprojects {
     }
 
     // 发布到test环境
-    tasks.register('publishToTest', Exec) {
+    task publishToTest(type: Exec) {
         // 设置任务分组
         group = 'remote'
 
@@ -31,7 +31,7 @@ subprojects {
     }
 
     // 发布到demo环境
-    tasks.register('publishToDemo', Exec) {
+    task publishToDemo(type: Exec) {
         // 设置任务分组
         group = 'remote'
 
