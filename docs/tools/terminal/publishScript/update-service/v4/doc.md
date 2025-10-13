@@ -10,6 +10,8 @@
 
 ![service-logs-to-idea-console](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/update-service/imgs/service-logs-to-idea-console-2.png?raw=true)
 
+可惜idea的error日志分组功能, 只内置了以`Caused by:`为前缀去判断, 貌似没有开放自定义配置功能
+
 [全版本更新日志](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/update-service/version.md)
 
 [相关配置文件地址](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/update-service/v4)
