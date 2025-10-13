@@ -1,0 +1,121 @@
+
+// 脚本所在目录（绝对路径）
+def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+
+/**
+ * 加载环境配置
+ * @param profile 环境名称
+ * @return 是否成功加载
+ */
+def envLoad = { task, profile ->
+
+    def gradleEnvProp = rootProject.rootDir.absolutePath + "/gradle-${profile}.properties"
+    println "[log][envLoad] - 项目: ${project.name} 环境: ${profile} 属性文件: ${gradleEnvProp}"
+
+    def envPropsFile = file(gradleEnvProp)
+
+    if (!envPropsFile.exists()) {
+        return false
+    }
+
+    def props = new Properties()
+    envPropsFile.withInputStream { props.load(it) }
+    props.each { key, value ->
+        task.ext.set(key, value)
+        // 打印日志
+//        println "[log] - 项目: ${project.name} 环境: ${profile} key: ${key} value: ${value} 服务器: ${project.ext.has('remote.server') ? project.ext.get('remote.server') : ''} 基础目录: ${project.ext.has('remote.base.dir') ? project.ext.get('remote.base.dir') : ''}"
+    }
+    return true
+}
+
+def logTask = { task, profile ->
+
+    // 确保发布任务在 bootJar 任务存在时才执行
+    task.onlyIf {
+        return task.project.tasks.findByName('bootJar')
+    }
+
+    task.doFirst {
+
+        // 加载环境配置
+        envLoad(task, profile)
+
+        println "[log][configurePublishTask] - 项目: ${task.project.name} 环境: ${profile} 服务器: ${task.ext.has('remote.server') ? task.ext.get('remote.server') : '未设置'} 基础目录: ${task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : '未设置'}"
+        if (!task.ext.has('remote.server')) {
+            // 收集所有扩展属性信息
+            def allProperties =[:]
+            task.extensions.extraProperties.properties.each { key, value ->
+                allProperties[key] = value
+            }
+            throw new GradleException("环境变量不存在，当前所有属性: ${allProperties}")
+        }
+
+    }
+
+    task.doLast {
+        // 服务名，从项目名称获取
+        String serviceName = task.project.name
+        // 远程服务器
+        String remoteServer = task.ext.get('remote.server')
+        // 远程服务器基础路径
+        String remoteBaseDir = task.ext.get('remote.base.dir')
+        // 日志文件路径
+        String logFilePath = "${remoteBaseDir}/../logs/${serviceName}.log"
+
+        println "找到服务 ${serviceName}"
+        println "正在通过SSH连接到 ${remoteServer} 并开始打印服务 ${serviceName} 的日志 ${logFilePath}"
+
+        // 直接通过SSH连接到远程服务器并访问Arthas
+        // 命令解释: 连接到远程服务器，然后通过telnet访问本地的Arthas端口
+        String[] sshCommand = [
+                "ssh",
+                remoteServer,
+                "tail -fn+1 ${logFilePath}"
+        ]
+
+        ProcessBuilder sshProcessBuilder = new ProcessBuilder()
+        sshProcessBuilder.command(sshCommand)
+        sshProcessBuilder.redirectErrorStream(true)
+        Process sshProcess = sshProcessBuilder.start()
+
+        println "已建立到 ${remoteServer} 的SSH连接 (PID: ${sshProcess.pid})"
+
+        // 注册进程关闭钩子，确保资源释放
+        Runnable shutdownHook = {
+            sshProcess.destroy()
+            println "SSH连接已关闭"
+        }
+        Thread shutdownThread = new Thread(shutdownHook)
+        Runtime.getRuntime().addShutdownHook(shutdownThread)
+
+        try {
+            // 处理输出
+            Thread outputThread = Thread.start {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(sshProcess.inputStream))
+                String line
+                while ((line = reader.readLine()) != null) {
+                    println "${line}"
+                }
+            }
+
+            // 等待SSH进程结束
+            sshProcess.waitFor()
+            println "SSH连接已关闭，退出码: ${sshProcess.exitValue()}"
+
+        } catch (InterruptedException e) {
+            println "操作被中断: ${e.message}"
+            Thread.currentThread().interrupt()
+        } finally {
+            // 确保SSH进程被终止
+            if (sshProcess.alive) {
+                sshProcess.destroy()
+            }
+            Runtime.getRuntime().removeShutdownHook(shutdownThread)
+            println "SSH连接已关闭"
+        }
+    }
+}
+
+// 将方法导出到外部使用
+ext.logTask = logTask
+

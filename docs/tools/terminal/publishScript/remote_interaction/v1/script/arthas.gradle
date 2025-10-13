@@ -85,9 +85,9 @@ def arthasTask = { task, profile ->
         int exitCode = portProcess.exitValue()
 
         // 调试信息
-        // println "jq命令: ${jqCommand.join(' ')}"
-        // println "jq退出码: ${exitCode}"
-        // println "jq输出: [${output}]"
+//        println "jq命令: ${jqCommand.join(' ')}"
+//        println "jq退出码: ${exitCode}"
+//        println "jq输出: [${output}]"
 
         // 正确判断端口是否有效
         if (exitCode != 0 || output == 'null' || output.isEmpty()) {

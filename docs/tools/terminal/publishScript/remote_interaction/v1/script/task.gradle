@@ -5,6 +5,7 @@ subprojects {
 
     apply from: scriptDir + '/publish.gradle'
     apply from: scriptDir + '/arthas.gradle'
+    apply from: scriptDir + '/log.gradle'
 
     // 发布到指定环境(./gradlew publishToTest -Dprofile=dev(默认开发环境))
     task publish(type: Exec) {
@@ -60,6 +61,16 @@ subprojects {
         def profile = 'demo'
 
         arthasTask(it, profile)
+    }
+
+    // test环境
+    tasks.register('logToTest') {
+        // 设置任务分组
+        group = 'remote'
+
+        def profile = 'test'
+
+        logTask(it, profile)
     }
 
 
