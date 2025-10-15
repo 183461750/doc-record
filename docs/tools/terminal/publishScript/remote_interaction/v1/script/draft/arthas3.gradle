@@ -1,0 +1,317 @@
+// 脚本所在目录（绝对路径）
+def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+
+class PtyExecTask extends DefaultTask {
+    @Input  // 添加输入注解，标记该属性为任务输入
+    String[] command
+
+    // 构造函数中设置执行条件
+    PtyExecTask() {
+        // 仅当项目中存在bootJar任务时才执行
+        onlyIf {
+            project.tasks.findByName('bootJar') != null
+        }
+    }
+
+    @TaskAction
+    void execute() {
+        // 确保命令不为空
+        if (!command) {
+            throw new GradleException("命令未配置，请设置command属性")
+        }
+
+        def processBuilder = new ProcessBuilder(command)
+        processBuilder.environment().put("TERM", "xterm")
+        // 禁用默认的缓冲，确保实时输出
+        processBuilder.redirectErrorStream(false)
+
+        def process = processBuilder.start()
+        def latch = new CountDownLatch(3)  // 协调3个线程（输入、输出、错误）
+
+        try {
+            // 1. 处理进程输出流（远程输出 -> 本地控制台）
+            Thread outputThread = Thread.start {
+                try {
+                    byte[] buffer = new byte[1024]
+                    int bytesRead
+                    // 实时读取进程输出并打印到本地控制台
+                    while ((bytesRead = process.inputStream.read(buffer)) != -1 && process.alive) {
+                        System.out.write(buffer, 0, bytesRead)
+                        System.out.flush()  // 强制刷新，确保实时显示
+                    }
+                } catch (Exception e) {
+                    if (process.alive) {
+                        println "输出流处理异常: ${e.message}"
+                    }
+                } finally {
+                    latch.countDown()  // 通知线程完成
+                }
+            }
+
+            // 2. 处理进程错误流（远程错误 -> 本地控制台）
+            Thread errorThread = Thread.start {
+                try {
+                    byte[] buffer = new byte[1024]
+                    int bytesRead
+                    while ((bytesRead = process.errorStream.read(buffer)) != -1 && process.alive) {
+                        System.err.write(buffer, 0, bytesRead)
+                        System.err.flush()  // 强制刷新
+                    }
+                } catch (Exception e) {
+                    if (process.alive) {
+                        println "错误流处理异常: ${e.message}"
+                    }
+                } finally {
+                    latch.countDown()
+                }
+            }
+
+            // 3. 处理输入流（本地输入 -> 远程进程）
+            Thread inputThread = Thread.start {
+                try {
+                    byte[] buffer = new byte[1024]
+                    int bytesRead
+                    // 实时读取本地输入并发送到远程进程
+                    while ((bytesRead = System.in.read(buffer)) != -1 && process.alive) {
+                        process.outputStream.write(buffer, 0, bytesRead)
+                        process.outputStream.flush()  // 强制刷新，确保实时发送
+
+                        // 检测退出命令（输入exit时终止）
+                        String input = new String(buffer, 0, bytesRead).trim()
+                        if (input.equalsIgnoreCase("exit")) {
+                            process.destroy()  // 终止远程进程
+                            break
+                        }
+                    }
+                } catch (Exception e) {
+                    if (process.alive) {
+                        println "输入流处理异常: ${e.message}"
+                    }
+                } finally {
+                    latch.countDown()
+                }
+            }
+
+            // 等待进程结束
+            process.waitFor()
+            // 等待所有流处理线程完成
+            latch.await()
+
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt()
+            throw new GradleException("任务被中断: ${e.message}")
+        } finally {
+            // 确保所有流被关闭
+            process.inputStream.close()
+            process.outputStream.close()
+            process.errorStream.close()
+            process.destroy()
+        }
+    }
+}
+
+/**
+ * 加载环境配置
+ * @param profile 环境名称
+ * @return 是否成功加载
+ */
+def envLoad = { task, profile ->
+    def gradleEnvProp = rootProject.rootDir.absolutePath + "/gradle-${profile}.properties"
+    println "[arthas][envLoad] - 项目: ${project.name} 环境: ${profile} 属性文件: ${gradleEnvProp}"
+
+    def envPropsFile = file(gradleEnvProp)
+    if (!envPropsFile.exists()) {
+        return false
+    }
+
+    def props = new Properties()
+    envPropsFile.withInputStream { props.load(it) }
+    props.each { key, value ->
+        task.ext.set(key, value)
+    }
+    return true
+}
+
+def arthasTask = { task, profile ->
+    // 确保发布任务在 bootJar 任务存在时才执行
+    task.onlyIf {
+        return task.project.tasks.findByName('bootJar') != null
+    }
+
+    task.doFirst {
+        // 加载环境配置
+        if (!envLoad(task, profile)) {
+            throw new GradleException("环境配置文件不存在: gradle-${profile}.properties")
+        }
+
+        println "[arthas][configurePublishTask] - 项目: ${task.project.name} 环境: ${profile} 服务器: ${task.ext.has('remote.server') ? task.ext.get('remote.server') : '未设置'} 基础目录: ${task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : '未设置'}"
+        if (!task.ext.has('remote.server')) {
+            def allProperties = [:]
+            task.extensions.extraProperties.properties.each { key, value ->
+                allProperties[key] = value
+            }
+            throw new GradleException("环境变量不存在，当前所有属性: ${allProperties}")
+        }
+    }
+
+    task.doLast {
+        // 服务名，从项目名称获取
+        String serviceName = task.project.name
+        // 远程服务器
+        String remoteServer = task.ext.get('remote.server')
+        // JSON配置文件路径
+        def configFile = file(scriptDir + '/arthas_ports.json')
+
+        // 检查配置文件是否存在
+        if (!configFile.exists()) {
+            throw new GradleException("配置文件不存在: ${configFile.absolutePath}")
+        }
+
+        // 检查jq工具是否存在
+        Process jqCheckProcess = "which jq".execute()
+        jqCheckProcess.waitFor()
+        if (jqCheckProcess.exitValue() != 0) {
+            throw new GradleException("未找到jq工具，请先安装jq (https://stedolan.github.io/jq/)")
+        }
+
+        // 使用jq工具获取端口
+        String[] jqCommand = ["jq", "-r", ".\"${serviceName}\"", configFile.absolutePath]
+        ProcessBuilder portProcessBuilder = new ProcessBuilder()
+        portProcessBuilder.command(jqCommand)
+        portProcessBuilder.redirectErrorStream(true)
+        Process portProcess = portProcessBuilder.start()
+        portProcess.waitFor()
+
+        // 读取命令输出和错误
+        String output = portProcess.inputStream.text.trim()
+        int exitCode = portProcess.exitValue()
+
+        // 正确判断端口是否有效
+        if (exitCode != 0 || output == 'null' || output.isEmpty()) {
+            throw new GradleException("未找到服务 ${serviceName} 对应的端口，配置文件内容: ${configFile.text}")
+        }
+
+        // 拼接1，因为Arthas端口以1开头
+        String arthasPort = 1 + output
+
+        println "找到服务 ${serviceName} 的Arthas端口: ${arthasPort}"
+        println "正在通过SSH连接到 ${remoteServer} 并启动Arthas..."
+
+        // 直接通过SSH连接到远程服务器并访问Arthas
+        // 修改SSH参数以确保伪终端分配
+        String[] sshCommand = [
+                "ssh", "-t", "-t",  // 显式使用两个-t参数强制分配伪终端
+                "-o", "LogLevel=ERROR",  // 减少不必要的输出
+                "-o", "StrictHostKeyChecking=no",  // 自动接受新的主机密钥
+                remoteServer,
+                "TERM=xterm; telnet localhost ${arthasPort}"  // 设置终端类型
+        ]
+
+        ProcessBuilder sshProcessBuilder = new ProcessBuilder()
+        // 继承当前环境变量
+        sshProcessBuilder.environment().putAll(System.getenv())
+        // 设置终端环境变量
+        sshProcessBuilder.environment().put("TERM", "xterm")
+        sshProcessBuilder.environment().put("COLUMNS", "120")
+        sshProcessBuilder.environment().put("LINES", "40")
+
+        // 不合并错误流，保持原始输出特性
+        sshProcessBuilder.redirectErrorStream(false)
+        Process sshProcess = sshProcessBuilder.command(sshCommand).start()
+
+        println "已建立到 ${remoteServer} 的SSH连接 (PID: ${sshProcess.pid})"
+        println "进入实时交互模式，输入 'exit' 退出..."
+
+        // 注册进程关闭钩子
+        Runnable shutdownHook = {
+            if (sshProcess.alive) {
+                sshProcess.destroy()
+                println "\nSSH连接已强制关闭"
+            }
+        }
+        Thread shutdownThread = new Thread(shutdownHook)
+        Runtime.getRuntime().addShutdownHook(shutdownThread)
+
+        try {
+            // 实时输入转发（字节流，无缓冲）
+            Thread inputThread = Thread.start {
+                try {
+                    byte[] buffer = new byte[1024]
+                    int bytesRead
+                    // 直接从标准输入读取字节并写入进程
+                    while ((bytesRead = System.in.read(buffer)) != -1 && sshProcess.alive) {
+                        sshProcess.outputStream.write(buffer, 0, bytesRead)
+                        sshProcess.outputStream.flush() // 立即刷新，确保数据实时发送
+
+                        // 检查是否包含退出命令
+                        String input = new String(buffer, 0, bytesRead).trim()
+                        if (input.equalsIgnoreCase("exit")) {
+                            Thread.sleep(300) // 给服务器处理时间
+                            sshProcess.destroy()
+                            break
+                        }
+                    }
+                } catch (Exception e) {
+                    if (!sshProcess.alive) {
+                        println "\n连接已关闭，输入线程退出"
+                    } else {
+                        println "输入处理异常: ${e.message}"
+                    }
+                }
+            }
+
+            // 实时输出处理（字节流）
+            Thread outputThread = Thread.start {
+                try {
+                    byte[] buffer = new byte[1024]
+                    int bytesRead
+                    // 直接读取进程输出字节并打印到标准输出
+                    while ((bytesRead = sshProcess.inputStream.read(buffer)) != -1 && sshProcess.alive) {
+                        System.out.write(buffer, 0, bytesRead)
+                        System.out.flush() // 立即刷新，确保实时显示
+                    }
+                } catch (Exception e) {
+                    if (!sshProcess.alive) {
+                        println "\n连接已关闭，输出线程退出"
+                    } else {
+                        println "输出处理异常: ${e.message}"
+                    }
+                }
+            }
+
+            // 错误流处理
+            Thread errorThread = Thread.start {
+                try {
+                    byte[] buffer = new byte[1024]
+                    int bytesRead
+                    while ((bytesRead = sshProcess.errorStream.read(buffer)) != -1 && sshProcess.alive) {
+                        System.err.write(buffer, 0, bytesRead)
+                        System.err.flush()
+                    }
+                } catch (Exception e) {
+                    if (!sshProcess.alive) return
+                    println "错误流处理异常: ${e.message}"
+                }
+            }
+
+            // 等待SSH进程结束
+            sshProcess.waitFor()
+            println "\nSSH连接已关闭，退出码: ${sshProcess.exitValue()}"
+
+        } catch (InterruptedException e) {
+            println "\n操作被中断: ${e.message}"
+            Thread.currentThread().interrupt()
+        } finally {
+            // 清理资源
+            if (sshProcess.alive) {
+                sshProcess.destroy()
+            }
+            Runtime.getRuntime().removeShutdownHook(shutdownThread)
+            println "所有资源已释放"
+        }
+    }
+}
+
+// 将方法导出到外部使用
+ext.arthasTask = arthasTask
+ext.PtyExecTask = PtyExecTask

@@ -1,0 +1,114 @@
+
+// 脚本所在目录（绝对路径）
+def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+
+/**
+ * 加载环境配置
+ * @param profile 环境名称
+ * @return 是否成功加载
+ */
+def envLoad = { task, profile ->
+    def gradleEnvProp = rootProject.rootDir.absolutePath + "/gradle-${profile}.properties"
+    println "[arthas][envLoad] - 项目: ${project.name} 环境: ${profile} 属性文件: ${gradleEnvProp}"
+
+    def envPropsFile = file(gradleEnvProp)
+    if (!envPropsFile.exists()) {
+        return false
+    }
+
+    def props = new Properties()
+    envPropsFile.withInputStream { props.load(it) }
+    props.each { key, value ->
+        task.ext.set(key, value)
+    }
+    return true
+}
+
+def arthasTask = { task, profile ->
+    // 确保发布任务在 bootJar 任务存在时才执行
+    task.onlyIf {
+        return task.project.tasks.findByName('bootJar') != null
+    }
+
+    task.doFirst {
+        // 加载环境配置
+        if (!envLoad(task, profile)) {
+            throw new GradleException("环境配置文件不存在: gradle-${profile}.properties")
+        }
+
+        println "[arthas][configurePublishTask] - 项目: ${task.project.name} 环境: ${profile} 服务器: ${task.ext.has('remote.server') ? task.ext.get('remote.server') : '未设置'} 基础目录: ${task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : '未设置'}"
+        if (!task.ext.has('remote.server')) {
+            def allProperties = [:]
+            task.extensions.extraProperties.properties.each { key, value ->
+                allProperties[key] = value
+            }
+            throw new GradleException("环境变量不存在，当前所有属性: ${allProperties}")
+        }
+
+        // 服务名，从项目名称获取
+        String serviceName = task.project.name
+        // 远程服务器
+        String remoteServer = task.ext.get('remote.server')
+        // JSON配置文件路径
+        def configFile = file(scriptDir + '/arthas_ports.json')
+
+        // 检查配置文件是否存在
+        if (!configFile.exists()) {
+            throw new GradleException("配置文件不存在: ${configFile.absolutePath}")
+        }
+
+        // 检查jq工具是否存在
+        Process jqCheckProcess = "which jq".execute()
+        jqCheckProcess.waitFor()
+        if (jqCheckProcess.exitValue() != 0) {
+            throw new GradleException("未找到jq工具，请先安装jq (https://stedolan.github.io/jq/)")
+        }
+
+        // 使用jq工具获取端口
+        String[] jqCommand = ["jq", "-r", ".\"${serviceName}\"", configFile.absolutePath]
+        ProcessBuilder portProcessBuilder = new ProcessBuilder()
+        portProcessBuilder.command(jqCommand)
+        portProcessBuilder.redirectErrorStream(true)
+        Process portProcess = portProcessBuilder.start()
+        portProcess.waitFor()
+
+        // 读取命令输出和错误
+        String output = portProcess.inputStream.text.trim()
+        int exitCode = portProcess.exitValue()
+
+        // 正确判断端口是否有效
+        if (exitCode != 0 || output == 'null' || output.isEmpty()) {
+            throw new GradleException("未找到服务 ${serviceName} 对应的端口，配置文件内容: ${configFile.text}")
+        }
+
+        // 拼接1，因为Arthas端口以1开头
+        String arthasPort = 1 + output
+
+        println "找到服务 ${serviceName} 的Arthas端口: ${arthasPort}"
+        println "正在通过SSH连接到 ${remoteServer} 并启动Arthas..."
+
+        task.environment([
+                // 配置环境变量
+                TERM: "xterm",
+                LOCAL_BASE_DIR: rootProject.rootDir.absolutePath,
+                REMOTE_SERVER: task.ext.has('remote.server') ? task.ext.get('remote.server') : '',
+                REMOTE_BASE_DIR: task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : ''
+        ])
+
+        // 配置SSH命令行
+        task.commandLine = [
+                "ssh", "-tt",
+                remoteServer,
+                "TERM=xterm; telnet localhost ${arthasPort}"
+        ]
+
+        // 手动转发输入输出（确保交互正常）
+        task.standardInput = System.in
+        task.standardOutput = System.out
+        task.errorOutput = System.err
+    }
+
+}
+
+// 将方法导出到外部使用
+ext.arthasTask = arthasTask

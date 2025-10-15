@@ -4,7 +4,7 @@ subprojects {
     def scriptDir = new File(rootProject.rootDir, "script").absolutePath
 
     apply from: scriptDir + '/publish.gradle'
-    apply from: scriptDir + '/arthas.gradle'
+    apply from: scriptDir + '/arthas3.gradle'
     apply from: scriptDir + '/log.gradle'
 
     // 发布到指定环境(./gradlew publishToTest -Dprofile=dev(默认开发环境))
@@ -43,18 +43,22 @@ subprojects {
 
     }
 
-    // test环境
-    tasks.register('arthasToTest', Exec) {
+    // test环境 - 修复命令配置方式
+    tasks.register('arthasToTest', PtyExecTask) {
         // 设置任务分组
         group = 'remote'
 
         def profile = 'test'
 
-        arthasTask(it, profile)
+        // 直接设置command字段，不需要使用super
+        command = ['ssh', '-tt', 'test-2023.intranet.company', 'telnet localhost 18900']
+
+        // 如果需要使用arthasTask配置，取消注释下面这行
+        // arthasTask(it, profile)
     }
 
     // demo环境
-    tasks.register('arthasToDemo', Exec) {
+    tasks.register('arthasToDemo') {
         // 设置任务分组
         group = 'remote'
 
