@@ -1,4 +1,3 @@
-
 // 脚本所在目录（绝对路径）
 def scriptDir = new File(rootProject.rootDir, "script").absolutePath
 
@@ -8,12 +7,10 @@ def scriptDir = new File(rootProject.rootDir, "script").absolutePath
  * @return 是否成功加载
  */
 def envLoad = { task, profile ->
-
     def gradleEnvProp = rootProject.rootDir.absolutePath + "/gradle-${profile}.properties"
     println "[arthas][envLoad] - 项目: ${project.name} 环境: ${profile} 属性文件: ${gradleEnvProp}"
 
     def envPropsFile = file(gradleEnvProp)
-
     if (!envPropsFile.exists()) {
         return false
     }
@@ -22,34 +19,30 @@ def envLoad = { task, profile ->
     envPropsFile.withInputStream { props.load(it) }
     props.each { key, value ->
         task.ext.set(key, value)
-        // 打印日志
-//        println "[arthas] - 项目: ${project.name} 环境: ${profile} key: ${key} value: ${value} 服务器: ${project.ext.has('remote.server') ? project.ext.get('remote.server') : ''} 基础目录: ${project.ext.has('remote.base.dir') ? project.ext.get('remote.base.dir') : ''}"
     }
     return true
 }
 
 def arthasTask = { task, profile ->
-
     // 确保发布任务在 bootJar 任务存在时才执行
     task.onlyIf {
-        return task.project.tasks.findByName('bootJar')
+        return task.project.tasks.findByName('bootJar') != null
     }
 
     task.doFirst {
-
         // 加载环境配置
-        envLoad(task, profile)
+        if (!envLoad(task, profile)) {
+            throw new GradleException("环境配置文件不存在: gradle-${profile}.properties")
+        }
 
         println "[arthas][configurePublishTask] - 项目: ${task.project.name} 环境: ${profile} 服务器: ${task.ext.has('remote.server') ? task.ext.get('remote.server') : '未设置'} 基础目录: ${task.ext.has('remote.base.dir') ? task.ext.get('remote.base.dir') : '未设置'}"
         if (!task.ext.has('remote.server')) {
-            // 收集所有扩展属性信息
-            def allProperties =[:]
+            def allProperties = [:]
             task.extensions.extraProperties.properties.each { key, value ->
                 allProperties[key] = value
             }
             throw new GradleException("环境变量不存在，当前所有属性: ${allProperties}")
         }
-
     }
 
     task.doLast {
@@ -84,11 +77,6 @@ def arthasTask = { task, profile ->
         String output = portProcess.inputStream.text.trim()
         int exitCode = portProcess.exitValue()
 
-        // 调试信息
-//        println "jq命令: ${jqCommand.join(' ')}"
-//        println "jq退出码: ${exitCode}"
-//        println "jq输出: [${output}]"
-
         // 正确判断端口是否有效
         if (exitCode != 0 || output == 'null' || output.isEmpty()) {
             throw new GradleException("未找到服务 ${serviceName} 对应的端口，配置文件内容: ${configFile.text}")
@@ -101,7 +89,6 @@ def arthasTask = { task, profile ->
         println "正在通过SSH连接到 ${remoteServer} 并启动Arthas..."
 
         // 直接通过SSH连接到远程服务器并访问Arthas
-        // 命令解释: 连接到远程服务器，然后通过telnet访问本地的Arthas端口
         String[] sshCommand = [
                 "ssh",
                 remoteServer,
@@ -109,73 +96,102 @@ def arthasTask = { task, profile ->
         ]
 
         ProcessBuilder sshProcessBuilder = new ProcessBuilder()
-        sshProcessBuilder.command(sshCommand)
-        sshProcessBuilder.redirectErrorStream(true)
-        Process sshProcess = sshProcessBuilder.start()
+        // 关键改进：不合并错误流，保持原始输出特性
+        sshProcessBuilder.redirectErrorStream(false)
+        Process sshProcess = sshProcessBuilder.command(sshCommand).start()
 
         println "已建立到 ${remoteServer} 的SSH连接 (PID: ${sshProcess.pid})"
+        println "进入实时交互模式，输入 'exit' 退出..."
 
-        // 注册进程关闭钩子，确保资源释放
+        // 注册进程关闭钩子
         Runnable shutdownHook = {
-            sshProcess.destroy()
-            println "SSH连接已关闭"
+            if (sshProcess.alive) {
+                sshProcess.destroy()
+                println "\nSSH连接已强制关闭"
+            }
         }
         Thread shutdownThread = new Thread(shutdownHook)
         Runtime.getRuntime().addShutdownHook(shutdownThread)
 
         try {
-            // 处理输出
-            Thread outputThread = Thread.start {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(sshProcess.inputStream))
-                String line
-                while ((line = reader.readLine()) != null) {
-                    println "[Arthas] ${line}"
-                }
-            }
-
-            // 将Gradle的输入转发到SSH进程
+            // 实时输入转发（字节流，无缓冲）
             Thread inputThread = Thread.start {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(sshProcess.outputStream))
-                String line
                 try {
-                    while ((line = reader.readLine()) != null) {
-                        writer.write(line + "\n")
-                        writer.flush()
-                        // 退出命令处理
-                        if (line.trim().equalsIgnoreCase('exit')) {
-                            // 给服务器足够时间处理退出命令
-                            Thread.sleep(500)
+                    byte[] buffer = new byte[1024]
+                    int bytesRead
+                    // 直接从标准输入读取字节并写入进程
+                    while ((bytesRead = System.in.read(buffer)) != -1 && sshProcess.alive) {
+                        sshProcess.outputStream.write(buffer, 0, bytesRead)
+                        sshProcess.outputStream.flush() // 立即刷新，确保数据实时发送
+                        
+                        // 检查是否包含退出命令（处理换行和非换行情况）
+                        String input = new String(buffer, 0, bytesRead).trim()
+                        if (input.equalsIgnoreCase("exit")) {
+                            Thread.sleep(300) // 给服务器处理时间
                             sshProcess.destroy()
-                            Runtime.getRuntime().removeShutdownHook(shutdownThread)
-                            return
+                            break
                         }
                     }
                 } catch (Exception e) {
-                    println "输入处理异常: ${e.message}"
-                } finally {
-                    writer.close()
+                    if (!sshProcess.alive) {
+                        println "\n连接已关闭，输入线程退出"
+                    } else {
+                        println "输入处理异常: ${e.message}"
+                    }
+                }
+            }
+
+            // 实时输出处理（字节流）
+            Thread outputThread = Thread.start {
+                try {
+                    byte[] buffer = new byte[1024]
+                    int bytesRead
+                    // 直接读取进程输出字节并打印到标准输出
+                    while ((bytesRead = sshProcess.inputStream.read(buffer)) != -1 && sshProcess.alive) {
+                        System.out.write(buffer, 0, bytesRead)
+                        System.out.flush() // 立即刷新，确保实时显示
+                    }
+                } catch (Exception e) {
+                    if (!sshProcess.alive) {
+                        println "\n连接已关闭，输出线程退出"
+                    } else {
+                        println "输出处理异常: ${e.message}"
+                    }
+                }
+            }
+
+            // 错误流处理
+            Thread errorThread = Thread.start {
+                try {
+                    byte[] buffer = new byte[1024]
+                    int bytesRead
+                    while ((bytesRead = sshProcess.errorStream.read(buffer)) != -1 && sshProcess.alive) {
+                        System.err.write(buffer, 0, bytesRead)
+                        System.err.flush()
+                    }
+                } catch (Exception e) {
+                    if (!sshProcess.alive) return
+                    println "错误流处理异常: ${e.message}"
                 }
             }
 
             // 等待SSH进程结束
             sshProcess.waitFor()
-            println "SSH连接已关闭，退出码: ${sshProcess.exitValue()}"
+            println "\nSSH连接已关闭，退出码: ${sshProcess.exitValue()}"
 
         } catch (InterruptedException e) {
-            println "操作被中断: ${e.message}"
+            println "\n操作被中断: ${e.message}"
             Thread.currentThread().interrupt()
         } finally {
-            // 确保SSH进程被终止
+            // 清理资源
             if (sshProcess.alive) {
                 sshProcess.destroy()
             }
             Runtime.getRuntime().removeShutdownHook(shutdownThread)
-            println "SSH连接已关闭"
+            println "所有资源已释放"
         }
     }
 }
 
 // 将方法导出到外部使用
 ext.arthasTask = arthasTask
-
