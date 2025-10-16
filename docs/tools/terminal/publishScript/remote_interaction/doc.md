@@ -14,7 +14,10 @@
 ## 后续优化
 
 - arthas的交互体验, 目前只能一次性交互, 需要重新连接
+  - 如何让远程服务器识别到我在idea中的gradle task console中输入的`^c`的mac快捷键
 - 增加远程服务器连接功能
+- 自动生成任务, 根据gradle环境属性文件生成对应环境的任务, 这样就只需要添加环境属性文件即可了
+- 看看如何把这完整的功能打成插件包, 放到阿里制品库中, 实现通过gradle依赖引入即可拥有这些功能
 
 [相关配置文件地址](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/remote_interaction/v1)
 
