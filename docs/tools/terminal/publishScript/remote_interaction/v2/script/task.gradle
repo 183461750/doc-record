@@ -1,0 +1,38 @@
+
+subprojects {
+
+    def scriptDir = new File(rootProject.rootDir, "script").absolutePath
+
+    apply from: scriptDir + '/publish.gradle'
+    apply from: scriptDir + '/arthas.gradle'
+    apply from: scriptDir + '/log.gradle'
+
+    // 自动扫描属性文件并创建对应任务
+    def propertyFiles = fileTree(rootProject.rootDir).include('gradle-*.properties')
+
+    propertyFiles.each { propFile ->
+        def fileName = propFile.name
+        // 从文件名提取环境名，如 gradle-dev.properties -> dev
+        def profile = fileName.replaceAll('^gradle-(.*)\\.properties$', '$1')
+
+        // 为每个环境创建发布任务
+        task "publishTo${profile.capitalize()}"(type: Exec) {
+            group = 'remote'
+            configurePublishTask(it, profile)
+        }
+
+        // 为每个环境创建arthas任务
+        tasks.register("arthasTo${profile.capitalize()}", Exec) {
+            group = 'remote'
+            arthasTask(it, profile)
+        }
+
+        // 为每个环境创建log任务
+        tasks.register("logTo${profile.capitalize()}") {
+            group = 'remote'
+            logTask(it, profile)
+        }
+    }
+
+}
+
