@@ -14,8 +14,6 @@
 
 [所有版本功能文档](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/remote_interaction/version.md)
 
-[相关配置文件地址](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/remote_interaction/v1)
-
 ## 使用说明
 
 ```bash
@@ -38,14 +36,9 @@ Host xxx.dev.iuin
 
 ### 结合gradle使用
 
-项目根目录的`build.gradle`文件添加相关任务(配置已在上面提供的地址中了)
+[文档GitHub地址](https://github.com/183461750/doc-record/blob/main/docs/tools/terminal/publishScript/remote_interaction/v2/doc.md)
 
-```bash
-# 项目根目录执行
-mkdir script
-# 将上面提到的文件夹中的文件添加进去(配置已在上面提供的地址中了)
-# 并在项目根目录中添加对应的配置文件与引用代码
-```
+将GitHub中这个文档同级目录中的所有文件及文件夹都复制到项目根目录后刷新gradle即可(点击上面的链接可以直接跳转到对应目录)
 
 ```bash
 # bash ./gradlew :pay-service:publishToTest --info
