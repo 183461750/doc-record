@@ -40,13 +40,8 @@ def configurePublishTask = { task, profile ->
     }
 
     // 配置依赖关系 - 确保 bootJar 任务存在时先执行它
-    afterEvaluate {
-//        if (project.tasks.findByName('clean')) {
-//            task.dependsOn 'clean'
-//        }
-        if (task.project.tasks.findByName('bootJar')) {
-            task.dependsOn 'bootJar'
-        }
+    if (task.project.tasks.findByName('bootJar')) {
+        task.dependsOn 'bootJar'
     }
 
     // 关键：指定脚本执行的工作目录（脚本所在目录）

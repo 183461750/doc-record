@@ -16,7 +16,7 @@ subprojects {
         def profile = fileName.replaceAll('^gradle-(.*)\\.properties$', '$1')
 
         // 为每个环境创建发布任务
-        task "publishTo${profile.capitalize()}"(type: Exec) {
+        tasks.register("publishTo${profile.capitalize()}", Exec) {
             group = 'remote'
             configurePublishTask(it, profile)
         }
