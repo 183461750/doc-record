@@ -19,6 +19,23 @@ test('首页可访问且渲染 landing 区块', async ({ page }) => {
   await expect(page).toHaveTitle(/Doc Record/);
 });
 
+// 根路径是跳转存根：不用框架默认存根的原因见 src/pages/index.astro 的注释
+// （默认存根无样式，暗色主题下先闪白屏；且无 og 元信息，分享时预览为空标题）。
+// 这里同时锁住两条路径：无 JS 抓取拿到的 SEO 信号，与浏览器端最终落到首页。
+test('根路径给出 canonical/noindex/og，并跳转到默认语言首页', async ({ page, request }) => {
+  const stub = await request.get('/');
+  expect(stub.status()).toBeLessThan(400);
+  const html = await stub.text();
+  expect(html).toMatch(/rel="canonical" href="[^"]*\/zh-cn\/"/);
+  expect(html).toContain('content="noindex"');
+  expect(html).toContain('http-equiv="refresh" content="0;url=/zh-cn/"');
+  expect(html).toContain('property="og:title"');
+
+  await page.goto('/');
+  await page.waitForURL(/\/zh-cn\/$/);
+  await expect(page).toHaveTitle(/Doc Record/);
+});
+
 test('文档页标题唯一（正文 H1 不与页面标题重复）', async ({ page }) => {
   await page.goto(DOC_PAGE);
   await expect(page.locator('main h1')).toHaveCount(1);

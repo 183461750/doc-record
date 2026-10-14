@@ -5,8 +5,9 @@
  * 顶层定义的变量，因此这类常量放在独立模块中由两处共同导入。
  */
 
-/** 内容所在（也是 URL 前缀）的默认语言目录。 */
-export const DOCS_LOCALE = 'zh-cn';
+// 默认语言标识统一由 src/lib/site.ts 提供：astro.config.mjs、根路径跳转存根与
+// 本文件必须一致，否则分类页路由前缀会与站点实际布局错位。
+export { DEFAULT_LOCALE as DOCS_LOCALE } from './site';
 
 /** 顶层目录的展示名，其余层级沿用目录名。 */
 export const TOP_LEVEL_TITLES: Record<string, string> = {

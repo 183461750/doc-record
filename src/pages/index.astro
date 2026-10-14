@@ -1,0 +1,62 @@
+---
+/**
+ * 站点根路径：一次到默认语言首页的跳转。
+ *
+ * 为什么不用 `astro.config.mjs` 的 `redirects`：框架生成的存根是无样式的空白页，
+ * 暗色主题下会先闪一下白屏（实测 80ms 时背景为透明，200ms 后才到达目标页），
+ * 且不含 og 元信息 —— 分享裸域名时预览标题只有 “Redirecting to: /zh-cn/”。
+ *
+ * 这里保留三件对爬虫与分享必要的信号：
+ *   - `noindex`：根路径不参与索引，避免与 `/zh-cn/` 形成重复内容；
+ *   - `canonical` 指向默认语言首页；
+ *   - `og:*` / `twitter:*` 使用站点真实标题与描述。
+ * 跳转本身给出两条路径：`<head>` 内联脚本 `location.replace`（通常早于首次绘制，
+ * 用户看不到中间页），以及 `meta refresh` 兜底（无 JS 环境与只解析 HTML 的爬虫，
+ * 语义上等价于 301 存根）。
+ */
+import { DEFAULT_LOCALE, SITE_DESCRIPTION, SITE_TITLE } from '../lib/site';
+
+const target = `/${DEFAULT_LOCALE}/`;
+const canonical = new URL(target, Astro.site ?? Astro.url.origin).toString();
+---
+
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{SITE_TITLE}</title>
+    <meta name="description" content={SITE_DESCRIPTION} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE_TITLE} />
+    <meta property="og:title" content={SITE_TITLE} />
+    <meta property="og:description" content={SITE_DESCRIPTION} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="zh_CN" />
+    <meta name="twitter:card" content="summary" />
+    <meta http-equiv="refresh" content={`0;url=${target}`} />
+    <style is:inline>
+      /* 系统画布色：亮暗主题各自成立，无需复制主题的配色变量，也不再先闪白屏 */
+      html {
+        background: canvas;
+        color-scheme: light dark;
+      }
+      body {
+        margin: 0;
+        min-height: 100dvh;
+        display: grid;
+        place-items: center;
+        color: canvastext;
+        font: 1rem/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif;
+      }
+    </style>
+    <script is:inline define:vars={{ target }}>
+      // 在解析 body 之前跳转，通常早于首次绘制
+      location.replace(target);
+    </script>
+  </head>
+  <body>
+    <p>正在跳转到 <a href={target}>{target}</a>…</p>
+  </body>
+</html>

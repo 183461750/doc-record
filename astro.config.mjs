@@ -7,12 +7,12 @@ import starlightThemeBlack from 'starlight-theme-black';
 // 正文首个一级标题与页面标题重复时，在构建期移除该标题节点。
 // 文档由多人维护，无法要求每篇都声明 front matter，故在渲染管线兜底，
 // 详见 src/plugins/remark-strip-duplicate-h1.ts。
+// 站点级常量与跳转存根共用同一来源，见 src/lib/site.ts
+import { DEFAULT_LOCALE, SITE_DESCRIPTION, SITE_TITLE } from './src/lib/site.ts';
 import { remarkStripDuplicateH1 } from './src/plugins/remark-strip-duplicate-h1.ts';
 // Astro 7 起插件通过 unified 处理器传入，markdown.remarkPlugins 已弃用
 import { unified } from '@astrojs/markdown-remark';
 
-// 全部内容位于默认语言目录下，llms.txt 分卷均以该前缀为基准。
-const DEFAULT_LOCALE = 'zh-cn';
 const inDefaultLocale = (path) => `${DEFAULT_LOCALE}/${path}`;
 
 // llms.txt 分卷：完整版约 769 KB，单次取用会占满上下文，
@@ -62,17 +62,16 @@ export default defineConfig({
     processor: unified({ remarkPlugins: [remarkStripDuplicateH1] }),
   },
 
-  // 默认语言带前缀后框架不再生成站点根索引，此处补一条指向默认语言首页。
+  // 根路径由 src/pages/index.astro 承担：跳转到默认语言首页，并补齐 noindex、
+  // canonical 与 og 元信息。不用 redirects 是因为框架生成的存根无样式（暗色主题下
+  // 会先闪白屏）且无 og 信息，分享裸域名时预览为空标题。
   // 迁移前的 URL 不做逐条映射：新旧地址的兼容层会随内容演进而持续腐化，
   // 已收录链接交由搜索引擎按 canonical 与新站点地图重新收敛。
-  redirects: {
-    '/': `/${DEFAULT_LOCALE}/`,
-  },
 
   integrations: [
     starlight({
-      title: 'Doc Record',
-      description: '各类技术文档与解决方案收集',
+      title: SITE_TITLE,
+      description: SITE_DESCRIPTION,
       favicon: '/img/favicon.ico',
       // 语言目录即 locale 键，有两种取值约束：
       //   1. 键名必须与 src/content/docs/ 下的目录名同为小写。Astro 会把内容集合的
