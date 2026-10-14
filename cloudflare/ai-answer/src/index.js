@@ -38,7 +38,8 @@ const SYSTEM_PROMPT = [
 /** 汇总 CORS 响应头，预检请求直接复用。 */
 function corsHeaders(origin) {
   return {
-    'Access-Control-Allow-Origin': origin,
+    // 浏览器调用回显来源；无 Origin 的非浏览器调用不带该头（见 fetch 内的判定）
+    ...(origin ? { 'Access-Control-Allow-Origin': origin } : {}),
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
@@ -142,13 +143,14 @@ export default {
       .split(',')
       .map((value) => value.trim())
       .filter(Boolean);
-    const effectiveOrigin =
-      allowed.includes('*') || !origin ? origin || '*' : allowed.includes(origin) ? origin : null;
-    if (effectiveOrigin === null) {
+    const originAllowed = !origin || allowed.includes('*') || allowed.includes(origin);
+    if (!originAllowed) {
       return jsonError('Origin not allowed', 403, corsHeaders(''));
     }
 
-    const headers = corsHeaders(effectiveOrigin);
+    // 无 Origin 的调用（curl、服务端调用）不受同源策略约束，回显 `*` 只会
+    // 掩盖「配置了 ALLOWED_ORIGIN 即受保护」的误判，故这类请求不返回 CORS 头。
+    const headers = corsHeaders(origin);
 
     if (request.method === 'OPTIONS') {
       return new Response(null, { status: 204, headers });
@@ -160,23 +162,40 @@ export default {
       return jsonError('Expected application/json', 415, headers);
     }
 
+    // Content-Length 由客户端声明，可省略（chunked）或伪造，只能作快速拒绝；
+    // 真正的上限按读取后的实际字节数判定。
     const declaredLength = Number(request.headers.get('Content-Length') ?? '0');
     if (declaredLength > MAX_BODY_BYTES) {
       return jsonError('Payload too large', 413, headers);
     }
 
+    const rawBody = await request.text();
+    if (new TextEncoder().encode(rawBody).byteLength > MAX_BODY_BYTES) {
+      return jsonError('Payload too large', 413, headers);
+    }
+
     let payload;
     try {
-      payload = await request.json();
+      payload = JSON.parse(rawBody);
     } catch {
       return jsonError('Invalid JSON body', 400, headers);
     }
 
     const query = normalize(payload?.query).slice(0, MAX_QUERY_CHARS);
     const rawContexts = Array.isArray(payload?.contexts) ? payload.contexts : [];
-    const sitePrefix = env.SITE_URL || 'https://doc-record.iuin888vip.icu';
+    // 站点来源按 origin 相等比较：startsWith 会被
+    // https://doc-record.iuin888vip.icu.evil.com 这类同前缀域名绕过
+    // （与上方 CORS 白名单同一原则）；解析失败的 URL 一律丢弃。
+    const siteOrigin = new URL(env.SITE_URL || 'https://doc-record.iuin888vip.icu').origin;
     const contexts = rawContexts
-      .filter((item) => item && typeof item.url === 'string' && item.url.startsWith(sitePrefix))
+      .filter((item) => {
+        if (!item || typeof item.url !== 'string') return false;
+        try {
+          return new URL(item.url).origin === siteOrigin;
+        } catch {
+          return false;
+        }
+      })
       .slice(0, MAX_CONTEXTS)
       .map((item) => ({
         url: item.url,
@@ -231,9 +250,9 @@ export default {
           controller.close();
         },
       });
-      return new Response(body, { headers: sseHeaders(effectiveOrigin) });
+      return new Response(body, { headers: sseHeaders(origin) });
     }
 
-    return new Response(toAnswerStream(result), { headers: sseHeaders(effectiveOrigin) });
+    return new Response(toAnswerStream(result), { headers: sseHeaders(origin) });
   },
 };

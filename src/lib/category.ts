@@ -21,5 +21,6 @@ export const TOP_LEVEL_TITLES: Record<string, string> = {
   network: '网络',
   os: '操作系统',
   test: '测试',
+  todos: '待办',
   tools: '工具',
 };

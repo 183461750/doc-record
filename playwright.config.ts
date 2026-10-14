@@ -23,7 +23,10 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    // CI 与本机统一用 pnpm 执行：bun 仅在本机存在，CI 环境无此二进制
+    // CI 与本机统一用 pnpm 执行：bun 仅在本机存在，CI 环境无此二进制。
+    // 例外：CLAUDE.md 记录了本机 pnpm install 被安全策略拦截时改用 bun 安装依赖的绕法，
+    // 那种环境下本机跑 e2e 需自行 `bun run build && bunx astro preview --port 4331`，
+    // 或先手动起 preview（reuseExistingServer 为真时会直接复用）。
     command: 'pnpm run build && pnpm exec astro preview --port 4331',
     url: 'http://localhost:4331',
     reuseExistingServer: !process.env.CI,

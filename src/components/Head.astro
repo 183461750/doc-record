@@ -9,13 +9,21 @@
 import BlackHead from 'starlight-theme-black/overrides/Head.astro';
 import { rawMarkdownPath } from '../lib/raw-path';
 
-const { entry, lang } = Astro.locals.starlightRoute;
 const route = Astro.locals.starlightRoute;
+const { entry, lang } = route;
 
 const site = Astro.site ?? new URL(Astro.url.origin);
 const title = entry.data.title;
 const description = entry.data.description;
 const publishedAt = entry.data.date;
+
+// `date` 由 z.coerce.date() 解析，宽松输入（纯年份、非法日期）可能得到无效时间；
+// 不设保护时 toISOString() 抛出的 RangeError 会中断整站构建，而不是跳过单个页面。
+const datePublished = (() => {
+  if (!publishedAt) return undefined;
+  const parsed = new Date(publishedAt);
+  return Number.isNaN(parsed.getTime()) ? undefined : parsed.toISOString();
+})();
 
 // 与页面同路径的 Markdown 原文，供 AI 客户端直接取用
 const rawUrl = new URL(rawMarkdownPath(entry.id), site).toString();
@@ -47,7 +55,7 @@ const structuredData = {
   ...(description ? { description } : {}),
   url: pageUrl,
   inLanguage: lang,
-  ...(publishedAt ? { datePublished: new Date(publishedAt).toISOString() } : {}),
+  ...(datePublished ? { datePublished } : {}),
   isPartOf: {
     '@type': 'WebSite',
     name: 'Doc Record',

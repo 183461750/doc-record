@@ -48,7 +48,11 @@ const llmsTxtOptions = {
       description: '技术资料、读书笔记与待办',
       paths: [inDefaultLocale('materiel/**'), inDefaultLocale('books/**')],
     },
+    { label: 'Todos', description: '待办与计划', paths: [inDefaultLocale('todos/**')] },
   ],
+  // 测试夹具不进入面向 AI 的精简版（页面照常构建，e2e 依赖它们）；
+  // sitemap-ai.xml 侧另有排除，见 src/pages/sitemap-ai.xml.ts。
+  exclude: [inDefaultLocale('test/**')],
 };
 
 export default defineConfig({
