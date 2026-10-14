@@ -43,3 +43,10 @@ graphify-out/.graphify_uncached.txt
 
 # WorkBuddy - 本地工作数据，不纳入版本控制
 .workbuddy/
+
+# 迁移前 Docusaurus 时代的旧布局目录，本站内容已迁到 src/content/docs/，
+# 这里只剩本机残留：旧 .gitignore 忽略过的临时文件、以及本机评审记录
+# （docs/reviews/）。内容未入库过，故不纳入版本控制，避免污染 git status 与
+# 主项目的子模块状态标记。若评审记录确定要入库，先脱敏并移到 adr/ 等受控目录，
+# 再删除本规则。
+/docs/

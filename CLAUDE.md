@@ -84,7 +84,8 @@ bun 14.1s / pnpm 15.1s，CI 安装已无瓶颈）。
 
 - 新文档放入 `src/content/docs/zh-cn/` 下对应分类子目录，侧边栏由目录结构自动推导；
 - `title` 可选：未声明时由 `src/content.config.ts` 中的自定义 loader 从首个一级标题
-  推导，无一级标题时回退为文件名。schema 中它**必须**保持可选：Astro 在 `docsLoader`
+  推导（**跳过围栏代码块**，否则代码块里的 `#` 注释会被当成标题），无一级标题时回退为
+  文件名。schema 中它**必须**保持可选：Astro 在 `docsLoader`
   内部（glob loader）就按 schema 校验 front matter，早于本站 loader 的补齐，声明为
   必填会让所有未写 front matter 的文档在构建期校验失败；下游页面取值时按可选处理；
 - 博客条目（`<语言目录>/blog/**`，starlight-blog 的路径约定）由同一 loader 置
@@ -130,7 +131,10 @@ AI 问答调用 NLWeb 的 `/ask` 接口，默认地址为
 - `ai-search-config.yml`：手动操作 Cloudflare AI Search 实例，三种模式：
   `update` 应用完整配置、`tune` 只调检索参数（不触发重索引，可传
   `keyword_match_mode` 与 `score_threshold`）、`recreate` 删除实例后重建
-  （需输入实例名 `bold-union-4896` 确认）。
+  （需输入实例名 `bold-union-4896` 确认）；
+- `deploy-ai-answer.yml`：部署站点问答的生成端 Worker（召回在浏览器端由 Pagefind
+  完成，该 Worker 无状态，变更即发布）。常规部署已由 Cloudflare Workers Builds 的 Git
+  集成接管，此工作流保留为手动通道；未配置令牌时跳过而不失败。
 
 ## 翻译
 
@@ -142,6 +146,10 @@ AI 问答调用 NLWeb 的 `/ask` 接口，默认地址为
 界面文案位于 `src/content/i18n/`，按 BCP-47 语言标记命名，目前人工维护。
 `locales` 只声明了 `zh-cn`，因此仅 `zh-CN.json` 会被加载；`en.json`、`ja.json`、
 `zh-TW.json` 为已完成的译文，保留供新增语言时直接复用，不属于无用文件。
+`starlight-blog` 只内置 `en`/`fr`/`it`/`de` 四种文案，其 `starlightBlog.*` 键需要在
+`zh-CN.json`、`ja.json`、`zh-TW.json` 三份站点译文里保持同步（新增语言时一并补齐；
+`en.json` 不必重复，插件自带英文）。若某个键全语言缺失，i18next 会按 `fallbackLng`
+回退到默认语言，不会渲染出 `starlightBlog.post.date` 这类原始键。
 
 ## 约定
 
