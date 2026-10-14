@@ -10,6 +10,8 @@ import { expect, test } from '@playwright/test';
 // 取深层路径：七级目录 + 长中文标题，能同时覆盖侧边栏折叠、截断与缩进封顶
 const DOC_PAGE = '/zh-cn/docker/app/devs/data/elasticsearch/v1/test/test/';
 const BLOG_PAGE = '/zh-cn/blog/';
+// 取有前后邻居的博客文章：同时覆盖插件的卡片导航与曾经的 Starlight 文档分页
+const BLOG_POST = '/zh-cn/blog/docker/dev_utls/dev-container/remote-ssh/cpolar/article/doc/';
 
 test('首页可访问且渲染 landing 区块', async ({ page }) => {
   const response = await page.goto('/');
@@ -35,6 +37,31 @@ test('未声明 front matter 的文档标题唯一', async ({ page }) => {
 test('博客页可访问且导航栏含博客入口', async ({ page }) => {
   await page.goto(BLOG_PAGE);
   await expect(page).toHaveTitle(/Doc Record/);
+});
+
+// 博客文章寄居在 docs 集合（starlight-blog 的强制约定），曾因此同时被文档侧边栏
+// 与 Starlight 的文档分页收录：博客文章页出现两套上下篇，文档分页按目录字母序取
+// 邻居，与插件按发布日期渲染的卡片顺序互相冲突。现由 src/content.config.ts 的
+// loader 统一给博客条目置 `sidebar.hidden`，两处症状一并消除。
+test('博客文章页只有一套上下篇导航', async ({ page }) => {
+  await page.goto(BLOG_POST);
+  // 插件在正文末尾渲染的卡片导航：上一篇与下一篇都在
+  await expect(page.locator('.sl-blog-pagination a')).toHaveCount(2);
+  // 回归断言：文档分页不应再出现在博客文章页
+  await expect(page.locator('.pagination-links a')).toHaveCount(0);
+});
+
+test('文档侧边栏只保留唯一的博客入口，不列出博客文章', async ({ page }) => {
+  await page.goto(DOC_PAGE);
+  const sidebar = page.locator('#starlight__sidebar');
+  // 回归断言：博客文章曾作为 `blog` 分组出现在文档侧边栏，并被文档分页当作相邻文档
+  await expect(
+    sidebar.locator('a[href^="/zh-cn/blog/"]:not([href="/zh-cn/blog/"])'),
+  ).toHaveCount(0);
+  // 插件为文档侧边栏注入的博客总入口仍在（博客文章改由博客页自身的侧边栏呈现）
+  await expect(sidebar.locator('a[href="/zh-cn/blog/"]')).toHaveCount(1);
+  // 文档页自身的上下篇不受影响
+  expect(await page.locator('.pagination-links a').count()).toBeGreaterThan(0);
 });
 
 test('侧边栏长标题两行内截断，悬浮展开且相邻条目无叠压', async ({ page }) => {

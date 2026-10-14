@@ -1,6 +1,6 @@
 ---
 title: Mihomo SSH Config Alias Support
-date: 2024-05-22
+date: 2025-12-07
 ---
 <!-- truncate -->
 

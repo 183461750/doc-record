@@ -84,7 +84,13 @@ bun 14.1s / pnpm 15.1s，CI 安装已无瓶颈）。
 
 - 新文档放入 `src/content/docs/zh-cn/` 下对应分类子目录，侧边栏由目录结构自动推导；
 - `title` 可选：未声明时由 `src/content.config.ts` 中的自定义 loader 从首个一级标题
-  推导，无一级标题时回退为文件名；
+  推导，无一级标题时回退为文件名。schema 中它**必须**保持可选：Astro 在 `docsLoader`
+  内部（glob loader）就按 schema 校验 front matter，早于本站 loader 的补齐，声明为
+  必填会让所有未写 front matter 的文档在构建期校验失败；下游页面取值时按可选处理；
+- 博客条目（`<语言目录>/blog/**`，starlight-blog 的路径约定）由同一 loader 置
+  `sidebar.hidden`：它们寄居在 docs 集合，若不摘除会同时出现在文档侧边栏与 Starlight
+  的文档分页里，与插件自己的上下篇导航冲突，见
+  `adr/2026-10-13-博客条目退出文档侧边栏.md`；
 - 侧边栏无需手动配置，`astro.config.mjs` 未声明 `sidebar`。
 
 ## 面向 AI 的产物
@@ -112,6 +118,12 @@ AI 问答调用 NLWeb 的 `/ask` 接口，默认地址为
 ## 部署与自动化
 
 - `ci.yml`：推送 main 后构建并部署到 GitHub Pages；
+- `e2e.yml`：PR 变更 `src/**`、`tests/e2e/**`、`astro.config.mjs` 等路径时，
+  对构建产物跑 Playwright 用例（`pnpm test:e2e`）。只在 PR 触发，push main 不重复跑，
+  因此合并到 main 的改动以本地或 PR 阶段的这次运行为准；
+- `typecheck.yml`：PR 变更 `src/**`、`astro.config.mjs`、`tsconfig.json`、依赖清单时跑
+  `pnpm check`（`astro check`，先 `astro sync` 生成集合类型）。与 e2e.yml 分开是为了
+  让类型错误与端到端失败各自成一条信号，当前基线为 0 错误；
 - `content-check.yml`：对变更的 Markdown 运行 `scripts/check-content.py`，需完整安装
   依赖以便读取 Shiki 的语言清单；
 - `ai-search-sync.yml`：周期性触发 Cloudflare AI Search 同步；

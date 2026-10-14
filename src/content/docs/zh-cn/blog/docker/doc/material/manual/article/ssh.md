@@ -1,6 +1,6 @@
 ---
 title: ssh
-date: 2024-05-22
+date: 2024-01-21
 ---
 <!-- truncate -->
 

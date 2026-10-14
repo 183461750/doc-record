@@ -84,7 +84,9 @@ const subdirectoryEntries = directory.subdirectories
 
 const documentEntries = directory.documents
   .map((doc) => ({
-    title: doc.data.title,
+    // title 由 content.config.ts 的 loader 保证非空；schema 里它是可选的
+    // （校验发生在 loader 补齐之前），因此这里补一层兜底
+    title: doc.data.title ?? doc.id,
     href: `/${doc.id}/`,
   }))
   .sort((a, b) => a.title.localeCompare(b.title, 'zh-CN'));

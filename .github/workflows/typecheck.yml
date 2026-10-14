@@ -1,0 +1,46 @@
+name: Type Check
+
+# 类型门禁：`astro check` 先 astro sync 生成集合类型，再诊断 .astro 与 src 下的 TS。
+# 与 e2e.yml 分开的原因：类型错误与端到端行为失败是两类信号，两者各自的失败信息
+# 更短、定位更快；两处都只做只读权限，互不依赖。
+on:
+  pull_request:
+    paths:
+      - 'src/**'
+      - 'astro.config.mjs'
+      - 'tsconfig.json'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
+      - '.github/workflows/typecheck.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: typecheck-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v6
+        with:
+          version: 10.26.2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: pnpm
+
+      - name: Install Dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Type check
+        run: pnpm check

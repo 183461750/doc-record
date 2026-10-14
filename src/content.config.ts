@@ -23,43 +23,86 @@ function stripInlineMarkdown(value: string): string {
 const base = docsLoader();
 
 /**
- * 包装 Starlight 的 docsLoader，为未声明 title 的文档按首个一级标题推导标题。
- *
- * 目的：Markdown 保持原生态，作者无需为了通过构建而写 front matter。
- * title 仍是可选的标准字段，显式声明时优先使用。
+ * 博客条目的路径位置：`<语言目录>/blog/`。前缀与 starlight-blog 的默认
+ * `prefix` 取值（`blog`）一致，未在 `astro.config.mjs` 中传 `prefix`。
  */
-const docsLoaderWithTitleFallback: Loader = {
-  name: 'starlight-docs-title-fallback',
+const BLOG_DIRECTORY = 'blog';
+
+/**
+ * entry.id 形如 `zh-cn/blog/docker/...`：首段是语言目录，其后才是内容路径。
+ * 语言目录名与插件前缀都与本函数耦合，任一处改动需同步；e2e 用例会兜住该耦合。
+ */
+function isBlogEntry(id: string): boolean {
+  return id.split('/')[1] === BLOG_DIRECTORY;
+}
+
+/**
+ * loader 阶段的 `entry.data` 是未经过 schema 校验的 front matter，字段类型为
+ * `unknown`；`sidebar` 是需要合并而非整体覆盖的对象字段，故先收敛为对象。
+ */
+function asRecord(value: unknown): Record<string, unknown> {
+  return typeof value === 'object' && value !== null ? (value as Record<string, unknown>) : {};
+}
+
+/**
+ * 包装 Starlight 的 docsLoader，统一补齐作者无需声明的元数据。
+ *
+ * 1. `title`：未声明时按首个一级标题推导，无一级标题时回退为文件名。
+ *    目的：Markdown 保持原生态，作者无需为了通过构建而写 front matter。
+ *    title 仍是可选的标准字段，显式声明时优先使用。
+ * 2. `sidebar.hidden`：博客文章寄居在 docs 集合，是 starlight-blog 的强制约定
+ *    （插件复用 docs 集合并通过 `blogSchema` 扩展字段）。若不加处理，它们会同时
+ *    污染文档侧边栏与 Starlight 的文档分页：分页按 docs 侧边栏的目录序取
+ *    「当前项 ±1」，于是博客文章页会同时出现两套上下篇 —— 插件在正文末尾按发布日期
+ *    渲染的卡片，与这里按目录字母序算出的「上一篇/下一篇」，两者顺序互相冲突。
+ *    博客有自己的侧边栏、日期与标签，不属于文档信息架构：插件已为文档侧边栏注入
+ *    唯一的 `Blog` 入口（`sl-blog-mobile-link`），故这里把博客条目统一摘除。
+ *    摘除后文档分页在博客页自然为空（找不到当前项 → prev/next 均为 undefined）。
+ *
+ * @see adr/2026-10-13-博客条目退出文档侧边栏.md
+ */
+const normalizingDocsLoader: Loader = {
+  name: 'doc-record-docs-loader',
   async load(context) {
     await base.load(context);
 
     for (const entry of context.store.values()) {
-      if (entry.data?.title) continue;
-
-      let title = '';
-      if (entry.filePath) {
-        try {
-          const raw = await readFile(new URL(entry.filePath, context.config.root), 'utf8');
-          const match = FIRST_H1.exec(raw);
-          if (match) title = stripInlineMarkdown(match[1]);
-        } catch {
-          title = '';
+      if (!entry.data?.title) {
+        let title = '';
+        if (entry.filePath) {
+          try {
+            const raw = await readFile(new URL(entry.filePath, context.config.root), 'utf8');
+            const match = FIRST_H1.exec(raw);
+            if (match) title = stripInlineMarkdown(match[1]);
+          } catch {
+            title = '';
+          }
         }
+
+        // 无一级标题时回退为文件名，与主流静态站点生成器的行为一致
+        if (!title) title = entry.id.split('/').pop() ?? entry.id;
+
+        entry.data = { ...entry.data, title };
       }
 
-      // 无一级标题时回退为文件名，与主流静态站点生成器的行为一致
-      if (!title) title = entry.id.split('/').pop() ?? entry.id;
-
-      entry.data = { ...entry.data, title };
+      if (isBlogEntry(entry.id)) {
+        // 保留作者显式声明的其他 sidebar 字段（label、order 等）
+        entry.data = {
+          ...entry.data,
+          sidebar: { ...asRecord(entry.data?.sidebar), hidden: true },
+        };
+      }
     }
   },
 };
 
 export const collections = {
   docs: defineCollection({
-    loader: docsLoaderWithTitleFallback,
+    loader: normalizingDocsLoader,
     schema: docsSchema({
-      // title 降为可选：未声明时由 loader 从正文推导
+      // title 必须声明为可选：Astro 在 docsLoader 内部（glob loader 的 getEntryData）
+      // 就按 schema 校验 front matter，早于本站 loader 的标题补齐，声明为必填会让
+      // 所有未写 front matter 的文档在构建期校验失败。下游页面取值时按可选处理。
       extend: (context) =>
         blogSchema(context).extend({ title: z.string().optional() }),
     }),
