@@ -92,6 +92,10 @@ bun 14.1s / pnpm 15.1s，CI 安装已无瓶颈）。
   `sidebar.hidden`：它们寄居在 docs 集合，若不摘除会同时出现在文档侧边栏与 Starlight
   的文档分页里，与插件自己的上下篇导航冲突，见
   `adr/2026-10-13-博客条目退出文档侧边栏.md`；
+- 内容 glob **不遍历点目录**：目录名以 `.` 开头时其中文档不会成为条目（本站
+  `example/.devcontainer/doc.md` 因此从未发布）。点开头的**文件**会被收录，但 URL 会丢掉
+  前导点（`.nvmrc如何使用.md` → `/nvmrc如何使用/`）。详见
+  `adr/2026-10-14-代码审查发现项处置.md` 的 N1/N3；
 - 侧边栏无需手动配置，`astro.config.mjs` 未声明 `sidebar`。
 
 ## 面向 AI 的产物
