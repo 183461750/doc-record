@@ -54,8 +54,8 @@ bun 14.1s / pnpm 15.1s，CI 安装已无瓶颈）。
 | `src/content/i18n/` | 界面文案，按 BCP-47 语言标记命名 |
 | `src/content.config.ts` | 内容集合定义与 schema 扩展 |
 | `src/components/` | 覆写与新增的 Starlight 组件 |
-| `src/pages/` | 自定义路由：`/raw/**` Markdown 原文、`sitemap-ai.xml` |
-| `src/lib/` | 与内容集合 id 相关的路径换算 |
+| `src/pages/` | 自定义路由：根路径跳转存根、`/raw/**` Markdown 原文、`sitemap-ai.xml` |
+| `src/lib/` | 站点常量（`site.ts`）与内容 id 的路径换算（`raw-path.ts`、`category.ts`） |
 | `public/` | 静态资源，直接复制到产物根目录 |
 | `scripts/` | 内容迁移、内容门禁、Cloudflare 与 Weblate 运维脚本 |
 | `adr/` | 架构决策记录，按 `YYYY-MM-DD-主题.md` 命名 |
@@ -76,9 +76,10 @@ bun 14.1s / pnpm 15.1s，CI 安装已无瓶颈）。
    页面作为回退，产生正文完全相同的重复内容；`starlight-blog` 在这类回退路由上无法
    解析条目 id，构建会直接失败。
 
-`redirects` 只保留 `/` → `/zh-cn/` 一条：默认语言带前缀时框架不再生成站点根索引，
-该条用于保证域名根路径可用。旧 URL 不做逐条映射，已收录链接交由页面 canonical 与
-`sitemap-ai.xml` 收敛。
+根路径 `/` 由 `src/pages/index.astro` 承担：跳转到默认语言首页，并给出 `noindex`、
+`canonical` 与 `og:*`（不用框架 `redirects` 的原因、实测数据与边缘 301 等备选方案见
+`adr/2026-10-14-根路径跳转与首屏闪烁.md`）。旧 URL 不做逐条映射，已收录链接交由页面
+canonical 与 `sitemap-ai.xml` 收敛。
 
 ## 内容与 front matter
 
