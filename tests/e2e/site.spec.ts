@@ -34,6 +34,16 @@ test('未声明 front matter 的文档标题唯一', async ({ page }) => {
   await expect(page.locator('main h2').filter({ hasText: '二级标题' })).toBeVisible();
 });
 
+// 夹具：src/content/docs/zh-cn/test/fenced-comment-only.md 全文首个 `#` 出现在围栏
+// 代码块内，且正文没有一级标题。回归背景：标题推导曾对全文做 `^# ` 多行匹配，把代码
+// 注释当成标题，站内 19 篇未声明 title 的文档因此把「重启服务」这类注释渲染成页面标题。
+test('代码块内的井号注释不会被当作页面标题', async ({ page }) => {
+  await page.goto('/zh-cn/test/fenced-comment-only/');
+  await expect(page.locator('main h1')).toHaveCount(1);
+  // 没有可用的正文标题时回退为文件名
+  await expect(page.locator('main h1')).toHaveText('fenced-comment-only');
+});
+
 test('博客页可访问且导航栏含博客入口', async ({ page }) => {
   await page.goto(BLOG_PAGE);
   await expect(page).toHaveTitle(/Doc Record/);
