@@ -9,6 +9,7 @@ import starlightThemeBlack from 'starlight-theme-black';
 // 详见 src/plugins/remark-strip-duplicate-h1.ts。
 // 站点级常量与跳转存根共用同一来源，见 src/lib/site.ts
 import { DEFAULT_LOCALE, SITE_DESCRIPTION, SITE_TITLE } from './src/lib/site.ts';
+import { remarkLazyImages } from './src/plugins/remark-lazy-images.ts';
 import { remarkStripDuplicateH1 } from './src/plugins/remark-strip-duplicate-h1.ts';
 // Astro 7 起插件通过 unified 处理器传入，markdown.remarkPlugins 已弃用
 import { unified } from '@astrojs/markdown-remark';
@@ -59,7 +60,7 @@ export default defineConfig({
   site: 'https://doc-record.iuin888vip.icu',
 
   markdown: {
-    processor: unified({ remarkPlugins: [remarkStripDuplicateH1] }),
+    processor: unified({ remarkPlugins: [remarkStripDuplicateH1, remarkLazyImages] }),
   },
 
   // 根路径由 src/pages/index.astro 承担：跳转到默认语言首页，并补齐 noindex、

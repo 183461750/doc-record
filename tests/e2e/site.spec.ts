@@ -185,3 +185,35 @@ test('代码块不横向溢出文档容器', async ({ page }) => {
   });
   expect(overflow).toBe(true);
 });
+
+// 迁移遗留的远程图片（旧仓库 blob 的 `?raw=true` 地址，共 23 处 / 14 个页面）与第三方头像
+// 都会拖住 `load`：博客列表页的作者头像 `https://github.com/iuin8.png` 是 eager 图片，
+// 在代理网络下曾让 `page.goto` 偶发卡满 30 秒超时（见 adr 的 N5/N6）。
+// 回归保护两条：列表页不得引用第三方子资源；正文的远程图片必须懒加载
+// （由 src/plugins/remark-lazy-images.ts 统一加属性）。
+test('列表页不引用任何第三方子资源', async ({ page }) => {
+  await page.goto(BLOG_PAGE);
+
+  const external = await page.evaluate(() =>
+    [
+      ...document.querySelectorAll(
+        'img[src^="http"], script[src^="http"], iframe[src^="http"], link[rel="stylesheet"][href^="http"]',
+      ),
+    ].map((element) => element.getAttribute('src') ?? element.getAttribute('href')),
+  );
+
+  expect(external).toEqual([]);
+});
+
+test('正文的远程图片一律懒加载，不进入 load 事件', async ({ page }) => {
+  // 取图片最多的页面之一：其图片全部指向旧仓库
+  await page.goto('/zh-cn/docker/dev_utls/remote_debug/doc/');
+
+  const eagerExternal = await page.evaluate(() =>
+    [...document.querySelectorAll('img[src^="http"]')]
+      .filter((element) => element.getAttribute('loading') !== 'lazy')
+      .map((element) => element.getAttribute('src')),
+  );
+
+  expect(eagerExternal).toEqual([]);
+});
