@@ -25,6 +25,46 @@ test('点击入口展开面板，Esc 关闭', async ({ page }) => {
 });
 
 /**
+ * 生成端区分「可重试」与「当日额度耗尽」后，前端的提示也应区分：
+ * 429 给出次日再试的文案，其余失败仍是通用的暂不可用。
+ */
+test('额度耗尽（429）时提示次日再试', async ({ page }) => {
+  await page.route('**/ask', (route) =>
+    route.fulfill({
+      status: 429,
+      headers: { 'content-type': 'application/json', 'access-control-allow-origin': '*' },
+      body: '{"error":"generation quota exhausted"}',
+    }),
+  );
+
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+  await page.locator('.ai-ask-input').fill('Redis 持久化');
+  await page.locator('.ai-ask-submit').click();
+
+  await expect(page.locator('.ai-ask-result')).toHaveText(/额度已用完/);
+});
+
+test('其他失败仍提示暂不可用', async ({ page }) => {
+  await page.route('**/ask', (route) =>
+    route.fulfill({
+      status: 502,
+      headers: { 'content-type': 'application/json', 'access-control-allow-origin': '*' },
+      body: '{"error":"generation unavailable"}',
+    }),
+  );
+
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+  await page.locator('.ai-ask-input').fill('Redis 持久化');
+  await page.locator('.ai-ask-submit').click();
+
+  const result = page.locator('.ai-ask-result');
+  await expect(result).not.toHaveText(/额度已用完/);
+  await expect(result).toHaveText(/暂时/);
+});
+
+/**
  * 并发提交的边界：双击不应重复请求，换问题重问不应让旧响应污染新输出。
  *
  * 背景（代码审查发现项 H2）：提交原先既不取消上一次请求也不去重，双击会白跑一次生成，

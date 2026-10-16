@@ -36,6 +36,7 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     data-pending={t('aiAsk.pending')}
     data-empty={t('aiAsk.empty')}
     data-failed={t('aiAsk.failed')}
+    data-quota={t('aiAsk.quota')}
     data-sources={t('aiAsk.sources')}
   >
     <div class="ai-ask-head">
@@ -132,6 +133,8 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
   }
 
   /** 把 SSE 文本流切成完整的 `data:` 事件载荷。 */
+  let warnedUnexpectedEvent = false;
+
   function parseEvents(chunk: string): AskMessage[] {
     const messages: AskMessage[] = [];
     for (const block of chunk.split('\n\n')) {
@@ -142,7 +145,11 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
         try {
           messages.push(JSON.parse(payload) as AskMessage);
         } catch {
-          // 心跳或非 JSON 行直接忽略
+          // 心跳或非 JSON 行直接忽略；首次出现时留一条记录，避免上游换了格式却毫无迹象
+          if (!warnedUnexpectedEvent) {
+            warnedUnexpectedEvent = true;
+            console.warn('[ai-ask] 忽略无法解析的 SSE 数据行：', payload.slice(0, 80));
+          }
         }
       }
     }
@@ -334,6 +341,19 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     return { hits, contexts };
   }
 
+  /**
+   * 带状态码的请求失败：上层据此区分「可重试」与「当日额度已耗尽」。
+   * 对应生成端的 429（额度用尽，重试无效）与 502/503（容量或未知失败，可重试）。
+   */
+  class AskRequestError extends Error {
+    status: number;
+
+    constructor(status: number) {
+      super(`HTTP ${status}`);
+      this.status = status;
+    }
+  }
+
   /** 逐段读取 SSE，把解析出的消息交给调用方。 */
   async function readStream(response: Response, onMessage: (message: AskMessage) => void) {
     if (!response.body) throw new Error('empty body');
@@ -392,7 +412,7 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
       body: JSON.stringify({ query, contexts }),
       signal,
     });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    if (!response.ok) throw new AskRequestError(response.status);
 
     await readStream(response, (message) => {
       if (signal.aborted) return;
@@ -419,7 +439,7 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
       body: JSON.stringify({ query, mode: 'generate', site: 'all' }),
       signal,
     });
-    if (!response.ok) throw new Error(`HTTP ${response.status}`);
+    if (!response.ok) throw new AskRequestError(response.status);
 
     await readStream(response, (message) => {
       if (signal.aborted) return;
@@ -514,9 +534,12 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
         } else {
           await askNlweb(panel, output, query, signal);
         }
-      } catch {
+      } catch (error) {
         // 主动取消（换问题重问）不算失败，也不去改写新请求的输出
-        if (!signal.aborted) output.textContent = panel.dataset.failed ?? '';
+        if (!signal.aborted) {
+          const quota = error instanceof AskRequestError && error.status === 429;
+          output.textContent = (quota ? panel.dataset.quota : panel.dataset.failed) ?? '';
+        }
       } finally {
         if (inflight?.controller === controller) inflight = null;
       }
