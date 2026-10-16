@@ -66,6 +66,7 @@ PLAYWRIGHT_DOWNLOAD_HOST=https://cdn.npmmirror.com/binaries/playwright pnpm exec
 | `src/content/i18n/` | 界面文案，按 BCP-47 语言标记命名 |
 | `src/content.config.ts` | 内容集合定义与 schema 扩展 |
 | `src/components/` | 覆写与新增的 Starlight 组件 |
+| `src/plugins/` | 构建期 remark 插件：删除与页面标题重复的 H1、正文图片统一懒加载 |
 | `src/pages/` | 自定义路由：根路径跳转存根、`/raw/**` Markdown 原文、`sitemap-ai.xml` |
 | `src/lib/` | 站点常量（`site.ts`）与内容 id 的路径换算（`raw-path.ts`、`category.ts`） |
 | `public/` | 静态资源，直接复制到产物根目录 |
@@ -109,7 +110,10 @@ canonical 与 `sitemap-ai.xml` 收敛。
   `example/.devcontainer/doc.md` 因此从未发布）。点开头的**文件**会被收录，但 URL 会丢掉
   前导点（`.nvmrc如何使用.md` → `/nvmrc如何使用/`）。详见
   `adr/2026-10-14-代码审查发现项处置.md` 的 N1/N3；
-- 侧边栏无需手动配置，`astro.config.mjs` 未声明 `sidebar`。
+- 侧边栏无需手动配置，`astro.config.mjs` 未声明 `sidebar`；
+- 正文图片统一由 `src/plugins/remark-lazy-images.ts` 加 `loading="lazy"`：迁移遗留的远程图片
+  （旧仓库 blob 地址）若按默认 eager 处理会计入 `load` 事件，第三方站点变慢就会拖住整页加载，
+  曾因此在博客列表页触发过 30 秒卡顿（见 `adr/2026-10-14-代码审查发现项处置.md` 的 N5/N6）。
 
 ## 面向 AI 的产物
 
