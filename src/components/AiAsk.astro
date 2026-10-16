@@ -94,6 +94,10 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
 </div>
 
 <script>
+  // HTML → 纯文本与生成端共用同一份实现（代码审查发现项 M7）：此前前端只剥标签、
+  // 生成端还会解码实体，两边对同一段 Pagefind 文本给出不同结果
+  import { toPlainText } from '../../shared/plain-text.js';
+
   interface AskResult {
     url?: string;
     name?: string;
@@ -154,10 +158,6 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
       }
     }
     return messages;
-  }
-
-  function stripMarkup(text: string): string {
-    return text.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
   }
 
   /** 中文虚词与疑问词。长句检索时剔除，避免高频虚词占掉匹配名额。 */
@@ -334,8 +334,8 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     for (const item of picked) {
       const url = new URL(item.url, window.location.origin).href;
       const title = item.meta?.title ?? item.url;
-      hits.push({ url, name: title, description: stripMarkup(item.excerpt ?? '') });
-      const text = stripMarkup(item.content ?? '');
+      hits.push({ url, name: title, description: toPlainText(item.excerpt ?? '') });
+      const text = toPlainText(item.content ?? '');
       contexts.push({ url, title, text: bestWindow(text, terms.length > 0 ? terms : [query]) });
     }
     return { hits, contexts };
