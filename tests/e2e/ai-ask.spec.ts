@@ -23,3 +23,51 @@ test('点击入口展开面板，Esc 关闭', async ({ page }) => {
   await page.keyboard.press('Escape');
   await expect(panel).toBeHidden();
 });
+
+/**
+ * 并发提交的边界：双击不应重复请求，换问题重问不应让旧响应污染新输出。
+ *
+ * 背景（代码审查发现项 H2）：提交原先既不取消上一次请求也不去重，双击会白跑一次生成，
+ * 且两次响应争抢同一输出区，出现「答案与来源错配」。这里用慢响应把窗口撑开，
+ * 断言请求次数与输出归属。
+ */
+test('同一问题重复提交只请求一次，换问题重问以新响应为准', async ({ page }) => {
+  let requests = 0;
+  await page.route('**/ask', async (route) => {
+    requests += 1;
+    const index = requests;
+    // 让请求停留在途中，才有机会触发第二次提交
+    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      await route.fulfill({
+        status: 200,
+        headers: { 'content-type': 'text/event-stream; charset=utf-8' },
+        body: `data: {"answer":"答案 ${index}"}\n\ndata: [DONE]\n\n`,
+      });
+    } catch {
+      // 请求已被后一次提交取消（这正是被测行为之一）
+    }
+  });
+
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+  const result = page.locator('.ai-ask-result');
+  const input = page.locator('.ai-ask-input');
+
+  // 第一次提交：进入「检索中」
+  await input.fill('Redis 有哪两种持久化方式');
+  await page.locator('.ai-ask-submit').click();
+  await expect(result).toHaveText(/检索中/);
+
+  // 同一问题再次提交：应被忽略，请求数不变
+  await page.locator('.ai-ask-submit').click();
+  await expect(result).toContainText('答案 1');
+  expect(requests, '同一问题重复提交不应重复请求').toBe(1);
+
+  // 上一个请求进行中换问题提交：发出新请求，且输出只属于新请求
+  await input.fill('另一个问题');
+  await page.locator('.ai-ask-submit').click();
+  await expect(result).toContainText('答案 2');
+  expect(requests, '换问题应发出新请求').toBe(2);
+  await expect(result, '旧响应不应污染新输出').not.toContainText('答案 1');
+});

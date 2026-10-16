@@ -253,19 +253,36 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     const size = 1500;
     if (text.length <= size || terms.length === 0) return text.slice(0, size);
     const step = 500;
-    let best = text.slice(0, size);
-    let bestScore = -1;
-    for (let start = 0; start + size <= text.length + step; start += step) {
+    const last = Math.max(0, text.length - size);
+
+    const scoreOf = (start: number) => {
       const window = text.slice(start, start + size);
       let score = 0;
       for (const term of terms) {
         if (window.toLowerCase().includes(term.toLowerCase())) score += 1;
       }
+      return { window, score };
+    };
+
+    let best = text.slice(0, size);
+    let bestScore = -1;
+
+    // 起点上界为 last：原先写成 text.length + step，落在末尾之外的起点会切出
+    // 短于 size 的窗口 —— 既少了上下文，也可能因为「短窗口同样命中」被评为最佳。
+    for (let start = 0; start <= last; start += step) {
+      const { window, score } = scoreOf(start);
       if (score > bestScore) {
         bestScore = score;
         best = window;
       }
     }
+
+    // 正文结尾常是结论或关键配置，而步长网格可能刚好错过它，补一个末尾对齐的窗口
+    if (last % step !== 0) {
+      const { window, score } = scoreOf(last);
+      if (score > bestScore) best = window;
+    }
+
     return best;
   }
 
@@ -324,21 +341,39 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     const decoder = new TextDecoder();
     let buffer = '';
 
-    for (;;) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const boundary = buffer.lastIndexOf('\n\n');
-      if (boundary === -1) continue;
-      const complete = buffer.slice(0, boundary + 2);
-      buffer = buffer.slice(boundary + 2);
-      for (const message of parseEvents(complete)) onMessage(message);
+    try {
+      for (;;) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const boundary = buffer.lastIndexOf('\n\n');
+        if (boundary === -1) continue;
+        const complete = buffer.slice(0, boundary + 2);
+        buffer = buffer.slice(boundary + 2);
+        for (const message of parseEvents(complete)) onMessage(message);
+      }
+    } finally {
+      // 正常结束、上游出错、被 abort 中断三条路径都要还锁：
+      // 取消时若不还锁，底层流不会尽快释放回连接池。
+      reader.releaseLock();
     }
   }
 
-  /** 本地召回 + 自建生成端：中文查询可用。 */
-  async function askWithLocalRecall(panel: HTMLElement, output: HTMLElement, query: string) {
+  /**
+   * 本地召回 + 自建生成端：中文查询可用。
+   *
+   * `signal` 来自当前这次提交：被后一次提交取消后，本函数不得再改动界面，
+   * 否则旧请求的输出会盖掉新请求的（答案与来源错配的成因之一）。
+   */
+  async function askWithLocalRecall(
+    panel: HTMLElement,
+    output: HTMLElement,
+    query: string,
+    signal: AbortSignal,
+  ) {
     const { hits, contexts } = await localRecall(query);
+
+    if (signal.aborted) return;
 
     if (hits.length === 0) {
       output.textContent = panel.dataset.empty ?? '';
@@ -355,19 +390,26 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, contexts }),
+      signal,
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     await readStream(response, (message) => {
+      if (signal.aborted) return;
       const text = message.answer ?? message.content;
       if (typeof text === 'string' && text) answer.textContent += text;
     });
 
-    if (!answer.textContent) answer.textContent = panel.dataset.empty ?? '';
+    if (!signal.aborted && !answer.textContent) answer.textContent = panel.dataset.empty ?? '';
   }
 
   /** 回退路径：NLWeb 自行检索并生成，中文查询会被其过滤。 */
-  async function askNlweb(panel: HTMLElement, output: HTMLElement, query: string) {
+  async function askNlweb(
+    panel: HTMLElement,
+    output: HTMLElement,
+    query: string,
+    signal: AbortSignal,
+  ) {
     const collected: AskResult[] = [];
     const notes: string[] = [];
 
@@ -375,14 +417,18 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ query, mode: 'generate', site: 'all' }),
+      signal,
     });
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
 
     await readStream(response, (message) => {
+      if (signal.aborted) return;
       if (message.results) collected.push(...message.results);
       const text = message.answer ?? message.content;
       if (typeof text === 'string' && text) notes.push(text);
     });
+
+    if (signal.aborted) return;
 
     output.replaceChildren();
     const answer = document.createElement('p');
@@ -407,6 +453,23 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
       else openButton.focus();
     };
 
+    // 并发提交的状态。完全相同的问题重复提交直接忽略（双击场景，避免白跑一次生成）；
+    // 换问题再提交则取消上一次 —— 否则两次响应会争抢同一输出区，且重复消耗生成额度。
+    let inflight: { controller: AbortController; query: string } | null = null;
+
+    // 客户端路由（ClientRouter）会在每次导航后重新执行本脚本，而 document 上的监听器
+    // 不随页面卸载消失，会随导航次数累积（当前未启用 ClientRouter，属潜在问题）。
+    // 解绑与请求取消都挂在 AbortController 上：换页时一并中止。
+    const lifecycle = new AbortController();
+    document.addEventListener(
+      'astro:after-swap',
+      () => {
+        lifecycle.abort();
+        inflight?.controller.abort();
+      },
+      { signal: lifecycle.signal },
+    );
+
     openButton.addEventListener('click', () => {
       setOpen(panel.hidden);
     });
@@ -414,31 +477,48 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     closeButton.addEventListener('click', () => setOpen(false));
 
     // 面板不遮挡页面，故只在按 Esc 与点击面板外部时收起，而不是做成模态。
-    document.addEventListener('keydown', (event) => {
-      if (event.key === 'Escape' && !panel.hidden) setOpen(false);
-    });
+    document.addEventListener(
+      'keydown',
+      (event) => {
+        if (event.key === 'Escape' && !panel.hidden) setOpen(false);
+      },
+      { signal: lifecycle.signal },
+    );
 
-    document.addEventListener('pointerdown', (event) => {
-      if (panel.hidden) return;
-      const target = event.target as Node;
-      if (!launcher.contains(target)) setOpen(false);
-    });
+    document.addEventListener(
+      'pointerdown',
+      (event) => {
+        if (panel.hidden) return;
+        const target = event.target as Node;
+        if (!launcher.contains(target)) setOpen(false);
+      },
+      { signal: lifecycle.signal },
+    );
 
     form.addEventListener('submit', async (event) => {
       event.preventDefault();
       const query = input.value.trim();
       if (!query) return;
+      if (inflight?.query === query) return;
+
+      inflight?.controller.abort();
+      const controller = new AbortController();
+      inflight = { controller, query };
+      const { signal } = controller;
 
       output.textContent = panel.dataset.pending ?? '';
 
       try {
         if (panel.dataset.recall === 'true') {
-          await askWithLocalRecall(panel, output, query);
+          await askWithLocalRecall(panel, output, query, signal);
         } else {
-          await askNlweb(panel, output, query);
+          await askNlweb(panel, output, query, signal);
         }
       } catch {
-        output.textContent = panel.dataset.failed ?? '';
+        // 主动取消（换问题重问）不算失败，也不去改写新请求的输出
+        if (!signal.aborted) output.textContent = panel.dataset.failed ?? '';
+      } finally {
+        if (inflight?.controller === controller) inflight = null;
       }
     });
   });
