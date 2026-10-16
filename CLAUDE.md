@@ -13,8 +13,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 | --- | --- | --- |
 | Astro | 7.x | 静态站点生成 |
 | @astrojs/starlight | 0.42.x | 文档主题、侧边栏、搜索 |
-| starlight-blog | 0.29.x | 博客列表、分页、RSS |
-| starlight-llms-txt | 0.11.x | 生成 llms.txt 及分类分卷 |
+| starlight-blog | 0.30.x | 博客列表、分页、RSS |
+| starlight-llms-txt | 0.12.x | 生成 llms.txt 及分类分卷 |
 
 ## 常用命令
 
@@ -45,6 +45,16 @@ bun run dev                    # 或 bun run build / bunx playwright test
 以免与 `pnpm-lock.yaml` 双轨漂移。切换包管理器需同时调整锁文件策略、
 `pnpm.overrides` 与三个 workflow，变更成本高于收益（实测 `astro build`
 bun 14.1s / pnpm 15.1s，CI 安装已无瓶颈）。
+
+首次跑 e2e 需装浏览器二进制（`pnpm exec playwright install chromium`）；若
+`cdn.playwright.dev` 下载停滞（本机代理下常见），改用镜像：
+
+```bash
+PLAYWRIGHT_DOWNLOAD_HOST=https://cdn.npmmirror.com/binaries/playwright pnpm exec playwright install chromium
+```
+
+依赖漏洞的处置口径、`pnpm.overrides` 清单与「构建期 + 自有输入 ⇒ 可接受」的判定标准见
+`adr/2026-10-16-依赖漏洞清理.md`。
 
 ## 目录结构
 
