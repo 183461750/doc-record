@@ -167,7 +167,7 @@ await check('M10：实体被解码，被编码的标记不会留在 prompt 里',
   assert.match(prompt, /R&D/, '命名实体应被解码');
   assert.ok(!prompt.includes('&amp;'), '残留未解码的 &amp;');
   assert.ok(!prompt.includes('&lt;'), '残留未解码的 &lt;');
-  assert.ok(!/<script>/.test(prompt), '解码出来的标记没有被二次剥离');
+  assert.ok(!prompt.includes('<script>') && !prompt.includes('<SCRIPT>'), '解码出来的标记没有被二次剥离（含大写）');
   assert.match(prompt, /'d'/, '数字实体应被解码');
   assert.match(prompt, /中/, '十六进制实体应被解码');
 });
@@ -212,6 +212,19 @@ await check('M10/CodeQL：`<<<<…` 这类输入不会触发多项式回溯', as
   assert.ok(elapsed < 1000, `处理 60 KB 恶意输入耗时 ${elapsed}ms，超出预期`);
 });
 
+await check('M10：大写标签同样被剥离（剥离逻辑与大小写无关）', async () => {
+  const env = makeEnv('A');
+  const body = {
+    query: 'q',
+    contexts: [{ url: `${SITE}/zh-cn/middleware/x/`, text: '前 &lt;SCRIPT&gt;alert(1)&lt;/SCRIPT&gt; 后' }],
+  };
+  await worker.fetch(post(body, { Origin: SITE }), env);
+  const prompt = promptOf(env);
+
+  assert.ok(!prompt.includes('<SCRIPT>') && !prompt.includes('</SCRIPT>'), '大写标签未被剥离');
+  assert.ok(prompt.includes('前') && prompt.includes('后'), '标签之间的正文应保留');
+});
+
 await check('M10：未闭合的 `<` 之后按普通文本保留', async () => {
   const env = makeEnv('A');
   const body = {
@@ -221,8 +234,8 @@ await check('M10：未闭合的 `<` 之后按普通文本保留', async () => {
   await worker.fetch(post(body, { Origin: SITE }), env);
   const prompt = promptOf(env);
 
-  assert.ok(!/<b>/.test(prompt), '闭合标签应被剥离');
-  assert.match(prompt, /c<d e/, '未闭合标签后的内容应保留为文本');
+  assert.ok(!prompt.includes('<b>') && !prompt.includes('<B>'), '闭合标签应被剥离（含大写）');
+  assert.ok(prompt.includes('c<d e'), '未闭合标签后的内容应保留为文本');
 });
 
 console.log(`worker 最小用例：${passed} 项全部通过`);
