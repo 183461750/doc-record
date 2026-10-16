@@ -22,6 +22,9 @@
 
 from __future__ import annotations
 
+# 豁免清单与标题规则由内容脚本共用，见 scripts/content_rules.py
+from content_rules import SKIP_FILES as SKIP_FRONTMATTER_CHECK
+
 import argparse
 import re
 import sys
@@ -46,14 +49,6 @@ FRAMEWORK_SPECIFIC_FIELDS = {
 
 # Shiki 语言表中无对应条目、但 Expressive Code 可识别的通用别名
 LANGUAGE_ALIASES = {'text', 'txt', 'plain', 'plaintext', 'ansi'}
-
-# 不参与 front matter 与正文标题提示的文件：
-#   - SKILL.md 遵循 Agent Skills 规范，其 name / description 字段由该规范定义，
-#     不属于站点内容的元数据约定，正文一级标题同样按该规范编写
-#   - index.mdx 是各目录的索引页，`template` / `hero` 属站点级布局配置而非
-#     内容元数据，随站点生成器而变
-#   这类文件的正文仍受其他检查项约束
-SKIP_FRONTMATTER_CHECK = {'SKILL.md', 'index.mdx'}
 
 SECRET_PATTERNS: tuple[tuple[str, str], ...] = (
     (r'\bAKIA[0-9A-Z]{16}\b', 'AWS 访问密钥'),
