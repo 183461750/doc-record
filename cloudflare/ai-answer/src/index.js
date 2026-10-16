@@ -20,6 +20,15 @@
  *   - 校验片段 URL 归属站点，避免被当作通用生成代理。
  */
 
+/**
+ * 本文件用 JSDoc 标注类型，由 `pnpm check:worker`（tsc --checkJs --strict）校验；
+ * 绑定与变量的类型见同目录 env.d.ts。
+ *
+ * @typedef {Record<string, string>} ResponseHeaders 响应头集合（不含 undefined 值）
+ * @typedef {{ url?: unknown, title?: unknown, text?: unknown }} RawContext 请求体里未经校验的片段
+ * @typedef {{ url: string, title: string, text: string }} Context 校验后的片段
+ */
+
 const MAX_CONTEXTS = 6;
 const MAX_CONTEXT_CHARS = 1500;
 const MAX_QUERY_CHARS = 200;
@@ -35,18 +44,31 @@ const SYSTEM_PROMPT = [
   '输出示例：Redis 支持 RDB 与 AOF 两种持久化方式 [1][2]。',
 ].join('');
 
-/** 汇总 CORS 响应头，预检请求直接复用。 */
+/**
+ * 汇总 CORS 响应头，预检请求直接复用。
+ *
+ * @param {string} origin 请求来源；为空串表示非浏览器调用
+ * @returns {ResponseHeaders}
+ */
 function corsHeaders(origin) {
-  return {
-    // 浏览器调用回显来源；无 Origin 的非浏览器调用不带该头（见 fetch 内的判定）
-    ...(origin ? { 'Access-Control-Allow-Origin': origin } : {}),
+  /** @type {ResponseHeaders} */
+  const headers = {
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
     Vary: 'Origin',
   };
+  // 浏览器调用回显来源；无 Origin 的非浏览器调用不带该头（见 fetch 内的判定）
+  if (origin) headers['Access-Control-Allow-Origin'] = origin;
+  return headers;
 }
 
+/**
+ * @param {string} message
+ * @param {number} status
+ * @param {ResponseHeaders} headers
+ * @returns {Response}
+ */
 function jsonError(message, status, headers) {
   return new Response(JSON.stringify({ error: message }), {
     status,
@@ -54,6 +76,10 @@ function jsonError(message, status, headers) {
   });
 }
 
+/**
+ * @param {string} origin
+ * @returns {ResponseHeaders}
+ */
 function sseHeaders(origin) {
   return {
     ...corsHeaders(origin),
@@ -63,7 +89,12 @@ function sseHeaders(origin) {
   };
 }
 
-/** 去掉 HTML 标签并压缩空白，片段取自 Pagefind 的正文，含少量标记。 */
+/**
+ * 去掉 HTML 标签并压缩空白，片段取自 Pagefind 的正文，含少量标记。
+ *
+ * @param {unknown} text
+ * @returns {string}
+ */
 function normalize(text) {
   return String(text ?? '')
     .replace(/<[^>]*>/g, ' ')
@@ -72,6 +103,11 @@ function normalize(text) {
     .trim();
 }
 
+/**
+ * @param {string} query
+ * @param {Context[]} contexts
+ * @returns {string}
+ */
 function buildPrompt(query, contexts) {
   const blocks = contexts
     .map((item, index) => {
@@ -88,6 +124,31 @@ function buildPrompt(query, contexts) {
 /**
  * 把 Workers AI 的流式输出转换为本站的 SSE 格式。
  * 上游事件形如 data: {"response":"..."}，结束为 data: [DONE]。
+ */
+/**
+ * 取模型返回的文本。
+ *
+ * 审查项 U3：`stream: false` 下的实际返回结构在不同模型间存在差异，历史上同时兼容
+ * 「字符串」「{ response }」「{ result: { response } }」三种形态。这里把不确定性收敛到
+ * 一处并显式收窄，避免类型检查把它当成 any 放过去。
+ *
+ * @param {unknown} result
+ * @returns {string}
+ */
+function readModelText(result) {
+  if (typeof result === 'string') return result;
+  if (result && typeof result === 'object') {
+    const direct = /** @type {{ response?: unknown }} */ (result).response;
+    if (typeof direct === 'string') return direct;
+    const nested = /** @type {{ result?: { response?: unknown } }} */ (result).result?.response;
+    if (typeof nested === 'string') return nested;
+  }
+  return '';
+}
+
+/**
+ * @param {ReadableStream} upstream
+ * @returns {ReadableStream}
  */
 function toAnswerStream(upstream) {
   const decoder = new TextDecoder();
@@ -130,6 +191,7 @@ function toAnswerStream(upstream) {
   );
 }
 
+/** @type {ExportedHandler<Env>} */
 export default {
   async fetch(request, env) {
     const origin = request.headers.get('Origin') ?? '';
@@ -174,6 +236,7 @@ export default {
       return jsonError('Payload too large', 413, headers);
     }
 
+    /** @type {{ query?: unknown, contexts?: unknown }} */
     let payload;
     try {
       payload = JSON.parse(rawBody);
@@ -182,7 +245,9 @@ export default {
     }
 
     const query = normalize(payload?.query).slice(0, MAX_QUERY_CHARS);
-    const rawContexts = Array.isArray(payload?.contexts) ? payload.contexts : [];
+    const rawContexts = /** @type {RawContext[]} */ (
+      Array.isArray(payload?.contexts) ? payload.contexts : []
+    );
     // 站点来源按 origin 相等比较：startsWith 会被
     // https://doc-record.iuin888vip.icu.evil.com 这类同前缀域名绕过
     // （与上方 CORS 白名单同一原则）；解析失败的 URL 一律丢弃。
@@ -198,7 +263,8 @@ export default {
       })
       .slice(0, MAX_CONTEXTS)
       .map((item) => ({
-        url: item.url,
+        // 上面的 filter 已保证 url 是字符串且属于站点来源
+        url: /** @type {string} */ (item.url),
         title: typeof item.title === 'string' ? item.title : '',
         text: typeof item.text === 'string' ? item.text : '',
       }))
@@ -233,12 +299,7 @@ export default {
       return jsonError('generation unavailable', 502, headers);
     }
 
-    const raw =
-      (typeof result === 'string' && result) ||
-      result?.response ||
-      result?.result?.response ||
-      '';
-    const text = String(raw).replace(/^\s+/, '');
+    const text = readModelText(result).replace(/^\s+/, '');
 
     // 上游返回完整文本时包装成单个事件，保持前端的解析方式不变。
     if (!(result instanceof ReadableStream)) {

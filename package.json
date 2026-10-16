@@ -11,6 +11,8 @@
     "astro": "astro",
     "check": "astro check",
     "check:content": "python3 scripts/check-content.py",
+    "check:worker": "tsc -p cloudflare/ai-answer",
+    "test:worker": "node cloudflare/ai-answer/test.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -25,6 +27,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "^0.9.10",
+    "@cloudflare/workers-types": "5.20260915.1",
     "@playwright/test": "^1.64.0",
     "@types/mdast": "^4.0.4",
     "typescript": "~5.9.3"

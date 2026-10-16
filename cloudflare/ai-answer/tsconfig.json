@@ -1,13 +1,18 @@
 {
   // 独立的最小配置：仓库根的 tsconfig 继承 astro/tsconfigs/strict，
   // wrangler 在子目录运行时会向上查找并报找不到 base config。
+  // checkJs + strict 让这个 258 行的 worker 真正被检查（此前 checkJs: false，等于没有检查），
+  // 由根 package.json 的 check:worker 与 .github/workflows/typecheck.yml 执行。
   "compilerOptions": {
     "target": "es2022",
     "module": "es2022",
     "moduleResolution": "bundler",
     "lib": ["es2022"],
-    "checkJs": false,
-    "noEmit": true
+    "checkJs": true,
+    "allowJs": true,
+    "strict": true,
+    "noEmit": true,
+    "types": ["@cloudflare/workers-types"]
   },
-  "include": ["src/**/*.js"]
+  "include": ["src/**/*"]
 }

@@ -11,6 +11,9 @@ binding = "AI"
 # 设为 "*" 表示不限制，仅调试时使用。
 ALLOWED_ORIGIN = "https://doc-record.iuin888vip.icu"
 GENERATION_MODEL = "@cf/qwen/qwen3-30b-a3b-fp8"
+# 站点来源：用于校验前端提交的片段 URL 是否属于本站（按 origin 相等比较）。
+# 此前代码读 env.SITE_URL 但配置里没有这一项，实际一直靠代码默认值兜底，现补为显式配置。
+SITE_URL = "https://doc-record.iuin888vip.icu"
 
 # 观察性：日志自动进入 Cloudflare 的 Workers Logs。
 [observability]
