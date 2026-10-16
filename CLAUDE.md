@@ -23,7 +23,9 @@ pnpm install          # 安装依赖（Node >= 22）
 pnpm dev              # 启动开发服务器
 pnpm build            # 构建生产版本
 pnpm preview          # 本地预览构建结果
-pnpm check            # Astro 类型检查
+pnpm check            # Astro 类型检查（站点）
+pnpm check:worker     # Worker 类型检查（tsc --checkJs --strict）
+pnpm test:worker      # Worker 最小用例（不起网络，桩化 AI 绑定）
 pnpm check:content    # 内容门禁（代码块语言、内部结构、内网地址）
 pnpm test:e2e         # Playwright 端到端测试（自动构建后起 preview 服务）
 ```
@@ -137,9 +139,11 @@ AI 问答调用 NLWeb 的 `/ask` 接口，默认地址为
 - `e2e.yml`：PR 变更 `src/**`、`tests/e2e/**`、`astro.config.mjs` 等路径时，
   对构建产物跑 Playwright 用例（`pnpm test:e2e`）。只在 PR 触发，push main 不重复跑，
   因此合并到 main 的改动以本地或 PR 阶段的这次运行为准；
-- `typecheck.yml`：PR 变更 `src/**`、`astro.config.mjs`、`tsconfig.json`、依赖清单时跑
-  `pnpm check`（`astro check`，先 `astro sync` 生成集合类型）。与 e2e.yml 分开是为了
-  让类型错误与端到端失败各自成一条信号，当前基线为 0 错误；
+- `typecheck.yml`：静态质量门禁，PR 变更 `src/**`、`cloudflare/**`、`astro.config.mjs`、
+  `tsconfig.json`、依赖清单时跑三步：`pnpm check`（站点，先 `astro sync` 生成集合类型）、
+  `pnpm check:worker`（Worker，`checkJs + strict`，绑定类型见
+  `cloudflare/ai-answer/src/env.d.ts`）、`pnpm test:worker`（Worker 最小用例，不起网络）。
+  与 e2e.yml 分开是为了让类型/单元失败与端到端失败各自成一条信号，当前基线均为 0 错误；
 - `content-check.yml`：对变更的 Markdown 运行 `scripts/check-content.py`，需完整安装
   依赖以便读取 Shiki 的语言清单；
 - `ai-search-sync.yml`：周期性触发 Cloudflare AI Search 同步；

@@ -1,12 +1,14 @@
 name: Type Check
 
-# 类型门禁：`astro check` 先 astro sync 生成集合类型，再诊断 .astro 与 src 下的 TS。
+# 静态质量门禁：站点侧 `astro check`（先 astro sync 生成集合类型），
+# Worker 侧 `tsc --checkJs --strict` 与最小用例（不起网络，见 cloudflare/ai-answer/test.mjs）。
 # 与 e2e.yml 分开的原因：类型错误与端到端行为失败是两类信号，两者各自的失败信息
 # 更短、定位更快；两处都只做只读权限，互不依赖。
 on:
   pull_request:
     paths:
       - 'src/**'
+      - 'cloudflare/**'
       - 'astro.config.mjs'
       - 'tsconfig.json'
       - 'package.json'
@@ -42,5 +44,14 @@ jobs:
       - name: Install Dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: Type check
+      # 站点：astro check（先 astro sync 生成集合类型）
+      - name: Type check site
         run: pnpm check
+
+      # Worker：checkJs + strict，绑定类型见 cloudflare/ai-answer/src/env.d.ts
+      - name: Type check worker
+        run: pnpm check:worker
+
+      # Worker 最小用例：不起网络，桩化 AI 绑定直接调 fetch
+      - name: Test worker
+        run: pnpm test:worker

@@ -5,9 +5,11 @@
   "description": "站点问答的生成端：接收前端召回的片段，调用 Workers AI 生成带来源标注的答案",
   "scripts": {
     "deploy": "wrangler deploy",
-    "dev": "wrangler dev"
+    "dev": "wrangler dev",
+    "test": "node test.mjs"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"
-  }
+  },
+  "type": "module"
 }
