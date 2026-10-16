@@ -15,15 +15,32 @@ import worker from './src/index.js';
 
 const SITE = 'https://doc-record.iuin888vip.icu';
 
-/** 桩化 AI 绑定：`run` 固定返回给定结果，不触网、不消耗额度。 */
+/**
+ * 桩化 AI 绑定：不触网、不消耗额度。参数为 `Error` 时抛出（用于失败路径），
+ * 其余情况返回该值；每次调用的入参记录在 `calls` 里，便于断言真正送进模型的消息。
+ */
 function makeEnv(modelResult, overrides = {}) {
+  const calls = [];
   return {
-    AI: { run: async () => modelResult },
+    AI: {
+      run: async (model, inputs) => {
+        calls.push({ model, inputs });
+        if (modelResult instanceof Error) throw modelResult;
+        return modelResult;
+      },
+    },
     ALLOWED_ORIGIN: SITE,
     GENERATION_MODEL: 'test-model',
     SITE_URL: SITE,
+    calls,
     ...overrides,
   };
+}
+
+/** 取最后一次送进模型的消息文本。 */
+function promptOf(env) {
+  const messages = env.calls.at(-1)?.inputs?.messages ?? [];
+  return messages.map((message) => message.content).join('\n');
 }
 
 const VALID_BODY = {
@@ -123,6 +140,102 @@ await check('缺 query 与非 JSON 内容类型分别返回 400 / 415', async ()
     makeEnv('A'),
   );
   assert.equal(wrongType.status, 415);
+});
+
+await check('M5：响应是单事件 SSE —— 流式死代码已删除，不存在第二条路径', async () => {
+  const res = await worker.fetch(post(VALID_BODY, { Origin: SITE }), makeEnv('A'));
+  const text = await res.text();
+  assert.equal((text.match(/data: \{"content"/g) ?? []).length, 1);
+  assert.equal((text.match(/data: \[DONE\]/g) ?? []).length, 1);
+});
+
+await check('M10：实体被解码，被编码的标记不会留在 prompt 里', async () => {
+  const env = makeEnv('A');
+  const body = {
+    query: 'q',
+    contexts: [
+      {
+        url: `${SITE}/zh-cn/middleware/x/`,
+        title: 'R&amp;D',
+        text: 'a &lt;script&gt;alert(1)&lt;/script&gt; b&nbsp;c &#39;d&#39; &#x4e2d;',
+      },
+    ],
+  };
+  await worker.fetch(post(body, { Origin: SITE }), env);
+  const prompt = promptOf(env);
+
+  assert.match(prompt, /R&D/, '命名实体应被解码');
+  assert.ok(!prompt.includes('&amp;'), '残留未解码的 &amp;');
+  assert.ok(!prompt.includes('&lt;'), '残留未解码的 &lt;');
+  assert.ok(!prompt.includes('<script>') && !prompt.includes('<SCRIPT>'), '解码出来的标记没有被二次剥离（含大写）');
+  assert.match(prompt, /'d'/, '数字实体应被解码');
+  assert.match(prompt, /中/, '十六进制实体应被解码');
+});
+
+await check('M12：额度耗尽→429；容量不足→503+Retry-After；其余→502', async () => {
+  const quotaError = Object.assign(new Error('3036: Account limited'), { code: 3036 });
+  const quota = await worker.fetch(post(VALID_BODY, { Origin: SITE }), makeEnv(quotaError));
+  assert.equal(quota.status, 429);
+  assert.match(await quota.text(), /generation quota exhausted/);
+
+  const capacityError = Object.assign(new Error('3040: Out of capacity'), { code: 3040 });
+  const capacity = await worker.fetch(post(VALID_BODY, { Origin: SITE }), makeEnv(capacityError));
+  assert.equal(capacity.status, 503);
+  assert.equal(capacity.headers.get('retry-after'), '10');
+
+  const other = await worker.fetch(post(VALID_BODY, { Origin: SITE }), makeEnv(new Error('boom')));
+  assert.equal(other.status, 502);
+});
+
+await check('M12：仅消息里出现错误码也能识别（不依赖 code 字段）', async () => {
+  const res = await worker.fetch(
+    post(VALID_BODY, { Origin: SITE }),
+    makeEnv(new Error('AiError: 3036 Account limited')),
+  );
+  assert.equal(res.status, 429);
+});
+
+await check('M10/CodeQL：`<<<<…` 这类输入不会触发多项式回溯', async () => {
+  // 60000 个 `<`：贴近 64 KB 的体积上限（上限本身由 M3 的用例覆盖），
+  // 正则版在这种输入下是多项式回溯，线性扫描则一遍过
+  const hostile = '<'.repeat(60_000);
+  const env = makeEnv('A');
+  const started = Date.now();
+  const res = await worker.fetch(
+    post({ query: 'q', contexts: [{ url: `${SITE}/zh-cn/middleware/x/`, text: hostile }] }),
+    env,
+  );
+  const elapsed = Date.now() - started;
+
+  assert.equal(res.status, 200);
+  // 线性扫描：64 KB 极限输入应在毫秒级完成（原先的正则在此输入下是多项式复杂度）
+  assert.ok(elapsed < 1000, `处理 60 KB 恶意输入耗时 ${elapsed}ms，超出预期`);
+});
+
+await check('M10：大写标签同样被剥离（剥离逻辑与大小写无关）', async () => {
+  const env = makeEnv('A');
+  const body = {
+    query: 'q',
+    contexts: [{ url: `${SITE}/zh-cn/middleware/x/`, text: '前 &lt;SCRIPT&gt;alert(1)&lt;/SCRIPT&gt; 后' }],
+  };
+  await worker.fetch(post(body, { Origin: SITE }), env);
+  const prompt = promptOf(env);
+
+  assert.ok(!prompt.includes('<SCRIPT>') && !prompt.includes('</SCRIPT>'), '大写标签未被剥离');
+  assert.ok(prompt.includes('前') && prompt.includes('后'), '标签之间的正文应保留');
+});
+
+await check('M10：未闭合的 `<` 之后按普通文本保留', async () => {
+  const env = makeEnv('A');
+  const body = {
+    query: 'q',
+    contexts: [{ url: `${SITE}/zh-cn/middleware/x/`, text: 'a<b>c<d e' }],
+  };
+  await worker.fetch(post(body, { Origin: SITE }), env);
+  const prompt = promptOf(env);
+
+  assert.ok(!prompt.includes('<b>') && !prompt.includes('<B>'), '闭合标签应被剥离（含大写）');
+  assert.ok(prompt.includes('c<d e'), '未闭合标签后的内容应保留为文本');
 });
 
 console.log(`worker 最小用例：${passed} 项全部通过`);

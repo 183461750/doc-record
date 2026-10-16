@@ -30,5 +30,6 @@
   "starlightBlog.sidebar.authors": "作者",
   "starlightBlog.sidebar.rss": "RSS",
   "starlightBlog.tags.count_one": "标签「{{tag}}」下共 {{count}} 篇文章",
-  "starlightBlog.tags.count_other": "标签「{{tag}}」下共 {{count}} 篇文章"
+  "starlightBlog.tags.count_other": "标签「{{tag}}」下共 {{count}} 篇文章",
+  "aiAsk.quota": "今日问答额度已用完，请明天再试"
 }

@@ -163,6 +163,7 @@ export const collections = {
         'aiAsk.pending': z.string(),
         'aiAsk.empty': z.string(),
         'aiAsk.failed': z.string(),
+        'aiAsk.quota': z.string(),
         'aiAsk.sources': z.string(),
         'palette.label': z.string(),
         'palette.default': z.string(),

@@ -10,5 +10,6 @@
   "aiAsk.failed": "The Q&A service is temporarily unavailable",
   "aiAsk.sources": "Sources",
   "palette.label": "Color scheme",
-  "palette.default": "Default"
+  "palette.default": "Default",
+  "aiAsk.quota": "Today's question quota has been used up. Please try again tomorrow."
 }

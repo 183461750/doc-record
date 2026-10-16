@@ -90,15 +90,82 @@ function sseHeaders(origin) {
 }
 
 /**
- * 去掉 HTML 标签并压缩空白，片段取自 Pagefind 的正文，含少量标记。
+ * 去掉 HTML 标签，单次线性扫描。
+ *
+ * 不写成 `/<[^>]*>/g`：CodeQL 的 js/polynomial-redos 指出，形如 `<<<<…` 的输入会让
+ * 每个 `<` 都把后续字符扫一遍再回溯，复杂度是多项式的；而这里的文本来自公开端点、
+ * 属不可信输入（请求体上限 64 KB）。线性扫描在极限输入下也只走一遍。
+ *
+ * 与正则版的行为一致：未闭合的 `<` 之后的内容按普通文本保留，标签本身替换为空格。
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+function stripTags(value) {
+  let out = '';
+  let index = 0;
+
+  while (index < value.length) {
+    const open = value.indexOf('<', index);
+    if (open === -1) {
+      out += value.slice(index);
+      break;
+    }
+
+    out += value.slice(index, open);
+
+    const close = value.indexOf('>', open + 1);
+    if (close === -1) {
+      out += value.slice(open);
+      break;
+    }
+
+    out += ' ';
+    index = close + 1;
+  }
+
+  return out;
+}
+
+/** 命名实体表：Pagefind 的正文与摘录会把这些原样带出。 */
+const NAMED_ENTITIES = {
+  amp: '&',
+  lt: '<',
+  gt: '>',
+  quot: '"',
+  apos: "'",
+  nbsp: ' ',
+};
+
+/**
+ * 解码常见命名实体与数字实体，未知实体原样保留。
+ *
+ * @param {string} value
+ * @returns {string}
+ */
+function decodeEntities(value) {
+  const fromCode = (/** @type {number} */ code) =>
+    Number.isFinite(code) && code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : '';
+
+  return value
+    .replace(/&#x([0-9a-f]+);/gi, (_, hex) => fromCode(Number.parseInt(hex, 16)))
+    .replace(/&#(\d+);/g, (_, dec) => fromCode(Number(dec)))
+    .replace(/&([a-z]+);/gi, (match, name) => NAMED_ENTITIES[/** @type {keyof typeof NAMED_ENTITIES} */ (name.toLowerCase())] ?? match);
+}
+
+/**
+ * 把片段文本压成单行纯文本。
+ *
+ * 审查项 M10：此前只剥标签与 `&nbsp;`，其余实体（`&amp;`、`&lt;` 等）会被原样送进 prompt。
+ * 这里按「剥离 → 解码 → 再剥离」处理：顺序不能反 —— 先解码会让 `&lt;script&gt;`
+ * 变成真正的标签从而绕过剥离；解完再剥一次，则被编码的标记不会留在 prompt 里。
+ * 仅解码一层，双重编码（`&amp;lt;`）仍按字面保留，属已知边界。
  *
  * @param {unknown} text
  * @returns {string}
  */
 function normalize(text) {
-  return String(text ?? '')
-    .replace(/<[^>]*>/g, ' ')
-    .replace(/&nbsp;/g, ' ')
+  return stripTags(decodeEntities(stripTags(String(text ?? ''))))
     .replace(/\s+/g, ' ')
     .trim();
 }
@@ -122,15 +189,11 @@ function buildPrompt(query, contexts) {
 }
 
 /**
- * 把 Workers AI 的流式输出转换为本站的 SSE 格式。
- * 上游事件形如 data: {"response":"..."}，结束为 data: [DONE]。
- */
-/**
  * 取模型返回的文本。
  *
  * 审查项 U3：`stream: false` 下的实际返回结构在不同模型间存在差异，历史上同时兼容
  * 「字符串」「{ response }」「{ result: { response } }」三种形态。这里把不确定性收敛到
- * 一处并显式收窄，避免类型检查把它当成 any 放过去。
+ * 一处并显式收窄，避免类型检查把它当成 any 放过去；无法识别时返回空串由调用方兜底。
  *
  * @param {unknown} result
  * @returns {string}
@@ -147,48 +210,31 @@ function readModelText(result) {
 }
 
 /**
- * @param {ReadableStream} upstream
- * @returns {ReadableStream}
+ * 把生成侧失败映射为可区分的响应。
+ *
+ * 审查项 M12：此前所有失败都返回 502，前端无法区分「可重试」与「需等到次日」。
+ * 错误码取自 adr/2026-09-14-AI-Search-容量限流调优.md 的实测表：
+ *   3036 Account limited —— 当日免费额度用尽，重试无效，次日 00:00 UTC 重置 → 429
+ *   3040 Out of capacity —— 当时无可用 GPU 承接，瞬时态，重试通常成功 → 503 + Retry-After
+ * 运行时错误对象的形态未在文档中固定，这里同时看 `code` 字段与消息文本；
+ * 匹配不到时按 502 处理（保持原行为，前端仍提示可重试）。
+ *
+ * @param {unknown} error
+ * @param {ResponseHeaders} headers
+ * @returns {Response}
  */
-function toAnswerStream(upstream) {
-  const decoder = new TextDecoder();
-  const encoder = new TextEncoder();
-  let buffer = '';
-  // 上游首个分片常带换行等前导空白，直接透传会让答案开头出现空行。
-  let started = false;
+function generationError(error, headers) {
+  const code = /** @type {{ code?: unknown }} */ (error)?.code ?? '';
+  const message = error instanceof Error ? error.message : String(error ?? '');
+  const detail = `${String(code)} ${message}`;
 
-  return upstream.pipeThrough(
-    new TransformStream({
-      transform(chunk, controller) {
-        buffer += decoder.decode(chunk, { stream: true });
-        const lines = buffer.split('\n');
-        // 末段可能是不完整的一行，留到下一个分片再处理。
-        buffer = lines.pop() ?? '';
-
-        for (const line of lines) {
-          if (!line.startsWith('data:')) continue;
-          const payload = line.slice(5).trim();
-          if (!payload || payload === '[DONE]') continue;
-          let text;
-          try {
-            const parsed = JSON.parse(payload);
-            text = parsed.response ?? parsed.content ?? parsed.text;
-          } catch {
-            continue;
-          }
-          if (typeof text === 'string' && text) {
-            const outgoing = started ? text : text.replace(/^\s+/, '');
-            if (!outgoing) continue;
-            started = true;
-            controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: outgoing })}\n\n`));
-          }
-        }
-      },
-      flush(controller) {
-        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-      },
-    })
-  );
+  if (/\b3036\b|account limited/i.test(detail)) {
+    return jsonError('generation quota exhausted', 429, headers);
+  }
+  if (/\b3040\b|out of capacity/i.test(detail)) {
+    return jsonError('generation capacity unavailable', 503, { ...headers, 'Retry-After': '10' });
+  }
+  return jsonError('generation unavailable', 502, headers);
 }
 
 /** @type {ExportedHandler<Env>} */
@@ -294,26 +340,22 @@ export default {
         max_tokens: 800,
       });
     } catch (error) {
-      // 生成侧失败多由容量限制引起，属瞬时态，交由前端提示重试。
       console.error('generation failed', error);
-      return jsonError('generation unavailable', 502, headers);
+      return generationError(error, headers);
     }
 
     const text = readModelText(result).replace(/^\s+/, '');
 
-    // 上游返回完整文本时包装成单个事件，保持前端的解析方式不变。
-    if (!(result instanceof ReadableStream)) {
-      const body = new ReadableStream({
-        start(controller) {
-          const encoder = new TextEncoder();
-          controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: text })}\n\n`));
-          controller.enqueue(encoder.encode('data: [DONE]\n\n'));
-          controller.close();
-        },
-      });
-      return new Response(body, { headers: sseHeaders(origin) });
-    }
-
-    return new Response(toAnswerStream(result), { headers: sseHeaders(origin) });
+    // 单事件 SSE：`stream: false` 是刻意的（见上方注释，该模型流式下会吞数字），
+    // 因此不存在流式分支 —— 审查项 M5 删掉了此前永不执行的 toAnswerStream 与对应判断。
+    const body = new ReadableStream({
+      start(controller) {
+        const encoder = new TextEncoder();
+        controller.enqueue(encoder.encode(`data: ${JSON.stringify({ content: text })}\n\n`));
+        controller.enqueue(encoder.encode('data: [DONE]\n\n'));
+        controller.close();
+      },
+    });
+    return new Response(body, { headers: sseHeaders(origin) });
   },
 };
