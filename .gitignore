@@ -50,3 +50,7 @@ graphify-out/.graphify_uncached.txt
 # 主项目的子模块状态标记。若评审记录确定要入库，先脱敏并移到 adr/ 等受控目录，
 # 再删除本规则。
 /docs/
+
+# Python 编译缓存（scripts/ 下的工具脚本）
+__pycache__/
+*.pyc

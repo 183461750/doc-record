@@ -16,6 +16,8 @@
 
 import type { Root, RootContent } from 'mdast';
 
+import { firstHeadingText } from '../../shared/markdown-text.js';
+
 /** 取值时只保留行内文本，忽略强调、行内代码等标记。 */
 function nodeText(node: RootContent): string {
   if (node.type === 'text' || node.type === 'inlineCode') return node.value;
@@ -51,7 +53,11 @@ export function remarkStripDuplicateH1() {
     if (index === -1) return;
 
     const heading = children[index]!;
-    const text = nodeText(heading).trim();
+    // 与 loader 同源：优先按原始 Markdown 求标题纯文本（两处规则必须一致，见
+    // shared/markdown-text.js）。仅当原始 Markdown 里取不到 ATX 一级标题
+    // （例如 setext 写法）时才回退到 mdast 文本。
+    const text =
+      firstHeadingText(String(file?.value ?? '')) ?? nodeText(heading).trim();
     const title = typeof frontmatter.title === 'string' ? frontmatter.title.trim() : undefined;
 
     // 标题与页面标题不一致时视为作者有意保留，不删除

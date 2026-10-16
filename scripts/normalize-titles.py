@@ -25,12 +25,14 @@
 
 from __future__ import annotations
 
+# 豁免清单与内容门禁共用一份，见 scripts/content_rules.py
+from content_rules import SKIP_FILES
+
 import argparse
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent / 'src/content/docs'
-SKIP_FILES = {'SKILL.md', 'index.mdx'}
 
 H1_PATTERN = re.compile(r'^#\s+(.+?)\s*#*\s*$')
 FRONTMATTER_PATTERN = re.compile(r'\A---\r?\n.*?\r?\n---(?:\r?\n|$)', re.S)

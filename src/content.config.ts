@@ -7,60 +7,8 @@ import { docsLoader, i18nLoader } from '@astrojs/starlight/loaders';
 import { docsSchema, i18nSchema } from '@astrojs/starlight/schema';
 import { blogSchema } from 'starlight-blog/schema';
 
-/** 一级标题行（ATX 写法，行首不留缩进）。 */
-const ATX_H1 = /^#[ \t]+(.+?)[ \t]*$/;
-
-/** 围栏代码块标记（CommonMark：行首最多三个空格 + 至少三个反引号或波浪号）。 */
-const CODE_FENCE = /^ {0,3}(`{3,}|~{3,})/;
-
-/**
- * 取正文首个一级标题，跳过围栏代码块。
- *
- * 不能直接对全文做 `^# ` 的多行匹配：代码块里的 `#` 注释（shell、YAML、Dockerfile）
- * 同样以 `#` 开头，会被误当成标题 —— 站内曾有 19 篇未声明 title 的文档因此把
- * 代码注释（如「重启服务」）渲染成页面标题。这里按 CommonMark 走一遍围栏：
- * 行首最多三个空格的至少三个反引号或波浪号开栅栏；同类、不短于起始标记、其后只有
- * 空白的栅栏闭合；缩进四格的行属于缩进代码块，同样不参与判定。
- * 只识别 ATX 一级标题，与本文档库的实际写法一致（无 setext 用法）。
- */
-function firstHeading(markdown: string): string | undefined {
-  let fence = '';
-
-  for (const line of markdown.split('\n')) {
-    const marker = CODE_FENCE.exec(line);
-
-    if (fence) {
-      // 闭合栅栏不带信息串，长度不得短于起始标记，且同类（反引号不闭合波浪号）
-      const closes =
-        marker !== null &&
-        marker[1][0] === fence[0] &&
-        marker[1].length >= fence.length &&
-        line.slice(marker[0].length).trim() === '';
-      if (closes) fence = '';
-      continue;
-    }
-
-    if (marker) {
-      fence = marker[1];
-      continue;
-    }
-
-    const heading = ATX_H1.exec(line);
-    if (heading) return heading[1];
-  }
-
-  return undefined;
-}
-
-/** 去除行内 Markdown 标记，避免标题中残留 `**` 之类的符号。 */
-function stripInlineMarkdown(value: string): string {
-  return value
-    .replace(/`([^`]*)`/g, '$1')
-    .replace(/\*\*([^*]*)\*\*/g, '$1')
-    .replace(/\*([^*]*)\*/g, '$1')
-    .replace(/\[([^\]]*)\]\([^)]*\)/g, '$1')
-    .trim();
-}
+// 标题纯文本规则由 loader 与 remark 插件共用，见 shared/markdown-text.js 的说明
+import { firstHeadingText } from '../shared/markdown-text.js';
 
 const base = docsLoader();
 
@@ -114,8 +62,7 @@ const normalizingDocsLoader: Loader = {
         if (entry.filePath) {
           try {
             const raw = await readFile(new URL(entry.filePath, context.config.root), 'utf8');
-            const heading = firstHeading(raw);
-            if (heading) title = stripInlineMarkdown(heading);
+            title = firstHeadingText(raw) ?? '';
           } catch {
             title = '';
           }

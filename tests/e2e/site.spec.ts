@@ -51,6 +51,17 @@ test('未声明 front matter 的文档标题唯一', async ({ page }) => {
   await expect(page.locator('main h2').filter({ hasText: '二级标题' })).toBeVisible();
 });
 
+// 夹具：src/content/docs/zh-cn/test/markup-heading.md 不声明 front matter，首个 H1 含行内代码、
+// 强调、内联 HTML 与 HTML 实体。回归背景（审查项 M6）：标题推导与 remark 插件曾各用一套纯文本
+// 规则 —— 前者只剥行内 Markdown（`<kbd>`、`&amp;` 会留在标题里），后者走 mdast。现统一到
+// shared/markdown-text.js，本例断言推导出的标题不含任何标记，且正文 H1 被移除。
+test('含行内标记与内联 HTML 的标题被正确纯文本化', async ({ page }) => {
+  await page.goto('/zh-cn/test/markup-heading/');
+  await expect(page.locator('main h1')).toHaveCount(1);
+  await expect(page.locator('main h1')).toHaveText('反引号 code、粗体、 Ctrl 与 A & B');
+  await expect(page.locator('main h2').filter({ hasText: '二级标题' })).toBeVisible();
+});
+
 // 夹具：src/content/docs/zh-cn/test/fenced-comment-only.md 全文首个 `#` 出现在围栏
 // 代码块内，且正文没有一级标题。回归背景：标题推导曾对全文做 `^# ` 多行匹配，把代码
 // 注释当成标题，站内 19 篇未声明 title 的文档因此把「重启服务」这类注释渲染成页面标题。

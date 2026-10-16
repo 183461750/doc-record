@@ -67,6 +67,7 @@ PLAYWRIGHT_DOWNLOAD_HOST=https://cdn.npmmirror.com/binaries/playwright pnpm exec
 | `src/content.config.ts` | 内容集合定义与 schema 扩展 |
 | `src/components/` | 覆写与新增的 Starlight 组件 |
 | `src/plugins/` | 构建期 remark 插件：删除与页面标题重复的 H1、正文图片统一懒加载 |
+| `shared/` | 跨消费方的纯文本规则（`.js` + JSDoc）：站点前端、构建期插件与问答 Worker 共用 |
 | `src/pages/` | 自定义路由：根路径跳转存根、`/raw/**` Markdown 原文、`sitemap-ai.xml` |
 | `src/lib/` | 站点常量（`site.ts`）与内容 id 的路径换算（`raw-path.ts`、`category.ts`） |
 | `public/` | 静态资源，直接复制到产物根目录 |
@@ -111,6 +112,11 @@ canonical 与 `sitemap-ai.xml` 收敛。
   前导点（`.nvmrc如何使用.md` → `/nvmrc如何使用/`）。详见
   `adr/2026-10-14-代码审查发现项处置.md` 的 N1/N3；
 - 侧边栏无需手动配置，`astro.config.mjs` 未声明 `sidebar`；
+- 标题纯文本规则见 `shared/markdown-text.js`：loader（未声明 front matter 时由正文首个 H1
+  推导页面标题）与 remark 插件（判定正文 H1 是否与页面标题重复）必须同源，否则会重现
+  「页面出现两个标题」或「标题里残留 `<kbd>`、`&amp;`」；HTML → 纯文本的统一实现在
+  `shared/plain-text.js`，浏览器端召回与 Worker 的 prompt 组装共用，改动需同步跑
+  `pnpm check`（构建期路径）与 `pnpm check:worker`/`pnpm test:worker`（Worker 路径）；
 - 正文图片统一由 `src/plugins/remark-lazy-images.ts` 加 `loading="lazy"`：迁移遗留的远程图片
   （旧仓库 blob 地址）若按默认 eager 处理会计入 `load` 事件，第三方站点变慢就会拖住整页加载，
   曾因此在博客列表页触发过 30 秒卡顿（见 `adr/2026-10-14-代码审查发现项处置.md` 的 N5/N6）。
