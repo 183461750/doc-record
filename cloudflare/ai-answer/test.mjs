@@ -195,4 +195,34 @@ await check('M12：仅消息里出现错误码也能识别（不依赖 code 字�
   assert.equal(res.status, 429);
 });
 
+await check('M10/CodeQL：`<<<<…` 这类输入不会触发多项式回溯', async () => {
+  // 60000 个 `<`：贴近 64 KB 的体积上限（上限本身由 M3 的用例覆盖），
+  // 正则版在这种输入下是多项式回溯，线性扫描则一遍过
+  const hostile = '<'.repeat(60_000);
+  const env = makeEnv('A');
+  const started = Date.now();
+  const res = await worker.fetch(
+    post({ query: 'q', contexts: [{ url: `${SITE}/zh-cn/middleware/x/`, text: hostile }] }),
+    env,
+  );
+  const elapsed = Date.now() - started;
+
+  assert.equal(res.status, 200);
+  // 线性扫描：64 KB 极限输入应在毫秒级完成（原先的正则在此输入下是多项式复杂度）
+  assert.ok(elapsed < 1000, `处理 60 KB 恶意输入耗时 ${elapsed}ms，超出预期`);
+});
+
+await check('M10：未闭合的 `<` 之后按普通文本保留', async () => {
+  const env = makeEnv('A');
+  const body = {
+    query: 'q',
+    contexts: [{ url: `${SITE}/zh-cn/middleware/x/`, text: 'a<b>c<d e' }],
+  };
+  await worker.fetch(post(body, { Origin: SITE }), env);
+  const prompt = promptOf(env);
+
+  assert.ok(!/<b>/.test(prompt), '闭合标签应被剥离');
+  assert.match(prompt, /c<d e/, '未闭合标签后的内容应保留为文本');
+});
+
 console.log(`worker 最小用例：${passed} 项全部通过`);

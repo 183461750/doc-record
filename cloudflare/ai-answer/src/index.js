@@ -90,13 +90,41 @@ function sseHeaders(origin) {
 }
 
 /**
- * 去掉 HTML 标签。
+ * 去掉 HTML 标签，单次线性扫描。
+ *
+ * 不写成 `/<[^>]*>/g`：CodeQL 的 js/polynomial-redos 指出，形如 `<<<<…` 的输入会让
+ * 每个 `<` 都把后续字符扫一遍再回溯，复杂度是多项式的；而这里的文本来自公开端点、
+ * 属不可信输入（请求体上限 64 KB）。线性扫描在极限输入下也只走一遍。
+ *
+ * 与正则版的行为一致：未闭合的 `<` 之后的内容按普通文本保留，标签本身替换为空格。
  *
  * @param {string} value
  * @returns {string}
  */
 function stripTags(value) {
-  return value.replace(/<[^>]*>/g, ' ');
+  let out = '';
+  let index = 0;
+
+  while (index < value.length) {
+    const open = value.indexOf('<', index);
+    if (open === -1) {
+      out += value.slice(index);
+      break;
+    }
+
+    out += value.slice(index, open);
+
+    const close = value.indexOf('>', open + 1);
+    if (close === -1) {
+      out += value.slice(open);
+      break;
+    }
+
+    out += ' ';
+    index = close + 1;
+  }
+
+  return out;
 }
 
 /** 命名实体表：Pagefind 的正文与摘录会把这些原样带出。 */
