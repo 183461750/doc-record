@@ -71,7 +71,7 @@ PLAYWRIGHT_DOWNLOAD_HOST=https://cdn.npmmirror.com/binaries/playwright pnpm exec
 | `src/pages/` | 自定义路由：根路径跳转存根、`/raw/**` Markdown 原文、`sitemap-ai.xml` |
 | `src/lib/` | 站点常量（`site.ts`）与内容 id 的路径换算（`raw-path.ts`、`category.ts`） |
 | `public/` | 静态资源，直接复制到产物根目录 |
-| `scripts/` | 内容迁移、内容门禁、Cloudflare 与 Weblate 运维脚本 |
+| `scripts/` | 内容迁移、内容门禁、Cloudflare 与 Weblate 运维脚本（账号/实例标识符见 `cloudflare-env.sh`） |
 | `adr/` | 架构决策记录，按 `YYYY-MM-DD-主题.md` 命名 |
 
 ## 语言与 URL
@@ -132,9 +132,8 @@ canonical 与 `sitemap-ai.xml` 收敛。
 | `PaletteSelect.astro` / `palettes.css` | 导航栏的配色切换器与三套配色（Vitesse / Nord / Flexoki） |
 | `starlight-theme-black` | 全站视觉主题：排版、导航、代码块（Expressive Code vesper 主题）、Geist 字体 |
 
-AI 问答调用 NLWeb 的 `/ask` 接口，默认地址为
-`https://bold-union-4896-nlweb.iuinin666.workers.dev/ask`，
-可用 `PUBLIC_NLWEB_ASK_URL` 覆盖。
+AI 问答调用 NLWeb 的 `/ask` 接口，默认地址写在 `src/components/AiAsk.astro`（实例名与
+Workers 子域见 `scripts/cloudflare-env.sh`），可用 `PUBLIC_NLWEB_ASK_URL` 覆盖。
 
 ## MCP
 
@@ -155,15 +154,24 @@ AI 问答调用 NLWeb 的 `/ask` 接口，默认地址为
   `cloudflare/ai-answer/src/env.d.ts`）、`pnpm test:worker`（Worker 最小用例，不起网络）。
   与 e2e.yml 分开是为了让类型/单元失败与端到端失败各自成一条信号，当前基线均为 0 错误；
 - `content-check.yml`：对变更的 Markdown 运行 `scripts/check-content.py`，需完整安装
-  依赖以便读取 Shiki 的语言清单；
+  依赖以便读取 Shiki 的语言清单；除代码块语言、本地链接、front matter 字段与密钥检查外，
+  正文出现**多个一级标题**现为 error（页面标题区已渲染 h1，章节标题应用二级；代码块与
+  缩进代码块内的 `#` 注释不计）；
 - `ai-search-sync.yml`：周期性触发 Cloudflare AI Search 同步；
 - `ai-search-config.yml`：手动操作 Cloudflare AI Search 实例，三种模式：
   `update` 应用完整配置、`tune` 只调检索参数（不触发重索引，可传
   `keyword_match_mode` 与 `score_threshold`）、`recreate` 删除实例后重建
-  （需输入实例名 `bold-union-4896` 确认）；
+  （需输入实例名确认，取值由 `scripts/cloudflare-env.sh` 提供）；
 - `deploy-ai-answer.yml`：部署站点问答的生成端 Worker（召回在浏览器端由 Pagefind
   完成，该 Worker 无状态，变更即发布）。常规部署已由 Cloudflare Workers Builds 的 Git
   集成接管，此工作流保留为手动通道；未配置令牌时跳过而不失败。
+
+## Cloudflare 运维脚本
+
+账户 ID、AI Search 实例名、Workers 子域与站点来源集中在 `scripts/cloudflare-env.sh`，
+脚本以 `source` 引入并保留同名环境变量覆盖；workflow 的实例名确认也运行时读取，不要在任何
+脚本、workflow 或文档里再写一份默认值。生成 JSON 的 heredoc 必须用其中的 `json_string`
+转义字符串字段（直接插值在取值含引号或反斜杠时会拼出非法 JSON）。
 
 ## 翻译
 
