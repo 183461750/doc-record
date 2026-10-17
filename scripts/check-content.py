@@ -69,10 +69,10 @@ PRIVATE_ADDRESS_PATTERN = re.compile(
     r'|172\.(?:1[6-9]|2\d|3[01])\.\d{1,3}\.\d{1,3})\b'
 )
 
-FENCE_PATTERN = re.compile(r'^\s{0,3}(`{3,}|~{3,})(.*)$')
+FENCE_PATTERN = re.compile(r'^\s*(`{3,}|~{3,})(.*)$')
 FRONTMATTER_FIELD_PATTERN = re.compile(r'^([A-Za-z_][\w-]*):')
 # 正文一级标题：页面标题区已渲染同一文案，正文再写会被构建期移除
-BODY_H1_PATTERN = re.compile(r'^#\s+\S')
+BODY_H1_PATTERN = re.compile(r'^ {0,3}#\s+\S')
 LINK_PATTERN = re.compile(r'!?\[[^\]]*\]\(([^)\s]+)(?:\s+"[^"]*")?\)')
 # host:port 形态的目标不是文件引用，例如 localhost:8080
 HOST_PORT_PATTERN = re.compile(r'^[A-Za-z0-9][\w.-]*:\d+(?:/|$)')
@@ -209,17 +209,57 @@ def find_body_h1(lines: list[str]) -> list[tuple[int, str, str]]:
     """
     title = frontmatter_title(lines)
     for index in range(body_start_line(lines), len(lines)):
-        line = lines[index].strip()
-        if not line:
+        raw = lines[index]
+        if not raw.strip():
             continue
-        match = BODY_H1_PATTERN.match(line)
+        match = BODY_H1_PATTERN.match(raw)
         if match:
             heading_text = match.group(0).lstrip('#').strip()
             # 未声明 title 时页面标题正是由该标题推导而来，同样会被移除
             kind = 'chapter' if title is not None and title != heading_text else 'repeated'
-            return [(index + 1, line, kind)]
+            return [(index + 1, raw.strip(), kind)]
         break
     return []
+
+
+def iter_outside_fences(lines: list[str], start: int = 0):
+    """逐行产出围栏代码块之外的 (行号, 行内容)，行号从 start 起算。
+
+    围栏状态必须从文档开头开始跟踪：从中间起扫会把「已经打开的围栏」当成正文，
+    于是围栏里的 `#` 注释（shell / SQL）会被误判成一级标题。
+    """
+    open_fence: str | None = None
+    for index, line in enumerate(lines):
+        match = FENCE_PATTERN.match(line)
+        if match:
+            fence = match.group(1)
+            if open_fence is None:
+                open_fence = fence
+            elif fence[0] == open_fence[0] and len(fence) >= len(open_fence) and not match.group(2).strip():
+                open_fence = None
+            continue
+        if open_fence is None and index >= start:
+            # 缩进代码块（4 空格或制表符）里的 `#` 是注释，不是标题
+            if line.startswith('    ') or line.startswith('\t'):
+                continue
+            yield index + 1, line
+
+
+def find_extra_body_h1(lines: list[str]) -> list[tuple[int, str]]:
+    """找出首个内容块之后的正文一级标题。
+
+    页面标题区已渲染 h1，正文里的章节标题应当用二级：多出来的 h1 会让页面出现多个
+    一级标题（审查项 N2：曾有 5 个页面各自 2–5 个 h1），影响大纲与无障碍阅读顺序。
+    围栏代码块内的 `#` 注释（shell/SQL）不算标题。
+    """
+    body_start = body_start_line(lines)
+    first = find_body_h1(lines)
+    skip_upto = first[0][0] if first else body_start + 1
+    extras = []
+    for line_number, line in iter_outside_fences(lines, skip_upto):
+        if BODY_H1_PATTERN.match(line):
+            extras.append((line_number, line.strip()))
+    return extras
 
 
 def find_private_key(lines: list[str]) -> list[tuple[int, str]]:
@@ -263,6 +303,15 @@ def check_file(path: Path, languages: set[str] | None, repo_root: Path) -> list[
         findings.append(Finding(relative, line_number, 'error', f'本地引用不存在：{target}'))
 
     if path.name not in SKIP_FRONTMATTER_CHECK:
+        for line_number, heading in find_extra_body_h1(lines):
+            findings.append(
+                Finding(
+                    relative,
+                    line_number,
+                    'error',
+                    f'{heading}：页面已有标题区 h1，正文出现多个一级标题；章节标题请降级为二级',
+                )
+            )
         for line_number, heading, kind in find_body_h1(lines):
             message = (
                 '正文以一级标题开头，与页面标题重复，构建期自动移除；'

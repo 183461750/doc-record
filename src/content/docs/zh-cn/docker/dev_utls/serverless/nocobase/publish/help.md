@@ -21,7 +21,7 @@ title: "start-nocobase 帮助文档"
 
 <codepre id="codepre">
 
-# 代码 & 预览
+## 代码 & 预览
 
 - [ :smiley_cat:  源代码](https://github.com/183461750/nocobase)
 
@@ -47,7 +47,7 @@ title: "start-nocobase 帮助文档"
 
 <appdetail id="flushContent">
 
-# 应用详情
+## 应用详情
 
 
 
