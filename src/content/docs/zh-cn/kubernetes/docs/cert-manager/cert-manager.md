@@ -23,7 +23,7 @@ helm install \
   # --set installCRDs=true
 ```
 
-# 卸载
+## 卸载
 
 ```bash
 # 检查

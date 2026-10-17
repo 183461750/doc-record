@@ -25,8 +25,8 @@ set -euo pipefail
 
 : "${CLOUDFLARE_API_TOKEN:?需要设置 CLOUDFLARE_API_TOKEN}"
 
-CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-1e41ba8d32af254e50ca2f65292adfe1}"
-INSTANCE_ID="${INSTANCE_ID:-bold-union-4896}"
+# 账号、实例与站点地址的默认值集中在 scripts/cloudflare-env.sh（审查项 M8）
+source "$(dirname "$0")/cloudflare-env.sh"
 BASE="https://api.cloudflare.com/client/v4/accounts/${CLOUDFLARE_ACCOUNT_ID}/ai-search/instances/${INSTANCE_ID}"
 AUTH="Authorization: Bearer ${CLOUDFLARE_API_TOKEN}"
 

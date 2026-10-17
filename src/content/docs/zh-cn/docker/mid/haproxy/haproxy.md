@@ -1,3 +1,7 @@
+---
+title: "MySQL 主从部署"
+---
+
 ## 部署MySQL
 ```shell
 # mysql开启集群的sql命令
@@ -32,7 +36,7 @@ START REPLICA USER='root' PASSWORD='root' for channel 'channel1';
 SHOW REPLICA STATUS;
 
 ```
-# Last_SQL_Errno
+## Last_SQL_Errno
 ```shell
 1007：数据库已存在，创建数据库失败
 1008：数据库不存在，删除数据库失败

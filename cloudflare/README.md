@@ -88,7 +88,12 @@ export CLOUDFLARE_API_TOKEN=xxxx
 实际可提供的独立来源显著减少。
 
 内容迁入 `src/content/docs/zh-cn/` 并只声明该语言后，回退副本不再生成，
-`sitemap-0.xml` 与 `sitemap-ai.xml` 的条目数已收敛到同一量级（约 373 条）。
+`sitemap-0.xml` 与 `sitemap-ai.xml` 的条目数已收敛到同一量级。条目数随内容增长，
+这里不再写死（此前记录的「约 373 条」已滞后），核对方式：
+
+```bash
+curl -s https://doc-record.iuin888vip.icu/sitemap-ai.xml | grep -c '<loc>'
+```
 
 ### 3.2 更换内容源需要重建实例
 
@@ -199,7 +204,7 @@ AI Search 侧报告的 `workers_ai_out_of_capacity_error` 对应 **3040**（瞬�
   可排除 3036。
 
 2026-09-11 当天额度耗尽的原因仍为此前的失控爬取：`sitemap-0.xml` 含 1492 条 URL，
-且实例被反复重建与重试，同一批内容多次进入嵌入流程。切换到 367 条的根语言站点地图后，
+且实例被反复重建与重试，同一批内容多次进入嵌入流程。切换到当时 367 条的根语言站点地图后，
 单次全量索引的成本为：
 
 | 项目 | 取值 |
