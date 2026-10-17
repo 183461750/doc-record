@@ -28,8 +28,8 @@ set -euo pipefail
 
 : "${CLOUDFLARE_API_TOKEN:?需要设置 CLOUDFLARE_API_TOKEN}"
 
-CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-1e41ba8d32af254e50ca2f65292adfe1}"
-INSTANCE_ID="${INSTANCE_ID:-bold-union-4896}"
+# 账号、实例与站点地址的默认值集中在 scripts/cloudflare-env.sh（审查项 M8）
+source "$(dirname "$0")/cloudflare-env.sh"
 KEYWORD_MATCH_MODE="${KEYWORD_MATCH_MODE:-or}"
 SCORE_THRESHOLD="${SCORE_THRESHOLD:-0.2}"
 DRY_RUN="${DRY_RUN:-0}"
@@ -75,7 +75,7 @@ fi
 body=$(
   cat <<EOF
 {
-  "retrieval_options": { "keyword_match_mode": "${KEYWORD_MATCH_MODE}" },
+  "retrieval_options": { "keyword_match_mode": $(json_string "${KEYWORD_MATCH_MODE}") },
   "score_threshold": ${SCORE_THRESHOLD}
 }
 EOF
@@ -98,5 +98,5 @@ print("    retrieval_options: ", json.dumps(ro, ensure_ascii=False))
 
 echo
 echo "==> 完成。建议用多组查询词复验命中变化："
-echo "    curl -sS -X POST https://${INSTANCE_ID}-nlweb.iuinin666.workers.dev/ask \\"
+echo "    curl -sS -X POST https://${INSTANCE_ID}-nlweb.${WORKERS_SUBDOMAIN}.workers.dev/ask \\"
 echo "      -H 'Content-Type: application/json' -d '{\"query\":\"Docker 安装 Redis\",\"mode\":\"list\"}'"

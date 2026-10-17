@@ -31,8 +31,8 @@ set -euo pipefail
 
 : "${CLOUDFLARE_API_TOKEN:?需要设置 CLOUDFLARE_API_TOKEN}"
 
-CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-1e41ba8d32af254e50ca2f65292adfe1}"
-INSTANCE_ID="${INSTANCE_ID:-bold-union-4896}"
+# 账号、实例与站点地址的默认值集中在 scripts/cloudflare-env.sh（审查项 M8）
+source "$(dirname "$0")/cloudflare-env.sh"
 SITEMAP_URL="${SITEMAP_URL:-https://doc-record.iuin888vip.icu/sitemap-ai.xml}"
 # 1.66 取自 dist/raw 下 367 篇原文的实测估算：合计 493,614 字符，
 # 按 chunk_size 1024 / overlap 10% 切分约得 611 块。
@@ -121,4 +121,4 @@ else:
 '
 
 echo
-echo "==> 完成。问答入口：https://${INSTANCE_ID}-nlweb.iuinin666.workers.dev/"
+echo "==> 完成。问答入口：https://${INSTANCE_ID}-nlweb.${WORKERS_SUBDOMAIN}.workers.dev/"

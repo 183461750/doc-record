@@ -38,9 +38,8 @@ set -euo pipefail
 
 : "${CLOUDFLARE_API_TOKEN:?需要设置 CLOUDFLARE_API_TOKEN}"
 
-CLOUDFLARE_ACCOUNT_ID="${CLOUDFLARE_ACCOUNT_ID:-1e41ba8d32af254e50ca2f65292adfe1}"
-INSTANCE_ID="${INSTANCE_ID:-bold-union-4896}"
-SITE_URL="${SITE_URL:-https://doc-record.iuin888vip.icu}"
+# 账号、实例与站点地址的默认值集中在 scripts/cloudflare-env.sh（审查项 M8）
+source "$(dirname "$0")/cloudflare-env.sh"
 # sitemap-ai.xml 由 src/pages/sitemap-ai.xml.ts 生成，仅含根语言页面，
 # 不含 /en /ja /zh-Hant 回退副本，避免索引内容成倍重复。
 SITEMAP_PATH="${SITEMAP_PATH:-sitemap-ai.xml}"
@@ -136,14 +135,14 @@ fi
 body=$(
   cat <<EOF
 {
-  "id": "${INSTANCE_ID}",
+  "id": $(json_string "${INSTANCE_ID}"),
   "type": "web-crawler",
-  "source": "${SITE_URL}",
+  "source": $(json_string "${SITE_URL}"),
   "source_params": {
     "web_crawler": {
       "parse_type": "sitemap",
       "parse_options": {
-        "specific_sitemaps": ["${SITE_URL}/${SITEMAP_PATH}"]
+        "specific_sitemaps": [$(json_string "${SITE_URL}/${SITEMAP_PATH}")]
       },
       "discover_options": {
         "source": "sitemaps",
@@ -246,4 +245,4 @@ echo "==> 索引统计"
 api "${BASE}/instances/${INSTANCE_ID}/stats" 2>/dev/null | head -c 400 || true
 echo
 echo "==> 完成。可用以下地址验证问答："
-echo "    https://${INSTANCE_ID}-nlweb.iuinin666.workers.dev/"
+echo "    https://${INSTANCE_ID}-nlweb.${WORKERS_SUBDOMAIN}.workers.dev/"

@@ -21,7 +21,7 @@ on:
           - recreate
         default: update
       confirm:
-        description: 'recreate 模式下需输入实例名以确认（bold-union-4896）'
+        description: 'recreate 模式下需输入实例名以确认（取值见 scripts/cloudflare-env.sh）'
         required: false
         type: string
         default: ''
@@ -50,18 +50,26 @@ jobs:
   apply:
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      # 实例名以 scripts/cloudflare-env.sh 为单一来源（审查项 M8），workflow 不再另写一份
+      - name: 读取标识符
+        id: ids
+        run: |
+          source scripts/cloudflare-env.sh
+          echo "instance=${INSTANCE_ID}" >> "$GITHUB_OUTPUT"
+
       - name: 校验确认输入
         env:
           MODE: ${{ inputs.mode }}
           CONFIRM: ${{ inputs.confirm }}
+          INSTANCE: ${{ steps.ids.outputs.instance }}
         run: |
-          if [ "${MODE}" = 'recreate' ] && [ "${CONFIRM}" != 'bold-union-4896' ]; then
-            echo '::error::recreate 模式需要输入实例名 bold-union-4896 作为确认，终止执行。'
+          if [ "${MODE}" = 'recreate' ] && [ "${CONFIRM}" != "${INSTANCE}" ]; then
+            echo "::error::recreate 模式需要输入实例名 ${INSTANCE} 作为确认，终止执行。"
             exit 1
           fi
-
-      - name: Checkout
-        uses: actions/checkout@v7
 
       - name: 应用配置或调整检索参数
         env:
