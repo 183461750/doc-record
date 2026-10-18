@@ -107,10 +107,10 @@ canonical 与 `sitemap-ai.xml` 收敛。
   `sidebar.hidden`：它们寄居在 docs 集合，若不摘除会同时出现在文档侧边栏与 Starlight
   的文档分页里，与插件自己的上下篇导航冲突，见
   `adr/2026-10-13-博客条目退出文档侧边栏.md`；
-- 内容 glob **不遍历点目录**：目录名以 `.` 开头时其中文档不会成为条目（本站
-  `example/.devcontainer/doc.md` 因此从未发布）。点开头的**文件**会被收录，但 URL 会丢掉
-  前导点（`.nvmrc如何使用.md` → `/nvmrc如何使用/`）。详见
-  `adr/2026-10-14-代码审查发现项处置.md` 的 N1/N3；
+- 内容 glob **不遍历点目录**：目录名以 `.` 开头时其中文档不会成为条目（曾有一篇
+  `example/.devcontainer/doc.md` 因此从未发布，2026-10-17 已移出点目录改为
+  `example/devcontainer-记录.md`，见 `adr/2026-10-14-代码审查发现项处置.md` 的 N1）。
+  点开头的**文件**会被收录，但 URL 会丢掉前导点（`.nvmrc如何使用.md` → `/nvmrc如何使用/`，N3）；
 - 侧边栏无需手动配置，`astro.config.mjs` 未声明 `sidebar`；
 - 标题纯文本规则见 `shared/markdown-text.js`：loader（未声明 front matter 时由正文首个 H1
   推导页面标题）与 remark 插件（判定正文 H1 是否与页面标题重复）必须同源，否则会重现
@@ -129,7 +129,7 @@ canonical 与 `sitemap-ai.xml` 收敛。
 | `/llms.txt`、`/_llms-txt/*.txt` | 全站索引与分类分卷，供上下文有限的客户端按需取用 |
 | `/sitemap-ai.xml` | 只收录默认语言页面的站点地图，供 Cloudflare AI Search 抓取 |
 | `AiAsk.astro` | 全站问答的右下角悬浮入口，经 `PageFrame.astro` 挂到每个页面 |
-| `PaletteSelect.astro` / `palettes.css` | 导航栏的配色切换器与三套配色（Vitesse / Nord / Flexoki） |
+| `PaletteSelect.astro` / `src/styles/palettes.css` | 导航栏的配色切换器与三套配色（Vitesse / Nord / Flexoki） |
 | `starlight-theme-black` | 全站视觉主题：排版、导航、代码块（Expressive Code vesper 主题）、Geist 字体 |
 
 AI 问答调用 NLWeb 的 `/ask` 接口，默认地址写在 `src/components/AiAsk.astro`（实例名与
