@@ -9,6 +9,11 @@ updates:
       - dependency-name: "*"
         update-types:
           - version-update:semver-major
+      # @cloudflare/workers-types 的版本号是「compat 日期」（如 5.20260915.1），
+      # 必须与 cloudflare/ai-answer/wrangler.toml 的 compatibility_date 对齐 ——
+      # 单独升类型包会引入当前 compat 日期下不存在的运行时 API。
+      # 升 compatibility_date 时请连同本包一起手动升级，见 adr/2026-10-16-依赖漏洞清理.md。
+      - dependency-name: "@cloudflare/workers-types"
     groups:
       all-minor-patch:
         patterns:
