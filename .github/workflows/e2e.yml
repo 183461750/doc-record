@@ -4,6 +4,7 @@ on:
   pull_request:
     paths:
       - 'src/**'
+      - 'shared/**'
       - 'tests/e2e/**'
       - 'playwright.config.ts'
       - 'astro.config.mjs'
@@ -47,6 +48,11 @@ jobs:
 
       - name: Run e2e tests
         run: pnpm run test:e2e
+
+      # 召回质量门禁：另一份构建（设置 PUBLIC_AI_ANSWER_URL 以走召回链路），
+      # 断言金标准问题的期望页面落在召回前 3 条里，见 tests/recall/
+      - name: Run recall quality gate
+        run: pnpm run test:recall
 
       - name: Upload trace on failure
         if: failure()

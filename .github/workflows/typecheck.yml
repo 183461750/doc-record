@@ -8,6 +8,7 @@ on:
   pull_request:
     paths:
       - 'src/**'
+      - 'shared/**'
       - 'cloudflare/**'
       - 'astro.config.mjs'
       - 'tsconfig.json'

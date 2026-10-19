@@ -28,6 +28,7 @@ pnpm check:worker     # Worker 类型检查（tsc --checkJs --strict）
 pnpm test:worker      # Worker 最小用例（不起网络，桩化 AI 绑定）
 pnpm check:content    # 内容门禁（代码块语言、内部结构、内网地址）
 pnpm test:e2e         # Playwright 端到端测试（自动构建后起 preview 服务）
+pnpm test:recall      # 召回质量门禁（金标准问题，期望页面须落在召回前 3 条）
 ```
 
 ## 包管理器
@@ -67,7 +68,7 @@ PLAYWRIGHT_DOWNLOAD_HOST=https://cdn.npmmirror.com/binaries/playwright pnpm exec
 | `src/content.config.ts` | 内容集合定义与 schema 扩展 |
 | `src/components/` | 覆写与新增的 Starlight 组件 |
 | `src/plugins/` | 构建期 remark 插件：删除与页面标题重复的 H1、正文图片统一懒加载 |
-| `shared/` | 跨消费方的纯文本规则（`.js` + JSDoc）：站点前端、构建期插件与问答 Worker 共用 |
+| `shared/` | 跨消费方规则（`.js` + JSDoc）：纯文本化（前端/构建期/Worker 共用）、问答召回层（`recall.js`） |
 | `src/pages/` | 自定义路由：根路径跳转存根、`/raw/**` Markdown 原文、`sitemap-ai.xml` |
 | `src/lib/` | 站点常量（`site.ts`）与内容 id 的路径换算（`raw-path.ts`、`category.ts`） |
 | `public/` | 静态资源，直接复制到产物根目录 |
@@ -145,9 +146,14 @@ Workers 子域见 `scripts/cloudflare-env.sh`），可用 `PUBLIC_NLWEB_ASK_URL`
 ## 部署与自动化
 
 - `ci.yml`：推送 main 后构建并部署到 GitHub Pages；
-- `e2e.yml`：PR 变更 `src/**`、`tests/e2e/**`、`astro.config.mjs` 等路径时，
+- `e2e.yml`：PR 变更 `src/**`、`shared/**`、`tests/e2e/**`、`astro.config.mjs` 等路径时，
   对构建产物跑 Playwright 用例（`pnpm test:e2e`）。只在 PR 触发，push main 不重复跑，
   因此合并到 main 的改动以本地或 PR 阶段的这次运行为准；
+  同一次运行里还有 `pnpm test:recall`：用**另一份构建**（设置 `PUBLIC_AI_ANSWER_URL`
+  以走召回链路）跑金标准问题，断言期望页面落在召回前 3 条、整体命中率 ≥ 90%（当前基线
+  93.3%，唯一未命中是中文提问「安装」与英文 `install_k8s` 页面的词面不匹配）；
+  召回逻辑在 `shared/recall.js`，改策略前后都跑它，别凭感觉，详见
+  `adr/2026-10-19-AI-问答召回层与质量门禁.md`；
 - `typecheck.yml`：静态质量门禁，PR 变更 `src/**`、`cloudflare/**`、`astro.config.mjs`、
   `tsconfig.json`、依赖清单时跑三步：`pnpm check`（站点，先 `astro sync` 生成集合类型）、
   `pnpm check:worker`（Worker，`checkJs + strict`，绑定类型见
