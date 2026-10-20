@@ -204,3 +204,89 @@ test('窄屏下面板不超出视口', async ({ page }) => {
   });
   expect(fits).toBe(true);
 });
+
+/**
+ * 动态内容的样式回归。
+ *
+ * 面板内的答案、spinner、复制/重试按钮都是脚本创建的 —— Astro scoped CSS 只作用于
+ * 模板元素，漏写 :global() 时样式会静默失效（曾有：spinner 尺寸为 0、围栏代码块没有
+ * 底色）。只看文本的用例发现不了，所以这里断言计算样式。
+ */
+test('围栏代码块渲染为代码块，动态内容样式生效', async ({ page }) => {
+  await page.route('**/ask', (route) =>
+    route.fulfill({
+      status: 200,
+      headers: { 'content-type': 'text/event-stream; charset=utf-8' },
+      body:
+        `data: ${JSON.stringify({ content: '步骤：\n\n```bash\nhelm delete cert-manager\n```\n\n再用 `kubectl get ns` 确认。' })}\n\n` +
+        'data: [DONE]\n\n',
+    }),
+  );
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+  await page.locator('.ai-ask-input').fill('cert-manager 怎么卸载');
+  await page.locator('.ai-ask-submit').click();
+
+  const answer = page.locator('.ai-ask-answer-text');
+  await expect(answer.locator('pre code')).toHaveText('helm delete cert-manager');
+  await expect(answer).not.toContainText('```');
+  await expect(answer.locator('code').filter({ hasText: 'kubectl get ns' })).toHaveCount(1);
+
+  const styles = await page.evaluate(() => {
+    const pre = document.querySelector('.ai-ask-answer-text pre');
+    const inline = [...document.querySelectorAll('.ai-ask-answer-text code')].find((el) => !el.closest('pre'));
+    const copy = document.querySelector('.ai-ask-copy');
+    return {
+      preBg: pre ? getComputedStyle(pre).backgroundColor : null,
+      prePadding: pre ? getComputedStyle(pre).padding : null,
+      inlineBg: inline ? getComputedStyle(inline).backgroundColor : null,
+      copyBorder: copy ? getComputedStyle(copy).borderTopWidth : null,
+      copyPadding: copy ? getComputedStyle(copy).padding : null,
+    };
+  });
+  expect(styles.preBg).not.toBe('rgba(0, 0, 0, 0)');
+  expect(styles.prePadding).not.toBe('0px');
+  expect(styles.inlineBg).not.toBe('rgba(0, 0, 0, 0)');
+  expect(styles.copyBorder).not.toBe('0px');
+  expect(styles.copyPadding).not.toBe('0px');
+});
+
+test('加载态显示有尺寸的 spinner', async ({ page }) => {
+  await page.route('**/ask', () => {});
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+  await page.locator('.ai-ask-input').fill('网络不通怎么排查');
+  await page.locator('.ai-ask-submit').click();
+
+  const spinner = page.locator('.ai-ask-spinner');
+  await expect(spinner).toBeVisible();
+  const box = await spinner.boundingBox();
+  expect(box?.width ?? 0).toBeGreaterThan(8);
+  expect(box?.height ?? 0).toBeGreaterThan(8);
+});
+
+test('来源列表渲染为可点击链接', async ({ page }) => {
+  await page.route('**/ask', (route) =>
+    route.fulfill({
+      status: 200,
+      headers: { 'content-type': 'text/event-stream; charset=utf-8' },
+      body:
+        `data: ${JSON.stringify({
+          results: [
+            { url: 'https://example.com/a', name: '参考文档 A', description: '说明 A' },
+            { url: 'https://example.com/b', name: '参考文档 B' },
+          ],
+        })}\n\n` +
+        `data: ${JSON.stringify({ content: '答案正文' })}\n\ndata: [DONE]\n\n`,
+    }),
+  );
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+  await page.locator('.ai-ask-input').fill('测试来源');
+  await page.locator('.ai-ask-submit').click();
+
+  const links = page.locator('.ai-ask-result ol li a');
+  await expect(links).toHaveCount(2);
+  await expect(links.first()).toHaveAttribute('href', 'https://example.com/a');
+  await expect(links.first()).toHaveAttribute('rel', 'noopener noreferrer');
+});

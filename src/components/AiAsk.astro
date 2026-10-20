@@ -245,14 +245,8 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     }
   }
 
-  /**
-   * 把答案渲染成「文本 + 行内代码」。
-   *
-   * 只识别反引号包裹的行内代码，其余按纯文本插入（textContent），不引入 Markdown 解析器：
-   * 生成端输出可能包含任意字符，走 DOM 文本节点能保证不会被当作 HTML 执行。
-   */
-  function renderAnswerInto(target: HTMLElement, text: string) {
-    target.replaceChildren();
+  /** 把一段纯文本按行内代码拆开插入（不解析其它 Markdown，保证不执行任何 HTML）。 */
+  function appendInlineText(target: HTMLElement, text: string) {
     for (const part of text.split(/(`[^`\n]+`)/g)) {
       if (!part) continue;
       if (part.length > 2 && part.startsWith('`') && part.endsWith('`')) {
@@ -261,6 +255,48 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
         target.append(code);
       } else {
         target.append(document.createTextNode(part));
+      }
+    }
+  }
+
+  /**
+   * 把答案渲染成「文本 + 行内代码 + 围栏代码块」。
+   *
+   * 生成端会用 Markdown 围栏（```）给出命令，只渲染行内代码会把围栏原样显示出来。
+   * 这里只识别围栏与行内代码两种语法，其余按纯文本插入（textContent）——
+   * 不引入 Markdown 解析器，也不会把模型输出当成 HTML 执行。
+   * 围栏未闭合（模型截断）时按到文末处理，避免把半截内容当正文。
+   */
+  function renderAnswerInto(target: HTMLElement, text: string) {
+    target.replaceChildren();
+
+    const fence = /```([^\n]*)\n([\s\S]*?)(?:\n```|$)/g;
+    const segments: { code: boolean; value: string }[] = [];
+    let cursor = 0;
+    let match: RegExpExecArray | null;
+    while ((match = fence.exec(text))) {
+      segments.push({ code: false, value: text.slice(cursor, match.index) });
+      segments.push({ code: true, value: match[2] });
+      cursor = fence.lastIndex;
+    }
+    segments.push({ code: false, value: text.slice(cursor) });
+
+    // 代码块是块级元素，围栏前后的换行交给它自己的外边距，避免多出空行
+    for (let index = 1; index < segments.length; index += 1) {
+      const segment = segments[index];
+      if (segment.code) segments[index - 1].value = segments[index - 1].value.replace(/\n+$/, '');
+      else segment.value = segment.value.replace(/^\n+/, '');
+    }
+
+    for (const segment of segments) {
+      if (segment.code) {
+        const pre = document.createElement('pre');
+        const code = document.createElement('code');
+        code.textContent = segment.value.replace(/\n$/, '');
+        pre.append(code);
+        target.append(pre);
+      } else if (segment.value) {
+        appendInlineText(target, segment.value);
       }
     }
   }
@@ -736,17 +772,44 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     color: var(--sl-color-gray-3);
   }
 
-  .ai-ask-answer {
+  /* ── 以下元素由脚本动态创建，拿不到 Astro 的作用域类，必须写成 :global() ──
+     踩坑记录：漏写时样式静默失效 —— spinner 尺寸为 0、围栏代码块没有任何底色、
+     复制/重试按钮只剩浏览器默认外观，而只看文本的 e2e 完全发现不了。
+     回归保护见 tests/e2e/ai-ask.spec.ts 的「动态内容样式生效」用例。 */
+  .ai-ask-result :global(.ai-ask-answer) {
     margin: 0 0 0.75rem;
   }
 
-  .ai-ask-answer-text {
+  .ai-ask-result :global(.ai-ask-answer-text) {
     margin: 0;
     white-space: pre-wrap;
   }
 
+  /* 答案里的围栏代码块：等宽、可横向滚动、自带底色。
+     行内代码样式在它内部要失效，否则会叠加内边距和背景。 */
+  .ai-ask-result :global(.ai-ask-answer-text pre) {
+    margin: 0.5rem 0;
+    padding: 0.6rem 0.7rem;
+    overflow-x: auto;
+    border: 1px solid var(--sl-color-gray-5);
+    border-radius: 0.5rem;
+    background-color: var(--sl-color-gray-6);
+    font-family: var(--sl-font-mono);
+    font-size: 0.86em;
+    line-height: 1.55;
+    white-space: pre;
+  }
+
+  .ai-ask-result :global(.ai-ask-answer-text pre code) {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--sl-color-white);
+    font-size: inherit;
+  }
+
   /* 答案里的行内代码（生成端会输出反引号包裹的命令） */
-  .ai-ask-answer-text code {
+  .ai-ask-result :global(.ai-ask-answer-text code) {
     padding: 0.1em 0.35em;
     border-radius: 0.3rem;
     background-color: var(--sl-color-gray-6);
@@ -755,7 +818,7 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     font-size: 0.92em;
   }
 
-  .ai-ask-status {
+  .ai-ask-result :global(.ai-ask-status) {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -764,7 +827,7 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
   }
 
   /* 加载指示：细环旋转；减少动态偏好下改为静态圆点 */
-  .ai-ask-spinner {
+  .ai-ask-result :global(.ai-ask-spinner) {
     width: 0.8rem;
     height: 0.8rem;
     flex: none;
@@ -781,14 +844,14 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .ai-ask-spinner {
+    .ai-ask-result :global(.ai-ask-spinner) {
       animation: none;
       border-top-color: var(--sl-color-gray-5);
     }
   }
 
   /* 复制 / 重试等次要操作 */
-  .ai-ask-action {
+  .ai-ask-result :global(.ai-ask-action) {
     align-self: flex-start;
     margin-top: 0.5rem;
     padding: 0.25rem 0.6rem;
@@ -800,22 +863,22 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
     cursor: pointer;
   }
 
-  .ai-ask-action:hover {
+  .ai-ask-result :global(.ai-ask-action:hover) {
     border-color: var(--sl-color-accent);
     color: var(--sl-color-white);
   }
 
-  .ai-ask-action:focus-visible {
+  .ai-ask-result :global(.ai-ask-action:focus-visible) {
     outline: 2px solid var(--sl-color-accent);
     outline-offset: 1px;
   }
 
-  .ai-ask-action:disabled {
+  .ai-ask-result :global(.ai-ask-action:disabled) {
     cursor: default;
     opacity: 0.7;
   }
 
-  .ai-ask-sources {
+  .ai-ask-result :global(.ai-ask-sources) {
     margin: 0 0 0.5rem;
     color: var(--sl-color-gray-3);
   }
