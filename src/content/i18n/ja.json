@@ -31,5 +31,9 @@
   "starlightBlog.sidebar.rss": "RSS",
   "starlightBlog.tags.count_one": "タグ「{{tag}}」の記事 {{count}} 件",
   "starlightBlog.tags.count_other": "タグ「{{tag}}」の記事 {{count}} 件",
-  "aiAsk.quota": "本日の質問上限に達しました。明日またお試しください"
+  "aiAsk.quota": "本日の質問上限に達しました。明日またお試しください",
+  "aiAsk.clear": "会話をクリア",
+  "aiAsk.retry": "再試行",
+  "aiAsk.copy": "回答をコピー",
+  "aiAsk.copied": "コピーしました"
 }

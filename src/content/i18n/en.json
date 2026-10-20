@@ -11,5 +11,9 @@
   "aiAsk.sources": "Sources",
   "palette.label": "Color scheme",
   "palette.default": "Default",
-  "aiAsk.quota": "Today's question quota has been used up. Please try again tomorrow."
+  "aiAsk.quota": "Today's question quota has been used up. Please try again tomorrow.",
+  "aiAsk.clear": "Clear conversation",
+  "aiAsk.retry": "Retry",
+  "aiAsk.copy": "Copy answer",
+  "aiAsk.copied": "Copied"
 }
