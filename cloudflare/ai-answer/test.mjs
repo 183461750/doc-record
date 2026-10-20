@@ -238,4 +238,20 @@ await check('M10：未闭合的 `<` 之后按普通文本保留', async () => {
   assert.ok(prompt.includes('c<d e'), '未闭合标签后的内容应保留为文本');
 });
 
+await check('P1：系统提示覆盖“只输入关键词”的情形（docker / Redis 这类裸词）', async () => {
+  const env = makeEnv('A');
+  await worker.fetch(post({ query: 'Redis', contexts: VALID_BODY.contexts }, { Origin: SITE }), env);
+  const prompt = promptOf(env);
+
+  // 线上实测：片段里明明有 RedisInsight 部署命令，模型仍回了“未在文档中找到相关内容”，
+  // 因为输入只是关键词、没有明确问题。规则必须显式覆盖这种输入。
+  assert.match(prompt, /只给出关键词或短语/);
+  assert.match(prompt, /概括列出/);
+  // 拒答规则保留，且明确不标来源
+  assert.match(prompt, /未在文档中找到相关内容/);
+  assert.match(prompt, /不要标注来源编号/);
+  // 用户问题本身仍要进 prompt
+  assert.match(prompt, /Redis/);
+});
+
 console.log(`worker 最小用例：${passed} 项全部通过`);
