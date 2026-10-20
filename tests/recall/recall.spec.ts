@@ -69,9 +69,9 @@ test('召回命中率不低于基线（期望页面落在前 3 条）', async ({
 
   // 拦截“生成端”请求：只取召回结果，不真的调用线上 Worker。
   // 用数组按到达顺序记录：本轮请求数增加即代表这一题的召回已完成。
-  const bodies: { contexts?: { url: string }[] }[] = [];
+  const bodies: { contexts?: { url: string; text?: string }[] }[] = [];
   await page.route('https://recall-eval.test/ask', async (route) => {
-    bodies.push(route.request().postDataJSON() as { contexts?: { url: string }[] });
+    bodies.push(route.request().postDataJSON() as { contexts?: { url: string; text?: string }[] });
     await route.fulfill({
       status: 200,
       headers: { 'content-type': 'text/event-stream; charset=utf-8' },
@@ -115,6 +115,16 @@ test('召回命中率不低于基线（期望页面落在前 3 条）', async ({
       misses.push(`「${question}」期望其一 ${accept.join(' | ')}\n    实际前 ${TOP_K}：${shown}`);
     }
   }
+
+  // 索引卫生：召回上下文里不应出现页面界面文案（「Copy page / Open in ChatGPT…」按钮
+  // 与代码块的无障碍说明「终端窗口」）。这些文本曾占据每页索引正文的开头，污染召回。
+  const contextText = bodies
+    .flatMap((item) => item.contexts ?? [])
+    .map((item) => item.text ?? '')
+    .join('\n');
+  expect(contextText).not.toContain('Copy page');
+  expect(contextText).not.toContain('Open in ChatGPT');
+  expect(contextText).not.toContain('终端窗口');
 
   const hitRate = (GOLDEN.length - misses.length) / GOLDEN.length;
   console.log(`  召回命中率：${(hitRate * 100).toFixed(1)}%（${GOLDEN.length - misses.length}/${GOLDEN.length}）`);

@@ -10,6 +10,8 @@ import starlightThemeBlack from 'starlight-theme-black';
 // 站点级常量与跳转存根共用同一来源，见 src/lib/site.ts
 import { DEFAULT_LOCALE, SITE_DESCRIPTION, SITE_TITLE } from './src/lib/site.ts';
 import { remarkLazyImages } from './src/plugins/remark-lazy-images.ts';
+// 构建期把标题区的 MarkdownActions 排除出 Pagefind 索引，必须声明在 starlight() 之前
+import { pagefindIgnoreMarkdownActions } from './src/integrations/pagefind-ignore-markdown-actions.mjs';
 import { remarkStripDuplicateH1 } from './src/plugins/remark-strip-duplicate-h1.ts';
 // Astro 7 起插件通过 unified 处理器传入，markdown.remarkPlugins 已弃用
 import { unified } from '@astrojs/markdown-remark';
@@ -70,6 +72,7 @@ export default defineConfig({
   // 已收录链接交由搜索引擎按 canonical 与新站点地图重新收敛。
 
   integrations: [
+    pagefindIgnoreMarkdownActions(),
     starlight({
       title: SITE_TITLE,
       description: SITE_DESCRIPTION,
