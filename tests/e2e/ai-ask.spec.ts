@@ -290,3 +290,30 @@ test('来源列表渲染为可点击链接', async ({ page }) => {
   await expect(links.first()).toHaveAttribute('href', 'https://example.com/a');
   await expect(links.first()).toHaveAttribute('rel', 'noopener noreferrer');
 });
+
+test('长答案出现后结果区停在答案开头', async ({ page }) => {
+  const longAnswer = `第一段开始。\n\n${'这是一段用于撑高结果区的中文内容。'.repeat(30)}\n\n结尾段落。`;
+  await page.route('**/ask', (route) =>
+    route.fulfill({
+      status: 200,
+      headers: { 'content-type': 'text/event-stream; charset=utf-8' },
+      body:
+        `data: ${JSON.stringify({
+          results: Array.from({ length: 6 }, (_, i) => ({
+            url: `https://example.com/${i}`,
+            name: `参考 ${i}`,
+            description: '说明',
+          })),
+        })}\n\n` +
+        `data: ${JSON.stringify({ content: longAnswer })}\n\ndata: [DONE]\n\n`,
+    }),
+  );
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+  await page.locator('.ai-ask-input').fill('长答案测试');
+  await page.locator('.ai-ask-submit').click();
+  await expect(page.locator('.ai-ask-answer-text')).toContainText('第一段开始');
+
+  const scrollTop = await page.evaluate(() => document.querySelector('.ai-ask-result')?.scrollTop ?? -1);
+  expect(scrollTop).toBe(0);
+});
