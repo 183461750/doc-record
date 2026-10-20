@@ -119,3 +119,29 @@
 #starlight__sidebar li .container-group-link .container-sidebar-entry {
   padding-inline: 0.25rem;
 }
+
+/* ── 中文正文精修 ────────────────────────────────────────────────────────────
+   主题把正文设为 15px（偏拉丁文优化），中文在非 Retina 屏上偏小。提到 16px 后
+   在 640px 的版心里每行约 39 个汉字（原 42），更接近中文舒适区间；行高与段落间距
+   沿用主题的 1.75 / 16px，不另起一套节奏。只作用于正文内容区。
+   备注：CJK 字体不在这里显式声明 —— 现在用的就是系统 CJK 默认（macOS PingFang /
+   Windows 微软雅黑），显式列一份反而要覆写 Astro 生成的完整字体栈，风险大于收益。 */
+/* 主题用 `.sl-markdown-content * { font-size: 15px }` 无差别设置所有后代。
+   这里只把正文类元素提到 1rem，**不碰标题与代码块** —— 直接用 `*` 覆盖会把
+   标题压成 16px（未分层规则赢过分层里更具体的选择器），已实测踩过。
+   与主题同样的 40rem 断点：窄屏沿用主题的 15px。 */
+@media (min-width: 40rem) {
+  .sl-markdown-content :is(p, li, td, th, dd, dt) {
+    font-size: 1rem;
+  }
+}
+
+/* 中文断行细节：避免段落末行只剩一两个字、标题被拆成单字行。不支持该属性的浏览器
+   按默认规则排版，不影响可读性。 */
+.sl-markdown-content p {
+  text-wrap: pretty;
+}
+
+.sl-markdown-content :is(h2, h3, h4) {
+  text-wrap: balance;
+}
