@@ -369,7 +369,9 @@ const askEndpoint = useLocalRecall ? answerEndpoint : nlwebEndpoint;
       }
     });
     block.append(copyButton);
-    output.scrollTop = output.scrollHeight;
+    // 答案是从上往下读的：滚到结果区顶部（答案块就是第一个子节点）。
+    // 曾经滚到底部，长答案会把「来源列表尾部」推到眼前，反而遮住回答开头。
+    output.scrollTop = 0;
     revealClear(panel);
   }
 
