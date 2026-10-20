@@ -119,20 +119,3 @@
 #starlight__sidebar li .container-group-link .container-sidebar-entry {
   padding-inline: 0.25rem;
 }
-
-
-/* ── 代码块：终端框的「窗口点」 ────────────────────────────────────────────────
-   Expressive Code 用 mask + 单色绘制三个点，默认 `terminalTitlebarDotsOpacity: 0.15`，
-   在深色标题栏上几乎看不见（用户反馈「和底色一个样」）。这里改成 macOS 的交通灯配色：
-   同一个伪元素上用三段径向渐变画三个点，不需要改 Expressive Code 的 DOM。
-   只作用于终端框（is-terminal）；数据类语言（yaml/json/…）的代码框保持无点。 */
-.expressive-code .frame.is-terminal > figcaption.header::before {
-  -webkit-mask-image: none !important;
-  mask-image: none !important;
-  opacity: 1;
-  background-color: transparent;
-  background-image:
-    radial-gradient(circle at 0.29rem 50%, #ff5f57 0 0.26rem, transparent 0.27rem),
-    radial-gradient(circle at 1.06rem 50%, #febc2e 0 0.26rem, transparent 0.27rem),
-    radial-gradient(circle at 1.83rem 50%, #28c840 0 0.26rem, transparent 0.27rem);
-}

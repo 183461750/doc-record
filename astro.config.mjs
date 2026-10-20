@@ -112,6 +112,15 @@ export default defineConfig({
         ThemeSelect: './src/components/ThemeSelect.astro',
       },
       customCss: ['./src/styles/palettes.css', './src/styles/black-layout.css'],
+      // Expressive Code 默认把终端框的窗口点画成 15% 不透明度的单色 mask，深色标题栏上几乎
+      // 看不见（主题本身也不覆盖它，演示站同样如此）。这里只调不透明度、保留主题取色，
+      // 用官方支持的 styleOverrides，不覆盖插件的伪元素结构。
+      // 注：点是单色 mask，官方 API 做不出红黄绿交通灯配色。
+      expressiveCode: {
+        styleOverrides: {
+          frames: { terminalTitlebarDotsOpacity: '0.6' },
+        },
+      },
       // 必须传配置对象：插件对参数做 zod 校验，不传会报 expected object。
       // 标题区的 MarkdownActions 默认开启。
       // 侧边栏分组用折叠交互（useDropdowns）：本站目录层级最深达五层，
