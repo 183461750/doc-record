@@ -31,5 +31,9 @@
   "starlightBlog.sidebar.rss": "RSS",
   "starlightBlog.tags.count_one": "標籤「{{tag}}」下共 {{count}} 篇文章",
   "starlightBlog.tags.count_other": "標籤「{{tag}}」下共 {{count}} 篇文章",
-  "aiAsk.quota": "今日問答額度已用完，請明天再試"
+  "aiAsk.quota": "今日問答額度已用完，請明天再試",
+  "aiAsk.clear": "清空對話",
+  "aiAsk.retry": "重試",
+  "aiAsk.copy": "複製答案",
+  "aiAsk.copied": "已複製"
 }

@@ -111,3 +111,96 @@ test('同一问题重复提交只请求一次，换问题重问以新响应为�
   expect(requests, '换问题应发出新请求').toBe(2);
   await expect(result, '旧响应不应污染新输出').not.toContainText('答案 1');
 });
+
+/**
+ * 交互补强：清空、失败重试、复制答案、窄屏适配。
+ * 这些都依赖真实面板行为，故拦截生成端后驱动 UI 验证。
+ */
+test('有人问答后出现清空按钮，点击后重置面板', async ({ page }) => {
+  await page.route('**/ask', (route) =>
+    route.fulfill({
+      status: 200,
+      headers: { 'content-type': 'text/event-stream; charset=utf-8' },
+      body: 'data: {"content":"答案内容"}\n\ndata: [DONE]\n\n',
+    }),
+  );
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+
+  const clear = page.locator('.ai-ask-clear');
+  await expect(clear).toBeHidden();
+
+  await page.locator('.ai-ask-input').fill('Redis 持久化');
+  await page.locator('.ai-ask-submit').click();
+  await expect(page.locator('.ai-ask-result')).toContainText('答案内容');
+  await expect(clear).toBeVisible();
+
+  await clear.click();
+  await expect(page.locator('.ai-ask-result')).toHaveText('');
+  await expect(page.locator('.ai-ask-input')).toHaveValue('');
+  await expect(clear).toBeHidden();
+});
+
+test('失败后给出重试入口，重试会重新请求', async ({ page }) => {
+  let calls = 0;
+  await page.route('**/ask', (route) => {
+    calls += 1;
+    if (calls === 1) {
+      return route.fulfill({ status: 502, headers: { 'content-type': 'application/json' }, body: '{}' });
+    }
+    return route.fulfill({
+      status: 200,
+      headers: { 'content-type': 'text/event-stream; charset=utf-8' },
+      body: 'data: {"content":"重试成功"}\n\ndata: [DONE]\n\n',
+    });
+  });
+
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+  await page.locator('.ai-ask-input').fill('Redis 持久化');
+  await page.locator('.ai-ask-submit').click();
+
+  const retry = page.locator('.ai-ask-action', { hasText: '重试' });
+  await expect(retry).toBeVisible();
+  await retry.click();
+
+  await expect(page.locator('.ai-ask-result')).toContainText('重试成功');
+  expect(calls).toBe(2);
+});
+
+test('复制答案写入剪贴板并给出反馈', async ({ page, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write']);
+  await page.route('**/ask', (route) =>
+    route.fulfill({
+      status: 200,
+      headers: { 'content-type': 'text/event-stream; charset=utf-8' },
+      body: 'data: {"content":"先看 `iptables -t nat -L` 规则。"}\n\ndata: [DONE]\n\n',
+    }),
+  );
+
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+  await page.locator('.ai-ask-input').fill('网络不通怎么排查');
+  await page.locator('.ai-ask-submit').click();
+
+  // 行内代码渲染成 <code>，不是字面反引号
+  await expect(page.locator('.ai-ask-answer-text code')).toHaveText('iptables -t nat -L');
+
+  const copy = page.locator('.ai-ask-copy');
+  await copy.click();
+  await expect(copy).toHaveText('已复制');
+  const clipboard = await page.evaluate(() => navigator.clipboard.readText());
+  expect(clipboard).toContain('iptables -t nat -L');
+});
+
+test('窄屏下面板不超出视口', async ({ page }) => {
+  await page.setViewportSize({ width: 360, height: 720 });
+  await page.goto('/zh-cn/docker/app/firefox/firefox/');
+  await page.locator('.ai-ask-open').click();
+
+  const fits = await page.evaluate(() => {
+    const rect = document.querySelector('.ai-ask-panel')?.getBoundingClientRect();
+    return rect ? rect.left >= 0 && rect.right <= window.innerWidth : false;
+  });
+  expect(fits).toBe(true);
+});
