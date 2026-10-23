@@ -19,7 +19,7 @@
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.2",
     "@astrojs/starlight": "^0.42.6",
-    "astro": "^7.3.8",
+    "astro": "^7.4.1",
     "mermaid": "^12.1.0",
     "sharp": "^0.35.5",
     "starlight-blog": "^0.30.0",
@@ -27,7 +27,7 @@
     "starlight-theme-black": "^0.7.1"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
+    "@astrojs/check": "^0.9.11",
     "@cloudflare/workers-types": "5.20260915.1",
     "@playwright/test": "^1.64.0",
     "@types/mdast": "^4.0.4",
